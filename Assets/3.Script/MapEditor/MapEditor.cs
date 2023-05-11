@@ -2,104 +2,143 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class MapEditor : MonoBehaviour
 {
     [Header("Blocks")]
-    public GameObject[] blockPrefabs;
+    [SerializeField] private Material[] blockMaterials;
     [SerializeField] private GameObject _baseBlockPrefab;
-    [SerializeField] private GameObject _testBlockPrefab;
+    [SerializeField] private LineGrid _lineGrid;
+    [SerializeField] private Block _blockPrefab;
 
     [Header("Level")]
     [SerializeField] private Transform _level;
 
+    [Header("UI")]
+    [SerializeField] private GameObject _mapEditorUI;
+
+
+    [HideInInspector] public Block selectedBlock = null;
+    [HideInInspector] public Block prevBlock = null;
+    public int[,] mapData;
+
     private int _currentBlockIndex = 0;
     private int _minX, _minY;
-    private GameObject _selectedBlock;
     private Camera _mainCam;
+    private MapEditStateFactory _factory;
 
-    private int[,] _mapData;
+    public int MinX => _minX;
+    public int MinY => _minY;
+    public int CurrentBlockIndex => _currentBlockIndex;
+    public Camera MainCam => _mainCam;
 
     private void Awake()
     {
-        SelectBlock(_currentBlockIndex);
         _mainCam = Camera.main;
+        _factory = new MapEditStateFactory(this);
+    }
+
+    private void Update()
+    {
+        if(_factory.CurrentState != null)
+            _factory.CurrentState.Update();
+    }
+
+    // 편집 모드 전환
+    public void ChangeEditMode(EMapEditState editState)
+    {
+        _factory.ChangeState(editState);
     }
 
     // 맵 편집 시작 버튼에 넣어줌
     public void StartMapEdit()
     {
+        _mapEditorUI.SetActive(false);
         InitLevel();
     }
 
+    // 레벨 초기화 (안에 있는 오브젝트 다 삭제)
     private void InitLevel()
     {
         _level.DestroyAllChild();
     }
 
+    // 판때기 생성
     public void MakeBaseMap(int x, int z)
     {
+        _mapEditorUI.SetActive(true);
+
         GameObject baseBlock = Instantiate(_baseBlockPrefab, _level);
         baseBlock.transform.localScale = new Vector3(x, 1, z);
+        LineGrid lineGrid = Instantiate(_lineGrid, baseBlock.transform);
+        lineGrid.transform.localPosition = new Vector3(0, 0.51f, 0);
+        lineGrid.MakeGrid(-(x / 2 - 0.5f), -(z / 2 - 0.5f), x, z);
 
-        _mapData = new int[z, x];
+        mapData = new int[z, x];
 
         _minX = (x / 2) - 1;
         _minY = (z / 2) - 1;
+
+        ChangeEditMode(EMapEditState.Draw);
     }
 
-    private void SelectBlock(int index)
+    #region 각 상태에 넣어줄 함수들
+
+    // 블럭 선택
+    public void SelectBlock(int index)
     {
-        if (_selectedBlock != null)
-            Destroy(_selectedBlock.gameObject);
-        _selectedBlock = Instantiate(blockPrefabs[index], _level);
+        if (selectedBlock != null)
+            Destroy(selectedBlock.gameObject);
+        selectedBlock = Instantiate(_blockPrefab, _level);
+        selectedBlock.InitBlock(blockMaterials[index]);
     }
 
-    private void Update()
+    public void DestroyBlock()
     {
-        // 블럭 선택
-        InputBlock();
+        if (selectedBlock != null)
+            Destroy(selectedBlock.gameObject);
 
-        // 블럭 움직이기
-        RaycastHit hit;
-        if (Physics.Raycast(_mainCam.ScreenPointToRay(Input.mousePosition), out hit, 1 << LayerMask.NameToLayer("BaseBlock")))
+        selectedBlock = null;
+    }
+
+    public void InputBlock()
+    {
+        if (Input.GetKeyDown(KeyCode.Keypad0))
         {
-            // 만약 이미 블럭이 있다면 불가
-            Vector3 hitAroundPoint = new Vector3(Mathf.RoundToInt(hit.point.x), 1, Mathf.RoundToInt(hit.point.z));
-
-            if (_mapData[(int)hitAroundPoint.z + _minY, (int)hitAroundPoint.x + _minX] != 0)
-                return;
-
-            _selectedBlock.transform.position = hitAroundPoint;
-
-            // 블럭 놓기
-            if (Input.GetMouseButtonDown(0))
-            {
-                _mapData[(int)hitAroundPoint.z + _minY, (int)hitAroundPoint.x + _minX] = _currentBlockIndex + 1;
-
-                _selectedBlock.transform.position = hitAroundPoint;
-                _selectedBlock = null;
-                SelectBlock(_currentBlockIndex);
-            }
+            _currentBlockIndex = 0;
+            SelectBlock(_currentBlockIndex);
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad1))
+        {
+            _currentBlockIndex = 1;
+            SelectBlock(_currentBlockIndex);
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad2))
+        {
+            _currentBlockIndex = 2;
+            SelectBlock(_currentBlockIndex);
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad3))
+        {
+            _currentBlockIndex = 3;
+            SelectBlock(_currentBlockIndex);
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad4))
+        {
+            _currentBlockIndex = 4;
+            SelectBlock(_currentBlockIndex);
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad5))
+        {
+            _currentBlockIndex = 5;
+            SelectBlock(_currentBlockIndex);
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad6))
+        {
+            _currentBlockIndex = 6;
+            SelectBlock(_currentBlockIndex);
         }
     }
 
-    private void InputBlock()
-    {
-        if (Input.GetKeyDown(KeyCode.Keypad0))
-            _currentBlockIndex = 0;
-        else if (Input.GetKeyDown(KeyCode.Keypad1))
-            _currentBlockIndex = 1;
-        else if (Input.GetKeyDown(KeyCode.Keypad2))
-            _currentBlockIndex = 2;
-        else if (Input.GetKeyDown(KeyCode.Keypad3))
-            _currentBlockIndex = 3;
-        else if (Input.GetKeyDown(KeyCode.Keypad4))
-            _currentBlockIndex = 4;
-        else if (Input.GetKeyDown(KeyCode.Keypad5))
-            _currentBlockIndex = 5;
-        else if (Input.GetKeyDown(KeyCode.Keypad6))
-            _currentBlockIndex = 6;
-
-        SelectBlock(_currentBlockIndex);
-    }
+    #endregion
 }
