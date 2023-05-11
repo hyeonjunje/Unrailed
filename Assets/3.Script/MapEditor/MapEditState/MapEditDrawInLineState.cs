@@ -57,7 +57,7 @@ public class MapEditDrawInLineState : BaseMapEditState
             int x = (int)hitAroundPoint.x + _content.MinX;
             int y = (int)hitAroundPoint.z + _content.MinY;
 
-            if (_content.mapData[y, x] != 0)
+            if (_content.mapData[y, x] != null)
                 return;
 
             _content.selectedBlock.transform.position = hitAroundPoint;
@@ -119,16 +119,18 @@ public class MapEditDrawInLineState : BaseMapEditState
                     {
                         for(int j = minY; j <= maxY; j++)
                         {
-                            if(_content.mapData[j, i] == 0)
+                            if(_content.mapData[j, i] != null)
                             {
-                                _content.SelectBlock(_content.CurrentBlockIndex);
-                                int currentX = i - _content.MinX;
-                                int currentY = j - _content.MinY;
-                                _content.selectedBlock.transform.position = new Vector3(currentX, 1, currentY);
-                                _content.selectedBlock.SetPos(i, j);
-                                _content.mapData[j, i] = _content.CurrentBlockIndex + 1;
-                                _content.selectedBlock = null;
+                                GameObject.Destroy(_content.mapData[j, i]);
+                                _content.mapData[j, i] = null;
                             }
+                            _content.SelectBlock(_content.CurrentBlockIndex);
+                            int currentX = i - _content.MinX;
+                            int currentY = j - _content.MinY;
+                            _content.selectedBlock.transform.position = new Vector3(currentX, 1, currentY);
+                            _content.selectedBlock.SetPos(i, j);
+                            _content.mapData[j, i] = _content.selectedBlock;
+                            _content.selectedBlock = null;
                         }
                     }
                     _content.SelectBlock(_content.CurrentBlockIndex);

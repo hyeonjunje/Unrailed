@@ -20,7 +20,7 @@ public class MapEditor : MonoBehaviour
 
     [HideInInspector] public Block selectedBlock = null;
     [HideInInspector] public Block prevBlock = null;
-    public int[,] mapData;
+    public Block[,] mapData;
 
     private int _currentBlockIndex = 0;
     private int _minX, _minY;
@@ -74,7 +74,7 @@ public class MapEditor : MonoBehaviour
         lineGrid.transform.localPosition = new Vector3(0, 0.51f, 0);
         lineGrid.MakeGrid(-(x / 2 - 0.5f), -(z / 2 - 0.5f), x, z);
 
-        mapData = new int[z, x];
+        mapData = new Block[z, x];
 
         _minX = (x / 2) - 1;
         _minY = (z / 2) - 1;

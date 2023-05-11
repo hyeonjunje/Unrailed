@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class MapEditDrawState : BaseMapEditState
 {
+    private Block prevBlock;
+    private Block currentBlock;
+
     public MapEditDrawState(MapEditor mapEditor, MapEditStateFactory stateFactory) : base(mapEditor, stateFactory)
     {
     }
@@ -15,21 +18,17 @@ public class MapEditDrawState : BaseMapEditState
 
     public override void Enter()
     {
-        Debug.Log("들어왔습니다.");
-
         // 들어올 때 이전에 사용했던 블럭을 선택함 (없으면 0)
         _content.SelectBlock(_content.CurrentBlockIndex);
     }
 
     public override void Exit()
     {
-        Debug.Log("나갔습니다.");
+
     }
 
     public override void Update()
     {
-        Debug.Log("진행중입니다.");
-
         _content.InputBlock();
 
         // 시작점 끝점 찍고 그 사이 모든 그리드에 선택된 block들 다 생성한다.
@@ -42,15 +41,37 @@ public class MapEditDrawState : BaseMapEditState
             int x = (int)hitAroundPoint.x + _content.MinX;
             int y = (int)hitAroundPoint.z + _content.MinY;
 
-            if (_content.mapData[y, x] != 0)
-                return;
+            // 만약 이미 있는 블럭
+            if (_content.mapData[y, x] != null)
+            {
+                prevBlock = currentBlock;
+                currentBlock = _content.mapData[y, x];
+
+                if(prevBlock != null && prevBlock != currentBlock)
+                {
+                    prevBlock.gameObject.SetActive(true);
+                    currentBlock.gameObject.SetActive(false);
+                }
+            }
+            else
+            {
+                if(currentBlock != null)
+                    currentBlock.gameObject.SetActive(true);
+            }
 
             _content.selectedBlock.transform.position = hitAroundPoint;
 
             // 블럭 놓기
             if (Input.GetMouseButtonDown(0))
             {
-                _content.mapData[y, x] = _content.CurrentBlockIndex + 1;
+                // 만약 이미 있는 블럭이면 블럭 없애고 새로 그림
+                if (_content.mapData[y, x] != null)
+                {
+                    GameObject.Destroy(_content.mapData[y, x]);
+                    _content.mapData[y, x] = null;
+                }
+
+                _content.mapData[y, x] = _content.selectedBlock;
                 _content.selectedBlock.SetPos(x, y);
                 _content.selectedBlock.transform.position = hitAroundPoint;
                 _content.selectedBlock = null;
