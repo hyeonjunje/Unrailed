@@ -15,6 +15,5 @@ public abstract class BaseMapEditState
 
     public abstract void Enter();
     public abstract void Update();
-    public abstract void Click();
     public abstract void Exit();
 }

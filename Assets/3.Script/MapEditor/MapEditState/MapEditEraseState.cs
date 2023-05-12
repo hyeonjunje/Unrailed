@@ -4,19 +4,20 @@ using UnityEngine;
 
 public class MapEditEraseState : BaseMapEditState
 {
-    public MapEditEraseState(MapEditor mapEditor, MapEditStateFactory stateFactory) : base(mapEditor, stateFactory)
-    {
-    }
+    private Block _prevBlock;
+    private Block _currentBlock;
 
-    public override void Click()
+    private int _prevIndex;
+    private int _currentIndex;
+
+    public MapEditEraseState(MapEditor mapEditor, MapEditStateFactory stateFactory) : base(mapEditor, stateFactory)
     {
 
     }
 
     public override void Enter()
     {
-        // 선택된 블럭 지움
-        _content.DestroyBlock();
+
     }
 
     public override void Exit()
@@ -27,40 +28,27 @@ public class MapEditEraseState : BaseMapEditState
     public override void Update()
     {
         // 블럭 지우기 로직
-        // _content.EraseBlock();
-
-        RaycastHit hit;
-        if (Physics.Raycast(_content.MainCam.ScreenPointToRay(Input.mousePosition), out hit, 1000f, 1 << LayerMask.NameToLayer("BaseBlock")))
+        if (Physics.Raycast(_content.MainCam.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, 1000f, 1 << LayerMask.NameToLayer("BaseBlock")))
         {
-            Vector3 hitAroundPoint = new Vector3(Mathf.RoundToInt(hit.point.x), 1, Mathf.RoundToInt(hit.point.z));
+            int x = Mathf.RoundToInt(hit.point.x) + _content.MinX;
+            int y = Mathf.RoundToInt(hit.point.z) + _content.MinY;
 
-            int x = (int)hitAroundPoint.x + _content.MinX;
-            int y = (int)hitAroundPoint.z + _content.MinY;
-
-            // 만약 이미 블럭이 있다면 지워줌
-            if (_content.mapData[y, x] != null)
+            if (_currentBlock != null)
             {
-                _content.prevBlock = _content.selectedBlock;
-                _content.selectedBlock = _content.mapData[y, x];
-
-                if(_content.selectedBlock != _content.prevBlock)
-                {
-                    if (_content.prevBlock != null)
-                        _content.prevBlock.NonSelectBlock();
-                    _content.selectedBlock.SelectBlock();
-                }
-
-                // 블럭 지우기
-                if (Input.GetMouseButtonDown(0))
-                {
-                    _content.mapData[_content.selectedBlock.Y, _content.selectedBlock.X] = null;
-                    _content.DestroyBlock();
-                }
+                _prevBlock = _currentBlock;
+                _prevIndex = _currentIndex;
+                _prevBlock.SetBlockInfo(_content.GetMaterial(_prevIndex), _prevIndex);
             }
-            else
+            _currentBlock = _content.mapData[y, x];
+            _currentIndex = _currentBlock.Index;
+            _currentBlock.SetBlockInfo(_content.GetMaterial(0), 0);
+
+            // 계속 누르면 지워지게
+            if(Input.GetMouseButton(0))
             {
-                if(_content.selectedBlock != null)
-                    _content.selectedBlock.NonSelectBlock();
+                _content.mapData[y, x].SetBlockInfo(_content.GetMaterial(0), 0);
+
+                _currentBlock = null;
             }
         }
     }

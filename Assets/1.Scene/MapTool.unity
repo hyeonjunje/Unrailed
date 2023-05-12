@@ -1255,6 +1255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockMaterials:
+  - {fileID: 2100000, guid: 3b2ea3d3af7155a4d9114b72fe604a22, type: 2}
   - {fileID: 2100000, guid: c5794710a39bf2049856b2a62d16796f, type: 2}
   - {fileID: 2100000, guid: 94cde6c6b67ee6543988949b554a9e58, type: 2}
   - {fileID: 2100000, guid: 272338b554acfbe47a2073828b39cfef, type: 2}
@@ -1267,6 +1268,8 @@ MonoBehaviour:
   _blockPrefab: {fileID: 6343559345387229015, guid: a7aa4fa63e5a4b14b8d8e6c2d3fc8e93, type: 3}
   _level: {fileID: 150971739}
   _mapEditorUI: {fileID: 920608986}
+  selectedBlock: {fileID: 0}
+  prevBlock: {fileID: 0}
 --- !u!1 &637896096
 GameObject:
   m_ObjectHideFlags: 0
