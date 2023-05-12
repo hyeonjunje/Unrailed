@@ -15,7 +15,7 @@ public class MapEditor : MonoBehaviour
     [SerializeField] private Transform _level;
 
     [Header("UI")]
-    [SerializeField] private GameObject _mapEditorUI;
+    [SerializeField] private MapEditorUI _mapEditorUI;
 
 
     [HideInInspector] public Block selectedBlock = null;
@@ -27,6 +27,8 @@ public class MapEditor : MonoBehaviour
     private Camera _mainCam;
     private MapEditStateFactory _factory;
 
+
+    public int eraseSize => _mapEditorUI.EraseSize;
     public int MinX => _minX;
     public int MinY => _minY;
     public int CurrentBlockIndex => _currentBlockIndex;
@@ -53,7 +55,7 @@ public class MapEditor : MonoBehaviour
     // 맵 편집 시작 버튼에 넣어줌
     public void StartMapEdit()
     {
-        _mapEditorUI.SetActive(false);
+        _mapEditorUI.gameObject.SetActive(false);
         InitLevel();
     }
 
@@ -71,7 +73,7 @@ public class MapEditor : MonoBehaviour
     public void MakeBaseMap(int x, int z)
     {
         // UI 생성
-        _mapEditorUI.SetActive(true);
+        _mapEditorUI.gameObject.SetActive(true);
 
         // 좌표, 배열 초기화
         mapData = new Block[z, x];

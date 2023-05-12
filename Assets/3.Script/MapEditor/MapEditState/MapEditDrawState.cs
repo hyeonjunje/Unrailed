@@ -21,7 +21,8 @@ public class MapEditDrawState : BaseMapEditState
 
     public override void Exit()
     {
-        _currentBlock.SetBlockInfo(_content.GetMaterial(0), 0);
+        if (_currentBlock != null)
+            _currentBlock.SetBlockInfo(_content.GetMaterial(0), 0);
     }
 
     public override void Update()

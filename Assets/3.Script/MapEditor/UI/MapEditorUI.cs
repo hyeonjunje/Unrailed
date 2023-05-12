@@ -13,12 +13,39 @@ public class MapEditorUI : MonoBehaviour
     [SerializeField] private Button _drawButton;
     [SerializeField] private Button _rowDrawButton;
     [SerializeField] private Button _eraseButton;
-    
+    [SerializeField] private Button _eraseSizeButton;
+
+    private int _eraseSize;
+    public int EraseSize
+    {
+        get
+        {
+            return _eraseSize;
+        }
+        set
+        {
+            _eraseSize = value;
+
+            if(_eraseSize > 3)
+            {
+                _eraseSize = 1;
+            }
+            else if(_eraseSize <= 0)
+            {
+                _eraseSize = 3;
+            }
+
+            _eraseSizeButton.GetComponent<Text>().text = "X" + _eraseSize;
+        }
+    }
+
     private MapEditor _mapEditor;
     private Transform _cam;
 
     private void Awake()
     {
+        _eraseSize = 1;
+
         _mapEditor = FindObjectOfType<MapEditor>();
         _cam = Camera.main.transform;
         _leftButton.onClick.AddListener(() => _cam.position += Vector3.left);
@@ -44,6 +71,10 @@ public class MapEditorUI : MonoBehaviour
         _drawButton.onClick.AddListener(() => _drawButton.GetComponent<Image>().color = Color.yellow);
         _rowDrawButton.onClick.AddListener(() => _rowDrawButton.GetComponent<Image>().color = Color.yellow);
         _eraseButton.onClick.AddListener(() => _eraseButton.GetComponent<Image>().color = Color.yellow);
+
+        _eraseButton.onClick.AddListener(() => _eraseSizeButton.gameObject.SetActive(true));
+
+        _eraseSizeButton.onClick.AddListener(() => EraseSize++);
     }
 
     private void InitAllButtons()
@@ -51,5 +82,7 @@ public class MapEditorUI : MonoBehaviour
         _drawButton.GetComponent<Image>().color = Color.white;
         _rowDrawButton.GetComponent<Image>().color = Color.white;
         _eraseButton.GetComponent<Image>().color = Color.white;
+
+        _eraseSizeButton.gameObject.SetActive(false);
     }
 }
