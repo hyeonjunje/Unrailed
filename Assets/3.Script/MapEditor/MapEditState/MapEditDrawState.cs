@@ -22,7 +22,7 @@ public class MapEditDrawState : BaseMapEditState
     public override void Exit()
     {
         if (_currentBlock != null)
-            _currentBlock.SetBlockInfo(_content.GetMaterial(0), 0);
+            _currentBlock.SetBlockInfo(_content.GetMaterial(_currentIndex), _currentIndex);
     }
 
     public override void Update()

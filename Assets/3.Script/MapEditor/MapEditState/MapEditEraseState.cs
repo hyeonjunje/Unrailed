@@ -47,10 +47,31 @@ public class MapEditEraseState : BaseMapEditState
             // 계속 누르면 지워지게
             if(Input.GetMouseButton(0))
             {
-                _content.mapData[y, x].SetBlockInfo(_content.GetMaterial(0), 0);
+                int size = _content.EraseSize / 2;
+                for(int i = -size; i <= size; i++)
+                {
+                    for(int j = -size; j <= size; j++)
+                    {
+                        if(isRange(x + j, y + i))
+                            _content.mapData[y + i, x + j].SetBlockInfo(_content.GetMaterial(0), 0);
+
+                        // _content.mapData[y, x].SetBlockInfo(_content.GetMaterial(0), 0);
+                    }
+                }
 
                 _currentBlock = null;
             }
         }
+    }
+
+    private bool isRange(int x, int y)
+    {
+        if (x < 0 || y < 0)
+            return false;
+
+        if (x >= _content.mapData.GetLength(1) || y >= _content.mapData.GetLength(0))
+            return false;
+
+        return true;
     }
 }

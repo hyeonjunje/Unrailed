@@ -26,16 +26,16 @@ public class MapEditorUI : MonoBehaviour
         {
             _eraseSize = value;
 
-            if(_eraseSize > 3)
+            if(_eraseSize > 6)
             {
                 _eraseSize = 1;
             }
             else if(_eraseSize <= 0)
             {
-                _eraseSize = 3;
+                _eraseSize = 5;
             }
 
-            _eraseSizeButton.GetComponent<Text>().text = "X" + _eraseSize;
+            _eraseSizeButton.GetComponentInChildren<Text>().text = "X" + _eraseSize;
         }
     }
 
@@ -74,7 +74,7 @@ public class MapEditorUI : MonoBehaviour
 
         _eraseButton.onClick.AddListener(() => _eraseSizeButton.gameObject.SetActive(true));
 
-        _eraseSizeButton.onClick.AddListener(() => EraseSize++);
+        _eraseSizeButton.onClick.AddListener(() => EraseSize += 2);
     }
 
     private void InitAllButtons()

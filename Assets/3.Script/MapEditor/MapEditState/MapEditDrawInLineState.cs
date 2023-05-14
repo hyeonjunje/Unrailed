@@ -10,13 +10,13 @@ public class MapEditDrawInLineState : BaseMapEditState
     private Vector2Int startPos;
     private Vector2Int endPos;
 
-
     private Block _prevBlock;
     private Block _currentBlock;
 
     private int _prevIndex;
     private int _currentIndex;
 
+    private int _startBlockIndex;
 
     public MapEditDrawInLineState(MapEditor mapEditor, MapEditStateFactory stateFactory) : base(mapEditor, stateFactory)
     {
@@ -26,12 +26,14 @@ public class MapEditDrawInLineState : BaseMapEditState
     {
         isStart = false;
         isEnd = false;
+
+        _startBlockIndex = 0;
     }
 
     public override void Exit()
     {
         if(_currentBlock != null)
-            _currentBlock.SetBlockInfo(_content.GetMaterial(0), 0);
+            _currentBlock.SetBlockInfo(_content.GetMaterial(_currentIndex), _currentIndex);
     }
 
     public override void Update()

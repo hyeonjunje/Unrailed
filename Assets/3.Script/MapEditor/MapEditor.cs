@@ -28,7 +28,7 @@ public class MapEditor : MonoBehaviour
     private MapEditStateFactory _factory;
 
 
-    public int eraseSize => _mapEditorUI.EraseSize;
+    public int EraseSize => _mapEditorUI.EraseSize;
     public int MinX => _minX;
     public int MinY => _minY;
     public int CurrentBlockIndex => _currentBlockIndex;
