@@ -41,10 +41,10 @@
 
 # Example
 
-+ [feat] 플레이어 이동 구현
-+ [fix] 플레이어 날라가는 버그 수정
-+ [docs] Commit Message.md 수정
-+ [refactor] 유지보수를 위한 플레이어 스크립트 리팩토링
++ `[feat]` 플레이어 이동 구현
++ `[fix]` 플레이어 날라가는 버그 수정
++ `[docs]` Commit Message.md 수정
++ `[refactor]` 유지보수를 위한 플레이어 스크립트 리팩토링
 ...
 
 ### 타입 종류에 적히지 않은 단순한 작업은 타입을 적지 않습니다.
