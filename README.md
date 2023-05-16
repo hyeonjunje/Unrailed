@@ -3,15 +3,12 @@ Unity3d를 이용한 Unrailed 모작입니다.
 
 
 ## Coding Convention
+[Coding Convention](https://github.com/hyeonjunje/Unrailed/blob/ReadMe/%EB%A7%90%EB%9E%911%ED%8C%80%20%EB%AC%B8%EC%84%9C/Coding%20Convention.md)
 
-+ private, protected 변수 맨 앞에 _붙이고 카멜표기법      ex) private Animator _animator  <br>
-+ public 변수 그냥 카멜표기법                            ex) public Animator animator  <br>
-+ 프로퍼티 파스칼표기법                                  ex) public int PlayerHp {get; set;}  <br>
+## Git Commit Message Convention
+[Commit Message](https://github.com/hyeonjunje/Unrailed/blob/ReadMe/%EB%A7%90%EB%9E%911%ED%8C%80%20%EB%AC%B8%EC%84%9C/Commit%20Message.md)
 
-+ interface 앞에 I 붙이기                               ex) IDamagable  <br>
-+ Enum 앞에 E붙이기                                     ex) EState  <br>
-+ Coroutine 앞에 Co 붙이기                              ex) private IEnumerator FireCo()  <br>
-+ bool 변수 is이나 can 붙이기                           ex) isDead, canJump, isJump...  <br>
+## Git 전략
+[Git 전략](https://github.com/hyeonjunje/Unrailed/blob/ReadMe/%EB%A7%90%EB%9E%911%ED%8C%80%20%EB%AC%B8%EC%84%9C/Git%20%EC%A0%84%EB%9E%B5.md)
 
-+ 함수 이름은 동사로 시작, 맨 처음 글자는 대문자          ex) public void Fire, public void GenerateEnemy...  <br>
-+ Constants 쓸거면 다 대문자                            ex) public const int MINVALUE = 4;  <br>
+
