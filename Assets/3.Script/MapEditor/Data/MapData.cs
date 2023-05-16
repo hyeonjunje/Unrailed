@@ -14,3 +14,15 @@ public class MapData
         this.mapData = mapData;
     }
 }
+
+
+[System.Serializable]
+public class MapsData
+{
+    public List<MapData> mapsData = new List<MapData>();
+
+    public void Add(MapData mapData)
+    {
+        mapsData.Add(mapData);
+    }
+}

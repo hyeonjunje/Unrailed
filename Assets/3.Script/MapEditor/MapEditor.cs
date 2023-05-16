@@ -37,6 +37,8 @@ public class MapEditor : MonoBehaviour
 
     private void Awake()
     {
+        FileManager.LoadGame();
+
         _mainCam = Camera.main;
         _factory = new MapEditStateFactory(this);
         _mapCreator = GetComponent<MapCreator>();
@@ -171,14 +173,15 @@ public class MapEditor : MonoBehaviour
         }
 
         MapData mapData = new MapData(0, mapIndexData);
-        FileManager.MapData = mapData;
-        // FileManager.MapData.Add(mapData);
+        FileManager.MapsData.Add(mapData);
         FileManager.SaveGame();
     }
 
+
     // 불러오기 버튼
-    public void LoadMap()
+    public void LoadMap(int index)
     {
-        FileManager.LoadGame();
+        // todo 20230516 미래의 현준이가 : 인덱스 받아서 mapData의 mapData MyArr을 그려주기
+        MapData mapData = FileManager.MapsData.mapsData[index];
     }
 }
