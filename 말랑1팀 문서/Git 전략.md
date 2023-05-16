@@ -1,13 +1,23 @@
-# Coding Convention
+# Git 전략
 
-+ private, protected 변수 맨 앞에 _붙이고 카멜표기법      ex) private Animator _animator  <br>
-+ public 변수 그냥 카멜표기법                            ex) public Animator animator  <br>
-+ 프로퍼티 파스칼표기법                                  ex) public int PlayerHp {get; set;}  <br>
+## branch 설명
 
-+ interface 앞에 I 붙이기                               ex) IDamagable  <br>
-+ Enum 앞에 E붙이기                                     ex) EState  <br>
-+ Coroutine 앞에 Co 붙이기                              ex) private IEnumerator FireCo()  <br>
-+ bool 변수 is이나 can 붙이기                           ex) isDead, canJump, isJump...  <br>
++ main : 본 결과물이 저장될 main branch (팀장만 관리 가능) 
++ develop : 실제로 작업할 공간
++ test : 테스트 관련된 작업할 공간 (필요하면 마음껏 쓰세요)
 
-+ 함수 이름은 동사로 시작, 맨 처음 글자는 대문자          ex) public void Fire, public void GenerateEnemy...  <br>
-+ Constants 쓸거면 다 대문자                            ex) public const int MINVALUE = 4;  <br>
+
+## Git 협업
+
+### 세팅
+1. 팀원들은 팀장의 Repo를 Fork합니다.
+2. 팀원들은 각자의 Repo의 develop branch를 만들어 동기화(sync fork)합니다.
+
+### 반복작업
+1. 팀원들은 각자의 repo에서 작업한 뒤 팀장의 repo로 PR을 하기 전에 Sync Fork
+2. 깃허브 데스크탑 앱에서 Fetch origin
+3. Fetch origin하면 Pull 버튼 뜸 Pull 누르기
+4. 유니티 들어가서 내가 한 거 잘되는지 다시 확인
+5. 커밋 메세지 작성하면 Push 뜸 Push 누르기
+6. 다시 홈페이지 들어가서 Pull requests 누르기
+7. 내 Develop에서 팀장 Develop으로((경로 확인 잘하기)) Pull requests 보내기
