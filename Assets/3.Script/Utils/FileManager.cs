@@ -6,7 +6,7 @@ using System.IO;
 public class FileManager
 {
     private static MapData _mapData;
-    public static MapData MapData => _mapData;
+    public static MapData MapData { get { return _mapData; } set { _mapData = value; } }
 
     public static void SaveGame()
     {

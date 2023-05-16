@@ -40,7 +40,7 @@ public class MapEditEraseState : BaseMapEditState
                 _prevIndex = _currentIndex;
                 _prevBlock.SetBlockInfo(_content.GetMaterial(_prevIndex), _prevIndex);
             }
-            _currentBlock = _content.mapData[y, x];
+            _currentBlock = _content.mapArr[y, x];
             _currentIndex = _currentBlock.Index;
             _currentBlock.SetBlockInfo(_content.GetMaterial(0), 0);
 
@@ -53,7 +53,7 @@ public class MapEditEraseState : BaseMapEditState
                     for(int j = -size; j <= size; j++)
                     {
                         if(isRange(x + j, y + i))
-                            _content.mapData[y + i, x + j].SetBlockInfo(_content.GetMaterial(0), 0);
+                            _content.mapArr[y + i, x + j].SetBlockInfo(_content.GetMaterial(0), 0);
 
                         // _content.mapData[y, x].SetBlockInfo(_content.GetMaterial(0), 0);
                     }
@@ -69,7 +69,7 @@ public class MapEditEraseState : BaseMapEditState
         if (x < 0 || y < 0)
             return false;
 
-        if (x >= _content.mapData.GetLength(1) || y >= _content.mapData.GetLength(0))
+        if (x >= _content.mapArr.GetLength(1) || y >= _content.mapArr.GetLength(0))
             return false;
 
         return true;

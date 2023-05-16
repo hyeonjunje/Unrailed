@@ -41,13 +41,13 @@ public class MapEditDrawState : BaseMapEditState
                 _prevIndex = _currentIndex;
                 _prevBlock.SetBlockInfo(_content.GetMaterial(_prevIndex), _prevIndex);
             }
-            _currentBlock = _content.mapData[y, x];
+            _currentBlock = _content.mapArr[y, x];
             _currentIndex = _currentBlock.Index;
             _currentBlock.SetBlockInfo(_content.GetMaterial(_content.CurrentBlockIndex), _content.CurrentBlockIndex);
 
             if (Input.GetMouseButton(0))
             {
-                _content.mapData[y, x].SetBlockInfo(_content.GetMaterial(_content.CurrentBlockIndex), _content.CurrentBlockIndex);
+                _content.mapArr[y, x].SetBlockInfo(_content.GetMaterial(_content.CurrentBlockIndex), _content.CurrentBlockIndex);
                 _currentBlock = null;
             }
         }

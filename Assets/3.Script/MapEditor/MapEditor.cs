@@ -17,27 +17,29 @@ public class MapEditor : MonoBehaviour
     [Header("UI")]
     [SerializeField] private MapEditorUI _mapEditorUI;
 
+    
 
     [HideInInspector] public Block selectedBlock = null;
     [HideInInspector] public Block prevBlock = null;
-    public Block[,] mapData;
+    public Block[,] mapArr;
 
     private int _currentBlockIndex = 0;
     private int _minX, _minY;
     private Camera _mainCam;
     private MapEditStateFactory _factory;
-
+    private MapCreator _mapCreator;
 
     public int EraseSize => _mapEditorUI.EraseSize;
     public int MinX => _minX;
     public int MinY => _minY;
-    public int CurrentBlockIndex => _currentBlockIndex;
+    public int CurrentBlockIndex => _currentBlockIndex; 
     public Camera MainCam => _mainCam;
 
     private void Awake()
     {
         _mainCam = Camera.main;
         _factory = new MapEditStateFactory(this);
+        _mapCreator = GetComponent<MapCreator>();
     }
 
     private void Update()
@@ -76,7 +78,7 @@ public class MapEditor : MonoBehaviour
         _mapEditorUI.gameObject.SetActive(true);
 
         // 좌표, 배열 초기화
-        mapData = new Block[z, x];
+        mapArr = new Block[z, x];
         _minX = (x / 2) - 1;
         _minY = (z / 2) - 1;
 
@@ -95,7 +97,7 @@ public class MapEditor : MonoBehaviour
                 Block block = Instantiate(_blockPrefab, _level);
                 block.transform.localPosition = new Vector3(i - _minX, 1, j - _minY);
                 block.SetPos(i, j);
-                mapData[j, i] = block;
+                mapArr[j, i] = block;
                 SetMapData(i, j, _currentBlockIndex);
             }
         }
@@ -113,7 +115,7 @@ public class MapEditor : MonoBehaviour
 
     public void SetMapData(int x, int y, int materialIndex)
     {
-        mapData[y, x].SetBlockInfo(blockMaterials[materialIndex], materialIndex);
+        mapArr[y, x].SetBlockInfo(blockMaterials[materialIndex], materialIndex);
     }
 
     public void InputBlock()
@@ -146,5 +148,37 @@ public class MapEditor : MonoBehaviour
         {
             _currentBlockIndex = 7;
         }
+    }
+
+    // 맵 생성 버튼
+    public void CreateMap()
+    {
+        _mapCreator.CreateMap(mapArr);
+    }
+
+    // 저장 버튼
+    public void SaveMap()
+    {
+        MyArr<int>[] mapIndexData = new MyArr<int>[mapArr.GetLength(1)];
+
+        for(int i = 0; i < mapArr.GetLength(1); i++)
+        {
+            mapIndexData[i] = new MyArr<int>(mapArr.GetLength(0));
+            for (int j = 0; j < mapArr.GetLength(0); j++)
+            {
+                mapIndexData[i].arr[j] = mapArr[j, i].Index;
+            }
+        }
+
+        MapData mapData = new MapData(0, mapIndexData);
+        FileManager.MapData = mapData;
+        // FileManager.MapData.Add(mapData);
+        FileManager.SaveGame();
+    }
+
+    // 불러오기 버튼
+    public void LoadMap()
+    {
+        FileManager.LoadGame();
     }
 }

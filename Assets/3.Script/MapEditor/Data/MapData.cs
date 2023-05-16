@@ -6,9 +6,9 @@ using UnityEngine;
 public class MapData 
 {
     public int mapId;
-    public int[,] mapData;
+    public MyArr<int>[] mapData;
 
-    public MapData(int mapId, int[,] mapData)
+    public MapData(int mapId, MyArr<int>[] mapData)
     {
         this.mapId = mapId;
         this.mapData = mapData;
