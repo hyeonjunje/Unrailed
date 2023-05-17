@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrainWheelRotate : TrainMovement
+public class TrainWheelRotate : MonoBehaviour
 {
 
     void Update()
