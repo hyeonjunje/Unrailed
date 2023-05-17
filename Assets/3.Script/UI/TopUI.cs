@@ -5,6 +5,11 @@ using UnityEngine.UI;
 
 public class TopUI : MonoBehaviour
 {
+    [Header("File")]
+    [SerializeField] private Button saveButton;
+    [SerializeField] private Button openButton;
+    [SerializeField] private Button newButton;
+
     [Header("MapSizeArea")]
     [SerializeField] private Text xSize;
     [SerializeField] private Text ySize;
@@ -59,6 +64,13 @@ public class TopUI : MonoBehaviour
 
     private void SetOnClickButtonEvent()
     {
+        // File 버튼
+        saveButton.onClick.AddListener(() => { });
+        openButton.onClick.AddListener(() => { });
+        newButton.onClick.AddListener(() => mapEditor.InitMap());
+        newButton.onClick.AddListener(() => CurrentXSize = 40);
+        newButton.onClick.AddListener(() => CurrentYSize = 20);
+
         // 사이즈 조절 버튼
         xSizeUpButton.onClick.AddListener(() => CurrentXSize++);
         xSizeDownButton.onClick.AddListener(() => CurrentXSize--);

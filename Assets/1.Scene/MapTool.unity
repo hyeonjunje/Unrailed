@@ -4857,6 +4857,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fee59e1af4bd2e94ab23fed12bfee599, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  saveButton: {fileID: 1058392454}
+  openButton: {fileID: 828326249}
+  newButton: {fileID: 611638538}
   xSize: {fileID: 345420516}
   ySize: {fileID: 1629105639}
   xSizeUpButton: {fileID: 1295494372}

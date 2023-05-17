@@ -34,13 +34,27 @@ public class MapEditorMK2 : MonoBehaviour
     private int _minX;
     private int _minY;
     private Camera _mainCam;
+    private Vector3 _mainCamOriginPos;
 
     public void Awake()
     {
         _mainCam = Camera.main;
+        _mainCamOriginPos = _mainCam.transform.position;
         _target.gameObject.SetActive(true);
 
-        // 리스트 초기화
+        InitMap();
+    }
+
+    // 맵 초기화
+    public void InitMap()
+    {
+        // 원래 오브젝트 삭제
+        _blockParent.DestroyAllChild();
+        _environmentParent.DestroyAllChild();
+
+        // 카메라 원위치
+        _mainCam.transform.position = _mainCamOriginPos;
+
         groundList = new List<List<BlockMK2>>();
 
         _minX = (_defaultX / 2) - 1;
@@ -68,6 +82,7 @@ public class MapEditorMK2 : MonoBehaviour
             for(int i = 0; i < groundList.Count; i++)
             {
                 BlockMK2 go = Instantiate(_blockPrefab, _blockParent);
+                go.Init((int)EBlock.grass, _blocksMaterial[(int)EBlock.grass]);
                 go.transform.localPosition = new Vector3(x - _minX, 0, i - _minY);
                 groundList[i].Add(go);
             }
@@ -94,7 +109,7 @@ public class MapEditorMK2 : MonoBehaviour
             for(int i = 0; i < groundList[0].Count; i++)
             {
                 BlockMK2 go = Instantiate(_blockPrefab, _blockParent);
-
+                go.Init((int)EBlock.grass, _blocksMaterial[(int)EBlock.grass]);
                 go.transform.localPosition = new Vector3(i - _minX, 0, y - _minY);
                 groundList[groundList.Count - 1].Add(go);
             }
