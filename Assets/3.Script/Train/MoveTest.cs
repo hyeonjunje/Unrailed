@@ -1,21 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 
-public class MoveTest : MonoBehaviour
+public class MoveTest : Singleton<MoveTest>
 {
-    [SerializeField] private NavMeshAgent nav;
+    public Queue<Transform> nextTarget = new Queue<Transform>();
+    public float curSpeed;
     // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        
-    }
 
+    }
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void EnqueueRailPos(Transform transform)
+    {
+        nextTarget.Enqueue(transform);
     }
 }
