@@ -161,14 +161,14 @@ public class MapEditor : MonoBehaviour
     // 저장 버튼
     public void SaveMap()
     {
-        MyArr<int>[] mapIndexData = new MyArr<int>[mapArr.GetLength(1)];
+        MyArr<int>[] mapIndexData = new MyArr<int>[mapArr.GetLength(0)];
 
-        for(int i = 0; i < mapArr.GetLength(1); i++)
+        for(int i = 0; i < mapArr.GetLength(0); i++)
         {
-            mapIndexData[i] = new MyArr<int>(mapArr.GetLength(0));
-            for (int j = 0; j < mapArr.GetLength(0); j++)
+            mapIndexData[i] = new MyArr<int>(mapArr.GetLength(1));
+            for (int j = 0; j < mapArr.GetLength(1); j++)
             {
-                mapIndexData[i].arr[j] = mapArr[j, i].Index;
+                mapIndexData[i].arr[j] = mapArr[i, j].Index;
             }
         }
 
@@ -181,7 +181,22 @@ public class MapEditor : MonoBehaviour
     // 불러오기 버튼
     public void LoadMap(int index)
     {
-        // todo 20230516 미래의 현준이가 : 인덱스 받아서 mapData의 mapData MyArr을 그려주기
         MapData mapData = FileManager.MapsData.mapsData[index];
+
+        // 맵 초기화
+        _level.DestroyAllChild();
+        int y = mapData.mapData.Length;
+        int x = mapData.mapData[0].arr.Length;
+        MakeBaseMap(x, y);
+
+        // 색 입히기
+        for(int i = 0; i < y; i++)
+        {
+            for(int j = 0; j < x; j++)
+            {
+                int blockIndex = mapData.mapData[i].arr[j];
+                mapArr[i, j].SetBlockInfo(blockMaterials[blockIndex], blockIndex);
+            }
+        }
     }
 }

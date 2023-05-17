@@ -13,6 +13,8 @@ public class LoadUI : MonoBehaviour
     // 활성화 될 때 불러오기 버튼 만들어오기
     private void OnEnable()
     {
+        _content.DestroyAllChild();
+
         // 데이터를 로드해와서 보여주기
         for(int i = 0; i < FileManager.MapsData.mapsData.Count; i++)
         {
@@ -22,6 +24,6 @@ public class LoadUI : MonoBehaviour
         }
 
 
-        _content.sizeDelta = new Vector3(_content.sizeDelta.x, (_content.transform.childCount / 2) * 310);
+        _content.sizeDelta = new Vector3(_content.sizeDelta.x, (FileManager.MapsData.mapsData.Count / 2) * 310);
     }
 }

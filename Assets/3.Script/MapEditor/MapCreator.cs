@@ -21,6 +21,9 @@ public class MapCreator : MonoBehaviour
     [Header("Level")]
     [SerializeField] private Transform _level;
 
+    [Header("물 높이")]
+    [SerializeField] private float waterHeight = 0.8f;
+
     public void CreateMap(Block[,] mapData)
     {
         for(int i = 0; i < mapData.GetLength(0); i++)
@@ -33,12 +36,17 @@ public class MapCreator : MonoBehaviour
                     if(prefabs[index] != null)
                     {
                         GameObject go = Instantiate(prefabs[index], _level);
-                        go.transform.position = mapData[i, j].transform.position + Vector3.up;
+                        if(index == (int)EEnvironment.grass)
+                            go.transform.position = mapData[i, j].transform.position + Vector3.up * 0.5f;
+                        else
+                            go.transform.position = mapData[i, j].transform.position + Vector3.up;
+                        mapData[i, j].transform.localScale = Vector3.one;
                     }
                     // 물
-                    if(index == 7)
+                    if(index == (int)EEnvironment.water)
                     {
-                        mapData[i, j].transform.localScale -= Vector3.up * 0.8f;
+                        mapData[i, j].transform.localScale = Vector3.one - Vector3.up * (1 - waterHeight);
+                        mapData[i, j].transform.localPosition -= Vector3.up * ((1 - waterHeight) / 2);
                     }
                 }
             }
