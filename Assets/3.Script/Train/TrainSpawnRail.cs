@@ -7,7 +7,6 @@ public class MoveTest : Singleton<MoveTest>
 {
     public Queue<Transform> nextTarget = new Queue<Transform>();
     public float curSpeed;
-    // Start is called before the first frame update
     private void Awake()
     {
 
