@@ -664,7 +664,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6250964654718146153}
   m_Layer: 0
-  m_Name: Train_Creaft_Desk 1
+  m_Name: Train_Creaft_Desk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
