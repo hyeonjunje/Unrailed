@@ -56,7 +56,7 @@ public class MapEditDrawInLineState : BaseMapEditState
                 _prevIndex = _currentIndex;
                 _prevBlock.SetBlockInfo(_content.GetMaterial(_prevIndex), _prevIndex);
             }
-            _currentBlock = _content.mapData[y, x];
+            _currentBlock = _content.mapArr[y, x];
             _currentIndex = _currentBlock.Index;
             _currentBlock.SetBlockInfo(_content.GetMaterial(_content.CurrentBlockIndex), _content.CurrentBlockIndex);
 
@@ -91,7 +91,7 @@ public class MapEditDrawInLineState : BaseMapEditState
                     {
                         for(int j = minY; j <= maxY; j++)
                         {
-                            _content.mapData[j, i].SetBlockInfo(_content.GetMaterial(_content.CurrentBlockIndex), _content.CurrentBlockIndex);
+                            _content.mapArr[j, i].SetBlockInfo(_content.GetMaterial(_content.CurrentBlockIndex), _content.CurrentBlockIndex);
                         }
                     }
                     _currentBlock = null;
