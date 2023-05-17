@@ -52,7 +52,7 @@ public class MapEditorMK2 : MonoBehaviour
             for (int j = 0; j < _defaultX; j++)
             {
                 BlockMK2 go = Instantiate(_blockPrefab, _blockParent);
-                go.Init((int)EBlock.empty, _blocksMaterial[(int)EBlock.empty]);
+                go.Init((int)EBlock.grass, _blocksMaterial[(int)EBlock.grass]);
                 go.transform.localPosition = new Vector3(j - _minX, 0, i - _minY);
                 groundList[i].Add(go);
             }

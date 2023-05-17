@@ -17,6 +17,9 @@ public class TopUI : MonoBehaviour
     [SerializeField] private Toggle gridOnToggle;
     [SerializeField] private Toggle counterToggle;
 
+    [Header("GroundArea")]
+    [SerializeField] private Button[] groundButtons;
+
     [Header("ETC")]
     [SerializeField] private MapEditorMK2 mapEditor;
     [SerializeField] private LineGrid lineGrid;
@@ -56,6 +59,7 @@ public class TopUI : MonoBehaviour
 
     private void SetOnClickButtonEvent()
     {
+        // 사이즈 조절 버튼
         xSizeUpButton.onClick.AddListener(() => CurrentXSize++);
         xSizeDownButton.onClick.AddListener(() => CurrentXSize--);
         ySizeUpButton.onClick.AddListener(() => CurrentYSize++);
@@ -65,6 +69,14 @@ public class TopUI : MonoBehaviour
         xSizeDownButton.onClick.AddListener(() => mapEditor.ResizeXMap(-1));
         ySizeUpButton.onClick.AddListener(() => mapEditor.ResizeYMap(1));
         ySizeDownButton.onClick.AddListener(() => mapEditor.ResizeYMap(-1));
+
+        // ground 버튼들
+        for(int i = 0; i < groundButtons.Length; i++)
+        {
+            int index = i;
+            groundButtons[i].onClick.AddListener(() => mapEditor.materialIndex = index);
+            groundButtons[i].onClick.AddListener(() => SetButtonOutline(index));
+        }
     }
 
     private void SetOnCheckToggleEvent()
@@ -73,5 +85,15 @@ public class TopUI : MonoBehaviour
         lineGrid.gameObject.SetActive(false);
 
         gridOnToggle.onValueChanged.AddListener((flag) => lineGrid.gameObject.SetActive(gridOnToggle.isOn));
+    }
+
+    private void SetButtonOutline(int index)
+    {
+        for(int i = 0; i < groundButtons.Length; i++)
+        {
+            groundButtons[i].GetComponent<Outline>().enabled = false;
+            if (i == index)
+                groundButtons[i].GetComponent<Outline>().enabled = true;
+        }
     }
 }
