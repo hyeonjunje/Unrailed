@@ -3,22 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class MoveTest : Singleton<MoveTest>
+public class TrainSpawnRail : MonoBehaviour
 {
-    public Queue<Transform> nextTarget = new Queue<Transform>();
-    public float curSpeed;
+    private TrainMovement[] trainComponents;
     private void Awake()
     {
-
+        trainComponents = FindObjectsOfType<TrainMovement>();
     }
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        
-    }
-
-    public void EnqueueRailPos(Transform transform)
-    {
-        nextTarget.Enqueue(transform);
+        for (int i = 0; i < trainComponents.Length; i++)
+        {
+            trainComponents[i].EnqueueRailPos(gameObject);
+        }
     }
 }
