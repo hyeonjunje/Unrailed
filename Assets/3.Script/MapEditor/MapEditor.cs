@@ -27,7 +27,6 @@ public class MapEditor : MonoBehaviour
     private int _minX, _minY;
     private Camera _mainCam;
     private MapEditStateFactory _factory;
-    private MapCreator _mapCreator;
 
     public int EraseSize => _mapEditorUI.EraseSize;
     public int MinX => _minX;
@@ -41,7 +40,6 @@ public class MapEditor : MonoBehaviour
 
         _mainCam = Camera.main;
         _factory = new MapEditStateFactory(this);
-        _mapCreator = GetComponent<MapCreator>();
     }
 
     private void Update()
@@ -155,7 +153,7 @@ public class MapEditor : MonoBehaviour
     // 맵 생성 버튼
     public void CreateMap()
     {
-        _mapCreator.CreateMap(mapArr);
+        MapCreator.Instance.CreateMap(mapArr, _level);
     }
 
     // 저장 버튼
