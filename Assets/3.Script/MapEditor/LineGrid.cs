@@ -8,14 +8,7 @@ public class LineGrid : MonoBehaviour
     [SerializeField] private float sr, sc;
     [SerializeField] private int rowCount, colCount;
     [SerializeField] private float gridSize;
-
-/*    private void Start()
-    {
-        lr = GetComponent<LineRenderer>();
-        InitLineRenderer(lr);
-
-        MakeGrid(lr, sr, sc, rowCount, colCount);
-    }*/
+    [SerializeField] private float lineWidth = 0.05f;
 
     private void OnValidate()
     {
@@ -35,8 +28,8 @@ public class LineGrid : MonoBehaviour
 
     private void InitLineRenderer(LineRenderer lr)
     {
-        lr.startWidth = lr.endWidth = 0.1f;
-        lr.material.color = Color.blue;
+        lr.startWidth = lr.endWidth = lineWidth;
+        lr.material.color = Color.white;
     }
 
     private void MakeGrid(LineRenderer lr, float sr, float sc, int rowCount, int colCount)

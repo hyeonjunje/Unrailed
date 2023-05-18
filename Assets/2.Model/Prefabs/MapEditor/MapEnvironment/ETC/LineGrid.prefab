@@ -147,3 +147,4 @@ MonoBehaviour:
   rowCount: 0
   colCount: 0
   gridSize: 1
+  lineWidth: 0.05
