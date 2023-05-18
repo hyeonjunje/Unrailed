@@ -16,5 +16,7 @@ public class RailSpawn : MonoBehaviour
         int randz = Random.Range((int)bottomLeft.z, (int)topRight.z);
         Vector3 randVec = new Vector3(randX, -1.94f, randz);
         Instantiate(prefabs, randVec, Quaternion.identity);
+       //GameObject prefab = Instantiate(prefabs, randVec, Quaternion.identity);
+       //prefab.AddComponent<TrainSpawnRail>().EnqueueRail();
     }
 }
