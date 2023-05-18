@@ -15,13 +15,14 @@ public class MapEditorMK2 : MonoBehaviour
     [SerializeField] private Transform _environmentParent;
 
     [Header("Info")]
-    [SerializeField] private int _defaultX = 40;
-    [SerializeField] private int _defaultY = 20;
+    [SerializeField] private const int _defaultX = 40;
+    [SerializeField] private const int _defaultY = 20;
 
     [Header("ETC")]
     [SerializeField] private Transform _target;
 
-    public int materialIndex;
+    [HideInInspector] public int materialIndex;
+    [HideInInspector] public bool isDraw = true;
 
     // 한번에 합쳐도 될듯
     private int[,] groundArr;
@@ -37,6 +38,8 @@ public class MapEditorMK2 : MonoBehaviour
 
     public void Awake()
     {
+        isDraw = true;
+
         _mainCam = Camera.main;
         _mainCamOriginPos = _mainCam.transform.position;
         _target.gameObject.SetActive(true);
@@ -71,6 +74,7 @@ public class MapEditorMK2 : MonoBehaviour
             }
         }
     }
+
 
     // x축 변화
     public void ResizeXMap(int value)
@@ -127,22 +131,74 @@ public class MapEditorMK2 : MonoBehaviour
 
     private void Update()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(_mainCam.ScreenPointToRay(Input.mousePosition), out hit, 1000f, 1 << LayerMask.NameToLayer("Block")))
+        if(isDraw)
         {
-            int x = Mathf.RoundToInt(hit.point.x);
-            int z = Mathf.RoundToInt(hit.point.z);
-
-            _target.position = new Vector3(x, 0.51f, z);
-
-
-            if (Input.GetMouseButton(0))
+            RaycastHit hit;
+            if (Physics.Raycast(_mainCam.ScreenPointToRay(Input.mousePosition), out hit, 1000f, 1 << LayerMask.NameToLayer("Block")))
             {
-                // 다를 때만 다른 색으로 칠해준다.
-                if(groundList[z + _minY][x + _minX].Index != materialIndex)
+                int x = Mathf.RoundToInt(hit.point.x);
+                int z = Mathf.RoundToInt(hit.point.z);
+
+                _target.position = new Vector3(x, 0.51f, z);
+
+
+                if (Input.GetMouseButton(0))
                 {
-                    groundList[z + _minY][x + _minX].Init(materialIndex, _blocksMaterial[materialIndex]);
+                    // 다를 때만 다른 색으로 칠해준다.
+                    if (groundList[z + _minY][x + _minX].Index != materialIndex)
+                    {
+                        groundList[z + _minY][x + _minX].Init(materialIndex, _blocksMaterial[materialIndex]);
+                    }
                 }
+            }
+        }
+    }
+
+    public void SaveMap(string mapName)
+    {
+        MyArr<int>[] mapData = new MyArr<int>[groundList.Count];
+        for(int i = 0; i < groundList.Count; i++)
+        {
+            mapData[i] = new MyArr<int>(groundList[0].Count);
+            for(int j = 0; j < groundList[0].Count; j++)
+            {
+                mapData[i].arr[j] = groundList[i][j].Index;
+            }
+        }
+
+        FileManager.MapsData.Add(new MapData(mapName, 0, mapData));
+
+        FileManager.SaveGame();
+    }
+
+    public void LoadMap(MapData mapData)
+    {
+        int x = mapData.mapData[0].arr.Length;
+        int y = mapData.mapData.Length;
+
+        // 원래 오브젝트 삭제
+        _blockParent.DestroyAllChild();
+        _environmentParent.DestroyAllChild();
+
+        // 카메라 원위치
+        _mainCam.transform.position = _mainCamOriginPos;
+
+        groundList = new List<List<BlockMK2>>();
+
+        _minX = (x / 2) - 1;
+        _minY = (y / 2) - 1;
+
+        for (int i = 0; i < y; i++)
+        {
+            groundList.Add(new List<BlockMK2>());
+            for (int j = 0; j < x; j++)
+            {
+                int index = mapData.mapData[i].arr[j];
+
+                BlockMK2 go = Instantiate(_blockPrefab, _blockParent);
+                go.Init(index, _blocksMaterial[index]);
+                go.transform.localPosition = new Vector3(j - _minX, 0, i - _minY);
+                groundList[i].Add(go);
             }
         }
     }

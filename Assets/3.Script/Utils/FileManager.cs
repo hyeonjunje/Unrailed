@@ -8,6 +8,7 @@ public class FileManager
     private static MapsData _mapsData = new MapsData();
     public static MapsData MapsData => _mapsData;
 
+    // 저장할 때, 삭제할 때
     public static void SaveGame()
     {
         string filePath = Application.persistentDataPath + "/mapSave.json";
@@ -17,6 +18,7 @@ public class FileManager
         saveFile.Close();
     }
 
+    // 게임 시작할 때, 불러오기 버튼 누를 때
     public static void LoadGame()
     {
         string filePath = Application.persistentDataPath + "/mapSave.json";
