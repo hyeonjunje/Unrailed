@@ -427,10 +427,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7d78d93c27da9046a3de2980e5e1bee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rails: []
-  targetCount: 0
-  trainMoveSpeed: 0
-  trainRotateSpeed: 0
 --- !u!1 &1392105945654444479
 GameObject:
   m_ObjectHideFlags: 0
@@ -679,7 +675,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2071145127775875921}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -13.47}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6367733609620563484}
@@ -1398,10 +1394,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7d78d93c27da9046a3de2980e5e1bee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rails: []
-  targetCount: 0
-  trainMoveSpeed: 0
-  trainRotateSpeed: 0
 --- !u!1 &4000633482367725215
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6343559345387229012}
   - component: {fileID: 6343559345387228971}
   - component: {fileID: 6343559345387229015}
+  - component: {fileID: 45604219096226087}
   m_Layer: 30
   m_Name: BlockPrefab
   m_TagString: Untagged
@@ -108,4 +109,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e5054653ba76184f99b9a8cbaf13817, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _selectedMaterial: {fileID: 2100000, guid: 3b2ea3d3af7155a4d9114b72fe604a22, type: 2}
+--- !u!114 &45604219096226087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6343559345387228970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cab2f8bc9b8c60b4c91e4fb102cbaa22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _itemPrefabData: {fileID: 11400000, guid: 4b3c71a0f9d9ebc4f9f36dbbff85ea11, type: 2}
