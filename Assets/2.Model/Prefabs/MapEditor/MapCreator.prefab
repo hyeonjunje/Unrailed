@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &9057772623417158774
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9057772623417158773}
+  - component: {fileID: 9057772623417158772}
+  m_Layer: 0
+  m_Name: MapCreator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9057772623417158773
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9057772623417158774}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9057772623417158772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9057772623417158774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c25cdf3b28361147a97836c6783ec73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabs:
+  - {fileID: 0}
+  - {fileID: 8860555567026758209, guid: 059ebaf51fd8cd344b4b92bc7b82889c, type: 3}
+  - {fileID: 0}
+  - {fileID: 7431403202865544546, guid: d62f25cfb1f73fb478bae9de57c4ad71, type: 3}
+  - {fileID: 5868906023782802774, guid: b142e0dde8b16d84395af18e3e749859, type: 3}
+  - {fileID: 3175275437600049607, guid: c551a8b24602c5e4b8739447ec2f6226, type: 3}
+  - {fileID: 376089314841198113, guid: 4ecead4c758393e43a114477a1d25004, type: 3}
+  - {fileID: 0}
+  _blockPrefab: {fileID: 6343559345387229015, guid: a7aa4fa63e5a4b14b8d8e6c2d3fc8e93, type: 3}
+  blockMaterials:
+  - {fileID: 2100000, guid: 3b2ea3d3af7155a4d9114b72fe604a22, type: 2}
+  - {fileID: 2100000, guid: c5794710a39bf2049856b2a62d16796f, type: 2}
+  - {fileID: 2100000, guid: 94cde6c6b67ee6543988949b554a9e58, type: 2}
+  - {fileID: 2100000, guid: 272338b554acfbe47a2073828b39cfef, type: 2}
+  - {fileID: 2100000, guid: 2b5771d0faa3fcd438b9ad2ca320932c, type: 2}
+  - {fileID: 2100000, guid: baa57aced704d38439f9c090180c3170, type: 2}
+  - {fileID: 2100000, guid: 448d55ecc808e7b4589e9b95ba116d5d, type: 2}
+  - {fileID: 2100000, guid: a781090a95b4efb4cac6809638a39b6c, type: 2}
+  waterHeight: 0.8
