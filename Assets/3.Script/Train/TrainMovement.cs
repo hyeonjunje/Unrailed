@@ -35,15 +35,13 @@ public class TrainMovement : MonoBehaviour
             // 큐에 들어온 레일 위치로 이동
             transform.position = Vector3.MoveTowards(transform.position, rails.Peek().transform.position, trainMoveSpeed * Time.deltaTime);
             transform.LookAt(rails.Peek().transform.position);
+            //var trainRotate = Quaternion.LookRotation(rails.Peek().transform.position);
+            //transform.rotation = Quaternion.Slerp(transform.rotation, trainRotate, trainRotateSpeed * Time.deltaTime);
 
             if (transform.position == rails.Peek().transform.position)
             {
                 rails.Dequeue();
             }
-
-
-            // var trainRotate = Quaternion.LookRotation(rails[targetCount].transform.position);
-            // transform.rotation = Quaternion.Slerp(transform.rotation, trainRotate, trainRotateSpeed * Time.deltaTime);
         }
         else
         {
@@ -55,5 +53,6 @@ public class TrainMovement : MonoBehaviour
     {
         //rails.Add(gameObject);
         rails.Enqueue(gameObject);
+        Debug.Log("큐에 추가");
     }
 }
