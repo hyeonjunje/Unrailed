@@ -170,7 +170,7 @@ public class MapEditor : MonoBehaviour
             }
         }
 
-        MapData mapData = new MapData(0, mapIndexData);
+        MapData mapData = new MapData("Test", 0, mapIndexData);
         FileManager.MapsData.Add(mapData);
         FileManager.SaveGame();
     }
