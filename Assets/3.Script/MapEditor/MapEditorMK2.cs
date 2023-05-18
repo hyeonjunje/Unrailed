@@ -45,6 +45,8 @@ public class MapEditorMK2 : MonoBehaviour
         _target.gameObject.SetActive(true);
 
         InitMap();
+
+        FileManager.LoadGame();
     }
 
     // ∏  √ ±‚»≠
@@ -68,7 +70,7 @@ public class MapEditorMK2 : MonoBehaviour
             for (int j = 0; j < _defaultX; j++)
             {
                 BlockMK2 go = Instantiate(_blockPrefab, _blockParent);
-                go.Init((int)EBlock.grass, _blocksMaterial[(int)EBlock.grass]);
+                go.Init((int)EBlock.grass, _blocksMaterial[(int)EBlock.grass], _blocksMaterial[(int)EBlock.grass]);
                 go.transform.localPosition = new Vector3(j - _minX, 0, i - _minY);
                 groundList[i].Add(go);
             }
@@ -85,7 +87,7 @@ public class MapEditorMK2 : MonoBehaviour
             for(int i = 0; i < groundList.Count; i++)
             {
                 BlockMK2 go = Instantiate(_blockPrefab, _blockParent);
-                go.Init((int)EBlock.grass, _blocksMaterial[(int)EBlock.grass]);
+                go.Init((int)EBlock.grass, _blocksMaterial[(int)EBlock.grass], _blocksMaterial[(int)EBlock.grass]);
                 go.transform.localPosition = new Vector3(x - _minX, 0, i - _minY);
                 groundList[i].Add(go);
             }
@@ -112,7 +114,7 @@ public class MapEditorMK2 : MonoBehaviour
             for(int i = 0; i < groundList[0].Count; i++)
             {
                 BlockMK2 go = Instantiate(_blockPrefab, _blockParent);
-                go.Init((int)EBlock.grass, _blocksMaterial[(int)EBlock.grass]);
+                go.Init((int)EBlock.grass, _blocksMaterial[(int)EBlock.grass], _blocksMaterial[(int)EBlock.grass]);
                 go.transform.localPosition = new Vector3(i - _minX, 0, y - _minY);
                 groundList[groundList.Count - 1].Add(go);
             }
@@ -148,9 +150,9 @@ public class MapEditorMK2 : MonoBehaviour
                     if (groundList[z + _minY][x + _minX].Index != materialIndex)
                     {
                         if(materialIndex >= _blocksMaterial.Length)
-                            groundList[z + _minY][x + _minX].Init(materialIndex, null);
+                            groundList[z + _minY][x + _minX].Init(materialIndex, null, _blocksMaterial[(int)EBlock.grass]);
                         else
-                            groundList[z + _minY][x + _minX].Init(materialIndex, _blocksMaterial[materialIndex]);
+                            groundList[z + _minY][x + _minX].Init(materialIndex, _blocksMaterial[materialIndex], _blocksMaterial[(int)EBlock.grass]);
                     }
                 }
             }
@@ -218,9 +220,9 @@ public class MapEditorMK2 : MonoBehaviour
                 BlockMK2 go = Instantiate(_blockPrefab, _blockParent);
 
                 if (index >= _blocksMaterial.Length)
-                    go.Init(index, null);
+                    go.Init(index, null, _blocksMaterial[(int)EBlock.grass]);
                 else
-                    go.Init(index, _blocksMaterial[index]);
+                    go.Init(index, _blocksMaterial[index], _blocksMaterial[(int)EBlock.grass]);
 
                 go.transform.localPosition = new Vector3(j - _minX, 0, i - _minY);
                 groundList[i].Add(go);

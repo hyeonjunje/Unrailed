@@ -6,7 +6,6 @@ public class BlockMK2 : MonoBehaviour
 {
     private int _index;
     private Renderer _renderer;
-    private Material _originMaterial;
 
     [SerializeField] private ItemPrefabData _itemPrefabData;
 
@@ -16,14 +15,13 @@ public class BlockMK2 : MonoBehaviour
     private void Awake()
     {
         _renderer = GetComponent<MeshRenderer>();
-        _originMaterial = _renderer.material;
     }
 
-    public void Init(int index, Material material)
+    public void Init(int index, Material material, Material originMaterial)
     {
         _index = index;
         if (index > (int)EBlock.blackRock)
-            _renderer.material = _originMaterial;
+            _renderer.material = originMaterial;
         else
             _renderer.material = material;
 
