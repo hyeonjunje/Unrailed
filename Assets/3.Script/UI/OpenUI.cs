@@ -8,10 +8,12 @@ public class OpenUI : MonoBehaviour
     [SerializeField] private RectTransform content;
 
     private MapEditorMK2 mapEditor;
+    private TopUI topUI;
 
     private void Awake()
     {
         mapEditor = FindObjectOfType<MapEditorMK2>();
+        topUI = FindObjectOfType<TopUI>();
     }
 
     private void OnEnable()
@@ -39,7 +41,8 @@ public class OpenUI : MonoBehaviour
         for(int i = 0; i < count; i++)
         {
             FileElem fileElem = Instantiate(fileElemPrefab, content);
-            fileElem.Init(i);
+
+            fileElem.Init(i, i != topUI.currentMapIndex);
         }
     }
 }

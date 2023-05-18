@@ -24,10 +24,6 @@ public class MapEditorMK2 : MonoBehaviour
     [HideInInspector] public int materialIndex;
     [HideInInspector] public bool isDraw = true;
 
-    // 한번에 합쳐도 될듯
-    private int[,] groundArr;
-    private int[,] itemArr;
-
     // 계속 증가하니까 리스트로?
     private List<List<BlockMK2>> groundList = new List<List<BlockMK2>>();
 
@@ -154,6 +150,7 @@ public class MapEditorMK2 : MonoBehaviour
         }
     }
 
+    // 새로 저장하기
     public void SaveMap(string mapName)
     {
         MyArr<int>[] mapData = new MyArr<int>[groundList.Count];
@@ -171,6 +168,25 @@ public class MapEditorMK2 : MonoBehaviour
         FileManager.SaveGame();
     }
 
+    // 덮어쓰기
+    public void SaveMap(int index)
+    {
+        MyArr<int>[] mapData = new MyArr<int>[groundList.Count];
+        for (int i = 0; i < groundList.Count; i++)
+        {
+            mapData[i] = new MyArr<int>(groundList[0].Count);
+            for (int j = 0; j < groundList[0].Count; j++)
+            {
+                mapData[i].arr[j] = groundList[i][j].Index;
+            }
+        }
+
+        string mapName = FileManager.MapsData.mapsData[index].mapDataName;
+        FileManager.MapsData.mapsData[index] = new MapData(mapName, 0, mapData);
+
+        FileManager.SaveGame();
+    }
+
     public void LoadMap(MapData mapData)
     {
         int x = mapData.mapData[0].arr.Length;
@@ -180,13 +196,10 @@ public class MapEditorMK2 : MonoBehaviour
         _blockParent.DestroyAllChild();
         _environmentParent.DestroyAllChild();
 
-        // 카메라 원위치
-        _mainCam.transform.position = _mainCamOriginPos;
-
         groundList = new List<List<BlockMK2>>();
 
-        _minX = (x / 2) - 1;
-        _minY = (y / 2) - 1;
+        _minX = (_defaultX / 2) - 1;
+        _minY = (_defaultY / 2) - 1;
 
         for (int i = 0; i < y; i++)
         {
@@ -201,5 +214,8 @@ public class MapEditorMK2 : MonoBehaviour
                 groundList[i].Add(go);
             }
         }
+
+        // 카메라 위치 조정
+        _mainCam.transform.position = new Vector3((groundList[0].Count - _defaultX) / 2, Camera.main.transform.position.y, (groundList.Count - _defaultY) / 2 + 2);
     }
 }

@@ -7,8 +7,12 @@ public class TopUI : MonoBehaviour
 {
     [Header("File")]
     [SerializeField] private Button saveButton;
+    [SerializeField] private Button saveAsButton;
     [SerializeField] private Button openButton;
     [SerializeField] private Button newButton;
+
+    [SerializeField] private SaveAsUI saveAsUI;
+    [SerializeField] private OpenUI openUI;
 
     [Header("MapSizeArea")]
     [SerializeField] private Text xSize;
@@ -28,6 +32,8 @@ public class TopUI : MonoBehaviour
     [Header("ETC")]
     [SerializeField] private MapEditorMK2 mapEditor;
     [SerializeField] private LineGrid lineGrid;
+
+    public int currentMapIndex;
 
     private int _currentXSize;
     private int _currentYSize;
@@ -55,6 +61,8 @@ public class TopUI : MonoBehaviour
 
     private void Awake()
     {
+        currentMapIndex = -1;
+
         CurrentXSize = 40;
         CurrentYSize = 20;
         lineGrid.MakeGrid(-19.5f, -9.5f, CurrentXSize, CurrentYSize);
@@ -62,11 +70,17 @@ public class TopUI : MonoBehaviour
         SetOnCheckToggleEvent();
     }
 
+    public void InteractiveSaveButton()
+    {
+        saveButton.interactable = true;
+    }
+
     private void SetOnClickButtonEvent()
     {
         // File ¹öÆ°
-        saveButton.onClick.AddListener(() => { });
-        openButton.onClick.AddListener(() => { });
+        saveButton.onClick.AddListener(() => mapEditor.SaveMap(currentMapIndex));
+        saveAsButton.onClick.AddListener(() => saveAsUI.gameObject.SetActive(true));
+        openButton.onClick.AddListener(() => openUI.gameObject.SetActive(true));
         newButton.onClick.AddListener(() => mapEditor.InitMap());
         newButton.onClick.AddListener(() => CurrentXSize = 40);
         newButton.onClick.AddListener(() => CurrentYSize = 20);
