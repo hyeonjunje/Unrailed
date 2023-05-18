@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EBlock { empty, grass, water, tree1, tree2, iron, blackRock, size }
+
 public class MapEditorMK2 : MonoBehaviour
 {
-    private enum EBlock { empty, grass, water, tree, iron, blackRock, size}
-
-
     [Header("Blocks")]
     [SerializeField] private BlockMK2 _blockPrefab;
     [SerializeField] private Material[] _blocksMaterial; 
@@ -93,7 +92,7 @@ public class MapEditorMK2 : MonoBehaviour
             {
                 BlockMK2 go = groundList[i][groundList[i].Count - 1];
                 groundList[i].RemoveAt(groundList[i].Count - 1);
-                Destroy(go);
+                Destroy(go.gameObject);
             }
         }
         _mainCam.transform.position = new Vector3((groundList[0].Count - _defaultX) / 2, Camera.main.transform.position.y, Camera.main.transform.position.z);
@@ -119,7 +118,7 @@ public class MapEditorMK2 : MonoBehaviour
             for (int i = 0; i < groundList[0].Count; i++)
             {
                 BlockMK2 go = groundList[groundList.Count - 1][i];
-                Destroy(go);
+                Destroy(go.gameObject);
             }
             groundList.RemoveAt(groundList.Count - 1);
         }
