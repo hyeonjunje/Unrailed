@@ -6,11 +6,7 @@ public class BlockMK2 : MonoBehaviour
 {
     private int _index;
     private Renderer _renderer;
-
-    [SerializeField] private ItemPrefabData _itemPrefabData;
-
     public int Index => _index;
-
 
     private void Awake()
     {
@@ -21,39 +17,5 @@ public class BlockMK2 : MonoBehaviour
     {
         _index = index;
         _renderer.material = material;
-
-        InitData();
-
-        if (index == (int)EBlock.tree1)
-        {
-            Instantiate(_itemPrefabData.tree1, transform).transform.localPosition = Vector3.up * 0.5f;
-        }
-        else if(index == (int)EBlock.tree2)
-        {
-            Instantiate(_itemPrefabData.tree2, transform).transform.localPosition = Vector3.up * 0.5f;
-        }
-        else if(index == (int)EBlock.iron)
-        {
-            Instantiate(_itemPrefabData.iron, transform).transform.localPosition = Vector3.up;
-        }
-        else if(index == (int)EBlock.blackRock)
-        {
-            Instantiate(_itemPrefabData.blackStone, transform).transform.localPosition = Vector3.up;
-        }
-        else if(index == (int)EBlock.water)
-        {
-            transform.localScale -= Vector3.up * 0.2f;
-            transform.position -= Vector3.up * 0.1f;
-            transform.tag = "Water";
-        }
-    }
-
-    private void InitData()
-    {
-        transform.DestroyAllChild();
-
-        transform.localScale = Vector3.one;
-        transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
-        transform.tag = "Untagged";
     }
 }
