@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 216f532667361674b8bc05d88468e8bb, type: 3}
   m_Name: ItemPrefabData
   m_EditorClassIdentifier: 
-  tree1: {fileID: 430936053216991807, guid: 6b12d9e5dda27994782a14a0afe2c594, type: 3}
-  tree2: {fileID: 5019990921700754394, guid: 10fcbae82427e304c9c3bfaa9f027788, type: 3}
+  tree1: {fileID: 430936053216991807, guid: 10fcbae82427e304c9c3bfaa9f027788, type: 3}
+  tree2: {fileID: 5019990921700754394, guid: 6b12d9e5dda27994782a14a0afe2c594, type: 3}
   iron: {fileID: 4341736099985110207, guid: 3d5492ef49dac5946821f8c46e094ae9, type: 3}
   blackStone: {fileID: 5924141927945776992, guid: 164dd970fe91b37499c8f3e9c76d6a89, type: 3}
