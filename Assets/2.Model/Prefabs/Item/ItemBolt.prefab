@@ -5226,7 +5226,7 @@ GameObject:
   - component: {fileID: 4460289043226363843}
   - component: {fileID: 4460289043226363852}
   m_Layer: 0
-  m_Name: Item_Bolt
+  m_Name: ItemBolt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
