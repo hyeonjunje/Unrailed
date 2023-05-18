@@ -29,28 +29,7 @@ public class BlockMK2 : MonoBehaviour
 
         InitData();
 
-        if (index == (int)EBlock.tree1)
-        {
-            Instantiate(_itemPrefabData.tree1, transform).transform.localPosition = Vector3.up * 0.5f;
-        }
-        else if(index == (int)EBlock.tree2)
-        {
-            Instantiate(_itemPrefabData.tree2, transform).transform.localPosition = Vector3.up * 0.5f;
-        }
-        else if(index == (int)EBlock.iron)
-        {
-            Instantiate(_itemPrefabData.iron, transform).transform.localPosition = Vector3.up;
-        }
-        else if(index == (int)EBlock.blackRock)
-        {
-            Instantiate(_itemPrefabData.blackStone, transform).transform.localPosition = Vector3.up;
-        }
-        else if(index == (int)EBlock.water)
-        {
-            transform.localScale -= Vector3.up * 0.2f;
-            transform.position -= Vector3.up * 0.1f;
-            transform.tag = "Water";
-        }
+        InstantiateItem(index);
     }
 
     private void InitData()
@@ -60,5 +39,39 @@ public class BlockMK2 : MonoBehaviour
         transform.localScale = Vector3.one;
         transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
         transform.tag = "Untagged";
+    }
+
+    private void InstantiateItem(int index)
+    {
+        GameObject prefab = _itemPrefabData.itemPrefabs[index];
+        switch(index)
+        {
+            case (int)EBlock.water:
+                transform.localScale -= Vector3.up * 0.2f;
+                transform.position -= Vector3.up * 0.1f;
+                transform.tag = "Water";
+                break;
+            case (int)EBlock.tree1:
+            case (int)EBlock.tree2:
+                GameObject go = Instantiate(prefab, transform);
+                go.transform.localPosition = Vector3.up * 0.5f;
+                go.transform.localRotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
+                break;
+            case (int)EBlock.iron:
+            case (int)EBlock.blackRock:
+                Instantiate(prefab, transform).transform.localPosition = Vector3.up;
+                break;
+            case (int)EBlock.station:
+            case (int)EBlock.fence:
+            case (int)EBlock.rail:
+            case (int)EBlock.treeItem:
+            case (int)EBlock.ironItem:
+            case (int)EBlock.axe:
+            case (int)EBlock.pick:
+            case (int)EBlock.bucket:
+            case (int)EBlock.bolt:
+                Instantiate(prefab, transform).transform.localPosition = Vector3.up * 0.5f;
+                break;
+        }
     }
 }

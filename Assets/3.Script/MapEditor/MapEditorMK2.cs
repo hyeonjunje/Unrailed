@@ -2,7 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EBlock { empty, grass, water, tree1, tree2, iron, blackRock, size }
+// public enum EBlock { empty, grass, water, tree1, tree2, iron, blackRock, size }
+public enum EBlock { empty, grass, water, tree1, tree2, iron,
+    blackRock, station, fence,
+    rail, treeItem, ironItem, axe,
+    pick, bucket, bolt, size}
 
 public class MapEditorMK2 : MonoBehaviour
 {
@@ -143,7 +147,10 @@ public class MapEditorMK2 : MonoBehaviour
                     // 다를 때만 다른 색으로 칠해준다.
                     if (groundList[z + _minY][x + _minX].Index != materialIndex)
                     {
-                        groundList[z + _minY][x + _minX].Init(materialIndex, _blocksMaterial[materialIndex]);
+                        if(materialIndex >= _blocksMaterial.Length)
+                            groundList[z + _minY][x + _minX].Init(materialIndex, null);
+                        else
+                            groundList[z + _minY][x + _minX].Init(materialIndex, _blocksMaterial[materialIndex]);
                     }
                 }
             }
@@ -209,7 +216,12 @@ public class MapEditorMK2 : MonoBehaviour
                 int index = mapData.mapData[i].arr[j];
 
                 BlockMK2 go = Instantiate(_blockPrefab, _blockParent);
-                go.Init(index, _blocksMaterial[index]);
+
+                if (index >= _blocksMaterial.Length)
+                    go.Init(index, null);
+                else
+                    go.Init(index, _blocksMaterial[index]);
+
                 go.transform.localPosition = new Vector3(j - _minX, 0, i - _minY);
                 groundList[i].Add(go);
             }
