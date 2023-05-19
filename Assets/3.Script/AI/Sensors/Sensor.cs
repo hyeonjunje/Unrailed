@@ -22,7 +22,7 @@ public class Sensor : MonoBehaviour
             if (candidateTarget.gameObject == gameObject)
                 continue;
 
-            //잡았다
+            //감지 범위(10)안에 들어온 경우
             if (Vector3.Distance(_enemyAI.EyeLocation, candidateTarget.transform.position) <= _enemyAI.DetectionRange)
                 _enemyAI.Report(candidateTarget);
         }

@@ -87,12 +87,12 @@ public class BTNodeBase : BTElementBase
         return this;
     }
 
-    void TickServices(float deltaTime)
+    private void TickServices(float deltaTime)
     {
         foreach (var service in _services)
             service.OnTick(deltaTime);
     }
-    bool EvaluateDecorators()
+    private bool EvaluateDecorators()
     {
         bool canRun = true;
 
@@ -156,6 +156,7 @@ public class BTNodeBase : BTElementBase
     {
         bool tickedAnyNodes = false;
 
+        //데코레이터 조건을 만족하는지 검사
         if (!DecoratorsPermitRunning)
         {
             LastStatus = BehaviorTree.ENodeStatus.Failed;
@@ -163,12 +164,15 @@ public class BTNodeBase : BTElementBase
             return tickedAnyNodes;
         }
 
+        //서비스 업데이트하기
         TickServices(deltaTime);
+
+
         //처음 진입시
         if (LastStatus == BehaviorTree.ENodeStatus.Unknown) //기본값
         {
-            OnEnter();
             //진입
+            OnEnter();
             tickedAnyNodes = true;
 
             if (LastStatus == BehaviorTree.ENodeStatus.Failed)

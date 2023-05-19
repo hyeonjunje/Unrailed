@@ -8,6 +8,8 @@ public class TrackedTarget
     public DetectableTarget Detectable;
     public Vector3 RawPosition;
 
+
+    public float LastSensedTime = -1f;
     public float Awareness;
 
     //타겟이 있는지 계속 확인
@@ -18,15 +20,36 @@ public class TrackedTarget
         if (target != null)
             Detectable = target;
         RawPosition = position;
+        LastSensedTime = Time.time;
 
         Awareness = Mathf.Clamp(Mathf.Max(Awareness, minAwareness) + awareness, 0f, 2f);
 
         //타겟이 있었는데 사라졌다면
-        if (oldAwareness >= 1 && Awareness <= 0)
-            return false;
+        if (oldAwareness < 2f && Awareness >= 2f)
+            return true;
+        if (oldAwareness < 1f && Awareness >= 1f)
+            return true;
+        if (oldAwareness <= 0f && Awareness >= 0f)
+            return true;
 
         //아니라면
-        return true;
+        return false;
+    }
+
+    public bool DecayAwareness(float decayTime, float amount) //시간이 지날수록 인식을 감소시킴
+    {
+        if ((Time.time - LastSensedTime) <= decayTime) //감지가 최근에 이루어졌음(false)
+            return false;
+
+        var oldAwareness = Awareness;
+
+        Awareness -= amount;
+
+        if (oldAwareness >= 2f && Awareness < 2f) //전에 2보다 컸는데 지금은 2 밑임(true)
+            return true;
+        if (oldAwareness >= 1f && Awareness < 1f) //전에 1보다 컸는데 지금 1 밑임(true)
+            return true;
+        return Awareness <= 0f;//현재 인식되지 않음(true)
     }
 
 }
@@ -39,6 +62,10 @@ public class AwarenessSystem : MonoBehaviour
     //인식의 증가 속도
     [SerializeField] private float _awarenessBuildRate = 1f;
 
+    //인식 정도의 감소가 시작되기 전의 지연 시간
+    [SerializeField] float AwarenessDecayDelay = 0.1f;
+    // 감소 속도
+    [SerializeField] float AwarenessDecayRate = 0.1f;
 
     private Dictionary<GameObject, TrackedTarget> _targets = new Dictionary<GameObject, TrackedTarget>();
     public Dictionary<GameObject, TrackedTarget> ActiveTargets => _targets;
@@ -53,13 +80,21 @@ public class AwarenessSystem : MonoBehaviour
 
     private void Update()
     {
+        //여기 업데이트문에서 하는 일은 타겟 청소밖에 없어요
+
         List<GameObject> toCleanup = new List<GameObject>();
-        foreach(var targetGO in _targets.Keys)
+        foreach (var targetGO in _targets.Keys)
         {
-            //더 이상 인식할 수 없을 때
-            if(_targets[targetGO].Awareness<=0)
+            //Debug.Log(_targets[targetGO].Awareness);
+            if (_targets[targetGO].DecayAwareness(AwarenessDecayDelay, AwarenessDecayRate * Time.deltaTime))
             {
-                toCleanup.Add(targetGO);
+                //더 이상 인식할 수 없을 때
+                if (_targets[targetGO].Awareness <= 0)
+                {
+                    _enemyAI.OnFullyLost();
+                    toCleanup.Add(targetGO);
+                }
+
             }
 
         }
@@ -67,19 +102,6 @@ public class AwarenessSystem : MonoBehaviour
         foreach (var target in toCleanup)
             _targets.Remove(target);
 
-    }
-
-    private void AddTarget(GameObject targetGO, DetectableTarget target, Vector3 position)
-    {
-        if (!_targets.ContainsKey(targetGO))
-        {
-            _targets[targetGO] = new TrackedTarget();
-        }
-    }
-
-    public void FindTarget(DetectableTarget target)
-    {
-        AddTarget(target.gameObject, target, target.transform.position);
     }
 
     private void UpdateAwareness(GameObject targetGO, DetectableTarget target, Vector3 position, float awareness, float minAwareness)

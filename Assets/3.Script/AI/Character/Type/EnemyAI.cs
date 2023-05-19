@@ -29,12 +29,17 @@ public class EnemyAI : MonoBehaviour
 
     public void OnDetected(GameObject target)
     {
-        _feedbackDisplay.text = "감지함 // 목표 :" + target.gameObject.name;
+        _feedbackDisplay.text = "반정도 감지함 // 목표 :" + target.gameObject.name;
     }
 
     public void OnFullyDetected(GameObject target)
     {
-        _feedbackDisplay.text = "찾았다! // 목표 : " + target.gameObject.name;
+        _feedbackDisplay.text = "완벽히 감지함 // 목표 : " + target.gameObject.name;
+    }
+
+    public void OnLostSuspicion()
+    {
+        _feedbackDisplay.text = "목표 잃음";
     }
 
     public void OnLostDetect(GameObject target)
