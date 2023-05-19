@@ -5,16 +5,16 @@ using UnityEngine;
 
 public class TrainSpawnRail : MonoBehaviour
 {
-    private TrainMovement[] trainComponents;
-    private void Awake()
+   [SerializeField] private TrainMovement[] trainComponents;
+
+    public void EnqueueRail()
     {
         trainComponents = FindObjectsOfType<TrainMovement>();
-    }
-    private void OnEnable()
-    {
+
         for (int i = 0; i < trainComponents.Length; i++)
         {
             trainComponents[i].EnqueueRailPos(gameObject);
+            Debug.Log("기차에 위치값 추가");
         }
     }
 }
