@@ -5,18 +5,38 @@ using UnityEngine;
 public class RailSpawn : MonoBehaviour
 {
 
-    public GameObject prefabs;
-
-    public Vector3 bottomLeft;
-    public Vector3 topRight;
-
-    public void SpawnRandRail()
+    public List<GameObject> obj=  new List<GameObject>();
+    float timeSpawn;
+    [SerializeField] int countUp;
+    private void Awake()
     {
-        int randX = Random.Range((int)bottomLeft.x, (int)topRight.x);
-        int randz = Random.Range((int)bottomLeft.z, (int)topRight.z);
-        Vector3 randVec = new Vector3(randX, -1.94f, randz);
-        Instantiate(prefabs, randVec, Quaternion.identity);
-       //GameObject prefab = Instantiate(prefabs, randVec, Quaternion.identity);
-       //prefab.AddComponent<TrainSpawnRail>().EnqueueRail();
+        foreach (GameObject child in obj)
+        {
+            child.SetActive(false);
+        }
+        obj.Reverse();
+    }
+    public void Update()
+    {
+        timeSpawn += Time.deltaTime;
+        if(timeSpawn > .5f)
+        {
+            TimeUp();
+            timeSpawn = 0;
+        }
+    }
+
+    void TimeUp()
+    {
+
+        if (countUp >= obj.Count)
+        {
+            return;
+        }
+
+        obj[countUp].SetActive(true);
+        countUp++;
+
+     
     }
 }
