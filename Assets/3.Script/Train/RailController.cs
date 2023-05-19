@@ -20,6 +20,8 @@ public class RailController : MonoBehaviour
     public bool isBack;
     public bool isLeft;
     public bool isRight;
+    public bool isStartRail;
+    public bool isEndRail;
 
     private Vector3 _frontPos;
     private Vector3 _backPos;
@@ -95,7 +97,8 @@ public class RailController : MonoBehaviour
         {
             neighborRail = raycastHit.collider.GetComponentInParent<RailController>();
 
-            if (neighborRail != null && !neighborRail.isInstance)
+            //북 동 남 서 확인하여 isIntance를 확인
+            if (neighborRail != null && !neighborRail.isInstance && !isStartRail)
             {
                 if (isFront) neighborRail.isBack = true;
                 if (isRight) neighborRail.isLeft = true;
@@ -107,10 +110,20 @@ public class RailController : MonoBehaviour
                 neighborRail.railDirSelet();
                 neighborRail.RailSwitch();
                 neighborRail.railLine.Line.SetActive(true);
+
+
                 foreach (Transform child in neighborRail.railChild)
                 {
-                    child.gameObject.layer = 0;
+
+                        child.gameObject.layer = 0;
                 }
+            }
+            //북 동 남 서 확인하여 isGoal을 확인
+            if (neighborRail != null && neighborRail.isEndRail)
+            {
+                neighborRail.isEndRail = false;
+                neighborRail.enabled = false;
+                neighborRail.enabled = true;
             }
         }
 
@@ -148,5 +161,22 @@ public class RailController : MonoBehaviour
         Debug.DrawRay(_backPos, -transform.forward * 0.3f, Color.green);
         Debug.DrawRay(_rightPos, transform.right * 0.3f, Color.yellow);
         Debug.DrawRay(_leftPos, -transform.right * 0.3f, Color.blue);
+    }
+
+    private void OnDisable()
+    {
+        if (!isStartRail && !neighborRail.isStartRail)
+        {
+            neighborRail.isInstance = false;
+            neighborRail.railLine.Line.SetActive(false);
+        }
+
+
+        //혹시 몰라 이전 레일의 레이어를 되돌리는 로직도 구현해둠 필요하면 작성
+        //foreach (Transform child in neighborRail.railChild)
+        //{
+        //
+        //    child.gameObject.layer = 23;
+        //}
     }
 }
