@@ -7,10 +7,10 @@ public class RailController : MonoBehaviour
     [SerializeField] private GameObject[] railPrefabs;
     private Transform[] railChild;
     [SerializeField] private RailController neighborRail;
+    [SerializeField] private RailLine railLine;
     [SerializeField] private List<bool> dirList = new List<bool>();
 
     private TrainSpawnRail _trainPos;
-
     
     public int dirCount;
 
@@ -29,26 +29,43 @@ public class RailController : MonoBehaviour
     private void Awake()
     {
         _trainPos = GetComponentInChildren<TrainSpawnRail>();
-        _frontPos = new Vector3(transform.position.x, transform.position.y, transform.position.z + 1.3f);
-        _backPos = new Vector3(transform.position.x, transform.position.y, transform.position.z - 1.3f);
-        _rightPos = new Vector3(transform.position.x + 1.3f, transform.position.y, transform.position.z);
-        _leftPos = new Vector3(transform.position.x - 1.3f, transform.position.y, transform.position.z);
-
         railChild = this.GetComponentsInChildren<Transform>();
-
-
     }
     private void OnEnable()
     {
+        //기차이동 위치값 초기화
+        _trainPos.EnqueueRail();
+
+
+        //레일을 이동시켰을 때 인식할 레이의 위치
+        _frontPos = new Vector3(transform.position.x, transform.position.y, transform.position.z + 0.5f);
+        _backPos = new Vector3(transform.position.x, transform.position.y, transform.position.z - 0.5f);
+        _rightPos = new Vector3(transform.position.x + 0.5f, transform.position.y, transform.position.z);
+        _leftPos = new Vector3(transform.position.x - 0.5f, transform.position.y, transform.position.z);
+
+        //노란 레일선  초기화
+        railLine = null;
+        
+        //위치 방향 초기화
+        isFront = false;
+        isBack = false;
+        isLeft = false;
+        isRight = false;
+        dirCount = 0;
+
+        //오브젝트 레이어 초기화
         foreach (Transform child in railChild)
         {
             child.gameObject.layer = 23;
         }
+        //인식불가 bool 초기화
         isInstance = false;
-        _trainPos.EnqueueRail();
+        
+        //철로 연결
         RaycastOn();
+        railLine.Line.SetActive(false);
     }
-
+    //todo 05 18 앞 철로가 없으면 철로를 해제 할 수 있도록 만들어 놓을것 그리고 가능하면 - 박상연
     public void RailSwitch()
     {
         for (int i = 0; i < railPrefabs.Length; i++)
@@ -57,6 +74,11 @@ public class RailController : MonoBehaviour
             if (dirCount != i)
             {
                 railPrefabs[i].SetActive(false);
+
+            }
+            else
+            {
+                railLine = railPrefabs[i].GetComponentInChildren<RailLine>();
             }
         }
     }
@@ -64,16 +86,12 @@ public class RailController : MonoBehaviour
     {
         RaycastHit raycastHit;
 
-        isFront = Physics.Raycast(_frontPos, transform.forward, 1.4f, LayerMask.GetMask("Rail"));
-        isBack = Physics.Raycast(_backPos, -transform.forward, 1.4f, LayerMask.GetMask("Rail"));
-        isRight = Physics.Raycast(_rightPos, transform.right, 1.4f, LayerMask.GetMask("Rail"));
-        isLeft = Physics.Raycast(_leftPos, -transform.right, 1.4f, LayerMask.GetMask("Rail"));
+        RailDir();
 
-
-        if ((Physics.Raycast(_frontPos, transform.forward, out raycastHit, 1) && !raycastHit.collider.GetComponentInParent<RailController>().isInstance)
-            || (Physics.Raycast(_rightPos, transform.right, out raycastHit, 1 )&& !raycastHit.collider.GetComponentInParent<RailController>().isInstance) 
-            || (Physics.Raycast(_backPos, -transform.forward, out raycastHit, 1) && !raycastHit.collider.GetComponentInParent<RailController>().isInstance)
-            || (Physics.Raycast(_leftPos, -transform.right, out raycastHit, 1) && !raycastHit.collider.GetComponentInParent<RailController>().isInstance))
+        if ((Physics.Raycast(_frontPos, transform.forward, out raycastHit, 0.3f) && !raycastHit.collider.GetComponentInParent<RailController>().isInstance)
+            || (Physics.Raycast(_rightPos, transform.right, out raycastHit, 0.3f )&& !raycastHit.collider.GetComponentInParent<RailController>().isInstance) 
+            || (Physics.Raycast(_backPos, -transform.forward, out raycastHit, 0.3f) && !raycastHit.collider.GetComponentInParent<RailController>().isInstance)
+            || (Physics.Raycast(_leftPos, -transform.right, out raycastHit, 0.3f) && !raycastHit.collider.GetComponentInParent<RailController>().isInstance))
         {
             neighborRail = raycastHit.collider.GetComponentInParent<RailController>();
 
@@ -84,19 +102,34 @@ public class RailController : MonoBehaviour
                 if (isBack) neighborRail.isFront = true;
                 if (isLeft) neighborRail.isRight = true;
 
- 
+
                 neighborRail.isInstance = true;
                 neighborRail.railDirSelet();
                 neighborRail.RailSwitch();
-
+                neighborRail.railLine.Line.SetActive(true);
                 foreach (Transform child in neighborRail.railChild)
                 {
                     child.gameObject.layer = 0;
                 }
             }
         }
+
+
         railDirSelet();
         RailSwitch();
+    }
+
+    void RailDir()
+    {
+        isFront = Physics.Raycast(_frontPos, transform.forward, 0.3f, LayerMask.GetMask("Rail"));
+        if (isFront) return;
+        isRight = Physics.Raycast(_rightPos, transform.right, 0.3f, LayerMask.GetMask("Rail"));
+        if (isRight) return;
+        isBack = Physics.Raycast(_backPos, -transform.forward, 0.3f, LayerMask.GetMask("Rail"));
+        if (isBack) return;
+        isLeft = Physics.Raycast(_leftPos, -transform.right, 0.3f, LayerMask.GetMask("Rail"));
+        if (isLeft) return;
+
     }
     private void railDirSelet()
     {
@@ -106,12 +139,14 @@ public class RailController : MonoBehaviour
         else if (isFront && isLeft) dirCount = 1;
         else if (isBack && isRight) dirCount = 4;
         else if (isBack && isLeft) dirCount = 2;
+
+       
     }
     void Update()
     {
-        Debug.DrawRay(_frontPos, transform.forward * 1, Color.red);
-        Debug.DrawRay(_backPos, -transform.forward * 1, Color.green);
-        Debug.DrawRay(_rightPos, transform.right * 1, Color.yellow);
-        Debug.DrawRay(_leftPos, -transform.right * 1, Color.blue);
+        Debug.DrawRay(_frontPos, transform.forward * 0.3f, Color.red);
+        Debug.DrawRay(_backPos, -transform.forward * 0.3f, Color.green);
+        Debug.DrawRay(_rightPos, transform.right * 0.3f, Color.yellow);
+        Debug.DrawRay(_leftPos, -transform.right * 0.3f, Color.blue);
     }
 }

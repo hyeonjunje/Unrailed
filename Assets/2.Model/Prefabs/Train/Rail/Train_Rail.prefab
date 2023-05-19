@@ -58,6 +58,8 @@ MonoBehaviour:
   - {fileID: 2894323836706315179}
   - {fileID: 3379158823204492267}
   neighborRail: {fileID: 0}
+  railLine: {fileID: 0}
+  dirList: 
   dirCount: 0
   isInstance: 0
   isFront: 0
@@ -652,7 +654,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 295172335645524140, guid: 1ca61840dc4e4d147a6d17eddc4d4bba, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.61
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 295172335645524140, guid: 1ca61840dc4e4d147a6d17eddc4d4bba, type: 3}
       propertyPath: m_LocalPosition.z
