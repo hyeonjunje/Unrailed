@@ -2,7 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EBlock { empty, grass, water, tree1, tree2, iron, blackRock, size }
+// public enum EBlock { empty, grass, water, tree1, tree2, iron, blackRock, size }
+public enum EBlock { empty, grass, water, tree1, tree2, iron,
+    blackRock, station, fence,
+    rail, treeItem, ironItem, axe,
+    pick, bucket, bolt, size}
 
 public class MapEditorMK2 : MonoBehaviour
 {
@@ -41,6 +45,8 @@ public class MapEditorMK2 : MonoBehaviour
         _target.gameObject.SetActive(true);
 
         InitMap();
+
+        FileManager.LoadGame();
     }
 
     // 맵 초기화
@@ -64,7 +70,7 @@ public class MapEditorMK2 : MonoBehaviour
             for (int j = 0; j < _defaultX; j++)
             {
                 BlockMK2 go = Instantiate(_blockPrefab, _blockParent);
-                go.Init((int)EBlock.grass, _blocksMaterial[(int)EBlock.grass]);
+                go.Init((int)EBlock.grass, _blocksMaterial[(int)EBlock.grass], _blocksMaterial[(int)EBlock.grass]);
                 go.transform.localPosition = new Vector3(j - _minX, 0, i - _minY);
                 groundList[i].Add(go);
             }
@@ -81,7 +87,7 @@ public class MapEditorMK2 : MonoBehaviour
             for(int i = 0; i < groundList.Count; i++)
             {
                 BlockMK2 go = Instantiate(_blockPrefab, _blockParent);
-                go.Init((int)EBlock.grass, _blocksMaterial[(int)EBlock.grass]);
+                go.Init((int)EBlock.grass, _blocksMaterial[(int)EBlock.grass], _blocksMaterial[(int)EBlock.grass]);
                 go.transform.localPosition = new Vector3(x - _minX, 0, i - _minY);
                 groundList[i].Add(go);
             }
@@ -108,7 +114,7 @@ public class MapEditorMK2 : MonoBehaviour
             for(int i = 0; i < groundList[0].Count; i++)
             {
                 BlockMK2 go = Instantiate(_blockPrefab, _blockParent);
-                go.Init((int)EBlock.grass, _blocksMaterial[(int)EBlock.grass]);
+                go.Init((int)EBlock.grass, _blocksMaterial[(int)EBlock.grass], _blocksMaterial[(int)EBlock.grass]);
                 go.transform.localPosition = new Vector3(i - _minX, 0, y - _minY);
                 groundList[groundList.Count - 1].Add(go);
             }
@@ -143,7 +149,10 @@ public class MapEditorMK2 : MonoBehaviour
                     // 다를 때만 다른 색으로 칠해준다.
                     if (groundList[z + _minY][x + _minX].Index != materialIndex)
                     {
-                        groundList[z + _minY][x + _minX].Init(materialIndex, _blocksMaterial[materialIndex]);
+                        if(materialIndex >= _blocksMaterial.Length)
+                            groundList[z + _minY][x + _minX].Init(materialIndex, null, _blocksMaterial[(int)EBlock.grass]);
+                        else
+                            groundList[z + _minY][x + _minX].Init(materialIndex, _blocksMaterial[materialIndex], _blocksMaterial[(int)EBlock.grass]);
                     }
                 }
             }
@@ -209,7 +218,12 @@ public class MapEditorMK2 : MonoBehaviour
                 int index = mapData.mapData[i].arr[j];
 
                 BlockMK2 go = Instantiate(_blockPrefab, _blockParent);
-                go.Init(index, _blocksMaterial[index]);
+
+                if (index >= _blocksMaterial.Length)
+                    go.Init(index, null, _blocksMaterial[(int)EBlock.grass]);
+                else
+                    go.Init(index, _blocksMaterial[index], _blocksMaterial[(int)EBlock.grass]);
+
                 go.transform.localPosition = new Vector3(j - _minX, 0, i - _minY);
                 groundList[i].Add(go);
             }
