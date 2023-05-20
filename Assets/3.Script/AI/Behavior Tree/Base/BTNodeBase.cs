@@ -154,11 +154,18 @@ public class BTNodeBase : BTElementBase
 
     protected virtual bool OnTick(float deltaTime)
     {
+        //반환값이 false라면 노드 종료
+        //반환값이 true라면 계속 진행
+
+
         bool tickedAnyNodes = false;
 
         //데코레이터 조건을 만족하는지 검사
+        //DecoratorsPermitRunning의 기본값은 true
+        //이게 false라면
         if (!DecoratorsPermitRunning)
         {
+            //실패로 설정하고 이 노드를 실행했다고 표시
             LastStatus = BehaviorTree.ENodeStatus.Failed;
             tickedAnyNodes = true;
             return tickedAnyNodes;
@@ -182,23 +189,25 @@ public class BTNodeBase : BTElementBase
         // 진행 단계
         if (onEnterFn != null)
         {
-            LastStatus = onEnterFn.Invoke(); //상태 바꾸기
-            tickedAnyNodes = true; // 진행 중이면 true
+            //onEnter 함수를 실행하여 반환된 상태로 업데이트
+            LastStatus = onEnterFn.Invoke(); 
+            tickedAnyNodes = true;
 
-            //끝에 닿았으면 false (성공/실패 상태 일때)
+            //Enter에서 반환한게 진행중이 아닌 성공/실패 상태일 때는 다음으로 넘어가기
             if (LastStatus != BehaviorTree.ENodeStatus.InProgress)
                 return tickedAnyNodes;
         }
 
-        // 자녀 노드가 더 이상 없을 때
+        // 자녀 노드가 없을 때
         if (_children.Count == 0)
         {
             if (onEnterFn == null)
-                LastStatus = BehaviorTree.ENodeStatus.Succeeded; //성공 반환
+                LastStatus = BehaviorTree.ENodeStatus.Succeeded; //성공 상태로 업데이트
 
-            return tickedAnyNodes; //false 반환
+            return tickedAnyNodes; // 종료 
         }
 
+        //실행
         for (int childIndex = 0; childIndex < _children.Count; ++childIndex)
         {
 
@@ -207,22 +216,25 @@ public class BTNodeBase : BTElementBase
 
             //이전 데코레이터에 의해 활성화 되었나?
             bool childPreviouslyEnabledByDecorators = child.DecoratorsPermitRunning;
-            //현재 데코레이터에 의해 활성화 되는가?
+
+            //현재 데코레이터에 의해 활성화 되는가?(전 데코레이터중 실패한 것이 있는가?)
             bool childCurrentlyEnabledByDecorators = child.EvaluateDecorators();
 
 
             //자식 노드가 "InProgress" 상태일 때 
             if (child.LastStatus == BehaviorTree.ENodeStatus.InProgress)
             {
-                //자식 노드가 실행되어있다면 true / 아니라면 false
+                //자식 노드가 실행시키기
                 tickedAnyNodes |= child.OnTick(deltaTime);
+                //성공, 실패 여부 반환
                 return tickedAnyNodes;
             }
 
-            //자식 노드가 이미 기록되어 있다면 다음 자식으로 넘어가기
+            //자식 노드가 진행중이라면 다음 노드로 넘어가기
             if (child.LastStatus != BehaviorTree.ENodeStatus.Unknown)
                 continue;
 
+            //자식 노드 실행시키기
             tickedAnyNodes |= child.OnTick(deltaTime);
 
 
@@ -236,6 +248,7 @@ public class BTNodeBase : BTElementBase
                     if (futureChild.LastStatus == BehaviorTree.ENodeStatus.InProgress)
                         futureChild.OnAbort();
                     else
+                        //성공/실패시 자식들 상태를 Unknown으로 바꿔주기
                         futureChild.Reset();
                 }
             }
