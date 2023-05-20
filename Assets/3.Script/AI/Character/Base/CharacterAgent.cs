@@ -31,18 +31,24 @@ public class CharacterAgent : CharacterBase
     protected void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
+        
     }
 
     protected void Update()
     {
         
         //탐색중이 아니고, 목적지 설정이 되었고, 남은 거리가 멈춤 거리보다 적으면
-        //if (_agent.remainingDistance <= _agent.stoppingDistance)
-        if (!_agent.pathPending && _destinationSet && !_agent.isOnOffMeshLink&&(_agent.remainingDistance <= _agent.stoppingDistance))
+        if (_agent.remainingDistance <= _agent.stoppingDistance&&_destinationSet&&!_agent.pathPending)
+        //if (!_agent.pathPending && _destinationSet && !_agent.isOnOffMeshLink&&(_agent.remainingDistance <= _agent.stoppingDistance))
         {
             //도착으로 간주   
             _destinationSet = false;
             _reachedDestination = true;
+        }
+
+        if(_agent.remainingDistance > _agent.stoppingDistance&&_destinationSet)
+        {
+            _reachedDestination = false;
         }
 
 
@@ -117,7 +123,6 @@ public class CharacterAgent : CharacterBase
     {
         CancelCurrentCommand(); // 리셋하고
         SetDestination(destination); //목적지 설정을 하고
-        Debug.Log(_agent.remainingDistance); //이게 어떻게 0이뜨지??
 
     }
 
