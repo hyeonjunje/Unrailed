@@ -10,7 +10,7 @@ public enum EOffmeshLinkStatus
 }
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class CharacterAgent : MonoBehaviour
+public class CharacterAgent : CharacterBase
 {
     [SerializeField] private float _nearestPointSearchRange = 5f;
 
@@ -26,21 +26,29 @@ public class CharacterAgent : MonoBehaviour
     //AI가 움직이고 있으면 true 아니면 false
     public bool isMoving => _agent.velocity.magnitude > float.Epsilon;
     public bool AtDestination => _reachedDestination;
+    public bool DestinationSet => _destinationSet;
 
     protected void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
+        
     }
 
     protected void Update()
     {
+        
         //탐색중이 아니고, 목적지 설정이 되었고, 남은 거리가 멈춤 거리보다 적으면
-        //if (_agent.remainingDistance <= _agent.stoppingDistance)
-        if (!_agent.pathPending && _destinationSet && !_agent.isOnOffMeshLink&&(_agent.remainingDistance <= _agent.stoppingDistance))
+        if (_agent.remainingDistance <= _agent.stoppingDistance&&_destinationSet&&!_agent.pathPending)
+        //if (!_agent.pathPending && _destinationSet && !_agent.isOnOffMeshLink&&(_agent.remainingDistance <= _agent.stoppingDistance))
         {
             //도착으로 간주   
             _destinationSet = false;
             _reachedDestination = true;
+        }
+
+        if(_agent.remainingDistance > _agent.stoppingDistance&&_destinationSet)
+        {
+            _reachedDestination = false;
         }
 
 
@@ -80,6 +88,13 @@ public class CharacterAgent : MonoBehaviour
         _agent.updateUpAxis = true;
     }
 
+    public void StopNav()
+    {
+        _agent.ResetPath();
+        _agent.updatePosition = false;
+        _agent.updateRotation = false;
+        _agent.updateUpAxis = false;
+    }
 
 
     public Vector3 PickLocationInRange(float range) //무작위 이동
@@ -95,18 +110,20 @@ public class CharacterAgent : MonoBehaviour
         return transform.position;
     }
 
-    protected virtual void CancelCurrentCommand() //목적지 초기화
+    public virtual void CancelCurrentCommand() //목적지 초기화
     {
         _agent.ResetPath();
+
         _destinationSet = false;
         _reachedDestination = false;
+        OffMeshLinkStatus = EOffmeshLinkStatus.NotStarted;
     }
 
     public virtual void MoveTo(Vector3 destination) // 목적지로 이동
     {
-        CancelCurrentCommand();
+        CancelCurrentCommand(); // 리셋하고
+        SetDestination(destination); //목적지 설정을 하고
 
-        SetDestination(destination);
     }
 
 
