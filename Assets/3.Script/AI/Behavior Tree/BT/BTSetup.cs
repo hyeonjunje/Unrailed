@@ -103,8 +103,17 @@ public class BTSetup : MonoBehaviour
         {
             var currentTarget = _localMemory.GetGeneric<DetectableTarget>(BlackBoardKey.CurrentTarget);
             _agent.MoveTo(currentTarget.transform.position);
-            Debug.Log("한번만하세요");
-            return BehaviorTree.ENodeStatus.Succeeded;
+
+            if (Vector3.Distance(_agent.transform.position, currentTarget.transform.position) < 1)
+            {
+                _agent.CancelCurrentCommand();
+                return BehaviorTree.ENodeStatus.Succeeded;
+
+            }
+
+            else
+                return BehaviorTree.ENodeStatus.InProgress;
+
         },
             () =>
             {
@@ -127,55 +136,101 @@ public class BTSetup : MonoBehaviour
         () =>
          {
              var currentTarget = _localMemory.GetGeneric<DetectableTarget>(BlackBoardKey.CurrentTarget);
+             currentTarget.transform.SetParent(transform);
+             currentTarget.transform.localPosition = Vector3.zero;
+             _agent.CancelCurrentCommand();
+             return BehaviorTree.ENodeStatus.Succeeded;
 
-             if(currentTarget!=null)
+
+            /* if (currentTarget != null)
              {
                  //다가가서 주울 수 있는 상태가 되어야함
-                 if(Vector3.Distance(_agent.transform.position, currentTarget.transform.position)<1)
+                 if (Vector3.Distance(_agent.transform.position, currentTarget.transform.position) < 1)
                  {
-                    currentTarget.transform.SetParent(transform);
-                    currentTarget.transform.localPosition = Vector3.zero;
+                     currentTarget.transform.SetParent(transform);
+                     currentTarget.transform.localPosition = Vector3.zero;
                      _agent.CancelCurrentCommand();
-                     _agent.StopNav();
+                     //_agent.StopNav();
                      return BehaviorTree.ENodeStatus.Succeeded;
 
                  }
              }
 
              else Debug.Log("없어졌어용");
-             return BehaviorTree.ENodeStatus.Failed;
+             return BehaviorTree.ENodeStatus.Failed;*/
              //못 주우면 처음으로 돌아가기
          },
          () =>
          {
-             //var currentTarget = _localMemory.GetGeneric<DetectableTarget>(BlackBoardKey.CurrentTarget);
-             //currentTarget.transform.SetParent(gameObject.transform);
-             return BehaviorTree.ENodeStatus.Succeeded;
+             var currentTarget = _localMemory.GetGeneric<DetectableTarget>(BlackBoardKey.CurrentTarget);
 
+             return (currentTarget.transform.parent = this.transform) ? 
+             BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
          });
 
 
         var runRoot = mainSeq.Add<BTNode_Sequence>("Seq3 : 도망 시도");
         runRoot.AddDecorator<BTDecoratorBase>("목표로 이동할 수 있나요?", () =>
         {
-            Vector3 pos = new Vector3(-19, 0, -2);
-            //var dd = _agent.PickLocationInRange(_wanderRange);
+            Vector3 pos = new Vector3(-20, 0, -2);
             _localMemory.SetGeneric(BlackBoardKey.NewDestination, pos);
-            //타겟이 있으면 true 없으면 false
             var newDestination = _localMemory.GetGeneric<Vector3>(BlackBoardKey.NewDestination);
             return newDestination != null;
         });
-        var ff = runRoot.Add<BTNode_Action>("목적지 있음 : 도망 실행",
+        var runAction = runRoot.Add<BTNode_Action>("목적지 있음 : 도망 실행",
             () =>
             {
+                var currentTarget = _localMemory.GetGeneric<DetectableTarget>(BlackBoardKey.CurrentTarget);
                 var newDestination = _localMemory.GetGeneric<Vector3>(BlackBoardKey.NewDestination);
-                //_agent.MoveTo(newDestination);
-                return BehaviorTree.ENodeStatus.Failed;
+                _agent.MoveTo(newDestination);
+
+                if (Vector3.Distance(_agent.transform.position, newDestination) < 2)
+                {
+                    Debug.Log("다왔어용");
+                    //currentTarget.transform.parent = null;
+                    _agent.CancelCurrentCommand();
+                    return BehaviorTree.ENodeStatus.Succeeded;
+                }
+                else
+                {
+                    Debug.Log("가는 중이에용");
+                    return BehaviorTree.ENodeStatus.InProgress;
+                }
+
+
+                //return BehaviorTree.ENodeStatus.Succeeded;
             },
             () =>
             {
-                return BehaviorTree.ENodeStatus.Failed;
+                return BehaviorTree.ENodeStatus.Succeeded;
+
             });
+
+        //내려놓기
+
+        var discardRoot = mainSeq.Add<BTNode_Sequence>("Seq4 : 내려놓기 시도");
+        discardRoot.AddDecorator<BTDecoratorBase>("내려놓을 수 있나요?", () =>
+         {
+             var currentTarget = _localMemory.GetGeneric<DetectableTarget>(BlackBoardKey.CurrentTarget);
+             return currentTarget != null;
+         });
+        var discardAction = discardRoot.Add<BTNode_Action>("버리기 실행",
+            () =>
+            {
+                var currentTarget = _localMemory.GetGeneric<DetectableTarget>(BlackBoardKey.CurrentTarget);
+
+                currentTarget.transform.parent = null;
+                _agent.CancelCurrentCommand();
+                Debug.Log("버렸어용");
+                return BehaviorTree.ENodeStatus.Succeeded;
+            },
+            () =>
+            {
+
+                return BehaviorTree.ENodeStatus.Succeeded;
+            }
+            );
+
 
 
         var wanderRoot = canChaseSel.Add<BTNode_Sequence>("목표 못 찾음 : 무작위 이동");
@@ -189,6 +244,7 @@ public class BTSetup : MonoBehaviour
         },
         () =>
         {
+            //return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
             return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
         });
 
