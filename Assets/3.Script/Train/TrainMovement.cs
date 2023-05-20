@@ -7,15 +7,18 @@ using System.Linq;
 public class TrainMovement : MonoBehaviour
 {
     public Queue<GameObject> rails = new Queue<GameObject>();
-    //public List<GameObject> rails = new List<GameObject>();
+    public List<GameObject> listToQue = new List<GameObject>();
     //[SerializeField] private GameObject[] rails;
-    [SerializeField] private int targetCount;
-    public float trainMoveSpeed;
-    public float trainRotateSpeed;
+    //public List<GameObject> rails = new List<GameObject>();
     Transform startRayPos;
 
-    public List<GameObject> listToQue = new List<GameObject>();
+    [SerializeField] private int targetCount;
 
+    public bool isGoal;
+    public float trainSpeed;
+    public float goalSpeed;
+    private float _trainMoveSpeed;
+    private float _trainRotateSpeed;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -25,6 +28,14 @@ public class TrainMovement : MonoBehaviour
     void Update()
     {
         listToQue = rails.ToList();
+        if (isGoal)
+        {
+            _trainMoveSpeed = goalSpeed;
+        }
+        else
+        {
+            _trainMoveSpeed = trainSpeed;
+        }
 
         TrainMovePos();
     }
@@ -33,7 +44,7 @@ public class TrainMovement : MonoBehaviour
         if(rails.Count != 0)
         {
             // 큐에 들어온 레일 위치로 이동
-            transform.position = Vector3.MoveTowards(transform.position, rails.Peek().transform.position, trainMoveSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, rails.Peek().transform.position, _trainMoveSpeed * Time.deltaTime);
             transform.LookAt(rails.Peek().transform.position);
             //var trainRotate = Quaternion.LookRotation(rails.Peek().transform.position);
             //transform.rotation = Quaternion.Slerp(transform.rotation, trainRotate, trainRotateSpeed * Time.deltaTime);
@@ -49,10 +60,10 @@ public class TrainMovement : MonoBehaviour
         }
 
     }
-    public void EnqueueRailPos(GameObject gameObject)
+    public void EnqueueRailPos(RailController gameObject)
     {
         //rails.Add(gameObject);
-        rails.Enqueue(gameObject);
+        rails.Enqueue(gameObject.gameObject);
         Debug.Log("큐에 추가");
     }
 }

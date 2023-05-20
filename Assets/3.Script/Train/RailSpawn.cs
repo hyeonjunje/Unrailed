@@ -8,18 +8,19 @@ public class RailSpawn : MonoBehaviour
     public List<GameObject> obj=  new List<GameObject>();
     float timeSpawn;
     [SerializeField] int countUp;
+    
     private void Awake()
     {
         foreach (GameObject child in obj)
         {
             child.SetActive(false);
         }
-        obj.Reverse();
+       // obj.Reverse();
     }
     public void Update()
     {
         timeSpawn += Time.deltaTime;
-        if(timeSpawn > .5f)
+        if(timeSpawn > .1f)
         {
             TimeUp();
             timeSpawn = 0;
