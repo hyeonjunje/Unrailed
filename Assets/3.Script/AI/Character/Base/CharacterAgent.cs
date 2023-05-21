@@ -36,9 +36,8 @@ public class CharacterAgent : CharacterBase
 
     protected void Update()
     {
-        
         //탐색중이 아니고, 목적지 설정이 되었고, 남은 거리가 멈춤 거리보다 적으면
-        if (_agent.remainingDistance <= _agent.stoppingDistance&&_destinationSet&&!_agent.pathPending)
+        if ((_agent.remainingDistance <= _agent.stoppingDistance)&&_destinationSet&&!_agent.pathPending)
         //if (!_agent.pathPending && _destinationSet && !_agent.isOnOffMeshLink&&(_agent.remainingDistance <= _agent.stoppingDistance))
         {
             //도착으로 간주   

@@ -8,6 +8,7 @@ public class BTSetup : MonoBehaviour
     {
         public static readonly BlackBoardKey CurrentTarget = new BlackBoardKey() { Name = "CurrentTarget" };
         public static readonly BlackBoardKey NewDestination = new BlackBoardKey() { Name = "NewDestination" };
+        public static readonly BlackBoardKey RandomDestination = new BlackBoardKey() { Name = "RandomDestination" };
 
         public string Name;
 
@@ -31,6 +32,7 @@ public class BTSetup : MonoBehaviour
     protected CharacterAgent _agent;
     protected AwarenessSystem _sensors;
     protected Blackboard<BlackBoardKey> _localMemory;
+
 
     private void Awake()
     {
@@ -102,9 +104,13 @@ public class BTSetup : MonoBehaviour
         () =>
         {
             var currentTarget = _localMemory.GetGeneric<DetectableTarget>(BlackBoardKey.CurrentTarget);
-            _agent.MoveTo(currentTarget.transform.position);
 
-            if (Vector3.Distance(_agent.transform.position, currentTarget.transform.position) < 1)
+            if (!_agent.AtDestination)
+            {
+                _agent.MoveTo(currentTarget.transform.position);
+            }
+
+            if (_agent.AtDestination)
             {
                 _agent.CancelCurrentCommand();
                 return BehaviorTree.ENodeStatus.Succeeded;
@@ -186,14 +192,12 @@ public class BTSetup : MonoBehaviour
 
                 if (Vector3.Distance(_agent.transform.position, newDestination) < 2)
                 {
-                    Debug.Log("다왔어용");
                     //currentTarget.transform.parent = null;
                     _agent.CancelCurrentCommand();
                     return BehaviorTree.ENodeStatus.Succeeded;
                 }
                 else
                 {
-                    Debug.Log("가는 중이에용");
                     return BehaviorTree.ENodeStatus.InProgress;
                 }
 
@@ -218,15 +222,22 @@ public class BTSetup : MonoBehaviour
             () =>
             {
                 var currentTarget = _localMemory.GetGeneric<DetectableTarget>(BlackBoardKey.CurrentTarget);
-
+                if(currentTarget!=null)
+                {
                 currentTarget.transform.parent = null;
                 _agent.CancelCurrentCommand();
                 Debug.Log("버렸어용");
+                //_localMemory.SetGeneric<DetectableTarget>(BlackBoardKey.CurrentTarget, null);
+                    currentTarget.GetComponent<DetectableTargetManager>().Deregister(currentTarget);
+            var randomDestination = _agent.PickLocationInRange(_wanderRange);
+            _localMemory.SetGeneric<Vector3>(BlackBoardKey.RandomDestination, randomDestination);
+
+                }
+                
                 return BehaviorTree.ENodeStatus.Succeeded;
             },
             () =>
             {
-
                 return BehaviorTree.ENodeStatus.Succeeded;
             }
             );
@@ -234,18 +245,37 @@ public class BTSetup : MonoBehaviour
 
 
         var wanderRoot = canChaseSel.Add<BTNode_Sequence>("목표 못 찾음 : 무작위 이동");
-        wanderRoot.Add<BTNode_Action>("무작위 이동중",
+        var wanderDeco = wanderRoot.AddDecorator<BTDecoratorBase>("무작위 위치 지정하기", () =>
+        {
+            Debug.Log("위치 정하기");
+            return true;
+        });
+        wanderDeco.Add<BTNode_Action>("무작위 이동중",
         () =>
         {
+            var randomDestination = _localMemory.GetGeneric<Vector3>(BlackBoardKey.RandomDestination);
             //이상하게 움직이는거 고치기
-            Vector3 location = _agent.PickLocationInRange(_wanderRange);
-            _agent.MoveTo(location);
-            return BehaviorTree.ENodeStatus.InProgress;
+            if(!_agent.AtDestination)
+            {
+                _agent.MoveTo(randomDestination);
+
+            }
+
+            if (_agent.AtDestination)
+            {
+                _agent.CancelCurrentCommand();
+                _localMemory.SetGeneric<Vector3>(BlackBoardKey.RandomDestination, _agent.PickLocationInRange(_wanderRange));
+                return BehaviorTree.ENodeStatus.Succeeded;
+
+            }
+
+            else
+                return BehaviorTree.ENodeStatus.InProgress;
         },
         () =>
         {
-            //return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
-            return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
+                return BehaviorTree.ENodeStatus.Succeeded;
+          
         });
 
 

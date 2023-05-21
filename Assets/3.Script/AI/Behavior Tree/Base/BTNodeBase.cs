@@ -193,7 +193,8 @@ public class BTNodeBase : BTElementBase
             LastStatus = onEnterFn.Invoke(); 
             tickedAnyNodes = true;
 
-            //Enter에서 반환한게 진행중이 아닌 성공/실패 상태일 때는 다음으로 넘어가기
+            //Enter에서 반환한게 진행중이 아닌 성공/실패 상태일 때는 Tick된 모든 노드를 반환하고
+            // 
             if (LastStatus != BehaviorTree.ENodeStatus.InProgress)
                 return tickedAnyNodes;
         }
