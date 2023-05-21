@@ -129,7 +129,8 @@ public class CharacterAgent : CharacterBase
     public virtual void SetDestination(Vector3 destination) // 목적지 설정하기
     {
         NavMeshHit hitResult;
-        if (NavMesh.SamplePosition(destination, out hitResult, _nearestPointSearchRange, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(destination, out hitResult, _nearestPointSearchRange, NavMesh.AllAreas)
+            )
         {
             _agent.SetDestination(hitResult.position);
             _destinationSet = true;
