@@ -45,6 +45,8 @@ public class BTSetup : MonoBehaviour
     {
         _localMemory = BlackboardManager.Instance.GetIndividualBlackboard<BlackBoardKey>(this);
         _localMemory.SetGeneric<DetectableTarget>(BlackBoardKey.CurrentTarget, null);
+        _localMemory.SetGeneric<Vector3>(BlackBoardKey.RandomDestination, Vector3.forward);
+
 
         var BTRoot = _tree.RootNode.Add<BTNode_Selector>("BT 시작"); //셀렉터
 
@@ -108,104 +110,91 @@ public class BTSetup : MonoBehaviour
             if (!_agent.AtDestination)
             {
                 _agent.MoveTo(currentTarget.transform.position);
-            }
-
-            if (_agent.AtDestination)
-            {
-                _agent.CancelCurrentCommand();
-                return BehaviorTree.ENodeStatus.Succeeded;
-
-            }
-
-            else
                 return BehaviorTree.ENodeStatus.InProgress;
+            }
+            else
+            {
+                //_agent.CancelCurrentCommand();
+                return BehaviorTree.ENodeStatus.Succeeded;
+            }
+
 
         },
             () =>
             {
-                /*var currentTarget = _localMemory.GetGeneric<DetectableTarget>(BlackBoardKey.CurrentTarget);
-                  _agent.MoveTo(currentTarget.transform.position);*/
-
                 //return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
                 return BehaviorTree.ENodeStatus.Succeeded;
             });
 
         var stealRoot = mainSeq.Add<BTNode_Sequence>("Seq2 : 훔치기 시도");
-        var dd = stealRoot.AddDecorator<BTDecoratorBase>("훔칠 타겟이 존재하는지 확인하는 Decorator", () =>
+        var stealDeco = stealRoot.AddDecorator<BTDecoratorBase>("훔칠 타겟이 존재하는지 확인하는 Decorator", () =>
         {
             var currentTarget = _localMemory.GetGeneric<DetectableTarget>(BlackBoardKey.CurrentTarget);
             return currentTarget != null;
 
         });
 
-        var stealRootAction = dd.Add<BTNode_Action>("A 타겟 존재 : 훔치기 실행",
+        var stealRootAction = stealDeco.Add<BTNode_Action>("A 타겟 존재 : 훔치기 실행",
         () =>
          {
              var currentTarget = _localMemory.GetGeneric<DetectableTarget>(BlackBoardKey.CurrentTarget);
              currentTarget.transform.SetParent(transform);
              currentTarget.transform.localPosition = Vector3.zero;
              _agent.CancelCurrentCommand();
+
+
              return BehaviorTree.ENodeStatus.Succeeded;
-
-
-            /* if (currentTarget != null)
-             {
-                 //다가가서 주울 수 있는 상태가 되어야함
-                 if (Vector3.Distance(_agent.transform.position, currentTarget.transform.position) < 1)
-                 {
-                     currentTarget.transform.SetParent(transform);
-                     currentTarget.transform.localPosition = Vector3.zero;
-                     _agent.CancelCurrentCommand();
-                     //_agent.StopNav();
-                     return BehaviorTree.ENodeStatus.Succeeded;
-
-                 }
-             }
-
-             else Debug.Log("없어졌어용");
-             return BehaviorTree.ENodeStatus.Failed;*/
-             //못 주우면 처음으로 돌아가기
          },
          () =>
          {
              var currentTarget = _localMemory.GetGeneric<DetectableTarget>(BlackBoardKey.CurrentTarget);
-
-             return (currentTarget.transform.parent = this.transform) ? 
-             BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
+             var newDestination = _localMemory.GetGeneric<Vector3>(BlackBoardKey.NewDestination);
+             return BehaviorTree.ENodeStatus.Succeeded;
+             //return (currentTarget.transform.parent = this.transform) ? 
+             //BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
          });
 
 
         var runRoot = mainSeq.Add<BTNode_Sequence>("Seq3 : 도망 시도");
-        runRoot.AddDecorator<BTDecoratorBase>("목표로 이동할 수 있나요?", () =>
+        var runDeco = runRoot.AddDecorator<BTDecoratorBase>("목표로 이동할 수 있나요?", () =>
         {
             Vector3 pos = new Vector3(-20, 0, -2);
             _localMemory.SetGeneric(BlackBoardKey.NewDestination, pos);
+
             var newDestination = _localMemory.GetGeneric<Vector3>(BlackBoardKey.NewDestination);
             return newDestination != null;
         });
-        var runAction = runRoot.Add<BTNode_Action>("목적지 있음 : 도망 실행",
+        var runAction = runDeco.Add<BTNode_Action>("목적지 있음 : 도망 실행",
             () =>
             {
-                var currentTarget = _localMemory.GetGeneric<DetectableTarget>(BlackBoardKey.CurrentTarget);
                 var newDestination = _localMemory.GetGeneric<Vector3>(BlackBoardKey.NewDestination);
+                var currentTarget = _localMemory.GetGeneric<DetectableTarget>(BlackBoardKey.CurrentTarget);
                 if(!_agent.AtDestination)
                 {
-                _agent.MoveTo(newDestination);
+                    Debug.Log("어째서..");
+                    _agent.MoveTo(newDestination);
+                    return BehaviorTree.ENodeStatus.InProgress;
+                    //여기서 무한실행걸림 이거 고쳐야댐
 
-                }
-
-                if (_agent.AtDestination)
-                {
-                    _agent.CancelCurrentCommand();
-                    Debug.Log("왜..");
-                    return BehaviorTree.ENodeStatus.Succeeded;
                 }
                 else
                 {
-                    return BehaviorTree.ENodeStatus.InProgress;
+                    Debug.Log("왜..");
+                    return BehaviorTree.ENodeStatus.Succeeded;
                 }
+/*
+                
+                if(Vector3.Distance(_agent.transform.position, newDestination)<2)
+                {
 
+                    return BehaviorTree.ENodeStatus.Succeeded;
+                }*/
 
+/*                if (_agent.AtDestination)
+                {
+
+                }
+*/
                 //return BehaviorTree.ENodeStatus.Succeeded;
             },
             () =>
@@ -251,7 +240,7 @@ public class BTSetup : MonoBehaviour
 
 
 
-        var wanderRoot = canChaseSel.Add<BTNode_Sequence>("목표 못 찾음 : 무작위 이동");
+        var wanderRoot = BTRoot.Add<BTNode_Sequence>("목표 못 찾음 : 무작위 이동");
         var wanderDeco = wanderRoot.AddDecorator<BTDecoratorBase>("무작위 위치 지정하기", () =>
         {
             Debug.Log("위치 정하기");
