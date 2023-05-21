@@ -362,6 +362,7 @@ GameObject:
   - component: {fileID: 832733101446939770}
   - component: {fileID: 1995170838729584600}
   - component: {fileID: 1039576545902024545}
+  - component: {fileID: -5306715016768939798}
   m_Layer: 0
   m_Name: ItemAxe
   m_TagString: Item
@@ -410,6 +411,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-5306715016768939798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5844127213111809277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 293f033d1dfd9254ab8fef8e66c2838d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemType: 2
 --- !u!1 &8277278062670763822
 GameObject:
   m_ObjectHideFlags: 0

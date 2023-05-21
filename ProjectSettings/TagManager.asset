@@ -8,6 +8,7 @@ TagManager:
   - Rail
   - Item
   - Items
+  - Empty
   layers:
   - Default
   - TransparentFX
@@ -38,7 +39,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Empty
   - Block
   - BaseBlock
   m_SortingLayers:

@@ -34,6 +34,7 @@ public class BlockMK2 : MonoBehaviour
     {
         transform.DestroyAllChild();
 
+        _renderer.enabled = true;
         transform.localScale = Vector3.one;
         transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
         transform.tag = "Untagged";
@@ -44,6 +45,10 @@ public class BlockMK2 : MonoBehaviour
         GameObject prefab = _itemPrefabData.itemPrefabs[index];
         switch(index)
         {
+            case (int)EBlock.empty:
+                _renderer.enabled = false;
+                transform.tag = "Empty";
+                break;
             case (int)EBlock.water:
                 transform.localScale -= Vector3.up * 0.2f;
                 transform.position -= Vector3.up * 0.1f;
@@ -53,7 +58,8 @@ public class BlockMK2 : MonoBehaviour
             case (int)EBlock.tree2:
                 GameObject go = Instantiate(prefab, transform);
                 go.transform.localPosition = Vector3.up * 0.5f;
-                go.transform.localRotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
+                go.transform.localRotation = Quaternion.identity;
+                go.transform.GetChild(0).localRotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
                 break;
             case (int)EBlock.iron:
             case (int)EBlock.blackRock:

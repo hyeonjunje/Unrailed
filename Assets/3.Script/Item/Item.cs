@@ -9,6 +9,7 @@ public enum EItem
     axe,
     pick,
     bucket,
+    bolt,
     none
 }
 
