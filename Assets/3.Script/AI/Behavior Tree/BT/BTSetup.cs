@@ -188,12 +188,16 @@ public class BTSetup : MonoBehaviour
             {
                 var currentTarget = _localMemory.GetGeneric<DetectableTarget>(BlackBoardKey.CurrentTarget);
                 var newDestination = _localMemory.GetGeneric<Vector3>(BlackBoardKey.NewDestination);
+                if(!_agent.AtDestination)
+                {
                 _agent.MoveTo(newDestination);
 
-                if (Vector3.Distance(_agent.transform.position, newDestination) < 2)
+                }
+
+                if (_agent.AtDestination)
                 {
-                    //currentTarget.transform.parent = null;
                     _agent.CancelCurrentCommand();
+                    Debug.Log("왜..");
                     return BehaviorTree.ENodeStatus.Succeeded;
                 }
                 else
@@ -206,6 +210,7 @@ public class BTSetup : MonoBehaviour
             },
             () =>
             {
+
                 return BehaviorTree.ENodeStatus.Succeeded;
 
             });
@@ -215,8 +220,10 @@ public class BTSetup : MonoBehaviour
         var discardRoot = mainSeq.Add<BTNode_Sequence>("Seq4 : 내려놓기 시도");
         discardRoot.AddDecorator<BTDecoratorBase>("내려놓을 수 있나요?", () =>
          {
-             var currentTarget = _localMemory.GetGeneric<DetectableTarget>(BlackBoardKey.CurrentTarget);
-             return currentTarget != null;
+             Debug.Log("여기못들어오나");
+             return true;
+             //var currentTarget = _localMemory.GetGeneric<DetectableTarget>(BlackBoardKey.CurrentTarget);
+             //return currentTarget != null;
          });
         var discardAction = discardRoot.Add<BTNode_Action>("버리기 실행",
             () =>
@@ -227,10 +234,10 @@ public class BTSetup : MonoBehaviour
                 currentTarget.transform.parent = null;
                 _agent.CancelCurrentCommand();
                 Debug.Log("버렸어용");
-                //_localMemory.SetGeneric<DetectableTarget>(BlackBoardKey.CurrentTarget, null);
-                    currentTarget.GetComponent<DetectableTargetManager>().Deregister(currentTarget);
-            var randomDestination = _agent.PickLocationInRange(_wanderRange);
-            _localMemory.SetGeneric<Vector3>(BlackBoardKey.RandomDestination, randomDestination);
+                _localMemory.SetGeneric<DetectableTarget>(BlackBoardKey.CurrentTarget, null);
+                    //currentTarget.GetComponent<DetectableTargetManager>().Deregister(currentTarget);
+                var randomDestination = _agent.PickLocationInRange(_wanderRange);
+                _localMemory.SetGeneric<Vector3>(BlackBoardKey.RandomDestination, randomDestination);
 
                 }
                 
