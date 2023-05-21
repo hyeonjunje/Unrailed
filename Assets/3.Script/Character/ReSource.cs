@@ -5,11 +5,12 @@ using UnityEngine;
 public class ReSource : MonoBehaviour, IDig
 {
     [SerializeField] int ResourceHp = 3;
-    [SerializeField] float ResourceScale = 1f;
-    [SerializeField] bool isDig = false;
     [SerializeField] float Delay = 1f;
-    [SerializeField] float CurrentTime = 0f;
     [SerializeField] Transform ItemPrefab;
+
+    private float ResourceScale = 1f;
+    private float CurrentTime = 0f;
+    private bool isDig = true;// 처음에 false였던 이유 : Player가 참으로 바꿔줘야 되는 걸까?
 
     public void OnDig(Vector3 hitposition)
     {
@@ -39,10 +40,6 @@ public class ReSource : MonoBehaviour, IDig
         NewItem.SetParent(transform.parent);
         NewItem.localPosition = (new Vector3(0, 0.5f, 0));
         NewItem.localRotation = Quaternion.identity;
-
-
-
-
     }
 
     private IEnumerator OnDig_co()

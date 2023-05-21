@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6778046237540224405}
   - component: {fileID: 3947971111288161755}
   - component: {fileID: 3076300837362612534}
+  - component: {fileID: -1134903670521212545}
   m_Layer: 0
   m_Name: Iron
   m_TagString: Untagged
@@ -95,3 +96,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-1134903670521212545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4341736099985110207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23a928c34e8b1d145b10ced7a2ec071b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ResourceHp: 3
+  ResourceScale: 1
+  isDig: 1
+  Delay: 1
+  CurrentTime: 0
+  ItemPrefab: {fileID: 6337666441607593902, guid: e9ea948b5baee254a94c64ecba50279d, type: 3}

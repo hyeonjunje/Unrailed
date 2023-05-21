@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Water
   - Rail
+  - Item
+  - Items
   layers:
   - Default
   - TransparentFX
