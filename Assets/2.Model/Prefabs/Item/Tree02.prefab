@@ -199,6 +199,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 430936053216991776}
+  - component: {fileID: -2609321755794956651}
+  - component: {fileID: -3944306732855251627}
   m_Layer: 0
   m_Name: Tree02
   m_TagString: Untagged
@@ -221,6 +223,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-2609321755794956651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 430936053216991807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23a928c34e8b1d145b10ced7a2ec071b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ResourceHp: 3
+  ResourceScale: 1
+  isDig: 1
+  Delay: 1
+  CurrentTime: 0
+  ItemPrefab: {fileID: 1554482166082667595, guid: b6e1b227b7cc406449be17199cf61543, type: 3}
+--- !u!65 &-3944306732855251627
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 430936053216991807}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &430936053508983177
 GameObject:
   m_ObjectHideFlags: 0
