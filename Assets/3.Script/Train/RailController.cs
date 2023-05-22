@@ -5,13 +5,13 @@ using UnityEngine;
 public class RailController : MonoBehaviour
 {
     [SerializeField] private GameObject[] railPrefabs;
-    private Transform[] railChild;
     [SerializeField] private RailController neighborRail;
+    [SerializeField] private GoalManager trainManager;
+
+    private Transform[] railChild;
+    public TrainMovement[] trainComponents;
     public RailLine railLine;
 
-
-    public TrainMovement[] trainComponents;
-    private GoalManager trainManager;
     public int dirCount;
     int childCount;
 
@@ -32,6 +32,7 @@ public class RailController : MonoBehaviour
 
     private void Awake()
     {
+
         trainManager = FindObjectOfType<GoalManager>();
         railChild = this.GetComponentsInChildren<Transform>();
 
@@ -138,7 +139,7 @@ public class RailController : MonoBehaviour
                 if (isBack) neighborRail.isFront = true;
                 if (isLeft) neighborRail.isRight = true;
 
-                neighborRail.isInstance = true;
+                if(!neighborRail.isEndRail) neighborRail.isInstance = true;
 
                 neighborRail.railDirSelet();
                 neighborRail.RailSwitch();
@@ -152,6 +153,7 @@ public class RailController : MonoBehaviour
             //북 동 남 서 확인하여 isGoal을 확인
             if (neighborRail != null && neighborRail.isEndRail && !isEndRail)
             {
+                Debug.LogError("dfkf");
                 trainManager.TrainGoal();
                 neighborRail.isEndRail = false;
                 neighborRail.enabled = false;
@@ -179,8 +181,11 @@ public class RailController : MonoBehaviour
     }
     private void railDirSelet()
     {
-        if (isFront || isBack) dirCount = 5;
-        if (isRight || isLeft) dirCount = 0;
+        if (isFront) dirCount = 5;
+        if (isRight) dirCount = 0;
+        if (isBack) dirCount = 6;
+        if (isLeft) dirCount = 7;
+
         if (isFront && isRight) dirCount = 3;
         else if (isFront && isLeft) dirCount = 1;
         else if (isBack && isRight) dirCount = 4;
