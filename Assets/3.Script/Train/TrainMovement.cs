@@ -6,31 +6,40 @@ using System.Linq;
 
 public class TrainMovement : MonoBehaviour
 {
-    float time = 0;
+    public int trainNum;
+   
     public Queue<RailController> rails = new Queue<RailController>();
     public List<RailController> listToQue = new List<RailController>();
 
-    Transform startRayPos;
     public Transform trainMesh;
 
     [SerializeField] private int targetCount;
+    public ParticleSystem fireEffect;
 
     public bool isGoal;
-    public float trainSpeed;
+    public bool isBurn;
+   
+
+    public float trainSpeed = 0.5f;
     public float _trainRotateSpeed;
 
-    public float goalSpeed;
+    public float goalSpeed = 6f;
     private float _trainMoveSpeed;
+
     // Start is called before the first frame update
-    private void Awake()
+    //Transform startRayPos;
+    protected void GetMesh()
     {
-        startRayPos = transform.GetChild(0).GetComponent<Transform>();
         trainMesh = transform.GetChild(0).GetComponent<Transform>();
+        fireEffect = GetComponentInChildren<ParticleSystem>();
     }
-    // Update is called once per frame
-    void Update()
+   
+
+
+    protected void TrainMovePos()
     {
         listToQue = rails.ToList();
+
         if (isGoal)
         {
             _trainMoveSpeed = goalSpeed;
@@ -39,14 +48,11 @@ public class TrainMovement : MonoBehaviour
         else
         {
             _trainMoveSpeed = trainSpeed;
-            _trainRotateSpeed = trainSpeed *2;
+            _trainRotateSpeed = trainSpeed * 2;
         }
 
-        TrainMovePos();
-    }
-    void TrainMovePos()
-    {
-        if(rails.Count != 0)
+
+        if (rails.Count != 0)
         {
             // 큐에 들어온 레일 위치로 이동
             RotateTrain();

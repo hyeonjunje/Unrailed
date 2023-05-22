@@ -49,7 +49,7 @@ public class RailController : MonoBehaviour
     private void OnEnable()
     {
         trainManager.railCon.Add(gameObject.GetComponent<RailController>());
-        if (!isEndRail)
+        if (!isEndRail && !isStartRail)
         {
             //기차이동 위치값 초기화
             //단, 골이 아닐때에만 활성화된다.
@@ -118,7 +118,9 @@ public class RailController : MonoBehaviour
     }
     public void RaycastOn()
     {
-
+        //실 게임 내에서는 isStartRail 철로 2개정도 깔아두고 2개는 기본 철로. 그 후에 붙이면 정상가동
+        //isEndRail은 두개만 붙여놓을것 
+        if(isStartRail) return;
         RaycastHit raycastHit = new RaycastHit();
 
         RailDir();
@@ -153,7 +155,6 @@ public class RailController : MonoBehaviour
             //북 동 남 서 확인하여 isGoal을 확인
             if (neighborRail != null && neighborRail.isEndRail && !isEndRail)
             {
-                Debug.LogError("dfkf");
                 trainManager.TrainGoal();
                 neighborRail.isEndRail = false;
                 neighborRail.enabled = false;
@@ -211,7 +212,7 @@ public class RailController : MonoBehaviour
         {
             neighborRail.isInstance = false;
             neighborRail.railLine.Line.SetActive(false);
-            Debug.Log(gameObject.name);
+
         }
 
 
@@ -225,6 +226,7 @@ public class RailController : MonoBehaviour
 
     public void EnqueueRail()
     {
+        
         trainComponents = FindObjectsOfType<TrainMovement>();
 
         for (int i = 0; i < trainComponents.Length; i++)

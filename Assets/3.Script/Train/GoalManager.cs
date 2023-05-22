@@ -8,7 +8,7 @@ public class GoalManager : MonoBehaviour
 
     public void TrainGoal()
     {
-        Debug.LogError(gameObject.name);
+
         foreach (RailController rail in railCon)
         {
             rail.isGoal = true;

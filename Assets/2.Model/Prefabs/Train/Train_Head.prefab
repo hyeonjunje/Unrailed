@@ -3585,7 +3585,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5731449429487099751}
-  - component: {fileID: 1329174500012432674}
+  - component: {fileID: 273714674}
   m_Layer: 0
   m_Name: Train_Head
   m_TagString: Untagged
@@ -3608,7 +3608,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1329174500012432674
+--- !u!114 &273714674
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3617,16 +3617,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 6947313233791652070}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 510616fed8943b844bfaacb209f25d4f, type: 3}
+  m_Script: {fileID: 11500000, guid: 2d00ec1788ca9df43adf3934b615f076, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trainNum: 0
   listToQue: []
   trainMesh: {fileID: 0}
   targetCount: 0
+  fireEffect: {fileID: 0}
   isGoal: 0
-  trainSpeed: 0
+  isBurn: 0
+  trainSpeed: 0.5
   _trainRotateSpeed: 0
-  goalSpeed: 0
+  goalSpeed: 6
 --- !u!1 &6952161721232779402
 GameObject:
   m_ObjectHideFlags: 0
@@ -4926,7 +4929,7 @@ Transform:
   m_GameObject: {fileID: 8829383695455097838}
   m_LocalRotation: {x: -0.7841472, y: 0.04018843, z: 0.02194374, w: 0.6188833}
   m_LocalPosition: {x: 0.08666666, y: 2.0066664, z: 1.0966666}
-  m_LocalScale: {x: 1.0859253, y: 1.0859253, z: 1.0859253}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children: []
   m_Father: {fileID: 8096958401754032480}
   m_RootOrder: 0
