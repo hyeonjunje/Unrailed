@@ -107,17 +107,24 @@ public class BTSetup : MonoBehaviour
         mainSeq.Add<BTNode_Action>("A 목표 찾음 : 찾아서 출발",
         () =>
         {
-            var currentTarget = _localMemory.GetGeneric<DetectableTarget>(BlackBoardKey.CurrentTarget);
 
             //도착하지 않았다면
             if (!_agent.AtDestination)
             {
+                var currentTarget = _localMemory.GetGeneric<DetectableTarget>(BlackBoardKey.CurrentTarget);
+                Debug.Log("이동중");
                 //타겟으로 이동
+                //이거 타겟 좌표가 두번째 타겟때 업데이트가 안됨
+                //이름은 맞는데 좌표만 첫번째 타겟 좌표로 나옴........................................................뭐지?
                 _agent.MoveTo(currentTarget.transform.position);
+                Debug.Log(currentTarget.transform.position);
                 return BehaviorTree.ENodeStatus.InProgress;
             }
             else
             {
+                //도착했다면 성공 반환
+                //!!두번째 타겟부터 AI가 이동하기도 전에 납치하는 버그 고쳐야함
+                Debug.Log("다왔어용");
                 return BehaviorTree.ENodeStatus.Succeeded;
             }
 
@@ -139,15 +146,20 @@ public class BTSetup : MonoBehaviour
         var stealRootAction = stealDeco.Add<BTNode_Action>("A 타겟 존재 : 훔치기 실행",
         () =>
          {
+             if (_agent.AtDestination)
+             {
+                 var currentTarget = _localMemory.GetGeneric<DetectableTarget>(BlackBoardKey.CurrentTarget);
+                 currentTarget.transform.SetParent(transform);
+                 currentTarget.transform.localPosition = Vector3.zero;
+                 var newDestination = _agent.PickLocationInRange(10);
+                 _localMemory.SetGeneric<Vector3>(BlackBoardKey.NewDestination, newDestination);
 
-             var currentTarget = _localMemory.GetGeneric<DetectableTarget>(BlackBoardKey.CurrentTarget);
-             currentTarget.transform.SetParent(transform);
-             currentTarget.transform.localPosition = Vector3.zero;
+                 return BehaviorTree.ENodeStatus.Succeeded;
+             }
 
-             var newDestination = _agent.PickLocationInRange(10);
-             _localMemory.SetGeneric<Vector3>(BlackBoardKey.NewDestination, newDestination);
+             else
+                 return BehaviorTree.ENodeStatus.InProgress;
 
-             return BehaviorTree.ENodeStatus.Succeeded;
          },
          () =>
          {
@@ -237,6 +249,9 @@ public class BTSetup : MonoBehaviour
 
 
 
+
+
+
         var wanderRoot = BTRoot.Add<BTNode_Sequence>("목표 못 찾음 : 무작위 이동");
         var wanderDeco = wanderRoot.AddDecorator<BTDecoratorBase>("무작위 위치 지정하기", () =>
         {
@@ -265,7 +280,7 @@ public class BTSetup : MonoBehaviour
         () =>
         {
                 return BehaviorTree.ENodeStatus.Succeeded;
-          
+
         });
 
 
