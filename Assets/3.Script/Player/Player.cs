@@ -14,11 +14,12 @@ public class Player : MonoBehaviour
     public Transform rayStart;
     #endregion
     #region 이동 관련 변수
-    public float speed = 5f;
+    public float speed = 30f;
     float xAxis;
     float zAxis;
     Vector3 moveVec;
     [SerializeField] float dashCool = 0.3f;
+
     #endregion
     #region 아이템 픽업 관련 변수
     GameObject item;
@@ -38,17 +39,18 @@ public class Player : MonoBehaviour
     bool isDash;
     public bool isHaveItem;
     bool isWalk;
+    bool isWall;
     #endregion
     #region 컴포넌트 변수
     private Rigidbody _rigidbody;
     private Animator _animator;
     #endregion
-
+    Rigidbody rb;
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
-        _rigidbody = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
         rayStart = transform.GetChild(2);
 
         _animator.SetBool("isWalk", false);
@@ -71,14 +73,29 @@ public class Player : MonoBehaviour
         zAxis = Input.GetAxisRaw("Vertical");
         dashKeyDown = Input.GetButtonDown("Dash");
         getItemKeyDown = Input.GetButtonDown("getItem");
+       /* if(Input.GetKey(KeyCode.E))
+        {
+            Debug.Log("캐라");
+            _animator.SetBool("isDig",true);
+        }
+        else
+        {
+            _animator.SetBool("isMove", true);
+            _animator.SetBool("isDig", false);
+        }
+        */
     }
 
     void Walk()
     {
         if (!isDash) moveVec = new Vector3(xAxis, 0, zAxis).normalized;
 
+       // Vector3 getvel = new Vector3(xAxis, 0, zAxis) * speed* 3f;
+       // rb.velocity = getvel;
         transform.position += moveVec * speed * Time.deltaTime;
         _animator.SetBool("isWalk", moveVec != Vector3.zero);
+        
+        
     }
 
     void Turn()
@@ -256,18 +273,49 @@ public class Player : MonoBehaviour
     void DigUp()
     {
         RaycastHit hit;
-        Debug.DrawRay(transform.TransformPoint(0, 0.5f, 0), transform.forward * pickUpDistance, Color.red);
-        if (Physics.Raycast(transform.TransformPoint(0, 0.5f, 0), transform.forward, out hit, pickUpDistance))
+        Debug.DrawRay(transform.TransformPoint(0, 0.4f, 0), transform.forward * pickUpDistance*0.1f, Color.red) ;
+        if (Physics.Raycast(transform.TransformPoint(0, 0.4f, 0), transform.forward, out hit, pickUpDistance))
         {
             Debug.Log("발사" + hit.transform.name);
             IDig target = hit.collider.GetComponent<IDig>();
-            if (target != null)
+            
+           
+
+            if (target != null )
             {
-                if(hit.transform.name == "Tree01(Clone)" && item.name == "ItemAxe")
+                if(hit.transform.name == "Tree01(Clone)" && item.name == "ItemAxe(Clone)")
                 {
                     target.OnDig(hit.point);
+                    _animator.SetBool("isDig",true);
+                }
+                if (hit.transform.name == "Tree02(Clone)" && item.name == "ItemAxe(Clone)")
+                {
+                    target.OnDig(hit.point);
+                    _animator.SetBool("isDig", true);
+                }
+                if (hit.transform.name == "Iron(Clone)" && item.name == "ItemPick(Clone)")
+                {
+                    target.OnDig(hit.point);
+                    _animator.SetBool("isDig", true);
                 }
             }
+            if (target == null)
+            {
+
+                _animator.SetBool("isMove", true);
+                _animator.SetBool("isDig",false);
+            }
+        
+        }
+    }
+    void DrawWater()
+    {
+        RaycastHit hit;
+        Debug.DrawRay(transform.TransformPoint(0, 0.1f, 0), transform.forward * pickUpDistance * 0.1f, Color.red);
+        if(Physics.Raycast(transform.TransformPoint(0,0.1f,0),transform.forward,out hit, pickUpDistance))
+        {
+            Debug.Log("물" + hit.transform.name);
+            
         }
     }
 }

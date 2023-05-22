@@ -109,8 +109,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ResourceHp: 3
-  ResourceScale: 1
-  isDig: 1
   Delay: 1
-  CurrentTime: 0
   ItemPrefab: {fileID: 6337666441607593902, guid: e9ea948b5baee254a94c64ecba50279d, type: 3}
