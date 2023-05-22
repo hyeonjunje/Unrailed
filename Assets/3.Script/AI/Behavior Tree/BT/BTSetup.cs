@@ -32,10 +32,12 @@ public class BTSetup : MonoBehaviour
     protected CharacterAgent _agent;
     protected AwarenessSystem _sensors;
     protected Blackboard<BlackBoardKey> _localMemory;
+    DetectableTargetManager detectableTarget;
 
 
     private void Awake()
     {
+        detectableTarget = FindObjectOfType<DetectableTargetManager>();
         _tree = GetComponent<BehaviorTree>();
         _agent = GetComponent<CharacterAgent>();
         _sensors = GetComponent<AwarenessSystem>();
@@ -114,7 +116,6 @@ public class BTSetup : MonoBehaviour
             }
             else
             {
-                //_agent.CancelCurrentCommand();
                 return BehaviorTree.ENodeStatus.Succeeded;
             }
 
@@ -122,8 +123,7 @@ public class BTSetup : MonoBehaviour
         },
             () =>
             {
-                //return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
-                return BehaviorTree.ENodeStatus.Succeeded;
+                return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
             });
 
         var stealRoot = mainSeq.Add<BTNode_Sequence>("Seq2 : 훔치기 시도");
@@ -173,7 +173,7 @@ public class BTSetup : MonoBehaviour
                 {
                     Debug.Log("어째서..");
                     _agent.MoveTo(newDestination);
-                    return BehaviorTree.ENodeStatus.InProgress;
+                    return BehaviorTree.ENodeStatus.Succeeded;
                     //여기서 무한실행걸림 이거 고쳐야댐
 
                 }
@@ -189,13 +189,6 @@ public class BTSetup : MonoBehaviour
 
                     return BehaviorTree.ENodeStatus.Succeeded;
                 }*/
-
-/*                if (_agent.AtDestination)
-                {
-
-                }
-*/
-                //return BehaviorTree.ENodeStatus.Succeeded;
             },
             () =>
             {
@@ -218,19 +211,20 @@ public class BTSetup : MonoBehaviour
             () =>
             {
                 var currentTarget = _localMemory.GetGeneric<DetectableTarget>(BlackBoardKey.CurrentTarget);
-                if(currentTarget!=null)
+                if(currentTarget!=null&_agent.AtDestination)
                 {
                 currentTarget.transform.parent = null;
                 _agent.CancelCurrentCommand();
                 Debug.Log("버렸어용");
+                Destroy(currentTarget);
                 _localMemory.SetGeneric<DetectableTarget>(BlackBoardKey.CurrentTarget, null);
-                    //currentTarget.GetComponent<DetectableTargetManager>().Deregister(currentTarget);
                 var randomDestination = _agent.PickLocationInRange(_wanderRange);
                 _localMemory.SetGeneric<Vector3>(BlackBoardKey.RandomDestination, randomDestination);
+                return BehaviorTree.ENodeStatus.Succeeded;
 
                 }
                 
-                return BehaviorTree.ENodeStatus.Succeeded;
+                return BehaviorTree.ENodeStatus.InProgress;
             },
             () =>
             {
@@ -250,7 +244,6 @@ public class BTSetup : MonoBehaviour
         () =>
         {
             var randomDestination = _localMemory.GetGeneric<Vector3>(BlackBoardKey.RandomDestination);
-            //이상하게 움직이는거 고치기
             if(!_agent.AtDestination)
             {
                 _agent.MoveTo(randomDestination);

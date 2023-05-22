@@ -9,7 +9,7 @@ public class DetectableTarget : MonoBehaviour
         DetectableTargetManager.Instance.Register(this);
     }
 
-    void OnDestroy()
+    public void OnDestroy()
     {
         if (DetectableTargetManager.Instance != null)
             DetectableTargetManager.Instance.Deregister(this);
