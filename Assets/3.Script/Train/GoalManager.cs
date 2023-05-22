@@ -8,6 +8,7 @@ public class GoalManager : MonoBehaviour
 
     public void TrainGoal()
     {
+
         foreach (RailController rail in railCon)
         {
             rail.isGoal = true;

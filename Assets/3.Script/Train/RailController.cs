@@ -5,13 +5,13 @@ using UnityEngine;
 public class RailController : MonoBehaviour
 {
     [SerializeField] private GameObject[] railPrefabs;
-    private Transform[] railChild;
     [SerializeField] private RailController neighborRail;
+    [SerializeField] private GoalManager trainManager;
+
+    private Transform[] railChild;
+    public TrainMovement[] trainComponents;
     public RailLine railLine;
 
-
-    public TrainMovement[] trainComponents;
-    private GoalManager trainManager;
     public int dirCount;
     int childCount;
 
@@ -32,6 +32,7 @@ public class RailController : MonoBehaviour
 
     private void Awake()
     {
+
         trainManager = FindObjectOfType<GoalManager>();
         railChild = this.GetComponentsInChildren<Transform>();
 
@@ -48,7 +49,7 @@ public class RailController : MonoBehaviour
     private void OnEnable()
     {
         trainManager.railCon.Add(gameObject.GetComponent<RailController>());
-        if (!isEndRail)
+        if (!isEndRail && !isStartRail)
         {
             //기차이동 위치값 초기화
             //단, 골이 아닐때에만 활성화된다.
@@ -117,7 +118,9 @@ public class RailController : MonoBehaviour
     }
     public void RaycastOn()
     {
-
+        //실 게임 내에서는 isStartRail 철로 2개정도 깔아두고 2개는 기본 철로. 그 후에 붙이면 정상가동
+        //isEndRail은 두개만 붙여놓을것 
+        if(isStartRail) return;
         RaycastHit raycastHit = new RaycastHit();
 
         RailDir();
@@ -138,7 +141,7 @@ public class RailController : MonoBehaviour
                 if (isBack) neighborRail.isFront = true;
                 if (isLeft) neighborRail.isRight = true;
 
-                neighborRail.isInstance = true;
+                if(!neighborRail.isEndRail) neighborRail.isInstance = true;
 
                 neighborRail.railDirSelet();
                 neighborRail.RailSwitch();
@@ -179,8 +182,11 @@ public class RailController : MonoBehaviour
     }
     private void railDirSelet()
     {
-        if (isFront || isBack) dirCount = 5;
-        if (isRight || isLeft) dirCount = 0;
+        if (isFront) dirCount = 5;
+        if (isRight) dirCount = 0;
+        if (isBack) dirCount = 6;
+        if (isLeft) dirCount = 7;
+
         if (isFront && isRight) dirCount = 3;
         else if (isFront && isLeft) dirCount = 1;
         else if (isBack && isRight) dirCount = 4;
@@ -206,7 +212,7 @@ public class RailController : MonoBehaviour
         {
             neighborRail.isInstance = false;
             neighborRail.railLine.Line.SetActive(false);
-            Debug.Log(gameObject.name);
+
         }
 
 
@@ -220,6 +226,7 @@ public class RailController : MonoBehaviour
 
     public void EnqueueRail()
     {
+        
         trainComponents = FindObjectsOfType<TrainMovement>();
 
         for (int i = 0; i < trainComponents.Length; i++)
