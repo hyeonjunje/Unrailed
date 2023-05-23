@@ -20,7 +20,6 @@ public class BTNodeBase : BTElementBase
     public BehaviorTree.ENodeStatus LastStatus { get; protected set; } = BehaviorTree.ENodeStatus.Unknown;
     public bool DecoratorsPermitRunning { get; protected set; } = true;
 
-
     //생성자
     public BTNodeBase(string _Name = "", System.Func<BehaviorTree.ENodeStatus> _OnEnterFn = null,
     System.Func<BehaviorTree.ENodeStatus> _OnTickFn = null)
@@ -48,7 +47,6 @@ public class BTNodeBase : BTElementBase
     public BTNodeBase Add<T>(T newNode) where T : BTNodeBase
     {
         _children.Add(newNode);
-
         return newNode;
     }
 
@@ -187,13 +185,13 @@ public class BTNodeBase : BTElementBase
         }
 
         // 진행 단계
-        if (onEnterFn != null)
+        if (onTickFn != null)
         {
-            //onEnter 함수를 실행하여 반환된 상태로 업데이트
-            LastStatus = onEnterFn.Invoke(); 
+            //onTick 함수를 실행하여 반환된 상태로 업데이트
+            LastStatus = onTickFn.Invoke(); 
             tickedAnyNodes = true;
 
-            //Enter에서 반환한게 진행중이 아닌 성공/실패 상태일 때는 Tick된 모든 노드를 반환하고
+            //반환한게 진행중이 아닌 성공/실패 상태일 때는 Tick된 모든 노드를 반환하고
             // 
             if (LastStatus != BehaviorTree.ENodeStatus.InProgress)
                 return tickedAnyNodes;
@@ -202,7 +200,7 @@ public class BTNodeBase : BTElementBase
         // 자녀 노드가 없을 때
         if (_children.Count == 0)
         {
-            if (onEnterFn == null)
+            if (onTickFn == null)
                 LastStatus = BehaviorTree.ENodeStatus.Succeeded; //성공 상태로 업데이트
 
             return tickedAnyNodes; // 종료 
@@ -215,11 +213,21 @@ public class BTNodeBase : BTElementBase
             //자식 노드 가져오기
             var child = _children[childIndex];
 
-            //이전 데코레이터에 의해 활성화 되었나?
+            //이전 데코레이터에서 성공 여부
             bool childPreviouslyEnabledByDecorators = child.DecoratorsPermitRunning;
 
-            //현재 데코레이터에 의해 활성화 되는가?(전 데코레이터중 실패한 것이 있는가?)
+
+            //canRun 반환값
             bool childCurrentlyEnabledByDecorators = child.EvaluateDecorators();
+
+            //만약에 위에서 childPreviouslyEnabledByDecorators가
+            //1. false일 경우
+            //그러면 여기서 EvaluateDecorators를 할 때 canRun은 true고
+            //DecoratorsPermitRunning은 false인 상황이 발생해서 여기서 자식들을 다 초기화한 후
+            //true
+
+            //2. true일 경우
+            //자식들 초기화 안하고 true
 
 
             //자식 노드가 "InProgress" 상태일 때 
@@ -240,9 +248,10 @@ public class BTNodeBase : BTElementBase
 
 
             LastStatus = child.LastStatus;
-            //이전 데코레이터에서는 비활성화, 현재 데코레이터에서는 활성화인 경우
+            //다 초기화 때린 상황
             if (!childPreviouslyEnabledByDecorators && childCurrentlyEnabledByDecorators)
             {
+                //다음 자식들도 다 초기화..?
                 for (int futureIndex = childIndex + 1; futureIndex < _children.Count; ++futureIndex)
                 {
                     var futureChild = _children[futureIndex];
@@ -254,19 +263,25 @@ public class BTNodeBase : BTElementBase
                 }
             }
 
+
             if (child.LastStatus == BehaviorTree.ENodeStatus.InProgress)
                 return tickedAnyNodes;
+
+            //추가적인 평가가 필요 없는 상황
+            //Sequence의 경우, 실패 시 처음으로 돌아가기
             else if (child.LastStatus == BehaviorTree.ENodeStatus.Failed &&
                 !ContinueEvaluatingIfChildFailed())
             {
                 return tickedAnyNodes;
             }
+            //Selector의 경우, 성공 시 처음으로 돌아가기
             else if (child.LastStatus == BehaviorTree.ENodeStatus.Succeeded &&
                 !ContinueEvaluatingIfChildSucceeded())
             {
                 return tickedAnyNodes;
             }
         }
+        //상태 업데이트
         OnTickedAllChildren();
 
         return tickedAnyNodes;
