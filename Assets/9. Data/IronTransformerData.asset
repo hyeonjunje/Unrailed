@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19f4108ae9a77104fb09d915c3e4e5b2, type: 3}
+  m_Name: IronTransformerData
+  m_EditorClassIdentifier: 
+  isHeight: 0
+  originBlock: {fileID: 7206750060758765626, guid: 73026d663663e6f4b811f9eec4dd4002, type: 3}
+  transformedBlock:
+  - {fileID: 4019676374655654645, guid: eb8299f697336254582d15fe1233d999, type: 3}
+  - {fileID: 6463121478924112176, guid: 3ee268822b68bac488e11cab9d71f844, type: 3}
+  - {fileID: 927781646846498863, guid: 866b11b1b2006ad498819cfe493da50a, type: 3}
+  - {fileID: 1191618286484348492, guid: a1afc5cbfd5072d4eb8a70ac1d4d1977, type: 3}

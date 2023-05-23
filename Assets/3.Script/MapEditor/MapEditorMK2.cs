@@ -22,6 +22,10 @@ public class MapEditorMK2 : MonoBehaviour
     [SerializeField] private const int _defaultX = 40;
     [SerializeField] private const int _defaultY = 20;
 
+    [Header("Data")]
+    [SerializeField] private ItemPrefabData _itemPrefabData;
+    [SerializeField] private BlockTransformerData[] _blockTransformerData;
+
     [Header("ETC")]
     [SerializeField] private Transform _target;
 
@@ -70,7 +74,7 @@ public class MapEditorMK2 : MonoBehaviour
             for (int j = 0; j < _defaultX; j++)
             {
                 BlockMK2 go = Instantiate(_blockPrefab, _blockParent);
-                go.Init((int)EBlock.grass, _blocksMaterial[(int)EBlock.grass], _blocksMaterial[(int)EBlock.grass]);
+                InitBlock(go, (int)EBlock.grass);
                 go.transform.localPosition = new Vector3(j - _minX, 0, i - _minY);
                 groundList[i].Add(go);
             }
@@ -87,7 +91,7 @@ public class MapEditorMK2 : MonoBehaviour
             for(int i = 0; i < groundList.Count; i++)
             {
                 BlockMK2 go = Instantiate(_blockPrefab, _blockParent);
-                go.Init((int)EBlock.grass, _blocksMaterial[(int)EBlock.grass], _blocksMaterial[(int)EBlock.grass]);
+                InitBlock(go, (int)EBlock.grass);
                 go.transform.localPosition = new Vector3(x - _minX, 0, i - _minY);
                 groundList[i].Add(go);
             }
@@ -114,7 +118,9 @@ public class MapEditorMK2 : MonoBehaviour
             for(int i = 0; i < groundList[0].Count; i++)
             {
                 BlockMK2 go = Instantiate(_blockPrefab, _blockParent);
-                go.Init((int)EBlock.grass, _blocksMaterial[(int)EBlock.grass], _blocksMaterial[(int)EBlock.grass]);
+
+                InitBlock(go, (int)EBlock.grass);
+
                 go.transform.localPosition = new Vector3(i - _minX, 0, y - _minY);
                 groundList[groundList.Count - 1].Add(go);
             }
@@ -141,19 +147,14 @@ public class MapEditorMK2 : MonoBehaviour
                 int x = Mathf.RoundToInt(hit.point.x);
                 int z = Mathf.RoundToInt(hit.point.z);
 
-                _target.position = new Vector3(x, 0.51f, z);
+                _target.position = new Vector3(x, 10f, z);
 
 
                 if (Input.GetMouseButton(0))
                 {
                     // 다를 때만 다른 색으로 칠해준다.
                     if (groundList[z + _minY][x + _minX].Index != materialIndex)
-                    {
-                        if(materialIndex >= _blocksMaterial.Length)
-                            groundList[z + _minY][x + _minX].Init(materialIndex, null, _blocksMaterial[(int)EBlock.grass]);
-                        else
-                            groundList[z + _minY][x + _minX].Init(materialIndex, _blocksMaterial[materialIndex], _blocksMaterial[(int)EBlock.grass]);
-                    }
+                        InitBlock(groundList[z + _minY][x + _minX], materialIndex);
                 }
             }
         }
@@ -219,10 +220,7 @@ public class MapEditorMK2 : MonoBehaviour
 
                 BlockMK2 go = Instantiate(_blockPrefab, _blockParent);
 
-                if (index >= _blocksMaterial.Length)
-                    go.Init(index, null, _blocksMaterial[(int)EBlock.grass]);
-                else
-                    go.Init(index, _blocksMaterial[index], _blocksMaterial[(int)EBlock.grass]);
+                InitBlock(go, index);
 
                 go.transform.localPosition = new Vector3(j - _minX, 0, i - _minY);
                 groundList[i].Add(go);
@@ -231,5 +229,19 @@ public class MapEditorMK2 : MonoBehaviour
 
         // 카메라 위치 조정
         _mainCam.transform.position = new Vector3((groundList[0].Count - _defaultX) / 2, Camera.main.transform.position.y, (groundList.Count - _defaultY) / 2 + 2);
+    }
+
+    private void InitBlock(BlockMK2 block, int index)
+    {
+        if (index > (int)EBlock.blackRock)
+            index = (int)EBlock.grass;
+
+        BlockTransformerData blockTransformerData = null;
+        if (index == (int)EBlock.iron)
+            blockTransformerData = _blockTransformerData[0];
+        else if (index == (int)EBlock.blackRock)
+            blockTransformerData = _blockTransformerData[1];
+
+        block.Init(index, _blocksMaterial[index], _itemPrefabData.itemPrefabs[index], blockTransformerData);
     }
 }
