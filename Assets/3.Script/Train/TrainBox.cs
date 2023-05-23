@@ -28,7 +28,6 @@ public class TrainBox : TrainMovement
         if (!isBurn)
         {
             GiveMeItem();
-            
         }
     }
 
