@@ -11,6 +11,7 @@ public class TrainWater : TrainMovement
     [SerializeField] TrainMovement[] trains;
 
     [SerializeField] List<Renderer> waterColorList = new List<Renderer>();
+    [SerializeField] List<ParticleSystem> waterDestroyList= new List<ParticleSystem>();
 
 
     // 냉열일땐 R = 0 G = 10 B = 8 
@@ -93,8 +94,8 @@ public class TrainWater : TrainMovement
             {
                 for (int i = 0; i < trains.Length; i++)
                 {
-                    trains[i].gameObject.SetActive(false);
                     fireTime = 0;
+                    TrainOver();
                     //bool값으로 게임오버 시 시간이 안가는 조건문 만들기
                 }
             }
@@ -105,8 +106,10 @@ public class TrainWater : TrainMovement
     {
         fireTime = 0;
         isBurn = false;
+        _Red = 0;
+        _Green = 100;
+        _Blue = 80;
 
-  
         for (int i = 0; i < trains.Length; i++)
         {
             if(trains[i].trainNum == 0)
@@ -116,6 +119,8 @@ public class TrainWater : TrainMovement
             trains[i].isBurn = false;
             trains[i].fireEffect.gameObject.SetActive(false);
         }
+
+
     }
 
     private void FireColor()
@@ -134,7 +139,9 @@ public class TrainWater : TrainMovement
 
         for (int i = 0; i < waterColorList.Count; i++)
         {
+            var main = waterDestroyList[i].main;
             waterColorList[i].material.color = new Color(_Red * 0.01f, _Green * 0.01f, _Blue * 0.01f);
+            main.startColor = new Color(_Red * 0.01f, _Green * 0.01f, _Blue * 0.01f);
         }
     }
     private void Fire()

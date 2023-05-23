@@ -14,6 +14,8 @@ public class TrainMovement : MonoBehaviour
     public Transform trainMesh;
 
     [SerializeField] private int targetCount;
+    [SerializeField] protected GameObject destroyParticle;
+
     public ParticleSystem fireEffect;
 
     public bool isGoal;
@@ -31,7 +33,10 @@ public class TrainMovement : MonoBehaviour
     protected void GetMesh()
     {
         trainMesh = transform.GetChild(0).GetComponent<Transform>();
+        //destroyParticle = transform.GetChild(1).GetComponent<GameObject>();
         fireEffect = GetComponentInChildren<ParticleSystem>();
+        destroyParticle.SetActive(false);
+        trainMesh.gameObject.SetActive(true);
     }
    
 
@@ -70,11 +75,14 @@ public class TrainMovement : MonoBehaviour
 
         else
         {
-            Destroy(gameObject);
+            TrainOver();
         }
-
     }
-
+    protected void TrainOver()
+    {
+        trainMesh.gameObject.SetActive(false);
+        destroyParticle.SetActive(true);
+    }
     public void RotateTrain()
     {
         if(rails != null)
