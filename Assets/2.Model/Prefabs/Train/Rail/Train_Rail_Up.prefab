@@ -201,7 +201,7 @@ GameObject:
   - component: {fileID: 1043322077546499219}
   - component: {fileID: 7085176384660587328}
   m_Layer: 0
-  m_Name: Train_Rail_Vertical
+  m_Name: Train_Rail_Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
