@@ -211,19 +211,23 @@ public class MapEditorMK2 : MonoBehaviour
         _minX = (_defaultX / 2) - 1;
         _minY = (_defaultY / 2) - 1;
 
-        for (int i = 0; i < y; i++)
+        for(int i = 0; i < y; i++)
         {
             groundList.Add(new List<BlockMK2>());
             for (int j = 0; j < x; j++)
             {
-                int index = mapData.mapData[i].arr[j];
-
                 BlockMK2 go = Instantiate(_blockPrefab, _blockParent);
-
-                InitBlock(go, index);
-
                 go.transform.localPosition = new Vector3(j - _minX, 0, i - _minY);
                 groundList[i].Add(go);
+            }
+        }
+
+        for (int i = 0; i < y; i++)
+        {
+            for (int j = 0; j < x; j++)
+            {
+                int index = mapData.mapData[i].arr[j];
+                InitBlock(groundList[i][j], index);
             }
         }
 
@@ -233,15 +237,26 @@ public class MapEditorMK2 : MonoBehaviour
 
     private void InitBlock(BlockMK2 block, int index)
     {
-        if (index > (int)EBlock.blackRock)
-            index = (int)EBlock.grass;
-
         BlockTransformerData blockTransformerData = null;
         if (index == (int)EBlock.iron)
             blockTransformerData = _blockTransformerData[0];
         else if (index == (int)EBlock.blackRock)
             blockTransformerData = _blockTransformerData[1];
 
-        block.Init(index, _blocksMaterial[index], _itemPrefabData.itemPrefabs[index], blockTransformerData);
+        Material blockMaterial = null;
+
+        if (index > (int)EBlock.blackRock)
+            blockMaterial = _blocksMaterial[(int)EBlock.grass];
+        else
+            blockMaterial = _blocksMaterial[index];
+
+        StartCoroutine(InitBlockCo(block, blockMaterial, index, blockTransformerData));
+    }
+
+    // 한 프레임 후에 실행해야 제대로 작동함
+    private IEnumerator InitBlockCo(BlockMK2 block, Material blockMaterial, int index, BlockTransformerData blockTransformerData)
+    {
+        yield return null;
+        block.Init(index, blockMaterial, _itemPrefabData.itemPrefabs[index], blockTransformerData);
     }
 }
