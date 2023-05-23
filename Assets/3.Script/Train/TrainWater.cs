@@ -119,10 +119,7 @@ public class TrainWater : TrainMovement
             trains[i].isBurn = false;
             trains[i].fireEffect.gameObject.SetActive(false);
         }
-
-
     }
-
     private void FireColor()
     {
         _Red += Time.deltaTime * 4f;
@@ -134,7 +131,6 @@ public class TrainWater : TrainMovement
         if (_Green < 50)
         {
             _Blue -= Time.deltaTime * 1.5f;
-
         }
 
         for (int i = 0; i < waterColorList.Count; i++)

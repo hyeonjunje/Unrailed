@@ -2739,8 +2739,20 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 227030518030461874, guid: c18ae22b8d8dd8e4093323dab777ec21, type: 3}
+      propertyPath: CollisionModule.m_Bounce.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 227030518030461874, guid: c18ae22b8d8dd8e4093323dab777ec21, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 227030518030461874, guid: c18ae22b8d8dd8e4093323dab777ec21, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 227030518030461874, guid: c18ae22b8d8dd8e4093323dab777ec21, type: 3}
       propertyPath: InitialModule.startLifetime.scalar
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 227030518030461874, guid: c18ae22b8d8dd8e4093323dab777ec21, type: 3}
       propertyPath: InitialModule.startColor.maxColor.b
@@ -2838,8 +2850,20 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 227030518030461874, guid: c18ae22b8d8dd8e4093323dab777ec21, type: 3}
+      propertyPath: CollisionModule.m_Bounce.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 227030518030461874, guid: c18ae22b8d8dd8e4093323dab777ec21, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 227030518030461874, guid: c18ae22b8d8dd8e4093323dab777ec21, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 227030518030461874, guid: c18ae22b8d8dd8e4093323dab777ec21, type: 3}
       propertyPath: InitialModule.startLifetime.scalar
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c18ae22b8d8dd8e4093323dab777ec21, type: 3}
@@ -2916,8 +2940,20 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 227030518030461874, guid: c18ae22b8d8dd8e4093323dab777ec21, type: 3}
+      propertyPath: CollisionModule.m_Bounce.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 227030518030461874, guid: c18ae22b8d8dd8e4093323dab777ec21, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 227030518030461874, guid: c18ae22b8d8dd8e4093323dab777ec21, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 227030518030461874, guid: c18ae22b8d8dd8e4093323dab777ec21, type: 3}
       propertyPath: InitialModule.startLifetime.scalar
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 227030518030461874, guid: c18ae22b8d8dd8e4093323dab777ec21, type: 3}
       propertyPath: InitialModule.startColor.maxColor.b

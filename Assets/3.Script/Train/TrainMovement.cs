@@ -38,8 +38,6 @@ public class TrainMovement : MonoBehaviour
         destroyParticle.SetActive(false);
         trainMesh.gameObject.SetActive(true);
     }
-   
-
 
     protected void TrainMovePos()
     {
@@ -59,30 +57,45 @@ public class TrainMovement : MonoBehaviour
 
         if (rails.Count != 0)
         {
-            // 큐에 들어온 레일 위치로 이동
             RotateTrain();
             transform.position = Vector3.MoveTowards(transform.position, rails.Peek().transform.position, _trainMoveSpeed * Time.deltaTime);
-            // transform.LookAt(rails.Peek().transform.position);
-            //var trainRotate = rails.Peek().transform.position;
-            //Debug.Log(trainRotate);
-            //transform.rotation = Quaternion.Slerp(transform.rotation, trainRotate, trainRotateSpeed * Time.deltaTime);
+
 
             if (transform.position == rails.Peek().transform.position)
             {
                 rails.Dequeue();
             }
+
+            // 큐에 들어온 레일 위치로 이동
+            // transform.LookAt(rails.Peek().transform.position);
+            //var trainRotate = rails.Peek().transform.position;
+            //Debug.Log(trainRotate);
+            //transform.rotation = Quaternion.Slerp(transform.rotation, trainRotate, trainRotateSpeed * Time.deltaTime);
+
+            
         }
 
         else
         {
             TrainOver();
+
+            if (isGoal)
+            {
+                //클리어 조건
+            }
+            else
+            {
+                //오버 조건
+            }
         }
     }
+
     protected void TrainOver()
     {
         trainMesh.gameObject.SetActive(false);
         destroyParticle.SetActive(true);
     }
+
     public void RotateTrain()
     {
         if(rails != null)
@@ -93,8 +106,7 @@ public class TrainMovement : MonoBehaviour
     }
     public void EnqueueRailPos(RailController gameObject)
     {
-        //rails.Add(gameObject);
+        //큐에 추가
         rails.Enqueue(gameObject);
-        Debug.Log("큐에 추가");
     }
 }

@@ -183,7 +183,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 781804305}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.5569997}
+  m_LocalPosition: {x: 0, y: 0, z: 0.951}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 227030519451500717}
@@ -3845,7 +3845,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 227030518030461872, guid: c18ae22b8d8dd8e4093323dab777ec21, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.268
+      value: -1.54
       objectReference: {fileID: 0}
     - target: {fileID: 227030518030461872, guid: c18ae22b8d8dd8e4093323dab777ec21, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3892,8 +3892,20 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 227030518030461874, guid: c18ae22b8d8dd8e4093323dab777ec21, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 227030518030461874, guid: c18ae22b8d8dd8e4093323dab777ec21, type: 3}
+      propertyPath: ShapeModule.randomDirectionAmount
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 227030518030461874, guid: c18ae22b8d8dd8e4093323dab777ec21, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 227030518030461874, guid: c18ae22b8d8dd8e4093323dab777ec21, type: 3}
       propertyPath: InitialModule.startLifetime.scalar
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 227030518030461874, guid: c18ae22b8d8dd8e4093323dab777ec21, type: 3}
       propertyPath: InitialModule.startColor.maxColor.b
@@ -3947,7 +3959,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 227030518030461872, guid: c18ae22b8d8dd8e4093323dab777ec21, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.1919994
+      value: -0.96
       objectReference: {fileID: 0}
     - target: {fileID: 227030518030461872, guid: c18ae22b8d8dd8e4093323dab777ec21, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3994,8 +4006,20 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 227030518030461874, guid: c18ae22b8d8dd8e4093323dab777ec21, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 227030518030461874, guid: c18ae22b8d8dd8e4093323dab777ec21, type: 3}
+      propertyPath: ShapeModule.randomDirectionAmount
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 227030518030461874, guid: c18ae22b8d8dd8e4093323dab777ec21, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 227030518030461874, guid: c18ae22b8d8dd8e4093323dab777ec21, type: 3}
       propertyPath: InitialModule.startLifetime.scalar
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 227030518030461874, guid: c18ae22b8d8dd8e4093323dab777ec21, type: 3}
       propertyPath: InitialModule.startColor.maxColor.b

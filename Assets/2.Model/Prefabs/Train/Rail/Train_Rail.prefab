@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &949181838671956458
 Transform:
   m_ObjectHideFlags: 0
@@ -61,8 +61,9 @@ MonoBehaviour:
   - {fileID: 4547329205237366946}
   - {fileID: 1612486281182742952}
   neighborRail: {fileID: 0}
-  railLine: {fileID: 0}
+  trainManager: {fileID: 0}
   trainComponents: []
+  railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
   isGoal: 0
@@ -72,6 +73,8 @@ MonoBehaviour:
   isRight: 0
   isStartRail: 0
   isEndRail: 0
+  poolingTime: 300
+  lifeTime: 0
 --- !u!1001 &371693026464673480
 PrefabInstance:
   m_ObjectHideFlags: 0
