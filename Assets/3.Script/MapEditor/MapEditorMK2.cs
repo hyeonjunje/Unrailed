@@ -233,6 +233,8 @@ public class MapEditorMK2 : MonoBehaviour
 
         // 카메라 위치 조정
         _mainCam.transform.position = new Vector3((groundList[0].Count - _defaultX) / 2, Camera.main.transform.position.y, (groundList.Count - _defaultY) / 2 + 2);
+
+        SetHeightMap();
     }
 
     private void InitBlock(BlockMK2 block, int index)
@@ -258,5 +260,24 @@ public class MapEditorMK2 : MonoBehaviour
     {
         yield return null;
         block.Init(index, blockMaterial, _itemPrefabData.itemPrefabs[index], blockTransformerData);
+    }
+
+    // 버튼에도 할꺼야
+    public void SetHeightMap()
+    {
+        int x = groundList[0].Count;
+        int y = groundList.Count;
+        for (int i = 0; i < y; i++)
+        {
+            for(int j = 0; j < x; j++)
+            {
+                if(groundList[i][j].Index == (int)EBlock.blackRock)
+                {
+                    int height = groundList[i][j].GetHeight();
+                    Transform child = groundList[i][j].transform.GetChild(0);
+                    child.localScale = Vector3.one + Vector3.up * height * 0.3f;
+                }
+            }
+        }
     }
 }
