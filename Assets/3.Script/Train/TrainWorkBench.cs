@@ -9,12 +9,12 @@ public class TrainWorkBench : TrainMovement
     
     Animator anim;
     [SerializeField] GameObject prefabsRail;
-
     [SerializeField] Transform[] railSpawnPos;
 
     public int spawnIndex;
     private void Awake()
     {
+        anim = GetComponent<Animator>();
         GetMesh();
         fireEffect.gameObject.SetActive(false);
     }
@@ -22,14 +22,17 @@ public class TrainWorkBench : TrainMovement
     void Update()
     {
         TrainMovePos();
-        if (!isBurn)
-        {
-        }
+        anim.SetBool("isBurn", isBurn);
     }
 
     public void MakingRail()
     {
+
+        if (!isBurn)
+        {
+            anim.SetInteger("GetRails", spawnIndex);
+        }
         //스폰되는 레일 로직 쓰기
-        
+     
     }
 }

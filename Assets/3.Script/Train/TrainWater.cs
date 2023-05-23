@@ -10,13 +10,51 @@ public class TrainWater : TrainMovement
     [SerializeField] private float fireLimit;
     [SerializeField] TrainMovement[] trains;
 
+    [SerializeField] List<Renderer> waterColorList = new List<Renderer>();
+
+
+    // 냉열일땐 R = 0 G = 10 B = 8 
+    // 과열일땐 R = 10 G = 3 B = 3 
+
+
+    [SerializeField] private float _R;
+    [SerializeField] private float _G;
+    [SerializeField] private float _B;
+    #region 과열 색상 설정
+    private float _Red
+    {
+        get { return _R; }
+        set
+        {
+            _R = value;
+            _R = Mathf.Clamp(_R, 0, 100);
+        }
+    }
+    private float _Blue
+    {
+        get { return _B; }
+        set
+        {
+            _B = value;
+            _B = Mathf.Clamp(_B, 30, 80);
+        }
+    }
+    private float _Green
+    {
+        get { return _G; }
+        set
+        {
+            _G = value;
+            _G = Mathf.Clamp(_G, 30, 100);
+        }
+    }
+    #endregion 
 
     // Start is called before the first frame update
     void Awake()
     {
         GetMesh();
         trains = FindObjectsOfType<TrainMovement>();
-
 
     }
 
@@ -25,24 +63,31 @@ public class TrainWater : TrainMovement
         fireTime = 0;
         GetMesh();
         fireEffect.gameObject.SetActive(false);
+        _Red = 0;
+        _Green = 100;
+        _Blue = 80;
     }
 
-    // Update is called once per frame
     void Update()
     {
         fireTime += Time.deltaTime;
         TrainMovePos();
+        FireColor();
         FireOn();
     }
 
     public void FireOn()
     {
         //불타는중
-        if(fireLimit < fireTime)
+        if (fireLimit < fireTime)
         {
             isBurn = true;
+
             Fire();
+
             fireEffect.gameObject.SetActive(true);
+
+
             //게임 오버
             if (overFireTime < fireTime)
             {
@@ -55,30 +100,57 @@ public class TrainWater : TrainMovement
             }
         }
     }
+
     public void FireOff()
     {
         fireTime = 0;
         isBurn = false;
+
+  
         for (int i = 0; i < trains.Length; i++)
         {
+            if(trains[i].trainNum == 0)
+            {
+                trains[i].GetComponent<TrainEngine>().EngineCool();
+            }
             trains[i].isBurn = false;
             trains[i].fireEffect.gameObject.SetActive(false);
         }
     }
 
+    private void FireColor()
+    {
+        _Red += Time.deltaTime * 4f;
+
+        if (_Red > 50)
+        {
+            _Green -= Time.deltaTime * 4f;
+        }
+        if (_Green < 50)
+        {
+            _Blue -= Time.deltaTime * 1.5f;
+
+        }
+
+        for (int i = 0; i < waterColorList.Count; i++)
+        {
+            waterColorList[i].material.color = new Color(_Red * 0.01f, _Green * 0.01f, _Blue * 0.01f);
+        }
+    }
     private void Fire()
     {
-        if(70 < fireTime)
+        if (70 < fireTime)
         {
             for (int i = 0; i < trains.Length; i++)
             {
-                if(trains[i].trainNum == 0)
+                if (trains[i].trainNum == 0)
                 {
                     trains[i].isBurn = true;
-                    //파티클 시스템 연기에서 불로 교체할것
+                    trains[i].GetComponent<TrainEngine>().EngineFire();
                 }
             }
         }
+
         if (80 < fireTime)
         {
             for (int i = 0; i < trains.Length; i++)
@@ -88,9 +160,9 @@ public class TrainWater : TrainMovement
                     trains[i].isBurn = true;
                     trains[i].fireEffect.gameObject.SetActive(true);
                 }
-
             }
         }
+
         if (90 < fireTime)
         {
             for (int i = 0; i < trains.Length; i++)
@@ -100,8 +172,6 @@ public class TrainWater : TrainMovement
                     trains[i].isBurn = true;
                     trains[i].fireEffect.gameObject.SetActive(true);
                 }
-          
-
             }
         }
     }
