@@ -104,10 +104,19 @@ public class CharacterAgent : CharacterBase
 
         NavMeshHit hitResult;
         if (NavMesh.SamplePosition(searchLocation, out hitResult, _nearestPointSearchRange, NavMesh.AllAreas))
+        {
             return hitResult.position;
 
-        return transform.position;
+        }
+        else
+        {
+            Debug.Log("갈데가없어용");
+            return transform.position;
+        }
     }
+
+
+
 
     public virtual void CancelCurrentCommand() //목적지 초기화
     {
