@@ -33,9 +33,7 @@ public class ShopManager : MonoBehaviour
         endStation[0].newGameStart[1].SetActive(true);
         endStation.Clear();
         anim.SetBool("isReady", false);
-        trainEngine.anim.SetBool("CountDown", true);
         StartCoroutine(TrainStartMove());
-        trainEngine.anim.SetBool("CountDown", false);
 
     }
 
@@ -59,11 +57,18 @@ public class ShopManager : MonoBehaviour
 
     public IEnumerator TrainStartMove()
     {
+
+        yield return new WaitForSeconds(1f);
+        trainEngine.anim.SetBool("CountDown", true);
+        yield return new WaitForSeconds(0.1f);
+        trainEngine.anim.SetBool("CountDown", false);
         yield return new WaitForSeconds(readyCount);
         //5초 지나는 ui 효과
         trainEngine.isGoal = false;
         trainEngine.isReady = false;
+
         trainWater.FireOff();
         test.SetActive(true);
+
     }
 }
