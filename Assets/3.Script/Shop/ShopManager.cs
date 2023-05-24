@@ -33,7 +33,10 @@ public class ShopManager : MonoBehaviour
         endStation[0].newGameStart[1].SetActive(true);
         endStation.Clear();
         anim.SetBool("isReady", false);
+        trainEngine.anim.SetBool("CountDown", true);
         StartCoroutine(TrainStartMove());
+        trainEngine.anim.SetBool("CountDown", false);
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -58,9 +61,9 @@ public class ShopManager : MonoBehaviour
     {
         yield return new WaitForSeconds(readyCount);
         //5초 지나는 ui 효과
-        trainWater.FireOff();
         trainEngine.isGoal = false;
         trainEngine.isReady = false;
+        trainWater.FireOff();
         test.SetActive(true);
     }
 }

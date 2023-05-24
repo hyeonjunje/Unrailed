@@ -216,7 +216,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &110079959
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1260,7 +1260,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 2fccdb2c70d103145afb68ecdcfef32e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1304,7 +1304,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   endStation: []
   anim: {fileID: 0}
-  readyCount: 3
+  readyCount: 5
   test: {fileID: 1177860126}
 --- !u!1 &968018997
 GameObject:
@@ -2554,6 +2554,10 @@ PrefabInstance:
       propertyPath: trains.Array.data[3]
       value: 
       objectReference: {fileID: 300293463}
+    - target: {fileID: 2821878311088089043, guid: 6c7db0888c723e548aff18e04ba50afa, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5731449429487099751, guid: 6c7db0888c723e548aff18e04ba50afa, type: 3}
       propertyPath: m_RootOrder
       value: 6

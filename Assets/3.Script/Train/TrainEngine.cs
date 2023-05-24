@@ -6,6 +6,8 @@ public class TrainEngine : TrainMovement
     [SerializeField] private List<GameObject> smokeMesh = new List<GameObject>();
     [Header("In Game Obj Not Prefabs")]
     [SerializeField] protected List<TrainMovement> trains = new List<TrainMovement>();
+
+    public Animator anim;
     // Start is called before the first frame update
     void Awake()
     {
@@ -14,6 +16,7 @@ public class TrainEngine : TrainMovement
         smokeMesh[0].SetActive(false);
         smokeMesh[1].SetActive(false);
         smokeMesh[1].SetActive(true);
+        TryGetComponent(out anim);
     }
 
 
@@ -42,6 +45,8 @@ public class TrainEngine : TrainMovement
                 {
                     trains[i].isReady = false;
                 }
+                anim.SetBool("CountDown", false);
+
             }
             if (isGoal)
             {
