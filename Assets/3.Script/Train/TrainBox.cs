@@ -17,7 +17,6 @@ public class TrainBox : TrainMovement
         GetMesh();
         workBench = FindObjectOfType<TrainWorkBench>();
         fireEffect.gameObject.SetActive(false);
-
     }
 
     // Update is called once per frame

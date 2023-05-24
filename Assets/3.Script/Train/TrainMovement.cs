@@ -15,12 +15,12 @@ public class TrainMovement : MonoBehaviour
 
     [SerializeField] private int targetCount;
     [SerializeField] protected GameObject destroyParticle;
-
+    [SerializeField] protected ShopManager shop;
     public ParticleSystem fireEffect;
 
     public bool isGoal;
     public bool isBurn;
-   
+    public bool isReady;
 
     public float trainSpeed = 0.5f;
     public float _trainRotateSpeed;
@@ -33,7 +33,7 @@ public class TrainMovement : MonoBehaviour
     protected void GetMesh()
     {
         trainMesh = transform.GetChild(0).GetComponent<Transform>();
-        //destroyParticle = transform.GetChild(1).GetComponent<GameObject>();
+        shop = FindObjectOfType<ShopManager>();
         fireEffect = GetComponentInChildren<ParticleSystem>();
         destroyParticle.SetActive(false);
         trainMesh.gameObject.SetActive(true);
@@ -43,17 +43,24 @@ public class TrainMovement : MonoBehaviour
     {
         listToQue = rails.ToList();
 
-        if (isGoal)
+        if (!isReady)
         {
-            _trainMoveSpeed = goalSpeed;
-            _trainRotateSpeed = goalSpeed;
+            if (isGoal)
+            {
+                _trainMoveSpeed = goalSpeed;
+                _trainRotateSpeed = goalSpeed;
+            }
+            else
+            {
+                _trainMoveSpeed = trainSpeed;
+                _trainRotateSpeed = trainSpeed * 2;
+            }
+
         }
         else
         {
-            _trainMoveSpeed = trainSpeed;
-            _trainRotateSpeed = trainSpeed * 2;
+            _trainMoveSpeed = 0;
         }
-
 
         if (rails.Count != 0)
         {
@@ -77,16 +84,23 @@ public class TrainMovement : MonoBehaviour
 
         else
         {
-            TrainOver();
-
             if (isGoal)
             {
                 //클리어 조건
+                //제일 먼저 도착하는 엔진을 멈추게 하면 뒤 따라오는 애들 전원 정지로 구현
+
+                if (trainNum == 0)
+                {
+                    isReady = true;
+                    shop.ShopOn();
+                }
             }
             else
             {
                 //오버 조건
+                TrainOver();
             }
+
         }
     }
 
