@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     public Transform rightHand;
     public Transform betweenTwoHands;
     public Transform rayStart;
+    [SerializeField] WaterGauge waterGauge;
     #endregion
     #region 이동 관련 변수
     public float speed = 15f;
@@ -83,27 +84,14 @@ public class Player : MonoBehaviour
         zAxis = Input.GetAxisRaw("Vertical");
         dashKeyDown = Input.GetButtonDown("Dash");
         getItemKeyDown = Input.GetButtonDown("getItem");
-       /* if(Input.GetKey(KeyCode.E))
-        {
-            Debug.Log("캐라");
-            _animator.SetBool("isDig",true);
-        }
-        else
-        {
-            _animator.SetBool("isMove", true);
-            _animator.SetBool("isDig", false);
-        }
-        */
     }
 
     void Walk()
     {
         if (!isDash) moveVec = new Vector3(xAxis, 0, zAxis).normalized;
 
-      //  rb.velocity = moveVec * speed;
         Vector3 getvel = new Vector3(xAxis, 0, zAxis) * speed* 3f;
         rb.velocity = getvel;
-        //transform.position += moveVec * speed * Time.deltaTime;
         _animator.SetBool("isWalk", moveVec != Vector3.zero);
     }
 
@@ -116,7 +104,6 @@ public class Player : MonoBehaviour
     {
         if (dashKeyDown && !isDash)
         {
-
             isDash = true;
             speed *= 2;
             Invoke("DashOff", dashCool);
@@ -183,7 +170,6 @@ public class Player : MonoBehaviour
             {
                 ReplaceItem();
             }
-            
             
         }
     }
@@ -278,17 +264,16 @@ public class Player : MonoBehaviour
             }
         }
     }
-
+    
     void DigUp()
     {
         RaycastHit hit;
-        Debug.DrawRay(transform.TransformPoint(0, 0.4f, 0), transform.forward * pickUpDistance*0.5f, Color.red) ;
-        if (Physics.Raycast(transform.TransformPoint(0, 0.4f, 0), transform.forward, out hit, pickUpDistance))
+        Debug.DrawRay(transform.TransformPoint(0, 0.1f, 0), transform.forward * pickUpDistance*0.5f, Color.red) ;
+        if (Physics.Raycast(transform.TransformPoint(0, 0.1f, 0), transform.forward, out hit, pickUpDistance))
         {
             Debug.Log("발사" + hit.transform.name);
             IDig target = hit.collider.GetComponent<IDig>();
             
-           
 
             if (target != null )
             {
@@ -297,12 +282,32 @@ public class Player : MonoBehaviour
                     target.OnDig(hit.point);
                     _animator.SetBool("isDig",true);
                 }
-                if (hit.transform.name == "Tree02(Clone)" && item.name == "ItemAxe(Clone)")
+                else if (hit.transform.name == "Tree02(Clone)" && item.name == "ItemAxe(Clone)")
                 {
                     target.OnDig(hit.point);
                     _animator.SetBool("isDig", true);
                 }
-                if (hit.transform.name == "Iron(Clone)" && item.name == "ItemPick(Clone)")
+                else if (hit.transform.name == "ItemIron00(Clone)" && item.name == "ItemPick(Clone)")
+                {
+                    target.OnDig(hit.point);
+                    _animator.SetBool("isDig", true);
+                }
+                else if (hit.transform.name == "ItemIron01(Clone)" && item.name == "ItemPick(Clone)")
+                {
+                    target.OnDig(hit.point);
+                    _animator.SetBool("isDig", true);
+                }
+                else if (hit.transform.name == "ItemIron02(Clone)" && item.name == "ItemPick(Clone)")
+                {
+                    target.OnDig(hit.point);
+                    _animator.SetBool("isDig", true);
+                }
+                else if (hit.transform.name == "ItemIron03(Clone)" && item.name == "ItemPick(Clone)")
+                {
+                    target.OnDig(hit.point);
+                    _animator.SetBool("isDig", true);
+                }
+                else if (hit.transform.name == "Iron(Clone)" && item.name == "ItemPick(Clone)")
                 {
                     target.OnDig(hit.point);
                     _animator.SetBool("isDig", true);
