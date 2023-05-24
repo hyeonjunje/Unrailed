@@ -9,6 +9,7 @@ TagManager:
   - Item
   - Items
   - Empty
+  - WaterBox
   layers:
   - Default
   - TransparentFX

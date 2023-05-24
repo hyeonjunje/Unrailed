@@ -37,7 +37,7 @@ public class CharacterAgent : CharacterBase
     protected void Update()
     {
         //탐색중이 아니고, 목적지 설정이 되었고, 남은 거리가 멈춤 거리보다 적으면
-        if ((_agent.remainingDistance <= _agent.stoppingDistance)&&_destinationSet&&!_agent.pathPending)
+        if ((_agent.remainingDistance <= _agent.stoppingDistance)&&_destinationSet)
         //if (!_agent.pathPending && _destinationSet && !_agent.isOnOffMeshLink&&(_agent.remainingDistance <= _agent.stoppingDistance))
         {
             //도착으로 간주   
@@ -45,14 +45,15 @@ public class CharacterAgent : CharacterBase
             _reachedDestination = true;
         }
 
-        if(_agent.remainingDistance > _agent.stoppingDistance&&_destinationSet)
+/*        if(_agent.remainingDistance > _agent.stoppingDistance&&_destinationSet)
         {
             _reachedDestination = false;
         }
-
+*/
 
         if (_agent.isOnOffMeshLink) //오프 메시 링크 위에 있고
         {
+            Debug.Log("오프메시링크에 있어용");
             if (OffMeshLinkStatus == EOffmeshLinkStatus.NotStarted) //시작하지 않았다면
                 StartCoroutine(FollowOffmeshLink()); // 쫓아가기
         }
@@ -102,6 +103,8 @@ public class CharacterAgent : CharacterBase
         searchLocation += Random.Range(-range, range) * Vector3.forward;
         searchLocation += Random.Range(-range, range) * Vector3.right;
 
+        //areaMask 에 해당하는 NavMesh 중에서 maxDistance 반경 내에서
+        //searchLocation 가장 가까운 위치를 찾아서 그 결과를 hitResult에 담음
         NavMeshHit hitResult;
         if (NavMesh.SamplePosition(searchLocation, out hitResult, _nearestPointSearchRange, NavMesh.AllAreas))
         {
@@ -121,7 +124,6 @@ public class CharacterAgent : CharacterBase
     public virtual void CancelCurrentCommand() //목적지 초기화
     {
         _agent.ResetPath();
-
         _destinationSet = false;
         _reachedDestination = false;
         OffMeshLinkStatus = EOffmeshLinkStatus.NotStarted;
@@ -129,6 +131,7 @@ public class CharacterAgent : CharacterBase
 
     public virtual void MoveTo(Vector3 destination) // 목적지로 이동
     {
+
         CancelCurrentCommand(); // 리셋하고
         SetDestination(destination); //목적지 설정을 하고
 
