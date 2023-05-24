@@ -2,6 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public class BlockNode
+{
+    public BlockMK2 block;
+    public Vector3 dir;
+    public int distance;
+
+    public BlockNode(BlockMK2 block, Vector3 dir, int distance)
+    {
+        this.block = block;
+        this.dir = dir;
+        this.distance = distance;
+    }
+}
+
 public class BlockMK2 : MonoBehaviour
 {
     [SerializeField] private LayerMask _blockLayer;
@@ -137,8 +151,12 @@ public class BlockMK2 : MonoBehaviour
         go.transform.localRotation = Quaternion.identity;
 
         float randomHeight = 0;
-        if (Random.Range(1, 4) == 1)
-            randomHeight = 0.1f;
+
+        if(!_blockTransformerData.isHeight)
+        {
+            if (Random.Range(1, 4) == 1)
+                randomHeight = 0.1f;
+        }
 
         go.transform.localScale = Vector3.one + Vector3.up * randomHeight;
     }
@@ -154,4 +172,48 @@ public class BlockMK2 : MonoBehaviour
         go.transform.localPosition = Vector3.up * 0.5f;
         go.transform.localRotation = Quaternion.Euler(Vector3.up * angles[Random.Range(0, angles.Length)]);
     }
+
+
+
+
+    public int GetHeight()
+    {
+        int rayLength = 1;
+
+        Queue<BlockNode> blockQueue = new Queue<BlockNode>();
+        for(int i = 0; i < dir.Length; i++)
+        {
+            blockQueue.Enqueue(new BlockNode(this, dir[i], 0));
+        }
+
+        while(blockQueue.Count != 0)
+        {
+            BlockNode currentBlockNode = blockQueue.Dequeue();
+
+            BlockMK2 currentBlock = currentBlockNode.block;
+            Vector3 currentDir = currentBlockNode.dir;
+            int currentDistance = currentBlockNode.distance;
+
+            if (Physics.Raycast(currentBlock.transform.position, currentDir, out RaycastHit hit, 1f, _blockLayer))
+            {
+                BlockMK2 block = hit.transform.GetComponent<BlockMK2>();
+                if(block != null)
+                {
+                    if(block.isTransformed)
+                    {
+                        blockQueue.Enqueue(new BlockNode(block, currentDir, currentDistance + 1));
+                    }
+                    else
+                    {
+                        blockQueue = new Queue<BlockNode>();
+                        rayLength = currentDistance;
+                    }
+                }
+            }
+        }
+
+
+        return rayLength;
+    }
+
 }
