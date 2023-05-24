@@ -5,7 +5,7 @@ using UnityEngine;
 public class ReSource : MonoBehaviour, IDig
 {
     [SerializeField] int ResourceHp = 3;
-    [SerializeField] float Delay = 1f;
+    [SerializeField] float Delay = 0.5f;
     [SerializeField] Transform ItemPrefab;
     private float ResourceScale = 1f;
     private float CurrentTime = 0f;
@@ -17,7 +17,21 @@ public class ReSource : MonoBehaviour, IDig
         if (!isDig)
         {
             StartCoroutine(OnDig_co());
-            
+        }
+    }
+
+    private void DisableAllChildColliders(Transform parent)
+    {
+        foreach (Transform child in parent)
+        {
+            Collider childCollider = child.GetComponent<Collider>();
+            if (childCollider != null)
+            {
+                childCollider.enabled = false;
+            }
+
+            // ÀÚ½Ä °´Ã¼ÀÇ ÀÚ½Ä °´Ã¼µéµµ Àç±ÍÀûÀ¸·Î Å½»ö
+            DisableAllChildColliders(child);
         }
     }
 
@@ -28,12 +42,15 @@ public class ReSource : MonoBehaviour, IDig
         NewItem.SetParent(transform.parent);
         NewItem.localPosition = (new Vector3(0, 0.5f, 0));
         NewItem.localRotation = Quaternion.identity;
-        NewItem.GetComponent<BoxCollider>().enabled = false;
+
+        DisableAllChildColliders(NewItem);
     }
 
     private IEnumerator OnDig_co()
     {
         isDig = true;
+
+        yield return new WaitForSeconds(Delay);
 
         if (ResourceHp > 0)
         {
@@ -45,9 +62,10 @@ public class ReSource : MonoBehaviour, IDig
         {
             SpawnItem();
             Destroy(gameObject, 0.5f);
-            //  gameObject.SetActive(false);
         }
-        CurrentTime = 0;
+        isDig = false;
+
+        /*CurrentTime = 0;
         while (true)
         {
             CurrentTime += Time.deltaTime;
@@ -56,9 +74,8 @@ public class ReSource : MonoBehaviour, IDig
                 isDig = false;
                 break;
             }
-            yield return null;
 
-        }
+        }*/
 
     }
 }

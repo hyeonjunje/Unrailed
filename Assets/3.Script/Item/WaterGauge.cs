@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WaterGauge : MonoBehaviour
+public class WaterGauge : MonoBehaviour 
 {
+
     public Slider watergauge;
     public Transform player;
-    public LayerMask waterLayer;
+    public LayerMask WaterLayer;
     public GameObject Target;
-    public float raycastDistance = 1f;
+    public GameObject item;
+    public float raycastDistance = 5f;
     public Vector3 distance = Vector3.up * 0.4f;
+    public float maxGauge = 100f;
 
     private RectTransform UItransform;
     private float currentGauge = 0f;
-    private float maxGauge = 100f;
     private bool isFilling = false;
 
     private void Awake()
@@ -35,21 +37,21 @@ public class WaterGauge : MonoBehaviour
         }
     }
 
-    
 
-    private void OnTriggerEnter(Collider other)
+
+    private void OnCollisionEnter(Collision coll)
     {
-        if (other.CompareTag("Water"))
+        if (coll.collider.CompareTag("Water") && item.name == "Item_Bucket(Clone)")
         {
-            StartFilling(); 
-            watergauge.gameObject.SetActive(true);  
+            StartFilling();
+            watergauge.gameObject.SetActive(true);
         }
-
     }
+        
 
-    private void OnTriggerExit(Collider other)
+    private void OnCollisionExit(Collision coll)
     {
-        if (!other.CompareTag("Water"))
+        if(!coll.collider.CompareTag("Water"))
         {
             StopFilling();
             watergauge.gameObject.SetActive(false);
@@ -58,34 +60,39 @@ public class WaterGauge : MonoBehaviour
 
     private void FillGauge()
     {
-        RaycastHit hit;
-        Debug.DrawRay(player.position, player.forward * raycastDistance , Color.red);
-            if (Physics.Raycast(player.position, player.forward, out hit, raycastDistance, waterLayer))
-        {
-            if (hit.collider.CompareTag("Water"))
-            {
-                float targetGauge = Mathf.Clamp(currentGauge + Time.deltaTime * 1f, 3f, maxGauge);
-                currentGauge = Mathf.Lerp(currentGauge, targetGauge, 5f);
-                watergauge.value = currentGauge;
+         RaycastHit hit;
+         Vector3 raycastDirection = (player.forward.normalized);
+         Debug.DrawRay(player.position, raycastDirection * raycastDistance, Color.red);
+         bool hitWater = Physics.Raycast(player.position, raycastDirection, out hit, raycastDistance, WaterLayer);
 
-                if (currentGauge >= maxGauge)
-                {
-                    isFilling = false;
-                }
+         if( hitWater)
+         {
+             if (hit.collider.CompareTag("Water"))
+             {
 
-            }
+                 float targetGauge = Mathf.Clamp(currentGauge - Time.deltaTime * 1f, 0f, maxGauge);
+                 currentGauge = Mathf.Lerp(currentGauge, targetGauge, 5f);
+                 watergauge.value = maxGauge - currentGauge;
 
-        }
+                 if( currentGauge >= maxGauge)
+                 {
+                     isFilling = false;
+                 }
+             }
+         }
     }
+
     public void StartFilling()
     {
         isFilling = true;
         Debug.Log("물담는중");
+        currentGauge = maxGauge;
     }
         
     public void StopFilling()
     {
         isFilling = false;
+        currentGauge = 0;
     }
     
    public void Setup(GameObject target)
@@ -93,5 +100,6 @@ public class WaterGauge : MonoBehaviour
         this.Target = target;
         UItransform = GetComponent<RectTransform>();
     }
+    
 }
     
