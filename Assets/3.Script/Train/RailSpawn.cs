@@ -4,18 +4,15 @@ using UnityEngine;
 
 public class RailSpawn : MonoBehaviour
 {
-
     public List<GameObject> obj=  new List<GameObject>();
+
     float timeSpawn;
     [SerializeField] int countUp;
+    [SerializeField] RailPooling poolRail;
     
     private void Awake()
     {
-        foreach (GameObject child in obj)
-        {
-            child.SetActive(false);
-        }
-       // obj.Reverse();
+        poolRail = FindObjectOfType<RailPooling>();
     }
     public void Update()
     {
@@ -35,7 +32,8 @@ public class RailSpawn : MonoBehaviour
             return;
         }
 
-        obj[countUp].SetActive(true);
+        poolRail.TransformRail(obj[countUp].transform.position);
+        //obj[countUp].transform.position = poolRail.
         countUp++;
 
      
