@@ -50,7 +50,7 @@ public class PathFindingAgent : MonoBehaviour
         int minY = PathFindingField.Instance.MinY;
 
         _bottomLeft = new Vector2Int(minX, minY);
-        _topRight = new Vector2Int(minX + sizeX, minY + sizeY);
+        _topRight = new Vector2Int(minX + sizeX - 1, minY + sizeY - 1);
 
         _nodeArray = new Node[sizeY, sizeX];
 

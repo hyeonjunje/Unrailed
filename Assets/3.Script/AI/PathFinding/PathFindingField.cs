@@ -20,6 +20,20 @@ public class PathFindingField : MonoBehaviour
     #region ΩÃ±€≈Ê
     public static PathFindingField Instance { get; private set; } = null;
 
+/*    private static PathFindingField _instance = null;
+    public static PathFindingField Instance
+    {
+        get
+        {
+            if(_instance == null)
+            {
+                _instance = FindObjectOfType<PathFindingField>();
+            }
+            _instance.InitData(_instance._map);
+            return _instance;
+        }
+    }*/
+
     private void Awake()
     {
         if (Instance != null)
@@ -61,8 +75,9 @@ public class PathFindingField : MonoBehaviour
 
     public void UpdateMapData(float x, float y, bool flag)
     {
-        int xPos = (int)x + MinX;
-        int yPos = (int)y + MinY;
+        int xPos = Mathf.RoundToInt(x) - MinX;
+        int yPos = Mathf.RoundToInt(y) - MinY;
+
         _mapData[yPos, xPos] = flag;
     }
 
