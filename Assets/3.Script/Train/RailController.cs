@@ -30,9 +30,10 @@ public class RailController : MonoBehaviour
     private Vector3 _rightPos;
     private Vector3 _leftPos;
 
+    public float poolingTime;
+    public float lifeTime = 0;
     private void Awake()
     {
-
         trainManager = FindObjectOfType<GoalManager>();
         railChild = this.GetComponentsInChildren<Transform>();
 
@@ -86,17 +87,12 @@ public class RailController : MonoBehaviour
             isInstance = false;
         }
 
-   
         //철로 연결
         RaycastOn();
 
-        if (!isGoal && !isEndRail)
+        if (!isGoal && !isEndRail && !isStartRail)
         {
             railLine.Line.SetActive(false);
-        }
-        else if (isEndRail)
-        {
-            ResetLine();
         }
     }
     //todo 05 18 앞 철로가 없으면 철로를 해제 할 수 있도록 만들어 놓을것 그리고 가능하면 - 박상연
@@ -120,10 +116,11 @@ public class RailController : MonoBehaviour
     {
         //실 게임 내에서는 isStartRail 철로 2개정도 깔아두고 2개는 기본 철로. 그 후에 붙이면 정상가동
         //isEndRail은 두개만 붙여놓을것 
-        if(isStartRail) return;
+
         RaycastHit raycastHit = new RaycastHit();
 
         RailDir();
+
 
         if ((Physics.Raycast(_frontPos, transform.forward, out raycastHit, 0.3f) && (!raycastHit.collider.GetComponentInParent<RailController>().isInstance))
             || (Physics.Raycast(_rightPos, transform.right, out raycastHit, 0.3f )&& !raycastHit.collider.GetComponentInParent<RailController>().isInstance) 
@@ -198,23 +195,39 @@ public class RailController : MonoBehaviour
     }
     void Update()
     {
-        Debug.DrawRay(_frontPos, transform.forward * 0.3f, Color.red);
-        Debug.DrawRay(_backPos, -transform.forward * 0.3f, Color.green);
-        Debug.DrawRay(_rightPos, transform.right * 0.3f, Color.yellow);
-        Debug.DrawRay(_leftPos, -transform.right * 0.3f, Color.blue);
+        // Debug.DrawRay(_frontPos, transform.forward * 0.3f, Color.red);
+        // Debug.DrawRay(_backPos, -transform.forward * 0.3f, Color.green);
+        // Debug.DrawRay(_rightPos, transform.right * 0.3f, Color.yellow);
+        // Debug.DrawRay(_leftPos, -transform.right * 0.3f, Color.blue);
+
+
+
+        if (isGoal)
+        {
+            lifeTime += Time.deltaTime;
+
+            if(lifeTime >= poolingTime)
+            {
+                lifeTime = 0;
+                transform.position = Vector3.zero;
+                gameObject.SetActive(false);
+            }
+        }
     }
 
     private void OnDisable()
     {
         trainManager.railCon.Remove(gameObject.GetComponent<RailController>());
         
-        if (!isStartRail && !neighborRail.isStartRail && !isGoal)
+
+        if(neighborRail != null)
         {
-            neighborRail.isInstance = false;
-            neighborRail.railLine.Line.SetActive(false);
-
+            if (!isStartRail && !neighborRail.isStartRail && !isGoal)
+            {
+                neighborRail.isInstance = false;
+                neighborRail.railLine.Line.SetActive(false);
+            }
         }
-
 
         //혹시 몰라 이전 레일의 레이어를 되돌리는 로직도 구현해둠 필요하면 작성
         //foreach (Transform child in neighborRail.railChild)
@@ -226,13 +239,12 @@ public class RailController : MonoBehaviour
 
     public void EnqueueRail()
     {
-        
         trainComponents = FindObjectsOfType<TrainMovement>();
 
         for (int i = 0; i < trainComponents.Length; i++)
         {
+            //기차에 위치값 추가
             trainComponents[i].EnqueueRailPos(gameObject.GetComponent<RailController>());
-            Debug.Log("기차에 위치값 추가");
         }
     }
 }

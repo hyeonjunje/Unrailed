@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: ItemPrefabData
   m_EditorClassIdentifier: 
   itemPrefabs:
+  - {fileID: 2723795344066423885, guid: a8609a7d6d7b3764baef461ea99be0d4, type: 3}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 3335738554116049888, guid: 2ac7858601e20634393624b7d10bd1c2, type: 3}
   - {fileID: 5019990921700754394, guid: 10fcbae82427e304c9c3bfaa9f027788, type: 3}
   - {fileID: 430936053216991807, guid: 6b12d9e5dda27994782a14a0afe2c594, type: 3}
   - {fileID: 0}

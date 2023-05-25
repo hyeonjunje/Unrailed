@@ -27,7 +27,6 @@ public class TrainWorkBench : TrainMovement
 
     public void MakingRail()
     {
-
         if (!isBurn)
         {
             anim.SetInteger("GetRails", spawnIndex);
