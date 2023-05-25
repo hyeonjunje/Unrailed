@@ -16,7 +16,7 @@ public class MapEditorMK2 : MonoBehaviour
 
     [Header("Transform")]
     [SerializeField] private Transform _blockParent;
-    [SerializeField] private Transform _environmentParent;
+    [SerializeField] private Transform _borderParent;
 
     [Header("Info")]
     [SerializeField] private const int _defaultX = 40;
@@ -58,7 +58,7 @@ public class MapEditorMK2 : MonoBehaviour
     {
         // 원래 오브젝트 삭제
         _blockParent.DestroyAllChild();
-        _environmentParent.DestroyAllChild();
+        _borderParent.DestroyAllChild();
 
         // 카메라 원위치
         _mainCam.transform.position = _mainCamOriginPos;
@@ -204,7 +204,7 @@ public class MapEditorMK2 : MonoBehaviour
 
         // 원래 오브젝트 삭제
         _blockParent.DestroyAllChild();
-        _environmentParent.DestroyAllChild();
+        _borderParent.DestroyAllChild();
 
         groundList = new List<List<BlockMK2>>();
 
@@ -278,6 +278,51 @@ public class MapEditorMK2 : MonoBehaviour
                     child.localScale = Vector3.one + Vector3.up * height * 0.3f;
                 }
             }
+        }
+    }
+
+    // 버튼에 달꺼야
+    public void SetBorder()
+    {
+        _borderParent.DestroyAllChild();
+
+        int width = groundList[0].Count;
+        int height = groundList.Count;
+
+        GameObject emptyPrefab = _itemPrefabData.itemPrefabs[(int)EBlock.empty];
+
+        int minX = Mathf.RoundToInt(groundList[0][0].transform.position.x);
+        int maxX = Mathf.RoundToInt(groundList[height - 1][width - 1].transform.position.x);
+
+        int minY = Mathf.RoundToInt(groundList[0][0].transform.position.z);
+        int maxY = Mathf.RoundToInt(groundList[height - 1][width - 1].transform.position.z);
+
+        // 작은 수평선
+        for(int i = minX; i <= maxX; i++)
+        {
+            Vector3 pos = new Vector3(i, 0.5f, minY - 1);
+            Instantiate(emptyPrefab, pos, Quaternion.identity, _borderParent);
+        }
+
+        // 큰 수평선
+        for(int i = minX; i <= maxX; i++)
+        {
+            Vector3 pos = new Vector3(i, 0.5f, maxY + 1);
+            Instantiate(emptyPrefab, pos, Quaternion.identity, _borderParent);
+        }
+
+        // 작은 수직선
+        for(int i = minY; i <= maxY; i++)
+        {
+            Vector3 pos = new Vector3(minX - 1, 0.5f, i);
+            Instantiate(emptyPrefab, pos, Quaternion.identity, _borderParent);
+        }
+
+        // 큰 수평선
+        for(int i = minY; i <= maxY; i++)
+        {
+            Vector3 pos = new Vector3(maxX + 1, 0.5f, i);
+            Instantiate(emptyPrefab, pos, Quaternion.identity, _borderParent);
         }
     }
 }
