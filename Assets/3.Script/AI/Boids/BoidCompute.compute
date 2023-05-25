@@ -1,8 +1,8 @@
 #pragma kernel CSMain
 static const int threadGroupSize = 1024;
 struct Boid {
-    float3 position;
-    float3 direction;
+    float3 Position;
+    float3 Direction;
 
     float3 flockHeading;
     float3 flockCentre;
@@ -22,14 +22,13 @@ void CSMain (uint3 id : SV_DispatchThreadID)
     for (int indexB = 0; indexB < numBoids; indexB ++) {
         if (id.x != indexB) {
             Boid boidB = boids[indexB];
-            float3 offset = boidB.position - boids[id.x].position;
+            float3 offset = boidB.Position - boids[id.x].Position;
             float sqrDst = offset.x * offset.x + offset.y * offset.y + offset.z * offset.z;
-
+            
             if (sqrDst < viewRadius * viewRadius) {
                 boids[id.x].numFlockmates += 1;
-                boids[id.x].flockHeading += boidB.direction;
-                boids[id.x].flockCentre += boidB.position;
-
+                boids[id.x].flockHeading += boidB.Direction;
+                boids[id.x].flockCentre += boidB.Position;
                 if (sqrDst < avoidRadius * avoidRadius) {
                     boids[id.x].separationHeading -= offset / sqrDst;
                 }
