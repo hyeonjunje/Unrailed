@@ -1,10 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShopManager : MonoBehaviour
 {
     public List<TrainStation> endStation = new List<TrainStation>();
+
+    [SerializeField] private Transform[] shopUpgradeTrainPos;
+    [SerializeField] private Transform[] shopNewTrainPos;
+    [SerializeField] private Transform[] shopEnginePos;
+
+    [SerializeField] private Text[] shopUpgradeText;
+    [SerializeField] private Text[] shopNewTrainText;
+    [SerializeField] private Text[] shopEngineText;
+
+    public GameObject[] trainPrefabs;
+    public GameObject[] trainNewPrefabs;
+    public GameObject[] enginePrefabs;
 
     [SerializeField] private Animator anim;
     private TrainWater trainWater;
@@ -14,6 +27,7 @@ public class ShopManager : MonoBehaviour
 
     [SerializeField] GameObject test;
 
+    bool _isShop;
     private void Awake()
     {
         anim = GetComponentInParent<Animator>();
@@ -21,9 +35,26 @@ public class ShopManager : MonoBehaviour
         trainEngine = FindObjectOfType<TrainEngine>();
     }
 
+    public void RandItemSpawn()
+    {
+        for (int i = 0; i < shopUpgradeTrainPos.Length; i++)
+        {
+            Instantiate(trainPrefabs[i], shopUpgradeTrainPos[i].position, Quaternion.identity);
+        }
+        for (int i = 0; i < shopNewTrainPos.Length; i++)
+        {
+            Instantiate(trainNewPrefabs[i], shopNewTrainPos[i].position, Quaternion.identity);
+        }
+        Instantiate(enginePrefabs[0], shopEnginePos[0].position, Quaternion.identity);
+    }
     public void ShopOn()
     {
-        transform.position = endStation[0].transform.GetChild(1).transform.position;
+        if (!_isShop)
+        {
+            RandItemSpawn();
+            _isShop = true;
+        }
+        anim.gameObject.transform.position = endStation[0].transform.GetChild(1).transform.position;
         anim.SetBool("isReady",true);
     }
 
@@ -34,7 +65,6 @@ public class ShopManager : MonoBehaviour
         endStation.Clear();
         anim.SetBool("isReady", false);
         StartCoroutine(TrainStartMove());
-
     }
 
     private void OnTriggerEnter(Collider other)
@@ -44,6 +74,11 @@ public class ShopManager : MonoBehaviour
             GameObject obj = other.transform.GetChild(0).gameObject;
             obj.SetActive(false);
         }
+        if (other.CompareTag("ShopItem"))
+        {
+            GameObject obj = other.transform.GetChild(0).gameObject;
+            obj.SetActive(true);
+        }
     }
 
         private void OnTriggerExit(Collider other)
@@ -52,6 +87,11 @@ public class ShopManager : MonoBehaviour
         {
             GameObject obj = other.transform.GetChild(0).gameObject;
             obj.SetActive(true);
+        }
+        if (other.CompareTag("ShopItem"))
+        {
+            GameObject obj = other.transform.GetChild(0).gameObject;
+            obj.SetActive(false);
         }
     }
 
@@ -66,9 +106,8 @@ public class ShopManager : MonoBehaviour
         //5초 지나는 ui 효과
         trainEngine.isGoal = false;
         trainEngine.isReady = false;
-
+        _isShop = false;
         trainWater.FireOff();
         test.SetActive(true);
-
     }
 }

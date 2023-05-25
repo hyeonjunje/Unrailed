@@ -177,6 +177,17 @@ public class TrainWater : TrainMovement
                 }
             }
         }
+        if (100 < fireTime)
+        {
+            for (int i = 0; i < trains.Length; i++)
+            {
+                if (trains[i].trainNum == 3)
+                {
+                    trains[i].isBurn = true;
+                    trains[i].fireEffect.gameObject.SetActive(true);
+                }
+            }
+        }
     }
 
 }

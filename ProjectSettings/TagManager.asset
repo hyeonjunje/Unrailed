@@ -11,6 +11,7 @@ TagManager:
   - Empty
   - WaterBox
   - Block
+  - ShopItem
   layers:
   - Default
   - TransparentFX
