@@ -54,7 +54,8 @@ MonoBehaviour:
   m_RendererFeatures:
   - {fileID: -4863690725433062906}
   - {fileID: 3931303052059937397}
-  m_RendererFeatureMap: 064a33dd0db380bc750a71024ccb8e36
+  - {fileID: 7084849998137178355}
+  m_RendererFeatureMap: 064a33dd0db380bc750a71024ccb8e36f3b8e44189715262
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
   shaders:
@@ -69,10 +70,10 @@ MonoBehaviour:
     materialErrorPS: {fileID: 4800000, guid: 5fd9a8feb75a4b5894c241777f519d4e, type: 3}
   m_OpaqueLayerMask:
     serializedVersion: 2
-    m_Bits: 3766485055
+    m_Bits: 3833593919
   m_TransparentLayerMask:
     serializedVersion: 2
-    m_Bits: 3766485055
+    m_Bits: 3833593919
   m_DefaultStencilState:
     overrideStencilState: 0
     stencilReference: 0
@@ -110,6 +111,45 @@ MonoBehaviour:
     overrideDepthState: 1
     depthCompareFunction: 4
     enableWrite: 1
+    stencilSettings:
+      overrideStencilState: 0
+      stencilReference: 0
+      stencilCompareFunction: 8
+      passOperation: 0
+      failOperation: 0
+      zFailOperation: 0
+    cameraSettings:
+      overrideCamera: 0
+      restoreCamera: 1
+      offset: {x: 0, y: 0, z: 0, w: 0}
+      cameraFieldOfView: 60
+--- !u!114 &7084849998137178355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
+  m_Name: RenderObstacle
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  settings:
+    passTag: RenderObstacle
+    Event: 300
+    filterSettings:
+      RenderQueueType: 0
+      LayerMask:
+        serializedVersion: 2
+        m_Bits: 3900702783
+      PassNames: []
+    overrideMaterial: {fileID: 0}
+    overrideMaterialPassIndex: 0
+    overrideDepthState: 1
+    depthCompareFunction: 3
+    enableWrite: 0
     stencilSettings:
       overrideStencilState: 0
       stencilReference: 0
