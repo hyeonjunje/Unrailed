@@ -15,7 +15,7 @@ public class TrainMovement : MonoBehaviour
 
     [SerializeField] private int targetCount;
     [SerializeField] protected GameObject destroyParticle;
-    [SerializeField] protected ShopManager shop;
+    public ShopManager shop;
     public ParticleSystem fireEffect;
 
     public bool isGoal;
