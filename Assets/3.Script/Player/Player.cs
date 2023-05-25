@@ -6,6 +6,8 @@ public class Player : MonoBehaviour
 {
     // 게임
 
+    [SerializeField] private LayerMask waterlayer;
+
 
     //0521 todo 석환아 이따가 전처리기 만들어줘
     #region 아이템 주웠을 때 위치
@@ -26,6 +28,7 @@ public class Player : MonoBehaviour
     #region 아이템 픽업 관련 변수
     GameObject item;
     public List<GameObject> items = new List<GameObject>();
+    public GameObject WaterMesh;
     GameObject replaceItemTemp;
     List<GameObject> replaceItemsTemp = new List<GameObject>();
     EItem getFirstItems;
@@ -67,6 +70,7 @@ public class Player : MonoBehaviour
         // Dash();
         DropItems();
         DigUp();
+        DetectWater();
     }
 
 
@@ -265,6 +269,29 @@ public class Player : MonoBehaviour
         }
     }
     
+    void DetectWater()
+    {
+        RaycastHit hit;
+        Debug.DrawRay(transform.position, transform.forward * pickUpDistance, Color.red);
+        if (Physics.Raycast(transform.position, transform.forward, out hit, pickUpDistance, waterlayer))
+        {
+            Debug.Log("물 감지");
+            waterGauge.gameObject.SetActive(true);
+            waterGauge.FillGauge();
+            if (WaterMesh.activeSelf)
+            {
+               waterGauge.watergauge.gameObject.SetActive(false);
+            }
+
+        }
+        else
+        {
+            waterGauge.gameObject.SetActive(false);
+            waterGauge.StopFilling();
+
+        }
+    }
+
     void DigUp()
     {
         RaycastHit hit;
