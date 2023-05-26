@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     #endregion
     #region 이동 관련 변수
     public float speed = 15f;
-    
+
     float xAxis;
     float zAxis;
     Vector3 moveVec;
@@ -94,7 +94,7 @@ public class Player : MonoBehaviour
     {
         if (!isDash) moveVec = new Vector3(xAxis, 0, zAxis).normalized;
 
-        Vector3 getvel = new Vector3(xAxis, 0, zAxis) * speed* 3f;
+        Vector3 getvel = new Vector3(xAxis, 0, zAxis) * speed * 3f;
         rb.velocity = getvel;
         _animator.SetBool("isWalk", moveVec != Vector3.zero);
     }
@@ -162,7 +162,7 @@ public class Player : MonoBehaviour
         RaycastHit hitData;
         if (Physics.Raycast(betweenTwoHands.transform.position, Vector3.down, out hitData, 1000f))
         {
-            if(hitData.transform.gameObject.layer == LayerMask.NameToLayer("Block"))
+            if (hitData.transform.gameObject.layer == LayerMask.NameToLayer("Block"))
             {
                 Debug.Log("난 내려놨어요");
                 item.transform.SetParent(hitData.transform);
@@ -170,11 +170,11 @@ public class Player : MonoBehaviour
                 item.transform.localRotation = Quaternion.identity;
                 //item = null;
             }
-            else if(hitData.transform.tag == "Item")
+            else if (hitData.transform.tag == "Item")
             {
                 ReplaceItem();
             }
-            
+
         }
     }
 
@@ -198,11 +198,11 @@ public class Player : MonoBehaviour
 
     void ReplaceItem()
     {
-        
+
         RaycastHit hitData;
         Vector3 temp;
         //조건문 우선순위 &&가 ||보다 우선입니다.
-        if ((item != null || items.Count !=0) && (Physics.Raycast(transform.position, Vector3.down, out hitData, 1000f)) && getItemKeyDown)
+        if ((item != null || items.Count != 0) && (Physics.Raycast(transform.position, Vector3.down, out hitData, 1000f)) && getItemKeyDown)
         {
             if (hitData.transform.tag == "Item" && item.transform.tag == "Item")
             {
@@ -256,7 +256,7 @@ public class Player : MonoBehaviour
         }
 
         // 하나들자마자 그 다음 조건문까지 실행되는 게 문제
-        
+
         // 내려놓을 때 다시 먹는 문제
         // -> isHaveItem 변수를 통해 문제해결. DropItems가 실행되면 isHaveItem가 false가 되기 때문에, isHaveItem이 true일 경우에만 실행
         if (other.gameObject.gameObject.tag == "Items" && items.Count != 0 && (getFirstItems == other.gameObject.GetComponent<Item>().itemType) && isHaveItem)
@@ -268,7 +268,7 @@ public class Player : MonoBehaviour
             }
         }
     }
-    
+
     void DetectWater()
     {
         RaycastHit hit;
@@ -280,7 +280,7 @@ public class Player : MonoBehaviour
             waterGauge.FillGauge();
             if (WaterMesh.activeSelf)
             {
-               waterGauge.watergauge.gameObject.SetActive(false);
+                waterGauge.watergauge.gameObject.SetActive(false);
             }
 
         }
@@ -291,23 +291,124 @@ public class Player : MonoBehaviour
 
         }
     }
-
     void DigUp()
     {
         RaycastHit hit;
-        Debug.DrawRay(transform.TransformPoint(0, 0.1f, 0), transform.forward * pickUpDistance*0.5f, Color.red) ;
+        Debug.DrawRay(transform.TransformPoint(0, 0.1f, 0), transform.forward * pickUpDistance * 0.5f, Color.red);
         if (Physics.Raycast(transform.TransformPoint(0, 0.1f, 0), transform.forward, out hit, pickUpDistance))
         {
             Debug.Log("발사" + hit.transform.name);
+            //this.target = hit.transform.gameObject;
             IDig target = hit.collider.GetComponent<IDig>();
-            
 
-            if (target != null )
+            if (target != null)
             {
-                if(hit.transform.name == "Tree01(Clone)" && item.name == "ItemAxe(Clone)")
+                if (hit.transform.name == "Tree01(Clone)" && item.name == "ItemAxe(Clone)")
                 {
+                    _animator.SetBool("isDig", true);
+                    StartCoroutine(DigCoroutine(target, hit.point));
+                }
+                else if (hit.transform.name == "Tree02(Clone)" && item.name == "ItemAxe(Clone)")
+                {
+                    _animator.SetBool("isDig", true);
+                    StartCoroutine(DigCoroutine(target, hit.point));
+                }
+                else if (hit.transform.name == "ItemIron00(Clone)" && item.name == "ItemPick(Clone)")
+                {
+                    _animator.SetBool("isDig", true);
+                    StartCoroutine(DigCoroutine(target, hit.point));
+                }
+                else if (hit.transform.name == "ItemIron01(Clone)" && item.name == "ItemPick(Clone)")
+                {
+                    _animator.SetBool("isDig", true);
+                    StartCoroutine(DigCoroutine(target, hit.point));
+                }
+                else if (hit.transform.name == "ItemIron02(Clone)" && item.name == "ItemPick(Clone)")
+                {
+                    _animator.SetBool("isDig", true);
+                    StartCoroutine(DigCoroutine(target, hit.point));
+                }
+                else if (hit.transform.name == "ItemIron03(Clone)" && item.name == "ItemPick(Clone)")
+                {
+                    _animator.SetBool("isDig", true);
+                    StartCoroutine(DigCoroutine(target, hit.point));
+                }
+                else if (hit.transform.name == "Iron(Clone)" && item.name == "ItemPick(Clone)")
+                {
+                    _animator.SetBool("isDig", true);
+                    StartCoroutine(DigCoroutine(target, hit.point));
+                }
+                else
+                {
+                    _animator.SetBool("isMove", true);
+                    _animator.SetBool("isDig", false);
+                }
+            }
+            else
+            {
+                _animator.SetBool("isMove", true);
+                _animator.SetBool("isDig", false);
+            }
+        }
+        else
+        {
+            _animator.SetBool("isMove", true);
+            _animator.SetBool("isDig", false);
+        }
+    }
+
+    private IEnumerator DigCoroutine(IDig target, Vector3 hitPoint)
+    {
+        float digTime = 1.5f; 
+        float elapsedTime = 0f;
+
+        while (elapsedTime < digTime)
+        {
+            yield return null;
+            elapsedTime += Time.deltaTime;
+
+            if (!IsPlayerLookingAtTarget(hitPoint))
+            {
+                _animator.SetBool("isMove", true);
+                _animator.SetBool("isDig", false);
+                yield break; 
+            }
+        }
+
+        target.OnDig(hitPoint);
+        _animator.SetBool("isDig", false);
+    }
+
+    private bool IsPlayerLookingAtTarget(Vector3 targetPosition)
+    {
+        Vector3 playerToTarget = targetPosition - transform.position;
+        float angle = Vector3.Angle(transform.forward, playerToTarget);
+        return angle <= 30f; 
+    }
+
+    void SetRiver()
+    {
+
+    }
+    //GameObject target;
+    /*void DigUp()
+    {
+        RaycastHit hit;
+        Debug.DrawRay(transform.TransformPoint(0, 0.1f, 0), transform.forward * pickUpDistance * 0.5f, Color.red);
+        if (Physics.Raycast(transform.TransformPoint(0, 0.1f, 0), transform.forward, out hit, pickUpDistance))
+        {
+            Debug.Log("발사" + hit.transform.name);
+            //this.target = hit.transform.gameObject;
+            IDig target = hit.collider.GetComponent<IDig>();
+
+            if (target != null)
+            {
+                // hit.transform.gameObject.GetInstanceID
+                if (hit.transform.name == "Tree01(Clone)" && item.name == "ItemAxe(Clone)")
+                {
+                    _animator.SetBool("isDig", true );
+                    // 1.5초후 ondig
                     target.OnDig(hit.point);
-                    _animator.SetBool("isDig",true);
                 }
                 else if (hit.transform.name == "Tree02(Clone)" && item.name == "ItemAxe(Clone)")
                 {
@@ -344,10 +445,24 @@ public class Player : MonoBehaviour
             {
 
                 _animator.SetBool("isMove", true);
-                _animator.SetBool("isDig",false);
-            }
-        
+                _animator.SetBool("isDig", false);*/
+    /*if (this.target.TryGetComponent(out ReSource r))
+    {
+        if(r.IsDig)
+        {
+            r.OffDig();
+            r.IsDig = false;
         }
     }
-  
 }
+}
+else
+{
+_animator.SetBool("isMove", true);
+_animator.SetBool("isDig", false);
+}*/
+
+}
+
+      
+    
