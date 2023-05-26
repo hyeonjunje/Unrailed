@@ -8,6 +8,10 @@ public class PathFindingAgent : MonoBehaviour
     public float rotateSpeed;
     public float randomRange;
 
+    private bool _reachedDestination = false;
+    public bool AtDestination => _reachedDestination;
+
+
     public List<Node> finalNodeList;
     private Vector2Int _bottomLeft, _topRight;
     private Node[,] _nodeArray;
@@ -158,6 +162,7 @@ public class PathFindingAgent : MonoBehaviour
 
     private IEnumerator MoveCo()
     {
+        _reachedDestination = false;
         for(int i = 1; i < finalNodeList.Count; i++)
         {
             Node destNode = finalNodeList[i];
@@ -182,6 +187,9 @@ public class PathFindingAgent : MonoBehaviour
             transform.position = destPosition;
             transform.rotation = destRotation;
         }
+        _reachedDestination = true;
+
+
     }
 
     private void OnDrawGizmos()

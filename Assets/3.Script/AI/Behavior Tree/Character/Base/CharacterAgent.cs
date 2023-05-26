@@ -88,25 +88,6 @@ public class CharacterAgent : CharacterBase
         _agent.updateUpAxis = true;
     }
 
-    IEnumerator IdleCo()
-    {
-        
-        _agent.updatePosition = false;
-        _agent.updateRotation = false;
-        _agent.updateUpAxis = false;
-        yield return new WaitForSeconds(3);
-        _agent.updatePosition = true;
-        _agent.updateRotation = true;
-        _agent.updateUpAxis = true;
-        MoveTo(PickLocationInRange(1));
-    }
-
-    public void StopNav()
-    {
-        StartCoroutine(IdleCo());
-
-    }
-
 
     public Vector3 PickLocationInRange(float range) //무작위 이동
     {

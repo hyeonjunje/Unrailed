@@ -20,7 +20,7 @@ public class Spawner : MonoBehaviour
             Boid boid = Instantiate(prefab);
             boid.transform.position = new Vector3(pos.x, 0.5f, pos.z);
             //boid.transform.forward = Random.insideUnitSphere;
-            boid.transform.forward = Vector3.forward;
+            //boid.transform.forward = Vector3.forward;
         }
     }
 
