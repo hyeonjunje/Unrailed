@@ -20,6 +20,7 @@ public class ItemInteractionTest : MonoBehaviour
         _brightAmount /= 256;
     }
 
+
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.Space))
