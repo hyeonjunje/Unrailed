@@ -72,7 +72,7 @@ public class BoidManager : MonoBehaviour
             for (int i = 0; i < boids.Length; i++)
             {
                 boids[i].AvgFlockHeading = boidData[i].FlockHeading;
-                boids[i].CentreOfFlockmates = boidData[i].FlockCentre;
+                boids[i].CenterOfFlockmates = boidData[i].FlockCenter;
                 boids[i].AvgAvoidanceHeading = boidData[i].AvoidanceHeading;
                 boids[i].NumPerceivedFlockmates = boidData[i].NumFlockmates;
 
@@ -89,7 +89,7 @@ public class BoidManager : MonoBehaviour
         public Vector3 Direction;
 
         public Vector3 FlockHeading;
-        public Vector3 FlockCentre;
+        public Vector3 FlockCenter;
         public Vector3 AvoidanceHeading;
         public int NumFlockmates;
 
