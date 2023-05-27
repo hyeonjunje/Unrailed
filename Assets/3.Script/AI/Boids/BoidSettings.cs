@@ -7,6 +7,7 @@ public class BoidSettings : ScriptableObject
 {
     public float MinSpeed = 2;
     public float MaxSpeed = 5;
+
     [Header("무리를 인식하는 범위")]
     public float PerceptionRadius = 2.5f;
     [Header("충돌을 피하기 위해 인식하는 범위")]
@@ -30,10 +31,10 @@ public class BoidSettings : ScriptableObject
     [Header("충돌 대상 레이어")]
     public LayerMask ObstacleMask;
     
-    //경계 반경, 충돌 회피에 사용됨
+    [Header("장애물 회피 반경")]
     public float BoundsRadius = .27f;
-    //충돌을 피하기 위한 가중치
+    [Header("충돌 회피 가중치")]
     public float AvoidCollisionWeight = 10;
-    //충돌을 감지하기 위한 거리
+    [Header("충돌 감지 거리")]
     public float CollisionAvoidDst = 5;
 }
