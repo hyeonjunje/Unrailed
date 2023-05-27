@@ -19,9 +19,6 @@ public static class BoidHelper
         
         for (int i = 0; i < numViewDirections; i++)
         {
-
-   
-
             float t = (float)i / numViewDirections;
             float inclination = Mathf.Acos(1 - 2 * t);
             float azimuth = angleIncrement * i;

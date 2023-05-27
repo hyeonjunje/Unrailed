@@ -90,15 +90,15 @@ public class BTSetup : MonoBehaviour
             _localMemory.SetGeneric(BlackBoardKey.CurrentTarget, currentTarget);
         });
 
-        var canChaseSel = BTRoot.Add<BTNode_Sequence>("SEQ. 목표가 있나요?");
-        var canChaseDeco = canChaseSel.AddDecorator<BTDecoratorBase>("목표로 이동할 수 있나요?", () =>
+        var canChaseSeq = BTRoot.Add<BTNode_Sequence>("SEQ. 목표가 있나요?");
+        var canChaseDeco = canChaseSeq.AddDecorator<BTDecoratorBase>("목표로 이동할 수 있나요?", () =>
         {
             //타겟이 있으면 true 없으면 false
             var currentTarget = _localMemory.GetGeneric<DetectableTarget>(BlackBoardKey.CurrentTarget);
             return currentTarget != null;
         });
 
-        var oo = canChaseSel.Add<BTNode_Sequence>("d아악");
+        var oo = canChaseSeq.Add<BTNode_Sequence>("d아악");
 
         var mainSeq = oo.Add<BTNode_Sequence>("Seq1 : 목표로 이동 시도");
         var ff = mainSeq.Add<BTNode_Action>("A 목표 찾음 : 찾아서 출발",
@@ -152,14 +152,7 @@ public class BTSetup : MonoBehaviour
         var runRoot = mainSeq.Add<BTNode_Sequence>("Seq3 : 도망 시도");
         var runDeco = runRoot.AddDecorator<BTDecoratorBase>("목표로 이동할 수 있나요?", () =>
         {
-
-
             return true;
-            //Vector3 pos = new Vector3(-20, 0, -2);
-            //_localMemory.SetGeneric(BlackBoardKey.NewDestination, pos);
-
-/*            var newwDestination = _localMemory.GetGeneric<Vector3>(BlackBoardKey.NewDestination);
-            return newwDestination != null;*/
         });
         var runAction = runRoot.Add<BTNode_Action>("목적지 있음 : 도망 실행",
             () =>
@@ -191,34 +184,11 @@ public class BTSetup : MonoBehaviour
         discardRoot.AddDecorator<BTDecoratorBase>("내려놓을 수 있나요?", () =>
          {
             return true;
-
-             //var newDestination = _localMemory.GetGeneric<Vector3>(BlackBoardKey.NewDestination);
-             //var currentTarget = _localMemory.GetGeneric<DetectableTarget>(BlackBoardKey.CurrentTarget);
-             //return currentTarget != null;
          });
         var discardAction = discardRoot.Add<BTNode_Action>("버리기 실행",
             () =>
             {
                 var currentTarget = _localMemory.GetGeneric<DetectableTarget>(BlackBoardKey.CurrentTarget);
-/*                if(currentTarget!=null&_agent.AtDestination)
-                {
-                    //버리기
-                    currentTarget.transform.parent = null;
-                    _agent.CancelCurrentCommand();
-                    Debug.Log("버렸어용");
-                    Destroy(currentTarget);
-                    _localMemory.SetGeneric<DetectableTarget>(BlackBoardKey.CurrentTarget, null);
-
-                    //다음 목적지 설정
-                    var randomDestination = _agent.PickLocationInRange(_wanderRange);
-                    _localMemory.SetGeneric<Vector3>(BlackBoardKey.RandomDestination, randomDestination);
-                    return BehaviorTree.ENodeStatus.Succeeded;
-
-                }
-                else
-                return BehaviorTree.ENodeStatus.InProgress;*/
-
-
                 currentTarget.transform.parent = null;
                 Debug.Log("버렸어용");
                 Destroy(currentTarget);
@@ -238,9 +208,6 @@ public class BTSetup : MonoBehaviour
                 return BehaviorTree.ENodeStatus.Succeeded;
             }
             );
-
-
-
 
 
 
