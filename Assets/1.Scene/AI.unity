@@ -327,6 +327,10 @@ PrefabInstance:
       propertyPath: randomRange
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1129319063265514702, guid: 14692656320f5c94eb0d2398bcc2468b, type: 3}
+      propertyPath: rotateSpeed
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 5651405480735266838, guid: 14692656320f5c94eb0d2398bcc2468b, type: 3}
       propertyPath: m_Name
       value: SheepBoss
@@ -2162,7 +2166,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: -5880360163111897235, guid: 14692656320f5c94eb0d2398bcc2468b, type: 3}
   spawnRadius: 5
-  spawnCount: 5
+  spawnCount: 3
   colour: {r: 0, g: 0, b: 0, a: 0}
   showSpawnRegion: 1
 --- !u!1 &702697291
@@ -2256,6 +2260,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Target: {fileID: 260364340}
   Settings: {fileID: 11400000, guid: ec86e41367b36c242870cf141b018707, type: 2}
+  Compute: {fileID: 7200000, guid: 7d9769e721825e0448f03b27879be0e9, type: 3}
 --- !u!1 &803314915
 GameObject:
   m_ObjectHideFlags: 0

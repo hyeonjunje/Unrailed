@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13b55baae1090234188a283ef9814773, type: 3}
   m_Name: Flock Settings
   m_EditorClassIdentifier: 
+  PerceptionRadius: 10
+  AvoidanceRadius: 2
   ObstacleMask:
     serializedVersion: 2
     m_Bits: 1048576
   BoundsRadius: 0.27
-  CollisionAvoidDst: 1
+  CollisionAvoidDst: 2

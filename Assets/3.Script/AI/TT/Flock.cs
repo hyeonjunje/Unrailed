@@ -12,31 +12,36 @@ public class Flock : MonoBehaviour
     [HideInInspector]
     public Vector3 Forward;
 
+    //무리 중심 위치를 나타내는 벡터
     [HideInInspector]
-    public Vector3 CentreOfFlockmates;
+    public Vector3 CenterOfFlockmates;
+    //무리의 수
     [HideInInspector]
     public int NumPerceivedFlockmates;
+    //무리의 진행방향
+    [HideInInspector]
+    public Vector3 AvgFlockHeading;
+
 
     [HideInInspector]
     public Vector3 Center;
     [HideInInspector]
     public Vector3 TargetPosition;
     [HideInInspector]
-    public Vector3 SeparationPosition;
+    public Vector3 AlignmentPosition;
+
 
 
 
     private Transform _transform;
-    private Transform _target;
 
     private void Awake()
     {
         _transform = transform;
 
     }
-    public void Init(FlockSettings _settings, Transform target)
+    public void Init(FlockSettings _settings)
     {
-        this._target = target;
         this._settings = _settings;
         Position = _transform.position;
         Forward = _transform.forward;
@@ -47,23 +52,19 @@ public class Flock : MonoBehaviour
     {
         Center = Vector3.zero;
         TargetPosition = Vector3.zero;
-        SeparationPosition = Vector3.zero;
 
         //Cohesion
         if (NumPerceivedFlockmates != 0)
         {
-            //무리의 중심 위치(Vector3) / 주위의 무리들 수(int) 나누기 
-            CentreOfFlockmates /= NumPerceivedFlockmates;
+            //무리의 중심 위치 / 주위의 무리들 수나누기 
+            CenterOfFlockmates /= NumPerceivedFlockmates;
+            Center = CenterOfFlockmates;
 
-            //중심에서 내 위치까지의 벡터
-            Vector3 offsetToFlockmatesCentre = (CentreOfFlockmates - Position);
-            Center = offsetToFlockmatesCentre;
-
+            //Alignment
+            //주위 무리의 방향 / 무리들 수 나누기
+            AvgFlockHeading /= NumPerceivedFlockmates;
+            AlignmentPosition = AvgFlockHeading;
         }
-        //정렬
-
-        //Separation 
-
 
 
         Position = _transform.position;

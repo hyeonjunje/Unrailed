@@ -22,7 +22,7 @@ public class Boid : MonoBehaviour
 
     //무리 중심 위치를 나타내는 벡터
     [HideInInspector]
-    public Vector3 CentreOfFlockmates;
+    public Vector3 CenterOfFlockmates;
 
     //인식된 주변의 Boids 수
     [HideInInspector]
@@ -68,20 +68,20 @@ public class Boid : MonoBehaviour
         if (NumPerceivedFlockmates != 0)
         {
             //무리의 중심 위치(Vector3) / 주위의 무리들 수(int) 나누기 
-            CentreOfFlockmates /= NumPerceivedFlockmates;
+            CenterOfFlockmates /= NumPerceivedFlockmates;
 
             //중심에서 내 위치까지의 벡터
-            Vector3 offsetToFlockmatesCentre = (CentreOfFlockmates - Position);
-            offsetToFlockmatesCentre.Normalize();
-            float d = offsetToFlockmatesCentre.magnitude;
+            Vector3 offsetToFlockmatesCenter = (CenterOfFlockmates - Position);
+            offsetToFlockmatesCenter.Normalize();
+            float d = offsetToFlockmatesCenter.magnitude;
 
-            offsetToFlockmatesCentre /= d;
-            acceleration += offsetToFlockmatesCentre;
+            offsetToFlockmatesCenter /= d;
+            acceleration += offsetToFlockmatesCenter;
 
-            //무리로 향하는 힘
+            //무리의 이동방향을 따라가는 힘
             var alignmentForce = SteerTowards(AvgFlockHeading) * _settings.AlignWeight;
             //중심으로 향하는 힘 
-            var cohesionForce = SteerTowards(offsetToFlockmatesCentre) * _settings.CohesionWeight;
+            var cohesionForce = SteerTowards(offsetToFlockmatesCenter) * _settings.CohesionWeight;
             //다른 Boid를 회피하는 힘
             var seperationForce = SteerTowards(AvgAvoidanceHeading) * _settings.SeperateWeight;
 
