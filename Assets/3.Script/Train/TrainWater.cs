@@ -21,6 +21,11 @@ public class TrainWater : TrainMovement
     [SerializeField] private float _R;
     [SerializeField] private float _G;
     [SerializeField] private float _B;
+
+    int engineOver;
+    int boxOver;
+    int benchOver;
+    int spareOver;
     #region 과열 색상 설정
     private float _Red
     {
@@ -56,7 +61,6 @@ public class TrainWater : TrainMovement
     {
         GetMesh();
         trains = FindObjectsOfType<TrainMovement>();
-
     }
 
     private void OnEnable()
@@ -71,12 +75,44 @@ public class TrainWater : TrainMovement
 
     void Update()
     {
-        fireTime += Time.deltaTime;
         TrainMovePos();
-        FireColor();
-        FireOn();
+        TrainUpgrade();
+        if (!isReady)
+        {
+            fireTime += Time.deltaTime;
+            FireColor();
+            FireOn();
+        }
     }
-
+    
+    public override void TrainUpgrade()
+    {
+        //업그레이드 메서드
+        switch (trainUpgradeLevel)
+        {
+            case 1:
+                engineOver = 70;
+                boxOver = 80;
+                benchOver = 90;
+                spareOver = 100;
+                overFireTime = 120;
+                break;
+            case 2:
+                engineOver = 90;
+                boxOver = 100;
+                benchOver = 110;
+                spareOver = 120;
+                overFireTime = 140;
+                break;
+            case 3:
+                engineOver = 110;
+                boxOver = 120;
+                benchOver = 130;
+                spareOver = 140;
+                overFireTime = 160;
+                break;
+        }
+    }
     public void FireOn()
     {
         //불타는중
@@ -112,11 +148,12 @@ public class TrainWater : TrainMovement
 
         for (int i = 0; i < trains.Length; i++)
         {
-            if(trains[i].trainNum == 0)
+            if(trains[i].trainType == TrainType.Engine)
             {
                 trains[i].GetComponent<TrainEngine>().EngineCool();
             }
             trains[i].isBurn = false;
+            if(trains[i].trainType != TrainType.Spare)
             trains[i].fireEffect.gameObject.SetActive(false);
         }
     }
@@ -142,11 +179,11 @@ public class TrainWater : TrainMovement
     }
     private void Fire()
     {
-        if (70 < fireTime)
+        if (engineOver < fireTime)
         {
             for (int i = 0; i < trains.Length; i++)
             {
-                if (trains[i].trainNum == 0)
+                if (trains[i].trainType == TrainType.Engine)
                 {
                     trains[i].isBurn = true;
                     trains[i].GetComponent<TrainEngine>().EngineFire();
@@ -154,11 +191,11 @@ public class TrainWater : TrainMovement
             }
         }
 
-        if (80 < fireTime)
+        if (boxOver < fireTime)
         {
             for (int i = 0; i < trains.Length; i++)
             {
-                if (trains[i].trainNum == 1)
+                if (trains[i].trainType == TrainType.ChestBox)
                 {
                     trains[i].isBurn = true;
                     trains[i].fireEffect.gameObject.SetActive(true);
@@ -166,28 +203,29 @@ public class TrainWater : TrainMovement
             }
         }
 
-        if (90 < fireTime)
+        if (benchOver < fireTime)
         {
             for (int i = 0; i < trains.Length; i++)
             {
-                if (trains[i].trainNum == 2)
+                if (trains[i].trainType == TrainType.WorkBench)
                 {
                     trains[i].isBurn = true;
                     trains[i].fireEffect.gameObject.SetActive(true);
                 }
             }
         }
-        if (100 < fireTime)
-        {
-            for (int i = 0; i < trains.Length; i++)
-            {
-                if (trains[i].trainNum == 3)
-                {
-                    trains[i].isBurn = true;
-                    trains[i].fireEffect.gameObject.SetActive(true);
-                }
-            }
-        }
+
+        // if (spareOver < fireTime)
+        // {
+        //     for (int i = 0; i < trains.Length; i++)
+        //     {
+        //         if (trains[i].trainNum == 3)
+        //         {
+        //             trains[i].isBurn = true;
+        //             trains[i].fireEffect.gameObject.SetActive(true);
+        //         }
+        //     }
+        // }
     }
 
 }

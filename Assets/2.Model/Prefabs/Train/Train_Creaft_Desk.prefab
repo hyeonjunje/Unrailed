@@ -2002,7 +2002,7 @@ GameObject:
   - component: {fileID: 1384950076}
   m_Layer: 0
   m_Name: Train_Creaft_Desk
-  m_TagString: Untagged
+  m_TagString: Train
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2054,20 +2054,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c926b2996a51ff4badd29cc993ce608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trainType: 3
   trainNum: 2
   listToQue: []
   trainMesh: {fileID: 0}
+  trainUpgradeLevel: 0
   targetCount: 0
   destroyParticle: {fileID: 781804305}
+  shop: {fileID: 0}
   fireEffect: {fileID: 0}
   isGoal: 0
   isBurn: 0
+  isReady: 0
   trainSpeed: 0.5
   _trainRotateSpeed: 0
   goalSpeed: 6
   prefabsRail: {fileID: 0}
   railSpawnPos: []
   spawnIndex: 0
+  spawnSpeed: 0
 --- !u!1 &3418233748925569950
 GameObject:
   m_ObjectHideFlags: 0

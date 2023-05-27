@@ -5,7 +5,7 @@ public class TrainEngine : TrainMovement
 {
     [SerializeField] private List<GameObject> smokeMesh = new List<GameObject>();
     [Header("In Game Obj Not Prefabs")]
-    [SerializeField] protected List<TrainMovement> trains = new List<TrainMovement>();
+    public List<TrainMovement> trains = new List<TrainMovement>();
 
     public Animator anim;
     // Start is called before the first frame update

@@ -20206,7 +20206,7 @@ GameObject:
   - component: {fileID: 1639675127031358324}
   m_Layer: 0
   m_Name: Train_Dynamite
-  m_TagString: Untagged
+  m_TagString: Train
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20239,12 +20239,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c7a76b2bf21e624fa72d456b75f8009, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trainNum: 4
+  trainType: 5
+  trainNum: 3
   listToQue: []
   trainMesh: {fileID: 0}
+  trainUpgradeLevel: 1
   targetCount: 0
   destroyParticle: {fileID: 5899535958387374172}
-  shop: {fileID: 0}
   fireEffect: {fileID: 1746674779404156739}
   isGoal: 0
   isBurn: 0

@@ -12,6 +12,7 @@ TagManager:
   - WaterBox
   - Block
   - ShopItem
+  - Train
   layers:
   - Default
   - TransparentFX
