@@ -29,6 +29,7 @@ public class MapEditorMK2 : MonoBehaviour
     [Header("Prefabs")]
     [SerializeField] private Transform _waterFallUp;
     [SerializeField] private Transform _waterFallDown;
+    [SerializeField] private GameObject _barricade;
 
     [Header("ETC")]
     [SerializeField] private Transform _target;
@@ -307,7 +308,7 @@ public class MapEditorMK2 : MonoBehaviour
         int width = groundList[0].Count;
         int height = groundList.Count;
 
-        GameObject emptyPrefab = _itemPrefabData.itemPrefabs[(int)EBlock.empty];
+        GameObject emptyPrefab = _barricade;
 
         int minX = Mathf.RoundToInt(groundList[0][0].transform.position.x);
         int maxX = Mathf.RoundToInt(groundList[height - 1][width - 1].transform.position.x);
