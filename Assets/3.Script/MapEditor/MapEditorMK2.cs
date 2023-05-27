@@ -26,6 +26,10 @@ public class MapEditorMK2 : MonoBehaviour
     [SerializeField] private ItemPrefabData _itemPrefabData;
     [SerializeField] private BlockTransformerData[] _blockTransformerData;
 
+    [Header("Prefabs")]
+    [SerializeField] private Transform _waterFallUp;
+    [SerializeField] private Transform _waterFallDown;
+
     [Header("ETC")]
     [SerializeField] private Transform _target;
 
@@ -53,12 +57,18 @@ public class MapEditorMK2 : MonoBehaviour
         FileManager.LoadGame();
     }
 
-    // 맵 초기화
-    public void InitMap()
+    // 맵 오브젝트 제거
+    private void ClearMap()
     {
         // 원래 오브젝트 삭제
         _blockParent.DestroyAllChild();
         _borderParent.DestroyAllChild();
+    }
+
+    // 맵 초기화
+    public void InitMap()
+    {
+        ClearMap();
 
         // 카메라 원위치
         _mainCam.transform.position = _mainCamOriginPos;
@@ -203,8 +213,7 @@ public class MapEditorMK2 : MonoBehaviour
         int y = mapData.mapData.Length;
 
         // 원래 오브젝트 삭제
-        _blockParent.DestroyAllChild();
-        _borderParent.DestroyAllChild();
+        ClearMap();
 
         groundList = new List<List<BlockMK2>>();
 
@@ -260,6 +269,15 @@ public class MapEditorMK2 : MonoBehaviour
     {
         yield return null;
         block.Init(index, blockMaterial, _itemPrefabData.itemPrefabs[index], blockTransformerData);
+        
+        if(index == (int)EBlock.water)
+        {
+            // 위쪽이면 _waterFallUp, 밑쪽이면 _waterFallDown 생성
+            if (block.transform.localPosition.z == -9)
+                Instantiate(_waterFallDown.gameObject, block.transform);
+            else if (block.transform.localPosition.z == groundList.Count - 10)
+                Instantiate(_waterFallUp.gameObject, block.transform);
+        }   
     }
 
     // 버튼에도 할꺼야

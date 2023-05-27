@@ -1216,10 +1216,13 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 2fe7e4cb4ac1e2b47b39fa3a83b7a7be, type: 2}
   _blockParent: {fileID: 76488198}
   _borderParent: {fileID: 2109651816}
+  _environment: {fileID: 0}
   _itemPrefabData: {fileID: 11400000, guid: 4b3c71a0f9d9ebc4f9f36dbbff85ea11, type: 2}
   _blockTransformerData:
   - {fileID: 11400000, guid: 2aae399e2818c7642a7fb88defd8e208, type: 2}
   - {fileID: 11400000, guid: 3d0992563a1c47045a2776c094c6ef6e, type: 2}
+  _waterFallUp: {fileID: 3522402998835842009, guid: 7184e1b88124c514cac87aa0d65e1119, type: 3}
+  _waterFallDown: {fileID: 3162597236616404962, guid: c0e6df7e42ffa0240a33a24b9ce70beb, type: 3}
   _target: {fileID: 1428839800}
   materialIndex: 0
   isDraw: 1
