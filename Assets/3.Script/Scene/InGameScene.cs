@@ -5,7 +5,6 @@ using UnityEngine;
 public class InGameScene : MonoBehaviour
 {
     [SerializeField] private GameObject _loadingSceneUI;
-
     [SerializeField] private MapCreator _mapCreator;
 
     private void Awake()
@@ -21,18 +20,18 @@ public class InGameScene : MonoBehaviour
         // 동물, 도적, ai 생성
         // 긴 맵을 만들고 자르기??
         // astar 맵 최신화
-        // StartCoroutine(LodingCo());
+        StartCoroutine(LodingCo());
         Debug.Log(Time.realtimeSinceStartup);
 
         // 이 작업 다 끝나고 로딩 씬 풀고
         // 자른 맵 내려오면서 맵 조립
     }
 
-    private void Update()
+/*    private void Update()
     {
         if(Input.GetKeyDown(KeyCode.Space))
             StartCoroutine(LodingCo());
-    }
+    }*/
 
     private IEnumerator LodingCo()
     {

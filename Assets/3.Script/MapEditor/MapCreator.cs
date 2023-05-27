@@ -21,16 +21,17 @@ public class MapCreator : MonoBehaviour
     {
         // 비동기가 필요하긴 할 듯
         MapData mapData = FileManager.MapsData.mapsData[worldIndex];
-        LoadMap(mapData);
 
-        yield return null;
+        yield return StartCoroutine(InitMapCo(mapData));
 
-        SetHeightMap();
+        yield return StartCoroutine(InitBlockCo(mapData));
+
+        yield return StartCoroutine(SetHeightMapCo());
 
         yield return new WaitForEndOfFrame();
     }
 
-    private void LoadMap(MapData mapData)
+    private IEnumerator InitMapCo(MapData mapData)
     {
         int x = mapData.mapData[0].arr.Length;
         int y = mapData.mapData.Length;
@@ -40,10 +41,10 @@ public class MapCreator : MonoBehaviour
 
         groundList = new List<List<BlockMK2>>();
 
-        for(int i = 0; i < y; i++)
+        for (int i = 0; i < y; i++)
         {
             groundList.Add(new List<BlockMK2>());
-            for(int j = 0; j < x; j++)
+            for (int j = 0; j < x; j++)
             {
                 BlockMK2 go = Instantiate(_blockPrefab, _blockParent);
                 go.transform.localPosition = new Vector3(j - minX, 0, i - minY);
@@ -51,15 +52,25 @@ public class MapCreator : MonoBehaviour
             }
         }
 
-        for(int i = 0; i < y; i++)
+        yield return null;
+    }
+
+    private IEnumerator InitBlockCo(MapData mapData)
+    {
+        int x = mapData.mapData[0].arr.Length;
+        int y = mapData.mapData.Length;
+
+        for (int i = 0; i < y; i++)
         {
-            for(int j = 0; j < x; j++)
+            for (int j = 0; j < x; j++)
             {
                 int index = mapData.mapData[i].arr[j];
                 InitBlock(groundList[i][j], index);
             }
         }
+        yield return null;
     }
+
 
     private void InitBlock(BlockMK2 block, int index)
     {
@@ -76,13 +87,6 @@ public class MapCreator : MonoBehaviour
         else
             blockMaterial = _blocksMaterial[index];
 
-        StartCoroutine(InitBlockCo(block, blockMaterial, index, blockTransformerData));
-    }
-
-    // 한 프레임 후에 실행해야 제대로 작동함
-    private IEnumerator InitBlockCo(BlockMK2 block, Material blockMaterial, int index, BlockTransformerData blockTransformerData)
-    {
-        yield return null;
         block.Init(index, blockMaterial, _itemPrefabData.itemPrefabs[index], blockTransformerData);
 
         if (index == (int)EBlock.water)
@@ -95,7 +99,7 @@ public class MapCreator : MonoBehaviour
         }
     }
 
-    private void SetHeightMap()
+    private IEnumerator SetHeightMapCo()
     {
         int x = groundList[0].Count;
         int y = groundList.Count;
@@ -109,9 +113,10 @@ public class MapCreator : MonoBehaviour
                     int height = groundList[i][j].GetHeight();
                     Transform child = groundList[i][j].transform.GetChild(0);
                     child.localScale = Vector3.one + Vector3.up * height * 0.3f;
-                    Debug.Log(child.localScale);
                 }
             }
         }
+
+        yield return null;
     }
 }
