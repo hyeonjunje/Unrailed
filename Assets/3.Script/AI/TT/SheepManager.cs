@@ -5,13 +5,15 @@ using UnityEngine;
 public class SheepManager : MonoBehaviour
 {
     public Transform Target;
+    public FlockSettings Settings;
+
     private Flock[] _flock;
     void Start()
     {
         _flock = FindObjectsOfType<Flock>();
         foreach (Flock sheep in _flock)
         {
-            sheep.Init(Target);
+            sheep.Init(Settings, Target);
         }
 
     }

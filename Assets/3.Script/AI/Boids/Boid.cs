@@ -156,7 +156,7 @@ public class Boid : MonoBehaviour
             if (!Physics.Raycast(Position, dir, _settings.CollisionAvoidDst, _settings.ObstacleMask))
             {
                 // 충돌이 발생하지 않는다면 해당 방향 Vector 반환
-                return dir;
+                return dir.normalized;
             }
         }
 
