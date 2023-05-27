@@ -39,8 +39,8 @@ TagManager:
   - Rail
   - 
   - 
-  - 
-  - 
+  - RenderObstacle
+  - RenderAbove
   - 
   - Empty
   - Block
