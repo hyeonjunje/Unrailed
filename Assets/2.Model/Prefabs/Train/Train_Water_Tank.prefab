@@ -2329,7 +2329,7 @@ GameObject:
   - component: {fileID: 1289297532}
   m_Layer: 0
   m_Name: Train_Water_Tank
-  m_TagString: Untagged
+  m_TagString: Train
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2362,14 +2362,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17fc770ffa0ead34eb5c219db77d8be9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trainType: 1
   trainNum: -1
   listToQue: []
   trainMesh: {fileID: 0}
+  trainUpgradeLevel: 0
   targetCount: 0
   destroyParticle: {fileID: 931619253}
+  shop: {fileID: 0}
   fireEffect: {fileID: 5584199387377671665}
   isGoal: 0
   isBurn: 0
+  isReady: 0
   trainSpeed: 0.5
   _trainRotateSpeed: 0
   goalSpeed: 6

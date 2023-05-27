@@ -24,8 +24,11 @@ public class Train_Dir : TrainMovement
 
     void Dir()
     {
-        Vector3 dirPos = shop.endStation[0].transform.position - transform.position;
+        if(ShopManager.Instance.endStation[0] != null)
+        {
+        Vector3 dirPos = ShopManager.Instance.endStation[0].transform.position - transform.position;
         Quaternion rotation = Quaternion.LookRotation(dirPos);
         dirNiddle.transform.rotation = rotation;
+        }
     }
 }

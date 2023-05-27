@@ -3622,7 +3622,7 @@ GameObject:
   - component: {fileID: 7077014543622223247}
   m_Layer: 0
   m_Name: Train_Head
-  m_TagString: Untagged
+  m_TagString: Train
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3656,9 +3656,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d00ec1788ca9df43adf3934b615f076, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trainType: 0
   trainNum: 0
   listToQue: []
   trainMesh: {fileID: 0}
+  trainUpgradeLevel: 0
   targetCount: 0
   destroyParticle: {fileID: 947983282}
   shop: {fileID: 0}

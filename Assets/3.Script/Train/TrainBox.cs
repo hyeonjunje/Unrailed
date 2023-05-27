@@ -15,6 +15,7 @@ public class TrainBox : TrainMovement
     void Awake()
     {
         GetMesh();
+        trainUpgradeLevel = 2;
         workBench = FindObjectOfType<TrainWorkBench>();
         fireEffect.gameObject.SetActive(false);
     }
@@ -23,13 +24,29 @@ public class TrainBox : TrainMovement
     void Update()
     {
         TrainMovePos();
-
+        TrainUpgrade();
         if (!isBurn)
         {
             GiveMeItem();
         }
     }
+    public override void TrainUpgrade()
+    {
+        //업그레이드 메서드
+        switch (trainUpgradeLevel)
+        {
+            case 1:
+                maxItem = 3;
+                break;
+            case 2:
+                maxItem = 4;
 
+                break;
+            case 3:
+                maxItem = 6;
+                break;
+        }
+    }
     private void RelayItems()
     {
         woods.Remove(woods[0]);

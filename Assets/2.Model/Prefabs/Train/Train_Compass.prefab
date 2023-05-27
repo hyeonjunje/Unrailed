@@ -19164,7 +19164,7 @@ GameObject:
   - component: {fileID: 7649597831721704386}
   m_Layer: 0
   m_Name: Train_Compass
-  m_TagString: Untagged
+  m_TagString: Train
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19197,12 +19197,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83a1bdee684a48e4696158684b3caf2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trainType: 4
   trainNum: 3
   listToQue: []
   trainMesh: {fileID: 0}
+  trainUpgradeLevel: 1
   targetCount: 0
   destroyParticle: {fileID: 5124559149743332135}
-  shop: {fileID: 0}
   fireEffect: {fileID: 1079778289154513976}
   isGoal: 0
   isBurn: 0
