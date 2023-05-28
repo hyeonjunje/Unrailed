@@ -4,18 +4,27 @@ using UnityEngine;
 
 public class MapCreator : MonoBehaviour
 {
-    [SerializeField] private BlockMK2 _blockPrefab;
-    [SerializeField] private Material[] _blocksMaterial;
+    [Header("컴포넌트")]
+    [SerializeField] private MapSlicer _mapSlicer;
+
+    [Header("부모 트랜스폼")]
     [SerializeField] private Transform _blockParent;
-    [SerializeField] private ItemPrefabData _itemPrefabData;
-    [SerializeField] private BlockTransformerData[] _blockTransformerData;
+
+    [Header("프리팹 정보들")]
+    [SerializeField] private BlockMK2 _blockPrefab;
     [SerializeField] private Transform _waterFallUp;
     [SerializeField] private Transform _waterFallDown;
+    [SerializeField] private ItemPrefabData _itemPrefabData;
+    [SerializeField] private BlockTransformerData[] _blockTransformerData;
+    [SerializeField] private Material[] _blocksMaterial;
+
+    [Header("ETC")]
+    [SerializeField] private float _intervalTimeToMoveBlockBundle = 0.1f;  // 블럭 번들들이 떨어지는 시간간격
 
     // 맵은 순서대로 생성하기로 하자
     // 여기서 거리 UI 만들어??
-
-    private List<List<BlockMK2>> groundList;
+    public List<List<BlockMK2>> groundList { get; private set; }
+    private List<BlockBundle> _separatedBlockList;
 
     public IEnumerator CreateMapCo(int worldIndex)
     {
@@ -27,6 +36,8 @@ public class MapCreator : MonoBehaviour
         yield return StartCoroutine(InitBlockCo(mapData));
 
         yield return StartCoroutine(SetHeightMapCo());
+
+        yield return StartCoroutine(InitPositionCo());
 
         yield return new WaitForEndOfFrame();
     }
@@ -118,5 +129,21 @@ public class MapCreator : MonoBehaviour
         }
 
         yield return null;
+    }
+
+
+    private IEnumerator InitPositionCo()
+    {
+        _separatedBlockList = _mapSlicer.SliceMap(groundList);
+        yield return null;
+    }
+
+    public IEnumerator RePositionCo()
+    {
+        foreach (BlockBundle blockBundle in _separatedBlockList)
+        {
+            StartCoroutine(blockBundle.RePositionCo());
+            yield return new WaitForSeconds(_intervalTimeToMoveBlockBundle);
+        }
     }
 }

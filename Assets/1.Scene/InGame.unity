@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 133045899}
   - component: {fileID: 133045900}
+  - component: {fileID: 133045901}
   m_Layer: 0
   m_Name: MapCreator
   m_TagString: Untagged
@@ -166,6 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 015dc3054f7e56c48af1c1465b3be6d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _mapSlicer: {fileID: 133045901}
   _blockPrefab: {fileID: 45604219096226087, guid: a7aa4fa63e5a4b14b8d8e6c2d3fc8e93, type: 3}
   _blocksMaterial:
   - {fileID: 2100000, guid: 3b2ea3d3af7155a4d9114b72fe604a22, type: 2}
@@ -182,6 +184,21 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3d0992563a1c47045a2776c094c6ef6e, type: 2}
   _waterFallUp: {fileID: 3522402998835842009, guid: 7184e1b88124c514cac87aa0d65e1119, type: 3}
   _waterFallDown: {fileID: 3162597236616404962, guid: c0e6df7e42ffa0240a33a24b9ce70beb, type: 3}
+  _intervalTimeToMoveBlockBundle: 0.05
+--- !u!114 &133045901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 133045898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e193b49e34d23c4fa9fd3badcaf8d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moveSpeed: 3
+  _initPos: 40
 --- !u!1 &639408320
 GameObject:
   m_ObjectHideFlags: 0

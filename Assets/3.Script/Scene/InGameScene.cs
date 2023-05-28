@@ -27,11 +27,6 @@ public class InGameScene : MonoBehaviour
         // 자른 맵 내려오면서 맵 조립
     }
 
-/*    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-            StartCoroutine(LodingCo());
-    }*/
 
     private IEnumerator LodingCo()
     {
@@ -41,7 +36,8 @@ public class InGameScene : MonoBehaviour
         yield return StartCoroutine(_mapCreator.CreateMapCo(0));
         Debug.Log(Time.realtimeSinceStartup);
 
-        _loadingSceneUI.SetActive(false);
 
+        _loadingSceneUI.SetActive(false);
+        yield return StartCoroutine(_mapCreator.RePositionCo());
     }
 }
