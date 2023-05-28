@@ -3620,6 +3620,7 @@ GameObject:
   - component: {fileID: 5731449429487099751}
   - component: {fileID: 273714674}
   - component: {fileID: 7077014543622223247}
+  - component: {fileID: -6021769334966293777}
   m_Layer: 0
   m_Name: Train_Head
   m_TagString: Train
@@ -3663,7 +3664,6 @@ MonoBehaviour:
   trainUpgradeLevel: 0
   targetCount: 0
   destroyParticle: {fileID: 947983282}
-  shop: {fileID: 0}
   fireEffect: {fileID: 0}
   isGoal: 0
   isBurn: 0
@@ -3695,6 +3695,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!65 &-6021769334966293777
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6947313233791652070}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1.91}
+  m_Center: {x: 0, y: 0.5, z: -0.18}
 --- !u!1 &6952161721232779402
 GameObject:
   m_ObjectHideFlags: 0
@@ -5105,6 +5118,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 8096958401754032480}
     m_Modifications:
     - target: {fileID: 7212520077998805656, guid: 71041db654bebb04caf81e4024db723b, type: 3}
+      propertyPath: InitialModule.size3D
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7212520077998805656, guid: 71041db654bebb04caf81e4024db723b, type: 3}
       propertyPath: ShapeModule.radius.value
       value: 0.04
       objectReference: {fileID: 0}
@@ -5273,14 +5290,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 68af51dfd8caecb41b95b59b0b497626, type: 3}
---- !u!1 &4489390566581948575 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4489390566286857222, guid: 68af51dfd8caecb41b95b59b0b497626, type: 3}
-  m_PrefabInstance: {fileID: 312460441}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4489390566581948512 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4489390566286857465, guid: 68af51dfd8caecb41b95b59b0b497626, type: 3}
+  m_PrefabInstance: {fileID: 312460441}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4489390566581948575 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4489390566286857222, guid: 68af51dfd8caecb41b95b59b0b497626, type: 3}
   m_PrefabInstance: {fileID: 312460441}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &879165542

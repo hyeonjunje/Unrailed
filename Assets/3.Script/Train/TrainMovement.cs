@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-
+public enum TrainType { Engine, WaterBox, ChestBox, WorkBench, StationDir, Dynamite, Spare }
 public class TrainMovement : MonoBehaviour
 {
-    public enum TrainType { Engine,WaterBox,ChestBox,WorkBench,StationDir,Dynamite,Spare}
     public TrainType trainType;
+
     public int trainNum;
    
     public Queue<RailController> rails = new Queue<RailController>();
@@ -22,6 +22,9 @@ public class TrainMovement : MonoBehaviour
     public bool isGoal;
     public bool isBurn;
     public bool isReady;
+
+    //게임오버
+    public bool isOver;
 
     public float trainSpeed = 0.5f;
     public float _trainRotateSpeed;
@@ -105,16 +108,21 @@ public class TrainMovement : MonoBehaviour
 
         }
     }
+
     public virtual void TrainUpgrade()
     {
+        destroyParticle.SetActive(true);
+        //destroyParticle.SetActive(false);
         //상속해서 올리기
     }
     protected void TrainOver()
     {
-        if (trainType != TrainType.Spare)
+        if (trainType != TrainType.Spare && !isOver)
         {
             trainMesh.gameObject.SetActive(false);
+            destroyParticle.SetActive(false);
             destroyParticle.SetActive(true);
+            isOver = true;
         }
     }
 

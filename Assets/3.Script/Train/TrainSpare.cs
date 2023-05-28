@@ -35,10 +35,10 @@ public class TrainSpare : TrainMovement
         spawnTrainList.Add(train);
         engine.trains.Add(train);
 
+        train.TrainUpgrade();
 
         train.trainUpgradeLevel++;
         ShopManager.Instance.ResetTrains();
-        ShopManager.Instance.TrainCost();
 
     }
 
@@ -47,7 +47,7 @@ public class TrainSpare : TrainMovement
         Destroy(spawnTrainList[0].gameObject);
         engine.trains.RemoveAt(engine.trains.Count - 1);
         spawnTrainList.Clear();
-
+       
         train.trainUpgradeLevel--;
         ShopManager.Instance.newCarList[trainIdx].gameObject.SetActive(false);
         ShopManager.Instance.newCarList[trainIdx].gameObject.SetActive(true);
