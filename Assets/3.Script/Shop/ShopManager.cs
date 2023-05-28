@@ -39,6 +39,8 @@ public class ShopManager : MonoBehaviour
 
     bool _isShop;
 
+    public Image[] goToLoading;
+   
 
 
     private void Awake()
@@ -59,6 +61,7 @@ public class ShopManager : MonoBehaviour
         trainWater = FindObjectOfType<TrainWater>();
         trainEngine = FindObjectOfType<TrainEngine>();
     }
+
 
     public void ResetTrains()
     {
@@ -160,7 +163,7 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-        private void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Block")|| other.CompareTag("Item") || other.CompareTag("Items"))
         {
