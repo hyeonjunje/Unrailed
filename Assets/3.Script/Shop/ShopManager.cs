@@ -40,8 +40,6 @@ public class ShopManager : MonoBehaviour
     bool _isShop;
 
     public Image[] goToLoading;
-   
-
 
     private void Awake()
     {
@@ -181,7 +179,9 @@ public class ShopManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         trainEngine.anim.SetBool("CountDown", true);
+
         yield return new WaitForSeconds(0.1f);
+
         trainEngine.anim.SetBool("CountDown", false);
         yield return new WaitForSeconds(readyCount);
         //5초 지나는 ui 효과
@@ -190,6 +190,7 @@ public class ShopManager : MonoBehaviour
         _isShop = false;
         trainWater.FireOff();
         test.SetActive(true);
+  
     }
 
 
