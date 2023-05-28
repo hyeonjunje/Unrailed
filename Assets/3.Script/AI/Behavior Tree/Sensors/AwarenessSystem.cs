@@ -58,14 +58,14 @@ public class AwarenessSystem : MonoBehaviour
 {
 
     //인식의 최소값
-    [SerializeField] private float _minimumAwareness = 0f;
+    private float _minimumAwareness = 0f;
     //인식의 증가 속도
-    [SerializeField] private float _awarenessBuildRate = 1f;
+    private float _awarenessBuildRate = 1f;
 
-    //인식 정도의 감소가 시작되기 전의 지연 시간
-    [SerializeField] float AwarenessDecayDelay = 0.1f;
-    // 감소 속도
-    [SerializeField] float AwarenessDecayRate = 0.1f;
+    //인식 정도 감소가 시작되기 전의 지연 시간
+    private float AwarenessDecayDelay = 0.1f;
+    //감소 속도
+    private float AwarenessDecayRate = 0.1f;
 
     private Dictionary<GameObject, TrackedTarget> _targets = new Dictionary<GameObject, TrackedTarget>();
     public Dictionary<GameObject, TrackedTarget> ActiveTargets => _targets;
