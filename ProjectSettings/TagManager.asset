@@ -13,6 +13,8 @@ TagManager:
   - Block
   - ShopItem
   - Train
+  - StackItem
+  - NonStackItem
   layers:
   - Default
   - TransparentFX
@@ -25,8 +27,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - StackItemLayer
+  - NonStackItemLayer
   - 
   - 
   - 
