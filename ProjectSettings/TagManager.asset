@@ -6,6 +6,13 @@ TagManager:
   tags:
   - Water
   - Rail
+  - Item
+  - Items
+  - Empty
+  - WaterBox
+  - Block
+  - ShopItem
+  - Train
   layers:
   - Default
   - TransparentFX
@@ -27,16 +34,16 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Sheep
   - 
   - 
   - Rail
   - 
   - 
+  - RenderObstacle
+  - RenderAbove
   - 
-  - 
-  - 
-  - 
+  - Empty
   - Block
   - BaseBlock
   m_SortingLayers:

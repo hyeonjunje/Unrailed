@@ -5,7 +5,6 @@ using UnityEngine;
 public class TrainWheelRotate : MonoBehaviour
 {
     [SerializeField] bool isBolt;
-
     void Update()
     {
         if (!isBolt)

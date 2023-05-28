@@ -4,19 +4,38 @@ using UnityEngine;
 
 public class RailSpawn : MonoBehaviour
 {
+    public List<GameObject> obj=  new List<GameObject>();
 
-    public GameObject prefabs;
-
-    public Vector3 bottomLeft;
-    public Vector3 topRight;
-
-    public void SpawnRandRail()
+    float timeSpawn;
+    [SerializeField] int countUp;
+    [SerializeField] RailPooling poolRail;
+    
+    private void Awake()
     {
-        int randX = Random.Range((int)bottomLeft.x, (int)topRight.x);
-        int randz = Random.Range((int)bottomLeft.z, (int)topRight.z);
-        Vector3 randVec = new Vector3(randX, -1.94f, randz);
-        Instantiate(prefabs, randVec, Quaternion.identity);
-       //GameObject prefab = Instantiate(prefabs, randVec, Quaternion.identity);
-       //prefab.AddComponent<TrainSpawnRail>().EnqueueRail();
+        poolRail = FindObjectOfType<RailPooling>();
+    }
+    public void Update()
+    {
+        timeSpawn += Time.deltaTime;
+        if(timeSpawn > .1f)
+        {
+            TimeUp();
+            timeSpawn = 0;
+        }
+    }
+
+    void TimeUp()
+    {
+
+        if (countUp >= obj.Count)
+        {
+            return;
+        }
+
+        poolRail.TransformRail(obj[countUp].transform.position);
+        //obj[countUp].transform.position = poolRail.
+        countUp++;
+
+     
     }
 }

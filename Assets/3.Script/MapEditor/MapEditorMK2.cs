@@ -16,11 +16,20 @@ public class MapEditorMK2 : MonoBehaviour
 
     [Header("Transform")]
     [SerializeField] private Transform _blockParent;
-    [SerializeField] private Transform _environmentParent;
+    [SerializeField] private Transform _borderParent;
 
     [Header("Info")]
     [SerializeField] private const int _defaultX = 40;
     [SerializeField] private const int _defaultY = 20;
+
+    [Header("Data")]
+    [SerializeField] private ItemPrefabData _itemPrefabData;
+    [SerializeField] private BlockTransformerData[] _blockTransformerData;
+
+    [Header("Prefabs")]
+    [SerializeField] private Transform _waterFallUp;
+    [SerializeField] private Transform _waterFallDown;
+    [SerializeField] private GameObject _barricade;
 
     [Header("ETC")]
     [SerializeField] private Transform _target;
@@ -49,12 +58,18 @@ public class MapEditorMK2 : MonoBehaviour
         FileManager.LoadGame();
     }
 
-    // 맵 초기화
-    public void InitMap()
+    // 맵 오브젝트 제거
+    private void ClearMap()
     {
         // 원래 오브젝트 삭제
         _blockParent.DestroyAllChild();
-        _environmentParent.DestroyAllChild();
+        _borderParent.DestroyAllChild();
+    }
+
+    // 맵 초기화
+    public void InitMap()
+    {
+        ClearMap();
 
         // 카메라 원위치
         _mainCam.transform.position = _mainCamOriginPos;
@@ -70,7 +85,7 @@ public class MapEditorMK2 : MonoBehaviour
             for (int j = 0; j < _defaultX; j++)
             {
                 BlockMK2 go = Instantiate(_blockPrefab, _blockParent);
-                go.Init((int)EBlock.grass, _blocksMaterial[(int)EBlock.grass], _blocksMaterial[(int)EBlock.grass]);
+                InitBlock(go, (int)EBlock.grass);
                 go.transform.localPosition = new Vector3(j - _minX, 0, i - _minY);
                 groundList[i].Add(go);
             }
@@ -87,7 +102,7 @@ public class MapEditorMK2 : MonoBehaviour
             for(int i = 0; i < groundList.Count; i++)
             {
                 BlockMK2 go = Instantiate(_blockPrefab, _blockParent);
-                go.Init((int)EBlock.grass, _blocksMaterial[(int)EBlock.grass], _blocksMaterial[(int)EBlock.grass]);
+                InitBlock(go, (int)EBlock.grass);
                 go.transform.localPosition = new Vector3(x - _minX, 0, i - _minY);
                 groundList[i].Add(go);
             }
@@ -114,7 +129,9 @@ public class MapEditorMK2 : MonoBehaviour
             for(int i = 0; i < groundList[0].Count; i++)
             {
                 BlockMK2 go = Instantiate(_blockPrefab, _blockParent);
-                go.Init((int)EBlock.grass, _blocksMaterial[(int)EBlock.grass], _blocksMaterial[(int)EBlock.grass]);
+
+                InitBlock(go, (int)EBlock.grass);
+
                 go.transform.localPosition = new Vector3(i - _minX, 0, y - _minY);
                 groundList[groundList.Count - 1].Add(go);
             }
@@ -141,19 +158,14 @@ public class MapEditorMK2 : MonoBehaviour
                 int x = Mathf.RoundToInt(hit.point.x);
                 int z = Mathf.RoundToInt(hit.point.z);
 
-                _target.position = new Vector3(x, 0.51f, z);
+                _target.position = new Vector3(x, 10f, z);
 
 
                 if (Input.GetMouseButton(0))
                 {
                     // 다를 때만 다른 색으로 칠해준다.
                     if (groundList[z + _minY][x + _minX].Index != materialIndex)
-                    {
-                        if(materialIndex >= _blocksMaterial.Length)
-                            groundList[z + _minY][x + _minX].Init(materialIndex, null, _blocksMaterial[(int)EBlock.grass]);
-                        else
-                            groundList[z + _minY][x + _minX].Init(materialIndex, _blocksMaterial[materialIndex], _blocksMaterial[(int)EBlock.grass]);
-                    }
+                        InitBlock(groundList[z + _minY][x + _minX], materialIndex);
                 }
             }
         }
@@ -202,34 +214,134 @@ public class MapEditorMK2 : MonoBehaviour
         int y = mapData.mapData.Length;
 
         // 원래 오브젝트 삭제
-        _blockParent.DestroyAllChild();
-        _environmentParent.DestroyAllChild();
+        ClearMap();
 
         groundList = new List<List<BlockMK2>>();
 
         _minX = (_defaultX / 2) - 1;
         _minY = (_defaultY / 2) - 1;
 
-        for (int i = 0; i < y; i++)
+        for(int i = 0; i < y; i++)
         {
             groundList.Add(new List<BlockMK2>());
             for (int j = 0; j < x; j++)
             {
-                int index = mapData.mapData[i].arr[j];
-
                 BlockMK2 go = Instantiate(_blockPrefab, _blockParent);
-
-                if (index >= _blocksMaterial.Length)
-                    go.Init(index, null, _blocksMaterial[(int)EBlock.grass]);
-                else
-                    go.Init(index, _blocksMaterial[index], _blocksMaterial[(int)EBlock.grass]);
-
                 go.transform.localPosition = new Vector3(j - _minX, 0, i - _minY);
                 groundList[i].Add(go);
             }
         }
 
+        for (int i = 0; i < y; i++)
+        {
+            for (int j = 0; j < x; j++)
+            {
+                int index = mapData.mapData[i].arr[j];
+                InitBlock(groundList[i][j], index);
+            }
+        }
+
         // 카메라 위치 조정
         _mainCam.transform.position = new Vector3((groundList[0].Count - _defaultX) / 2, Camera.main.transform.position.y, (groundList.Count - _defaultY) / 2 + 2);
+
+        SetHeightMap();
+    }
+
+    private void InitBlock(BlockMK2 block, int index)
+    {
+        BlockTransformerData blockTransformerData = null;
+        if (index == (int)EBlock.iron)
+            blockTransformerData = _blockTransformerData[0];
+        else if (index == (int)EBlock.blackRock)
+            blockTransformerData = _blockTransformerData[1];
+
+        Material blockMaterial = null;
+
+        if (index > (int)EBlock.blackRock)
+            blockMaterial = _blocksMaterial[(int)EBlock.grass];
+        else
+            blockMaterial = _blocksMaterial[index];
+
+        StartCoroutine(InitBlockCo(block, blockMaterial, index, blockTransformerData));
+    }
+
+    // 한 프레임 후에 실행해야 제대로 작동함
+    private IEnumerator InitBlockCo(BlockMK2 block, Material blockMaterial, int index, BlockTransformerData blockTransformerData)
+    {
+        yield return null;
+        block.Init(index, blockMaterial, _itemPrefabData.itemPrefabs[index], blockTransformerData);
+        
+        if(index == (int)EBlock.water)
+        {
+            // 위쪽이면 _waterFallUp, 밑쪽이면 _waterFallDown 생성
+            if (block.transform.localPosition.z == -9)
+                Instantiate(_waterFallDown.gameObject, block.transform);
+            else if (block.transform.localPosition.z == groundList.Count - 10)
+                Instantiate(_waterFallUp.gameObject, block.transform);
+        }   
+    }
+
+    // 버튼에도 할꺼야
+    public void SetHeightMap()
+    {
+        int x = groundList[0].Count;
+        int y = groundList.Count;
+        for (int i = 0; i < y; i++)
+        {
+            for(int j = 0; j < x; j++)
+            {
+                if(groundList[i][j].Index == (int)EBlock.blackRock)
+                {
+                    int height = groundList[i][j].GetHeight();
+                    Transform child = groundList[i][j].transform.GetChild(0);
+                    child.localScale = Vector3.one + Vector3.up * height * 0.3f;
+                }
+            }
+        }
+    }
+
+    // 버튼에 달꺼야
+    public void SetBorder()
+    {
+        _borderParent.DestroyAllChild();
+
+        int width = groundList[0].Count;
+        int height = groundList.Count;
+
+        GameObject emptyPrefab = _barricade;
+
+        int minX = Mathf.RoundToInt(groundList[0][0].transform.position.x);
+        int maxX = Mathf.RoundToInt(groundList[height - 1][width - 1].transform.position.x);
+
+        int minY = Mathf.RoundToInt(groundList[0][0].transform.position.z);
+        int maxY = Mathf.RoundToInt(groundList[height - 1][width - 1].transform.position.z);
+
+        // 작은 수평선
+        for(int i = minX; i <= maxX; i++)
+        {
+            Vector3 pos = new Vector3(i, 0.5f, minY - 1);
+            Instantiate(emptyPrefab, pos, Quaternion.identity, _borderParent);
+        }
+
+        // 큰 수평선
+        for(int i = minX; i <= maxX; i++)
+        {
+            Vector3 pos = new Vector3(i, 0.5f, maxY + 1);
+            Instantiate(emptyPrefab, pos, Quaternion.identity, _borderParent);
+        }
+
+        // 작은 수직선
+        for(int i = minY; i <= maxY; i++)
+        {
+            Vector3 pos = new Vector3(minX - 1, 0.5f, i);
+            Instantiate(emptyPrefab, pos, Quaternion.identity, _borderParent);
+        }
+
+        // 큰 수평선
+        for(int i = minY; i <= maxY; i++)
+        {
+            Vector3 pos = new Vector3(maxX + 1, 0.5f, i);
+            Instantiate(emptyPrefab, pos, Quaternion.identity, _borderParent);
+        }
     }
 }

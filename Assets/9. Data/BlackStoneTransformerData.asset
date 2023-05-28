@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19f4108ae9a77104fb09d915c3e4e5b2, type: 3}
+  m_Name: BlackStoneTransformerData
+  m_EditorClassIdentifier: 
+  isHeight: 1
+  originBlock: {fileID: 7206750060758765626, guid: f3a506b80799a2f47b6316ff35094c59, type: 3}
+  transformedBlock:
+  - {fileID: 5359016652996111843, guid: dcbc87568f3015d4d95d0d550defdac6, type: 3}
+  - {fileID: 5195923980063985128, guid: 37547d1bddbbdf742b4f8df41b8e00d0, type: 3}
+  - {fileID: 696980883409521741, guid: e9f37294204aa9a42aa757c27801a612, type: 3}
+  - {fileID: 743683374126146740, guid: 9f2c82d9c8498e446b772120f64c70a3, type: 3}
