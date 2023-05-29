@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,9 +7,6 @@ public class MapCreator : MonoBehaviour
 {
     [Header("컴포넌트")]
     [SerializeField] private MapSlicer _mapSlicer;
-
-    [Header("부모 트랜스폼")]
-    [SerializeField] private Transform _blockParent;
 
     [Header("프리팹 정보들")]
     [SerializeField] private BlockMK2 _blockPrefab;
@@ -21,28 +19,46 @@ public class MapCreator : MonoBehaviour
     [Header("ETC")]
     [SerializeField] private float _intervalTimeToMoveBlockBundle = 0.1f;  // 블럭 번들들이 떨어지는 시간간격
 
+    public List<Transform> _mapParentList = new List<Transform>();
+
     // 맵은 순서대로 생성하기로 하자
     // 여기서 거리 UI 만들어??
     public List<List<BlockMK2>> groundList { get; private set; }
     private List<BlockBundle> _separatedBlockList;
 
-    public IEnumerator CreateMapCo(int worldIndex)
+    // 맵 생성
+    public async UniTask CreateMapAsync(int worldIndex)
     {
-        // 비동기가 필요하긴 할 듯
-        MapData mapData = FileManager.MapsData.mapsData[worldIndex];
+        MapData mapData = FileManager.MapsData.mapsData[0];
 
-        yield return StartCoroutine(InitMapCo(mapData));
+        float width = mapData.mapData[0].arr.Length;
+        Vector3 parentPosition = Vector3.right * width * worldIndex;
+        Transform currentParent = new GameObject("World " + (worldIndex + 1)).transform;
+        currentParent.position = parentPosition;
 
-        yield return StartCoroutine(InitBlockCo(mapData));
+        InitMap(mapData, currentParent);  // 맵 생성
+        await UniTask.Yield();
+        InitBlock(mapData); // 블럭 생성
+        await UniTask.Yield();
 
-        yield return StartCoroutine(SetHeightMapCo());
+        SetHeightMap();  // 높이 설정
+        _separatedBlockList = await _mapSlicer.SliceMap(groundList);  // 위치 설정
 
-        yield return StartCoroutine(InitPositionCo());
-
-        yield return new WaitForEndOfFrame();
+        // 렌더링 기다림
+        await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
     }
 
-    private IEnumerator InitMapCo(MapData mapData)
+    // 재위치 시키기
+    public async UniTask RePositionAsync()
+    {
+        foreach (BlockBundle blockBundle in _separatedBlockList)
+        {
+            blockBundle.RePositionAsync().Forget();
+            await UniTask.Delay(System.TimeSpan.FromSeconds(_intervalTimeToMoveBlockBundle));
+        }
+    }
+
+    private void InitMap(MapData mapData, Transform parent)
     {
         int x = mapData.mapData[0].arr.Length;
         int y = mapData.mapData.Length;
@@ -57,16 +73,14 @@ public class MapCreator : MonoBehaviour
             groundList.Add(new List<BlockMK2>());
             for (int j = 0; j < x; j++)
             {
-                BlockMK2 go = Instantiate(_blockPrefab, _blockParent);
+                BlockMK2 go = Instantiate(_blockPrefab, parent);
                 go.transform.localPosition = new Vector3(j - minX, 0, i - minY);
                 groundList[i].Add(go);
             }
         }
-
-        yield return null;
     }
 
-    private IEnumerator InitBlockCo(MapData mapData)
+    private void InitBlock(MapData mapData)
     {
         int x = mapData.mapData[0].arr.Length;
         int y = mapData.mapData.Length;
@@ -79,9 +93,26 @@ public class MapCreator : MonoBehaviour
                 InitBlock(groundList[i][j], index);
             }
         }
-        yield return null;
     }
 
+    private void SetHeightMap()
+    {
+        int x = groundList[0].Count;
+        int y = groundList.Count;
+
+        for (int i = 0; i < y; i++)
+        {
+            for (int j = 0; j < x; j++)
+            {
+                if (groundList[i][j].Index == (int)EBlock.blackRock)
+                {
+                    int height = groundList[i][j].GetHeight();
+                    Transform child = groundList[i][j].transform.GetChild(0);
+                    child.localScale = Vector3.one + Vector3.up * height * 0.3f;
+                }
+            }
+        }
+    }
 
     private void InitBlock(BlockMK2 block, int index)
     {
@@ -107,43 +138,6 @@ public class MapCreator : MonoBehaviour
                 Instantiate(_waterFallDown.gameObject, block.transform);
             else if (block.transform.localPosition.z == groundList.Count - 10)
                 Instantiate(_waterFallUp.gameObject, block.transform);
-        }
-    }
-
-    private IEnumerator SetHeightMapCo()
-    {
-        int x = groundList[0].Count;
-        int y = groundList.Count;
-
-        for (int i = 0; i < y; i++)
-        {
-            for (int j = 0; j < x; j++)
-            {
-                if (groundList[i][j].Index == (int)EBlock.blackRock)
-                {
-                    int height = groundList[i][j].GetHeight();
-                    Transform child = groundList[i][j].transform.GetChild(0);
-                    child.localScale = Vector3.one + Vector3.up * height * 0.3f;
-                }
-            }
-        }
-
-        yield return null;
-    }
-
-
-    private IEnumerator InitPositionCo()
-    {
-        _separatedBlockList = _mapSlicer.SliceMap(groundList);
-        yield return null;
-    }
-
-    public IEnumerator RePositionCo()
-    {
-        foreach (BlockBundle blockBundle in _separatedBlockList)
-        {
-            StartCoroutine(blockBundle.RePositionCo());
-            yield return new WaitForSeconds(_intervalTimeToMoveBlockBundle);
         }
     }
 }
