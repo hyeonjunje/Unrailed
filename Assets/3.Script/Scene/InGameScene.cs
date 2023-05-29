@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,37 +8,70 @@ public class InGameScene : MonoBehaviour
     [SerializeField] private GameObject _loadingSceneUI;
     [SerializeField] private MapCreator _mapCreator;
 
+    [SerializeField] private int worldCount = 0;
+
+    [SerializeField] private Transform test;
+
+    // 석환이 형 isStart가 true일 때만 player가 작동할 수 있게 해줘~~
+    public bool isStart { get; private set; } = false;
+
+    private bool isGenerate = false;
+
     private void Awake()
     {
         FileManager.LoadGame();
-
-        // 로딩 씬 보여주기
         _loadingSceneUI.SetActive(true);
+        isStart = false;
 
-        // 보여줄동안 
-        // 플레이어 생성
-        // 맵 생성
-        // 동물, 도적, ai 생성
-        // 긴 맵을 만들고 자르기??
-        // astar 맵 최신화
-        StartCoroutine(LodingCo());
-        Debug.Log(Time.realtimeSinceStartup);
-
-        // 이 작업 다 끝나고 로딩 씬 풀고
-        // 자른 맵 내려오면서 맵 조립
+        LoadingFirstGame(
+            () =>
+            {
+                _loadingSceneUI.SetActive(false);
+            },
+            () =>
+            {
+                isStart = true;
+            }).Forget();
     }
 
+    // 상점에서 게임하기 게이지 50% 정도 됐을 때 실행해줘 상연아~~
+    // 로딩 다 하고 필요한거 있으면 인자로 Action 넣어도 돼~
+    // 예외처리 했으니까 게이지 50% 넘고 게이지 나갔다가 다시 들어와도 아무 문제 없을거야~
+    public void CreateMap(System.Action onFinishedAsyncEvent = null)
+    { 
+        if(isGenerate == false)
+        {
+            isGenerate = true;
+            CreateNextMapAsync(onFinishedAsyncEvent).Forget();
+        }
+    }
 
-    private IEnumerator LodingCo()
+    // 상점이 원으로 줄어들 때 다 줄어들면 이거 실행해줘
+    // 맵 위치 설정하는거거든. 맵 위치 설정 다 끝나고 필요한거 있으면 인자로 Action 넣어도 돼~
+    public void RePositionMap(System.Action onFinishedAsyncEvent = null)
     {
-        // 맵 생성
-        // 플레이어 생성
-        // 동물, 도적, ai 생성
-        yield return StartCoroutine(_mapCreator.CreateMapCo(0));
-        Debug.Log(Time.realtimeSinceStartup);
+        RePositionAsync(onFinishedAsyncEvent).Forget();
+        isGenerate = false;
+    }
 
+    private async UniTaskVoid CreateNextMapAsync(System.Action onFinishedAsyncEvent = null)
+    {
+        await _mapCreator.CreateMapAsync(worldCount++);
+        onFinishedAsyncEvent?.Invoke();
+    }
 
-        _loadingSceneUI.SetActive(false);
-        yield return StartCoroutine(_mapCreator.RePositionCo());
+    private async UniTaskVoid RePositionAsync(System.Action onFinishedAsyncEvent = null)
+    {
+        await _mapCreator.RePositionAsync();
+        onFinishedAsyncEvent?.Invoke();
+    }
+
+    private async UniTaskVoid LoadingFirstGame(System.Action onCreateNextMapAsyncEvent = null, System.Action onPositionAsyncEvent = null)
+    {
+        await _mapCreator.CreateMapAsync(worldCount++);
+        onCreateNextMapAsyncEvent?.Invoke();
+
+        await _mapCreator.RePositionAsync();
+        onPositionAsyncEvent?.Invoke();
     }
 }
