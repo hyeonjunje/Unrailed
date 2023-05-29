@@ -34,15 +34,20 @@ public class TestPlayer : MonoBehaviour
             else
             {
                 obj.transform.position = new Vector3(obj.transform.position.x, 0, obj.transform.position.z);
+                obj = null;
             }
         }
   
     }
     private void OnTriggerStay(Collider other)
     {
-        if (space)
-        {
+     
             if (other.CompareTag("ShopItem"))
+            {
+
+                ShopItem item = other.GetComponent<ShopItem>();
+
+            if (space && item._isSpawn)
             {
                 obj = other.gameObject;
             }

@@ -17,6 +17,8 @@ TagManager:
   - NonStackItem
   - WoodPiece
   - IronPiece
+  - GameStartUI
+  - GameExitUI
   layers:
   - Default
   - TransparentFX

@@ -2015,10 +2015,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17312cb7b58d7ec4db2b70e43d7d365c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shop: {fileID: 0}
-  itemType: 2
+  itemType: 3
   itemCost: 1
   itemIdx: 0
+  _isSpawn: 1
 --- !u!54 &-7612223347651848664
 Rigidbody:
   m_ObjectHideFlags: 0

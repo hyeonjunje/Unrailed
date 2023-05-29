@@ -24,7 +24,6 @@ public class TrainBox : TrainMovement
     void Update()
     {
         TrainMovePos();
-        TrainUpgrade();
         if (!isBurn)
         {
             GiveMeItem();
@@ -32,6 +31,7 @@ public class TrainBox : TrainMovement
     }
     public override void TrainUpgrade()
     {
+        base.TrainUpgrade();
         //업그레이드 메서드
         switch (trainUpgradeLevel)
         {
@@ -42,7 +42,7 @@ public class TrainBox : TrainMovement
                 maxItem = 4;
 
                 break;
-            case 3:
+            default:
                 maxItem = 6;
                 break;
         }
