@@ -40,14 +40,14 @@ public class TrainDynamite : TrainMovement
                     spawnTime = spawnSelect;
                 }
             }
+            int i = (int)spawnTime;
+            text.text = i.ToString("D2");
         }
-        int i = (int)spawnTime;
-        text.text = i.ToString("D2");
+    
     }
 
     void MakeDynamite()
     {
-        
         Instantiate(prefabs,spawnPos.position, Quaternion.identity,transform);
     }
     public void RequestDynamite(Player player)
