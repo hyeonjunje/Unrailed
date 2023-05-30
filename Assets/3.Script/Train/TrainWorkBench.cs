@@ -33,6 +33,13 @@ public class TrainWorkBench : TrainMovement
             anim.SetInteger("GetRails", spawnIndex);
         }
         //스폰되는 레일 로직 쓰기
+
+        if(spawnIndex > 0 && !_isPlay && !isReady && !isGoal && !isBurn && !isOver)
+        {
+
+                StartCoroutine(Warning());
+            
+        }
      
     }
     public override void TrainUpgrade()

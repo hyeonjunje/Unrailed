@@ -20,6 +20,7 @@ public class WaterGauge : MonoBehaviour
     private float currentGauge = 0f;
     private bool isFilling = false;
 
+
     private void Awake()
     {
         Setup(Target);
@@ -94,11 +95,8 @@ public class WaterGauge : MonoBehaviour
     {
         isFilling = false;
         currentGauge = 0;
-        if (WaterMesh.activeSelf)
-        {
-            watergauge.gameObject.SetActive(false);
-        }
 
+       
 
     }
     
