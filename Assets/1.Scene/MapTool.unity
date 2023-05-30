@@ -1220,6 +1220,9 @@ MonoBehaviour:
   _blockTransformerData:
   - {fileID: 11400000, guid: 2aae399e2818c7642a7fb88defd8e208, type: 2}
   - {fileID: 11400000, guid: 3d0992563a1c47045a2776c094c6ef6e, type: 2}
+  _waterFallUp: {fileID: 3522402998835842009, guid: 7184e1b88124c514cac87aa0d65e1119, type: 3}
+  _waterFallDown: {fileID: 3162597236616404962, guid: c0e6df7e42ffa0240a33a24b9ce70beb, type: 3}
+  _barricade: {fileID: 2723795344066423885, guid: 22a7cda5959ef1d4eb6bfd45c260852b, type: 3}
   _target: {fileID: 1428839800}
   materialIndex: 0
   isDraw: 1

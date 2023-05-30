@@ -29,12 +29,14 @@ public class BlockMK2 : MonoBehaviour
 
     public int Index => _index;
     public bool isTransformed => Index == (int)EBlock.iron || Index == (int)EBlock.blackRock;
+    public bool isWater => Index == (int)EBlock.water;
 
     private void Awake()
     {
         _renderer = GetComponent<MeshRenderer>();
     }
 
+    // 블럭 Init 작업
     public void Init(int index, Material material, GameObject itemPrefab, BlockTransformerData blockTransformerData = null)
     {
         _index = index;
@@ -46,6 +48,8 @@ public class BlockMK2 : MonoBehaviour
         InstantiateItem(index);
     }
 
+
+    // 블럭 초기화
     private void InitData()
     {
         transform.DestroyAllChild();
@@ -56,6 +60,7 @@ public class BlockMK2 : MonoBehaviour
         transform.tag = "Untagged";
     }
 
+    // 블럭에 맞는 item들 생성
     private void InstantiateItem(int index)
     {
         GameObject go = null;
@@ -95,8 +100,28 @@ public class BlockMK2 : MonoBehaviour
         }
 
         CheckAroundTransformedBlock();
+
+        CheckBackWater();
     }
 
+    // 뒤 확인해서 물이 있고 물에 폭포가 있으면 없애줌
+    private void CheckBackWater()
+    {
+        if(Physics.Raycast(transform.position, Vector3.back, out RaycastHit hit, 1f, _blockLayer))
+        {
+            BlockMK2 block = hit.transform.GetComponent<BlockMK2>();
+
+            if (block != null)
+            {
+                if (block.isWater && block.transform.childCount == 2 && block.transform.localPosition.z != -9)
+                    Destroy(block.transform.GetChild(1).gameObject);
+            }
+
+        }
+    }
+
+
+    // 앞뒤좌우의 오브젝트 주위확인하여 변환
     private void CheckAroundTransformedBlock()
     {
         for(int i = 0; i < dir.Length; i++)
@@ -142,6 +167,7 @@ public class BlockMK2 : MonoBehaviour
         return true;
     }
 
+    // 원래 오브젝트 생성
     public void InstantiateTransformedOrigin()
     {
         transform.DestroyAllChild();
@@ -161,6 +187,7 @@ public class BlockMK2 : MonoBehaviour
         go.transform.localScale = Vector3.one + Vector3.up * randomHeight;
     }
 
+    // 변형된 오브젝트 생성
     public void InstantiateTransformedCarve()
     {
         transform.DestroyAllChild();
@@ -174,8 +201,10 @@ public class BlockMK2 : MonoBehaviour
     }
 
 
-
-
+    /// <summary>
+    /// BFS를 활용한 가장 낮은 높이 측정
+    /// </summary>
+    /// <returns>높이를 반환합니다.</returns>
     public int GetHeight()
     {
         int rayLength = 1;
@@ -211,7 +240,6 @@ public class BlockMK2 : MonoBehaviour
                 }
             }
         }
-
 
         return rayLength;
     }

@@ -695,9 +695,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3937295072386324067}
   - component: {fileID: 309490455}
+  - component: {fileID: 749403203522764796}
   m_Layer: 0
   m_Name: Train_Chest_Box
-  m_TagString: Untagged
+  m_TagString: Train
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -730,14 +731,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ce43fef999ae89478de728c0d24e60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trainType: 2
   trainNum: 1
   listToQue: []
   trainMesh: {fileID: 0}
+  trainUpgradeLevel: 0
   targetCount: 0
   destroyParticle: {fileID: 1476757627}
   fireEffect: {fileID: 0}
   isGoal: 0
   isBurn: 0
+  isReady: 0
   trainSpeed: 0.5
   _trainRotateSpeed: 0
   goalSpeed: 6
@@ -746,6 +750,19 @@ MonoBehaviour:
   workBench: {fileID: 0}
   player: {fileID: 0}
   maxItem: 0
+--- !u!65 &749403203522764796
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2071145127775875921}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1.26}
+  m_Center: {x: 0, y: 0.5, z: -0.29}
 --- !u!1 &2779711129589284112
 GameObject:
   m_ObjectHideFlags: 0

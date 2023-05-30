@@ -2327,9 +2327,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4830214949171945801}
   - component: {fileID: 1289297532}
+  - component: {fileID: 8946738010578979295}
   m_Layer: 0
   m_Name: Train_Water_Tank
-  m_TagString: Untagged
+  m_TagString: Train
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2362,14 +2363,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17fc770ffa0ead34eb5c219db77d8be9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trainType: 1
   trainNum: -1
   listToQue: []
   trainMesh: {fileID: 0}
+  trainUpgradeLevel: 0
   targetCount: 0
   destroyParticle: {fileID: 931619253}
   fireEffect: {fileID: 5584199387377671665}
   isGoal: 0
   isBurn: 0
+  isReady: 0
   trainSpeed: 0.5
   _trainRotateSpeed: 0
   goalSpeed: 6
@@ -2386,6 +2390,19 @@ MonoBehaviour:
   _R: 0
   _G: 0
   _B: 0
+--- !u!65 &8946738010578979295
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8058002238667743923}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1.57}
+  m_Center: {x: 0, y: 0.5, z: -0.22}
 --- !u!1 &8461819435873038528
 GameObject:
   m_ObjectHideFlags: 0
@@ -3072,13 +3089,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 71041db654bebb04caf81e4024db723b, type: 3}
---- !u!4 &5584199387377671666 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7212520077998805659, guid: 71041db654bebb04caf81e4024db723b, type: 3}
-  m_PrefabInstance: {fileID: 2983365430898610025}
-  m_PrefabAsset: {fileID: 0}
 --- !u!198 &5584199387377671665 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 7212520077998805656, guid: 71041db654bebb04caf81e4024db723b, type: 3}
+  m_PrefabInstance: {fileID: 2983365430898610025}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5584199387377671666 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7212520077998805659, guid: 71041db654bebb04caf81e4024db723b, type: 3}
   m_PrefabInstance: {fileID: 2983365430898610025}
   m_PrefabAsset: {fileID: 0}

@@ -23,5 +23,9 @@ public class AgentTest : MonoBehaviour
         {
             agent.MoveToRandomPosition();
         }
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            agent.MoveToClosestEndPosition();
+        }
     }
 }

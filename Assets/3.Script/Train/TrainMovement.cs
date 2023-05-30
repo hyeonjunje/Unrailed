@@ -3,24 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-
+public enum TrainType { Engine, WaterBox, ChestBox, WorkBench, StationDir, Dynamite, Spare }
 public class TrainMovement : MonoBehaviour
 {
+    public TrainType trainType;
+
     public int trainNum;
    
     public Queue<RailController> rails = new Queue<RailController>();
     public List<RailController> listToQue = new List<RailController>();
 
     public Transform trainMesh;
-
+    public int trainUpgradeLevel;
     [SerializeField] private int targetCount;
     [SerializeField] protected GameObject destroyParticle;
-    public ShopManager shop;
     public ParticleSystem fireEffect;
 
     public bool isGoal;
     public bool isBurn;
     public bool isReady;
+
+    //게임오버
+    public bool isOver;
 
     public float trainSpeed = 0.5f;
     public float _trainRotateSpeed;
@@ -32,11 +36,14 @@ public class TrainMovement : MonoBehaviour
     //Transform startRayPos;
     protected void GetMesh()
     {
-        trainMesh = transform.GetChild(0).GetComponent<Transform>();
-        shop = FindObjectOfType<ShopManager>();
-        fireEffect = GetComponentInChildren<ParticleSystem>();
-        destroyParticle.SetActive(false);
-        trainMesh.gameObject.SetActive(true);
+        if(trainType != TrainType.Spare)
+        {
+            trainMesh = transform.GetChild(0).GetComponent<Transform>();
+            fireEffect = GetComponentInChildren<ParticleSystem>();
+            destroyParticle.SetActive(false);
+            trainMesh.gameObject.SetActive(true);
+            trainUpgradeLevel = 1;
+        }
     }
 
     protected void TrainMovePos()
@@ -78,8 +85,6 @@ public class TrainMovement : MonoBehaviour
             //var trainRotate = rails.Peek().transform.position;
             //Debug.Log(trainRotate);
             //transform.rotation = Quaternion.Slerp(transform.rotation, trainRotate, trainRotateSpeed * Time.deltaTime);
-
-            
         }
 
         else
@@ -89,10 +94,10 @@ public class TrainMovement : MonoBehaviour
                 //클리어 조건
                 //제일 먼저 도착하는 엔진을 멈추게 하면 뒤 따라오는 애들 전원 정지로 구현
 
-                if (trainNum == 0)
+                if (trainType == TrainType.Engine)
                 {
                     isReady = true;
-                    shop.ShopOn();
+                    ShopManager.Instance.ShopOn();
                 }
             }
             else
@@ -104,10 +109,21 @@ public class TrainMovement : MonoBehaviour
         }
     }
 
+    public virtual void TrainUpgrade()
+    {
+        destroyParticle.SetActive(true);
+        //destroyParticle.SetActive(false);
+        //상속해서 올리기
+    }
     protected void TrainOver()
     {
-        trainMesh.gameObject.SetActive(false);
-        destroyParticle.SetActive(true);
+        if (trainType != TrainType.Spare && !isOver)
+        {
+            trainMesh.gameObject.SetActive(false);
+            destroyParticle.SetActive(false);
+            destroyParticle.SetActive(true);
+            isOver = true;
+        }
     }
 
     public void RotateTrain()
@@ -115,12 +131,14 @@ public class TrainMovement : MonoBehaviour
         if(rails != null)
         {
             Vector3 dir = rails.Peek().transform.position - transform.position;
+            if(trainMesh != null)
             trainMesh.transform.rotation = Quaternion.Lerp(trainMesh.transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * _trainRotateSpeed);
         }
     }
     public void EnqueueRailPos(RailController gameObject)
     {
-        //큐에 추가
-        rails.Enqueue(gameObject);
+        if (trainType != TrainType.Dynamite || trainType != TrainType.StationDir)
+            //큐에 추가
+            rails.Enqueue(gameObject);
     }
 }

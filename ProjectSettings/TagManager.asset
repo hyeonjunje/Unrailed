@@ -12,6 +12,13 @@ TagManager:
   - WaterBox
   - Block
   - ShopItem
+  - Train
+  - StackItem
+  - NonStackItem
+  - WoodPiece
+  - IronPiece
+  - GameStartUI
+  - GameExitUI
   layers:
   - Default
   - TransparentFX
@@ -24,6 +31,8 @@ TagManager:
   - 
   - 
   - 
+  - StackItemLayer
+  - NonStackItemLayer
   - 
   - 
   - 
@@ -31,16 +40,14 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
+  - Sheep
   - 
   - 
   - Rail
   - 
   - 
-  - 
-  - 
+  - RenderObstacle
+  - RenderAbove
   - 
   - Empty
   - Block
