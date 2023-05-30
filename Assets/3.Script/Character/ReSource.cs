@@ -74,7 +74,7 @@ public class ReSource : MonoBehaviour, IDig
             if (ResourceHp < 0.1f)
             {
                 SpawnItem();
-                Destroy(gameObject, 0.1f);
+                Destroy(gameObject, 0f);
                 ResourceScale = 1;
             }
             isDig = false;
