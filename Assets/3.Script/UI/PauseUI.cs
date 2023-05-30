@@ -20,20 +20,24 @@ public class PauseUI : MonoBehaviour
         {
             blurPost.SetActive(true);
             setPauseObj.SetActive(true);
+            Time.timeScale = 0;
         }
     }
     public void GotoLobby()
     {
         SceneManager.LoadScene("IntroScene");
+        Time.timeScale = 1;
     }
     public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Time.timeScale = 1;
     }
   
     public void Respawn()
     {
         //리스폰 나중에 민경씨 완성하면 개발
+        Time.timeScale = 1;
     }
     public void ExitGame()
     {
@@ -47,5 +51,6 @@ public class PauseUI : MonoBehaviour
     {
         blurPost.SetActive(false);
         setPauseObj.SetActive(false);
+        Time.timeScale = 1;
     }
 }
