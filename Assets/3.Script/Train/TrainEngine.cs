@@ -63,6 +63,11 @@ public class TrainEngine : TrainMovement
                 }
             }
         }
+
+        if(!_isPlay &&!isReady && !isGoal && !isBurn && rails.Count < 5 && !isOver)
+        {
+            StartCoroutine(Warning());
+        }
     }
     public void EngineFire()
     {

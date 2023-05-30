@@ -18,6 +18,8 @@ public class TrainBox : TrainMovement
         trainUpgradeLevel = 2;
         workBench = FindObjectOfType<TrainWorkBench>();
         fireEffect.gameObject.SetActive(false);
+
+        StartCoroutine(Warning()); //첫 목재 석재 넣어라
     }
 
     // Update is called once per frame

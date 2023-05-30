@@ -83,6 +83,11 @@ public class TrainWater : TrainMovement
             FireColor();
             FireOn();
         }
+
+        if (!_isPlay && !isReady && !isGoal && isBurn && !isOver)
+        {
+            StartCoroutine(Warning());
+        }
     }
     
     public override void TrainUpgrade()
