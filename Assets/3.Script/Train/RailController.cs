@@ -15,15 +15,21 @@ public class RailController : MonoBehaviour
     public int dirCount;
     int childCount;
 
+    [Header("Instance Rail")]
     public bool isInstance;
 
-    public bool isGoal;
+    [Header("Dir Rail")]
     public bool isFront;
     public bool isBack;
     public bool isLeft;
     public bool isRight;
+
+
+    [Header("None Dir Rail")]
+    public bool isGoal;
     public bool isStartRail;
     public bool isEndRail;
+    public bool isAnotherRail;
 
     private Vector3 _frontPos;
     private Vector3 _backPos;
@@ -120,15 +126,13 @@ public class RailController : MonoBehaviour
         RaycastHit raycastHit = new RaycastHit();
 
         RailDir();
-
-
+        if(!isAnotherRail)
         if ((Physics.Raycast(_frontPos, transform.forward, out raycastHit, 0.3f) && (!raycastHit.collider.GetComponentInParent<RailController>().isInstance))
             || (Physics.Raycast(_rightPos, transform.right, out raycastHit, 0.3f )&& !raycastHit.collider.GetComponentInParent<RailController>().isInstance) 
             || (Physics.Raycast(_backPos, -transform.forward, out raycastHit, 0.3f) && !raycastHit.collider.GetComponentInParent<RailController>().isInstance)
             || (Physics.Raycast(_leftPos, -transform.right, out raycastHit, 0.3f) && !raycastHit.collider.GetComponentInParent<RailController>().isInstance))
         {
             neighborRail = raycastHit.collider.GetComponentInParent<RailController>();
-
             //북 동 남 서 확인하여 isIntance를 확인
             if (neighborRail != null && 
                 !neighborRail.isInstance && !neighborRail.isStartRail)
