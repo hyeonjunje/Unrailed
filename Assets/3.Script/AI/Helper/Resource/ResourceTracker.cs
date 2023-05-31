@@ -32,6 +32,13 @@ public class ResourceTracker : MonoBehaviour
         TrackedResources[resource.Type].Add(resource);
     }
 
+    public void DeRegisterResource(WorldResource resource)
+    {
+          TrackedResources[resource.Type].Remove(resource);
+    }
+
+
+
     float Distance2D(Vector3 pos1, Vector3 pos2)
     {
         return Mathf.Sqrt((pos1.x - pos2.x) * (pos1.x - pos2.x) +
