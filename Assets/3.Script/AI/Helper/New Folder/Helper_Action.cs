@@ -3,21 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Helper_Action : MonoBehaviour
+public class Helper_Action : Helper
 {
-    public enum EState
-    {
-        Wood,
-        Stone,
-        Tracks,
-        Sleep
-
-    }
-
     public Dictionary<KeyCode, System.Action> Order;
-    public EState HelperState = EState.Wood;
 
-    private void Start()
+    private void Awake()
     {
         Order = new Dictionary<KeyCode, Action>();
         Init();
@@ -28,20 +18,19 @@ public class Helper_Action : MonoBehaviour
     {
         Order[KeyCode.Alpha1] = () =>
         {
-            //여기서 가능한 명령인지 확인하는거 나중에 추가하기(바닥에 도구가 있나요?)
-            HelperState = EState.Wood;
+            TargetResource = WorldResource.EType.Wood;
             Debug.Log("나무 캐세용");
         };
 
         Order[KeyCode.Alpha2] = () =>
         {
-            HelperState = EState.Stone;
+            TargetResource = WorldResource.EType.Stone;
             Debug.Log("돌 캐세용");
         };
 
         Order[KeyCode.Alpha3] = () =>
         {
-            HelperState = EState.Tracks;
+            TargetResource = WorldResource.EType.Wood;
             Debug.Log("자원 수집");
         };
     }
