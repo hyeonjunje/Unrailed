@@ -6187,13 +6187,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2777706224129331587, guid: ce663060779a3794d864c2015715d1b5, type: 3}
-      propertyPath: sun
-      value: 
+    - target: {fileID: 2777706224129331586, guid: ce663060779a3794d864c2015715d1b5, type: 3}
+      propertyPath: m_Name
+      value: PostProcessing Blur
       objectReference: {fileID: 0}
-    - target: {fileID: 2777706224221469706, guid: ce663060779a3794d864c2015715d1b5, type: 3}
-      propertyPath: sun
-      value: 
+    - target: {fileID: 2777706224129331586, guid: ce663060779a3794d864c2015715d1b5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2777706224221469701, guid: ce663060779a3794d864c2015715d1b5, type: 3}
+      propertyPath: m_Name
+      value: PostProcessing
+      objectReference: {fileID: 0}
+    - target: {fileID: 2777706224221469701, guid: ce663060779a3794d864c2015715d1b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce663060779a3794d864c2015715d1b5, type: 3}
@@ -9105,7 +9113,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 949181837250343326}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.9829607, y: -0.68672395, z: 4.7662697}
+  m_LocalPosition: {x: -0.017039299, y: -0.68672395, z: 5.7662697}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 973663513}
@@ -9136,7 +9144,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 949181837279061448}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.0170393, y: -0.68672395, z: 2.7662697}
+  m_LocalPosition: {x: -2.0170393, y: -0.68672395, z: 3.7662697}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 973663513}
@@ -9384,7 +9392,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 949181837680486104}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.9829607, y: -0.68672395, z: 3.7662697}
+  m_LocalPosition: {x: -1.0170393, y: -0.68672395, z: 5.7662697}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 973663513}
@@ -9415,7 +9423,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 949181837703160894}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.9829607, y: -0.68672395, z: 2.7662697}
+  m_LocalPosition: {x: -2.0170393, y: -0.68672395, z: 5.7662697}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 973663513}
@@ -9768,7 +9776,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 949181838301753667}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.9829607, y: -0.68672395, z: 2.7662697}
+  m_LocalPosition: {x: -2.0170393, y: -0.68672395, z: 6.7662697}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 973663513}
@@ -9847,7 +9855,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 949181838310986624}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.9829607, y: -0.68672395, z: 3.7662697}
+  m_LocalPosition: {x: -1.0170393, y: -0.68672395, z: 6.7662697}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 973663513}
@@ -10232,7 +10240,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 949181838857273863}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.017039299, y: -0.68672395, z: 2.7662697}
+  m_LocalPosition: {x: -2.0170393, y: -0.68672395, z: 4.7662697}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 973663513}
@@ -22319,53 +22327,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1395681526705835598, guid: fe89d3aeedc58324bbc745ddfc0f341d, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1716913570871544318, guid: fe89d3aeedc58324bbc745ddfc0f341d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1990920422067898420, guid: fe89d3aeedc58324bbc745ddfc0f341d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2732326081488509495, guid: fe89d3aeedc58324bbc745ddfc0f341d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3363878762998135659, guid: fe89d3aeedc58324bbc745ddfc0f341d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4131865113374017753, guid: fe89d3aeedc58324bbc745ddfc0f341d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4514775583044246132, guid: fe89d3aeedc58324bbc745ddfc0f341d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4514775583044246133, guid: fe89d3aeedc58324bbc745ddfc0f341d, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4514775583044246133, guid: fe89d3aeedc58324bbc745ddfc0f341d, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4514775583044246133, guid: fe89d3aeedc58324bbc745ddfc0f341d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 4874095719036482659, guid: fe89d3aeedc58324bbc745ddfc0f341d, type: 3}
-      propertyPath: dirCount
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6747005132310323146, guid: fe89d3aeedc58324bbc745ddfc0f341d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+    - target: {fileID: 1395681527437479615, guid: fe89d3aeedc58324bbc745ddfc0f341d, type: 3}
+      propertyPath: isAnotherRail
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7165701367044090425, guid: fe89d3aeedc58324bbc745ddfc0f341d, type: 3}
       propertyPath: m_RootOrder
@@ -22415,36 +22379,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: EndStation
       objectReference: {fileID: 0}
-    - target: {fileID: 7165701367044090426, guid: fe89d3aeedc58324bbc745ddfc0f341d, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7952658442074857641, guid: fe89d3aeedc58324bbc745ddfc0f341d, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7952658442074857641, guid: fe89d3aeedc58324bbc745ddfc0f341d, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7952658442074857641, guid: fe89d3aeedc58324bbc745ddfc0f341d, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7952658442074857641, guid: fe89d3aeedc58324bbc745ddfc0f341d, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7952658442074857641, guid: fe89d3aeedc58324bbc745ddfc0f341d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9021613126263448548, guid: fe89d3aeedc58324bbc745ddfc0f341d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1395681526705835598, guid: fe89d3aeedc58324bbc745ddfc0f341d, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fe89d3aeedc58324bbc745ddfc0f341d, type: 3}
 --- !u!33 &7179659698908359694
 MeshFilter:
@@ -27842,13 +27777,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921308527714892
@@ -27870,13 +27806,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921308568195246
@@ -27898,13 +27835,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921308617014052
@@ -27926,13 +27864,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921308682754535
@@ -27954,13 +27893,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921308722207682
@@ -27982,13 +27922,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921308763643785
@@ -28010,13 +27951,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921308810415071
@@ -28038,13 +27980,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921308822976046
@@ -28066,13 +28009,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921308948083827
@@ -28094,13 +28038,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921308979262820
@@ -28122,13 +28067,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921309001099371
@@ -28150,13 +28096,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921309047369430
@@ -28178,13 +28125,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921309061718019
@@ -28206,13 +28154,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921309125013328
@@ -28234,13 +28183,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921309138465703
@@ -28262,13 +28212,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921309151332983
@@ -28290,13 +28241,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921309260846246
@@ -28318,13 +28270,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921309284400326
@@ -28346,13 +28299,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921309367079887
@@ -28374,13 +28328,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921309423433382
@@ -28402,13 +28357,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921309451602473
@@ -28430,13 +28386,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921309478471887
@@ -28458,13 +28415,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921309557868565
@@ -28486,13 +28444,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921309590252677
@@ -28514,13 +28473,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921309724192107
@@ -28542,13 +28502,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921309925981591
@@ -28570,13 +28531,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921309930545256
@@ -28598,13 +28560,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921309930889044
@@ -28626,13 +28589,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921309936147664
@@ -28654,13 +28618,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921309981037218
@@ -28682,13 +28647,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921310052950754
@@ -28710,13 +28676,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921310074727752
@@ -28738,13 +28705,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921310119718989
@@ -28766,13 +28734,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921310146588448
@@ -28794,13 +28763,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921310155871480
@@ -28822,13 +28792,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921310171811930
@@ -28850,13 +28821,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921310223297906
@@ -28878,13 +28850,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921310272974082
@@ -28906,13 +28879,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921310356165966
@@ -28934,13 +28908,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921310369256378
@@ -28962,13 +28937,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921310386318352
@@ -28990,13 +28966,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921310387428201
@@ -29018,13 +28995,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921310494206668
@@ -29046,13 +29024,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921310561784842
@@ -29074,13 +29053,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!114 &8083921310600408365
@@ -29102,13 +29082,14 @@ MonoBehaviour:
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 10
   lifeTime: 0
 --- !u!108 &8109558586078304219

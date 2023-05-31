@@ -133,7 +133,7 @@ public class MapSlicer : MonoBehaviour
         return result;
     }
 
-    // 두 블럭번들을 적절히 섞는 메소드
+    // 두 블럭들을 적절히 섞는 메소드
     private List<BlockBundle> ShuffleBlockBundle(List<BlockBundle> blockBundleLower, List<BlockBundle> blockBundleUpper)
     {
         List<BlockBundle> separatedBlockList = new List<BlockBundle>();

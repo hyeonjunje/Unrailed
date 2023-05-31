@@ -35,7 +35,9 @@ public class MapEditorMK2 : MonoBehaviour
     [SerializeField] private Transform _target;
 
     [HideInInspector] public int materialIndex;
-    [HideInInspector] public bool isDraw = true;
+
+    // true면 상호작용할 수 있음
+    [HideInInspector] public bool isInteract = true;
 
     // 계속 증가하니까 리스트로?
     private List<List<BlockMK2>> groundList = new List<List<BlockMK2>>();
@@ -47,7 +49,7 @@ public class MapEditorMK2 : MonoBehaviour
 
     public void Awake()
     {
-        isDraw = true;
+        isInteract = true;
 
         _mainCam = Camera.main;
         _mainCamOriginPos = _mainCam.transform.position;
@@ -150,7 +152,7 @@ public class MapEditorMK2 : MonoBehaviour
 
     private void Update()
     {
-        if(isDraw)
+        if(isInteract)
         {
             RaycastHit hit;
             if (Physics.Raycast(_mainCam.ScreenPointToRay(Input.mousePosition), out hit, 1000f, 1 << LayerMask.NameToLayer("Block")))
