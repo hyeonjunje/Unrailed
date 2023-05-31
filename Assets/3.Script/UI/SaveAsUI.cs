@@ -18,12 +18,12 @@ public class SaveAsUI : MonoBehaviour
 
     private void OnEnable()
     {
-        mapEditor.isDraw = false;
+        mapEditor.isInteract = false;
     }
 
     private void OnDisable()
     {
-        mapEditor.isDraw = true;
+        mapEditor.isInteract = true;
     }
 
     private void SaveAs()

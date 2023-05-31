@@ -18,14 +18,14 @@ public class OpenUI : MonoBehaviour
 
     private void OnEnable()
     {
-        mapEditor.isDraw = false;
+        mapEditor.isInteract = false;
 
         OpenFileData();
     }
 
     private void OnDisable()
     {
-        mapEditor.isDraw = true;
+        mapEditor.isInteract = true;
     }
 
     public void OpenFileData()
