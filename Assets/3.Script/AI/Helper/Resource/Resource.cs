@@ -6,6 +6,7 @@ using System.Linq;
 public class Resource : MonoBehaviour
 {
     public Transform spawnPoint;
+    int num = 0;
     Helper Robot;
 
     [SerializeField] WorldResource.EType DefaultResource = WorldResource.EType.Wood;
@@ -53,6 +54,7 @@ public class Resource : MonoBehaviour
 
     public WorldResource GetGatherTarget(Helper brain)
     {
+        PopulateResources();
         WorldResource.EType targetResource = DefaultResource;
         var resourceTypes = System.Enum.GetValues(typeof(WorldResource.EType));
         foreach (var typeValue in resourceTypes)

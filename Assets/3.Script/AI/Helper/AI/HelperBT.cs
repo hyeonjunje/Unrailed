@@ -9,7 +9,7 @@ public class HelperBT : MonoBehaviour
     public class BlackBoardKey : BlackboardKeyBase
     {
         public static readonly BlackBoardKey Order = new BlackBoardKey() { Name = "Order" };
-        public static readonly BlackBoardKey CurrentTarget = new BlackBoardKey() { Name = "CurrentTarget" };
+        public static readonly BlackBoardKey Destination = new BlackBoardKey() { Name = "Destination" };
 
         public string Name;
 
@@ -26,6 +26,8 @@ public class HelperBT : MonoBehaviour
     protected Blackboard<BlackBoardKey> _localMemory;
     protected AI_Item _item;
 
+    private float _rotateSpeed = 10;
+
     protected WorldResource _target;
     protected WorldResource.EType _order;
 
@@ -41,7 +43,6 @@ public class HelperBT : MonoBehaviour
     private void Start()
     {
         _localMemory = BlackboardManager.Instance.GetIndividualBlackboard<BlackBoardKey>(this);
-        _localMemory.SetGeneric<DetectableTarget>(BlackBoardKey.CurrentTarget, null);
         _localMemory.SetGeneric<WorldResource.EType>(BlackBoardKey.Order, WorldResource.EType.Wood);
 
         var BTRoot = _tree.RootNode.Add<BTNode_Selector>("BT 시작");
@@ -60,7 +61,8 @@ public class HelperBT : MonoBehaviour
          });
 
         var mainSequence = OrderRoot.Add<BTNode_Sequence>("명령이 있는 경우");
-        var woodRoot = mainSequence.Add<BTNode_Sequence>("명령 : 나무/돌 캐기");
+        var woodRoot = mainSequence.Add<BTNode_Sequence>("1. 도구 찾기");
+
         //도끼 들기
         //나무로 이동하기
         //나무 베기
@@ -93,8 +95,7 @@ public class HelperBT : MonoBehaviour
             DebugTarget.text = _item.name;
             _agent.MoveTo(_item.InteractionPoint);
             _animator.SetBool("isMove", true);
-            //타겟 자원 설정
-            _target = _helper.Home.GetGatherTarget(_helper);
+
 
             return BehaviorTree.ENodeStatus.InProgress;
 
@@ -104,7 +105,7 @@ public class HelperBT : MonoBehaviour
             return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
         });
 
-        var pickUpTool = mainSequence.Add<BTNode_Action>("도구 들기", () =>
+        var pickUpTool = woodRoot.Add<BTNode_Action>("도구 들기", () =>
          {
 
              _item.transform.SetParent(RightHand);
@@ -121,12 +122,47 @@ public class HelperBT : MonoBehaviour
         });
 
 
-        var MoveToResource = mainSequence.Add<BTNode_Action>("자원으로 이동", () =>
+
+
+
+
+        var workRoot = mainSequence.Add<BTNode_Sequence>("2. 일하기",()=>
+        {
+            //타겟 자원 설정
+
+            return BehaviorTree.ENodeStatus.InProgress;
+
+        },()=>
+        {
+       
+            var order = _localMemory.GetGeneric<WorldResource.EType>(BlackBoardKey.Order);
+            return order == _order ? BehaviorTree.ENodeStatus.InProgress : BehaviorTree.ENodeStatus.Failed;
+        });
+/*        var workDeco = workRoot.AddDecorator<BTDecoratorBase>("명령이 들어올때까지 무한 반복", () =>
+         {
+             return true;
+         
+         });*/     
+
+        var target = workRoot.Add<BTNode_Action>("타겟 정하기", () =>
+         {
+             if(_target==null)
+             {
+                _target = _helper.Home.GetGatherTarget(_helper);
+                Vector3 position = _agent.FindCloestAroundEndPosition(_target.transform.position);
+                _localMemory.SetGeneric<Vector3>(BlackBoardKey.Destination, position);
+
+             }
+             return BehaviorTree.ENodeStatus.Succeeded;
+
+         });
+
+        var MoveToResource = workRoot.Add<BTNode_Action>("자원으로 이동", () =>
          {
              //자원으로 이동하기
              DebugTarget.text = _target.name;
-             Vector3 position = _agent.FindCloestAroundEndPosition(_target.transform.position);
-             _agent.MoveTo(position);
+             Vector3 pos = _agent.FindCloestAroundEndPosition(_target.transform.position);
+             _agent.MoveTo(pos);
 
              _animator.SetBool("isMove", true);
 
@@ -140,25 +176,31 @@ public class HelperBT : MonoBehaviour
          });
 
 
-        var CollectResource = mainSequence.Add<BTNode_Action>("자원 채집하기", () =>
+        var CollectResource = workRoot.Add<BTNode_Action>("자원 채집하기", () =>
          {
              _animator.SetBool("isDig", true);
-             _target.isDig();
+             StartCoroutine(_target.isDigCo());
              return BehaviorTree.ENodeStatus.InProgress;
 
          }, () =>
          {
-
-             return _target.isDig() ? BehaviorTree.ENodeStatus.InProgress : BehaviorTree.ENodeStatus.Succeeded;
+             Vector3 dir = _target.transform.position - transform.position;
+             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * _rotateSpeed);
+             if(!_target.isDig())
+             {
+                 Destroy(_target.gameObject);
+                 return BehaviorTree.ENodeStatus.Succeeded;
+             }
+             return BehaviorTree.ENodeStatus.InProgress;
          }
         );
-
 
 
 
         var OrderChange = BTRoot.Add<BTNode_Sequence>("명령이 바뀐 경우");
         OrderChange.Add<BTNode_Action>("도구 내려놓기", () =>
          {
+
              //내려놓기
              _item.transform.position = transform.position;
              _item.transform.rotation = Quaternion.identity;
@@ -167,6 +209,7 @@ public class HelperBT : MonoBehaviour
 
              //블랙보드 업데이트
              _item = null;
+             _target = null;
              _localMemory.SetGeneric<WorldResource.EType>(BlackBoardKey.Order, _order);
 
              return BehaviorTree.ENodeStatus.Succeeded;
