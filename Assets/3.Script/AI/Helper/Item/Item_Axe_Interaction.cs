@@ -9,6 +9,7 @@ public class Item_Axe_Interaction : SimpleInteraction
     private void Awake()
     {
         _axe = GetComponent<Item_Axe>();
+        _axe.Type = WorldResource.EType.Wood;
     }
 
     public override bool CanPerform()

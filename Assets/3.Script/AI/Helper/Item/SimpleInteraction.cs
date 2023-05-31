@@ -7,7 +7,7 @@ public class SimpleInteraction : BaseInteraction
     protected int MaxSimultaneousUsers = 1;
     public override bool CanPerform()
     {
-        throw new System.NotImplementedException();
+        return true;
     }
 
     public override bool LockInteraction()

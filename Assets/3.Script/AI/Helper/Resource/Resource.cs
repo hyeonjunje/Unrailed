@@ -45,7 +45,7 @@ public class Resource : MonoBehaviour
         {
             var type = (WorldResource.EType)value;
             TrackedResources[type] = ResourceTracker.Instance.GetResourcesInRange(type, transform.position, PerfectKnowledgeRange);
-            Debug.Log($"{TrackedResources[type].Count}, {type}");
+            //Debug.Log($"{TrackedResources[type].Count}, {type}");
             //ÃÑ ÀÚ¿ø¼ö
             NumAvailableResources += TrackedResources[type].Count;
         }

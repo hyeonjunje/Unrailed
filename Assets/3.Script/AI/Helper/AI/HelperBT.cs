@@ -13,7 +13,7 @@ public class HelperBT : MonoBehaviour
         public string Name;
 
     }
-
+    public Transform RightHand;
 
     private Vector3 _itemPosition;
     private Animator _animator;
@@ -22,7 +22,8 @@ public class HelperBT : MonoBehaviour
     protected BehaviorTree _tree;
     protected PathFindingAgent _agent;
     protected Blackboard<BlackBoardKey> _localMemory;
-    WorldResource Target;
+    protected AI_Item _item;
+    protected WorldResource _target;
 
     private void Awake()
     {
@@ -42,7 +43,7 @@ public class HelperBT : MonoBehaviour
         BTRoot.AddService<BTServiceBase>("명령을 기다리는 Service", (float deltaTime) =>
         {
             var order = _helper.TargetResource;
-            _localMemory.SetGeneric(BlackBoardKey.Order, order);
+            _localMemory.SetGeneric<WorldResource.EType>(BlackBoardKey.Order, order);
             
         });
 
@@ -60,42 +61,66 @@ public class HelperBT : MonoBehaviour
         var MoveToItem = woodRoot.Add<BTNode_Action>("도구로 이동",()=>
         {
             var order = _localMemory.GetGeneric<WorldResource.EType>(BlackBoardKey.Order);
-            Vector3 itemPosition;
 
-            switch(order)
+
+            foreach(var item in ItemManager.Instance.RegisteredObjects)
             {
-                case WorldResource.EType.Stone:
-                    //itemPosition = 곡괭이위치;
-                    Debug.Log("곡괭이");
-                    break;
-                case WorldResource.EType.Wood:
-                    Debug.Log("도끼");
-                    break;
-                case WorldResource.EType.Water:
-                    Debug.Log("양동이");
-                    break;
+                //아이템이 명령이랑 호환이 된다면
+                if(item.Type==order)
+                {
+                    foreach (var interaction in item.Interactions)
+                    {
+                        //플레이어가 들고 있는지 확인하기
+                        if (!interaction.CanPerform())
+                        {
+                            Debug.Log("누가 쓰고 있나봐요");
+                        }
+                        _item = item;
+                        Debug.Log($"{item.name} 주울 수 있어요");
+                        break;
+                    }
 
+                }
             }
 
-            //타겟 설정
-            Target = _helper.Home.GetGatherTarget(_helper);
             //도구로 이동하기
-            Debug.Log(Target);
+            _agent.MoveTo(_item.InteractionPoint);
+            _animator.SetBool("isMove", true);
+            //타겟 자원 설정
+            _target = _helper.Home.GetGatherTarget(_helper);
 
             return BehaviorTree.ENodeStatus.InProgress;
 
         },()=>
         {
-            return BehaviorTree.ENodeStatus.Succeeded;
-            //return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
+
+            return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
         });
+
+        var pickUpTool = mainSelector.Add<BTNode_Action>("도구 들기", () =>
+         {
+
+             _item.transform.SetParent(RightHand);
+             _item.transform.localPosition = Vector3.zero;
+             _item.transform.localRotation = Quaternion.identity;
+
+             return BehaviorTree.ENodeStatus.InProgress;
+         },
+        () =>
+        { 
+       
+             return _item.transform.parent == RightHand ? 
+            BehaviorTree.ENodeStatus.Succeeded:BehaviorTree.ENodeStatus.InProgress;
+        });
+
 
         var MoveToResource = mainSelector.Add<BTNode_Action>("자원으로 이동", () =>
          {
-             Vector3 position = Target.transform.position;
              //자원으로 이동하기
-             Vector3 dd = _agent.FindCloestAroundEndPosition(position);
-             _agent.MoveTo(dd);
+             Vector3 position = _agent.FindCloestAroundEndPosition(_target.transform.position);
+             _agent.MoveTo(position);
+
+             _animator.SetBool("isMove", true);
 
              return BehaviorTree.ENodeStatus.InProgress;
 
@@ -103,9 +128,21 @@ public class HelperBT : MonoBehaviour
         , () =>
          {
              return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
-             //return BehaviorTree.ENodeStatus.InProgress;
 
          });
+
+
+        var CollectResource = mainSelector.Add<BTNode_Action>("자원 채집하기", () =>
+         {
+             _animator.SetBool("isDig", true);
+             return BehaviorTree.ENodeStatus.InProgress;
+
+         }, () =>
+         {
+
+             return BehaviorTree.ENodeStatus.InProgress;
+         }
+        );
 
 
 
@@ -124,8 +161,8 @@ public class HelperBT : MonoBehaviour
          {
              if(_helper.Home!=null)
              {
-             Target = _helper.Home.GetGatherTarget(_helper);
-             _agent.MoveTo(Target.transform.position);
+             _target = _helper.Home.GetGatherTarget(_helper);
+             _agent.MoveTo(_target.transform.position);
 
              }
 
