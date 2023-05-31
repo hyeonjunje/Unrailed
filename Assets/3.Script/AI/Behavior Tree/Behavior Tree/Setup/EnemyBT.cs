@@ -12,9 +12,7 @@ public class EnemyBT : MonoBehaviour
 
         public string Name;
 
-
     }
-
 
     [Header("쫓아가는 기준")]
     //추적을 시작할 수 있는 최소 기준
@@ -23,6 +21,8 @@ public class EnemyBT : MonoBehaviour
     [SerializeField] private float _awarenessToStopChase = 2f;
 
 
+    [Header("타겟")]
+    [SerializeField] private string _wood;
 
     private Vector3 _itemPosition;
     private Animator _animator;
@@ -34,6 +34,7 @@ public class EnemyBT : MonoBehaviour
 
     private void Awake()
     {
+        _wood = "WoodPiece";
         _animator = GetComponent<Animator>();
         _tree = GetComponent<BehaviorTree>();
         _agent = GetComponent<PathFindingAgent>();
@@ -48,9 +49,9 @@ public class EnemyBT : MonoBehaviour
    
 
 
-        var BTRoot = _tree.RootNode.Add<BTNode_Selector>("BT 시작"); //셀렉터
+        var BTRoot = _tree.RootNode.Add<BTNode_Selector>("BT 시작");
 
-        BTRoot.AddService<BTServiceBase>("목표 찾는 Service", (float deltaTime) => //매프레임 계속 실행
+        BTRoot.AddService<BTServiceBase>("목표 찾는 Service", (float deltaTime) =>
         {
             if (_sensors.ActiveTargets == null || _sensors.ActiveTargets.Count == 0)
             {
@@ -87,9 +88,17 @@ public class EnemyBT : MonoBehaviour
                 }
             }
 
-
             //여기서 Set해주기
-            _localMemory.SetGeneric(BlackBoardKey.CurrentTarget, currentTarget);
+            if (currentTarget != null)
+            {
+                if (currentTarget.CompareTag(_wood))
+                {
+                    _localMemory.SetGeneric(BlackBoardKey.CurrentTarget, currentTarget);
+                }
+
+            }
+            else
+                return;
         });
 
         var canChaseSeq = BTRoot.Add<BTNode_Sequence>("SEQ. 목표가 있나요?");

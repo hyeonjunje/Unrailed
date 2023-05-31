@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(AwarenessSystem))]
+
 public class EnemyAI : MonoBehaviour
 {
     [SerializeField] private Text _feedbackDisplay;
