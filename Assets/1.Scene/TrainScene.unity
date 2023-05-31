@@ -6187,13 +6187,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2777706224129331587, guid: ce663060779a3794d864c2015715d1b5, type: 3}
-      propertyPath: sun
-      value: 
+    - target: {fileID: 2777706224129331586, guid: ce663060779a3794d864c2015715d1b5, type: 3}
+      propertyPath: m_Name
+      value: PostProcessing Blur
       objectReference: {fileID: 0}
-    - target: {fileID: 2777706224221469706, guid: ce663060779a3794d864c2015715d1b5, type: 3}
-      propertyPath: sun
-      value: 
+    - target: {fileID: 2777706224129331586, guid: ce663060779a3794d864c2015715d1b5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2777706224221469701, guid: ce663060779a3794d864c2015715d1b5, type: 3}
+      propertyPath: m_Name
+      value: PostProcessing
+      objectReference: {fileID: 0}
+    - target: {fileID: 2777706224221469701, guid: ce663060779a3794d864c2015715d1b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce663060779a3794d864c2015715d1b5, type: 3}
@@ -22321,6 +22329,14 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1395681526705835598, guid: fe89d3aeedc58324bbc745ddfc0f341d, type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1395681527437479615, guid: fe89d3aeedc58324bbc745ddfc0f341d, type: 3}
+      propertyPath: isEndRail
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1395681527437479615, guid: fe89d3aeedc58324bbc745ddfc0f341d, type: 3}
+      propertyPath: isInstance
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1716913570871544318, guid: fe89d3aeedc58324bbc745ddfc0f341d, type: 3}

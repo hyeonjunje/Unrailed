@@ -1792,7 +1792,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2777706223984096356}
         m_TargetAssemblyTypeName: PauseUI, Assembly-CSharp
-        m_MethodName: Continue
+        m_MethodName: ClickOnContinue
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
