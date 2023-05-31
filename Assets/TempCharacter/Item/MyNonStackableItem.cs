@@ -2,31 +2,75 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MyNonStackableItem : MyItem, IMyItem
+public class MyNonStackableItem : MyItem
 {
-    private PlayerController player;
-
-    private void Awake()
+    public override Pair<Stack<MyItem>, Stack<MyItem>> AutoGain(Stack<MyItem> handItem, Stack<MyItem> detectedItem)
     {
-        player = FindObjectOfType<PlayerController>();
+        // 이건 아무것도 안해도 돼
+        return new Pair<Stack<MyItem>, Stack<MyItem>>(handItem, detectedItem);
     }
 
-    public bool PickUp(int count = 0)
+    public override Pair<Stack<MyItem>, Stack<MyItem>> Change(Stack<MyItem> handItem, Stack<MyItem> detectedItem)
     {
-        RePosition(player.RightHandTransform, Vector3.zero);
+        // handItem은 무조건 nonStackableItem
 
-        return true;
+        EItemType detectedItemType = detectedItem.Peek().ItemType;
+        if(detectedItemType == EItemType.axe || detectedItemType == EItemType.pick || detectedItemType == EItemType.bucket)
+        {
+            MyItem temp = handItem.Pop();
+            handItem.Push(detectedItem.Pop());
+            detectedItem.Push(temp);
+            handItem.Peek().RePosition(player.RightHandTransform, Vector3.zero);
+            detectedItem.Peek().RePosition(player.CurrentBlockTransform, Vector3.up * 0.5f);
+        }
+        else if(detectedItemType == EItemType.wood || detectedItemType == EItemType.steel)
+        {
+            MyItem temp = handItem.Pop();
+            for(int i = 0; i < 3; i++)
+            {
+                if (detectedItem.Count == 0)
+                    break;
+
+                handItem.Push(detectedItem.Pop());
+                handItem.Peek().RePosition(player.TwoHandTransform, Vector3.up * i * stackInterval);
+            }
+            detectedItem.Push(temp);
+            detectedItem.Peek().RePosition(player.CurrentBlockTransform, Vector3.up * 0.5f + Vector3.up * (detectedItem.Count - 1) * stackInterval);
+        }
+        else if(detectedItemType == EItemType.rail)
+        {
+            if(!CheckConnectedRail())
+            {
+                MyItem temp = handItem.Pop();
+                for (int i = 0; i < 3; i++)
+                {
+                    if (detectedItem.Count == 0)
+                        break;
+
+                    handItem.Push(detectedItem.Pop());
+                    handItem.Peek().RePosition(player.TwoHandTransform, Vector3.up * i * stackInterval);
+                }
+                detectedItem.Push(temp);
+                detectedItem.Peek().RePosition(player.CurrentBlockTransform, Vector3.up * 0.5f + Vector3.up * (detectedItem.Count - 1) * stackInterval);
+            }
+        }
+
+        return new Pair<Stack<MyItem>, Stack<MyItem>>(handItem, detectedItem);
     }
 
-    public bool PutDown(int count = 0)
+    public override Pair<Stack<MyItem>, Stack<MyItem>> PickUp(Stack<MyItem> handItem, Stack<MyItem> detectedItem)
     {
-        RePosition(player.CurrentBlockTransform, Vector3.up * 0.5f);
-
-        return true;
+        // 그냥 주워
+        handItem.Push(detectedItem.Pop());
+        handItem.Peek().RePosition(player.RightHandTransform, Vector3.zero);
+        return new Pair<Stack<MyItem>, Stack<MyItem>>(handItem, detectedItem);
     }
 
-    public bool CheckItemType(IMyItem otherItem)
+    public override Pair<Stack<MyItem>, Stack<MyItem>> PutDown(Stack<MyItem> handItem, Stack<MyItem> detectedItem)
     {
-        return ItemType == otherItem.ItemType;
+        // 그냥 떨궈
+        detectedItem.Push(handItem.Pop());
+        detectedItem.Peek().RePosition(player.CurrentBlockTransform, Vector3.up * 0.5f);
+        return new Pair<Stack<MyItem>, Stack<MyItem>>(handItem, detectedItem);
     }
 }

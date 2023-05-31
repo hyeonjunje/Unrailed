@@ -20,8 +20,8 @@ public class PlayerController : MonoBehaviour
 
     // 물건
     // 종류가 다르면 안됨
-    private Stack<IMyItem> _handItem = new Stack<IMyItem>();
-    private Stack<IMyItem> _detectedItem = new Stack<IMyItem>();
+    private Stack<MyItem> _handItem = new Stack<MyItem>();
+    private Stack<MyItem> _detectedItem = new Stack<MyItem>();
 
     // 플레이어 수치
     private float _currentSpeed;
@@ -31,8 +31,8 @@ public class PlayerController : MonoBehaviour
     // 전방에 있는 오브젝트
     private Transform _currentFrontObject;
 
-    public List<IMyItem> handItemList = new List<IMyItem>();
-    public List<IMyItem> detectedItemList = new List<IMyItem>();
+    public List<MyItem> handItemList = new List<MyItem>();
+    public List<MyItem> detectedItemList = new List<MyItem>();
 
     public List<string> handItemGameObjectList = new List<string>();
     public List<string> detectedItemGameObjectList = new List<string>();
@@ -59,8 +59,8 @@ public class PlayerController : MonoBehaviour
         _isDash = false;
         _currentSpeed = _playerStat.moveSpeed;
 
-        _handItem = new Stack<IMyItem>();
-        _detectedItem = new Stack<IMyItem>();
+        _handItem = new Stack<MyItem>();
+        _detectedItem = new Stack<MyItem>();
     }
 
     private void FixedUpdate()
@@ -124,106 +124,29 @@ public class PlayerController : MonoBehaviour
     // spacebar 누를 때
     private void InteractiveItemSpace()
     {
-        if(_handItem.Count != 0 && _detectedItem.Count == 0) // 버리기
-        {
-            Debug.Log("버리기");
-
-            int count = 0;
-            // 그대로 내려놓음
-            while(_handItem.Count != 0)
-            {
-                IMyItem item = _handItem.Peek();
-                if (item.PutDown(count++))
-                {
-                    _handItem.Pop();
-                    _detectedItem.Push(item);
-                }
-                else
-                {
-                    break;
-                }
-            }
-        }
-        else if(_handItem.Count == 0 && _detectedItem.Count != 0) // 줍기
+        if (_handItem.Count == 0 && _detectedItem.Count != 0)  // 줍기
         {
             Debug.Log("줍기");
 
-            // 내 손이 3개일 때까지 듬
-            int count = 0;
-            while(_handItem.Count != 3)
-            {
-                if (_detectedItem.Count == 0)
-                    break;
+            Pair<Stack<MyItem>, Stack<MyItem>> p = _detectedItem.Peek().PickUp(_handItem, _detectedItem);
+            _handItem = p.first;
+            _detectedItem = p.second;
+        }
+        else if(_handItem.Count != 0 && _detectedItem.Count == 0) // 버리기
+        {
+            Debug.Log("버리기");
 
-                IMyItem item = _detectedItem.Peek();
-                if (item.PickUp(count++))
-                {
-                    _detectedItem.Pop();
-                    _handItem.Push(item);
-                }
-                else
-                {
-                    break;
-                }
-            }
+            Pair<Stack<MyItem>, Stack<MyItem>> p = _handItem.Peek().PutDown(_handItem, _detectedItem);
+            _handItem = p.first;
+            _detectedItem = p.second;
         }
         else if(_handItem.Count != 0 && _detectedItem.Count != 0) // 교체
         {
             Debug.Log("교체");
 
-            // 종류가 같으면 쌓는다.
-            if(_handItem.Peek().CheckItemType(_detectedItem.Peek()))
-            {
-                int count = _detectedItem.Count;
-                while (_handItem.Count != 0)
-                {
-                    if(_handItem.Peek().PutDown(count++))
-                    {
-                        _detectedItem.Push(_handItem.Pop());
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
-            // 종류가 다르면 한계까지 바꾼다.
-            else
-            {
-                if (_handItem.Count <= 3 && _detectedItem.Count <= 3)
-                {
-                    int count = 0;
-
-                    Stack<IMyItem> tempHandItem = new Stack<IMyItem>(_detectedItem);
-                    _detectedItem.Clear();
-
-                    while (_handItem.Count != 0)
-                    {
-                        if (_handItem.Peek().PutDown(count++))
-                        {
-                            _detectedItem.Push(_handItem.Pop());
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
-
-                    count = 0;
-
-                    while (tempHandItem.Count != 0)
-                    {
-                        if(tempHandItem.Peek().PickUp(count++))
-                        {
-                            _handItem.Push(tempHandItem.Pop());
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
-                }
-            }
+            Pair<Stack<MyItem>, Stack<MyItem>> p = _handItem.Peek().Change(_handItem, _detectedItem);
+            _handItem = p.first;
+            _detectedItem = p.second;
         }
     }
 
@@ -234,26 +157,9 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("와다닥 줍기");
 
-            IMyItem item = _detectedItem.Peek();
-            // 종류가 같으면 3개가 될 때까지 쌓는다.
-            if(_handItem.Peek().CheckItemType(item))
-            {
-                while(true)
-                {
-                    if (_handItem.Count >= 3 || _detectedItem.Count == 0)
-                        break;
-
-                    if(item.PickUp(_handItem.Count))
-                    {
-                        _detectedItem.Pop();
-                        _handItem.Push(item);
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
+            Pair<Stack<MyItem>, Stack<MyItem>> p = _handItem.Peek().AutoGain(_handItem, _detectedItem);
+            _handItem = p.first;
+            _detectedItem = p.second;
         }
     }
 
@@ -276,10 +182,10 @@ public class PlayerController : MonoBehaviour
                 return;
 
             _currentblock = hit.transform;
-            _detectedItem = new Stack<IMyItem>();
+            _detectedItem = new Stack<MyItem>();
             for(int i = 0; i < _currentblock.childCount; i++)
             {
-                IMyItem item = _currentblock.GetChild(i).GetComponent<IMyItem>();
+                MyItem item = _currentblock.GetChild(i).GetComponent<MyItem>();
                 if (item != null)
                     _detectedItem.Push(item);
             }

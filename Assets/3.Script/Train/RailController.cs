@@ -45,8 +45,6 @@ public class RailController : MonoBehaviour
 
     public void PutRail()
     {
-        Debug.Log("PutRail 합니다요");
-
         /// 나중에 trainManager.railCon.Add(gameObject.GetComponent<RailController>());
         if (!isEndRail && !isStartRail)
         {
@@ -82,11 +80,11 @@ public class RailController : MonoBehaviour
         }
     }
 
-/*    private void Awake()
+    private void Awake()
     {
         Init();
     }
-    private void OnEnable()
+    /* private void OnEnable()
     {
         PutRail();
     }*/
@@ -100,7 +98,6 @@ public class RailController : MonoBehaviour
             if (dirCount != i)
             {
                 railPrefabs[i].SetActive(false);
-
             }
             else
             {
@@ -118,10 +115,10 @@ public class RailController : MonoBehaviour
         RailDir();
 
 
-        if ((Physics.Raycast(transform.position, transform.forward, out raycastHit, range) && (!raycastHit.collider.GetComponentInParent<RailController>().isInstance))
-            || (Physics.Raycast(transform.position, transform.right, out raycastHit, range) && !raycastHit.collider.GetComponentInParent<RailController>().isInstance) 
-            || (Physics.Raycast(transform.position, -transform.forward, out raycastHit, range) && !raycastHit.collider.GetComponentInParent<RailController>().isInstance)
-            || (Physics.Raycast(transform.position, -transform.right, out raycastHit, range) && !raycastHit.collider.GetComponentInParent<RailController>().isInstance))
+        if ((Physics.Raycast(transform.position, transform.forward, out raycastHit, range, LayerMask.GetMask("Rail")) && (!raycastHit.collider.GetComponentInParent<RailController>().isInstance))
+            || (Physics.Raycast(transform.position, transform.right, out raycastHit, range, LayerMask.GetMask("Rail")) && !raycastHit.collider.GetComponentInParent<RailController>().isInstance) 
+            || (Physics.Raycast(transform.position, -transform.forward, out raycastHit, range, LayerMask.GetMask("Rail")) && !raycastHit.collider.GetComponentInParent<RailController>().isInstance)
+            || (Physics.Raycast(transform.position, -transform.right, out raycastHit, range, LayerMask.GetMask("Rail")) && !raycastHit.collider.GetComponentInParent<RailController>().isInstance))
         {
             neighborRail = raycastHit.collider.GetComponentInParent<RailController>();
 
@@ -186,13 +183,6 @@ public class RailController : MonoBehaviour
     }
     void Update()
     {
-        // Debug.DrawRay(_frontPos, transform.forward * 0.3f, Color.red);
-        // Debug.DrawRay(_backPos, -transform.forward * 0.3f, Color.green);
-        // Debug.DrawRay(_rightPos, transform.right * 0.3f, Color.yellow);
-        // Debug.DrawRay(_leftPos, -transform.right * 0.3f, Color.blue);
-
-
-
         if (isGoal)
         {
             lifeTime += Time.deltaTime;
