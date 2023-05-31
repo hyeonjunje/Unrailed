@@ -20,6 +20,7 @@ public class HelperBT : MonoBehaviour
     public Text DebugTarget;
 
     private Vector3 _itemPosition;
+    private Vector3 _home;
     private Animator _animator;
 
     protected Helper _helper;
@@ -35,6 +36,7 @@ public class HelperBT : MonoBehaviour
 
     private void Awake()
     {
+        _home = transform.position;
         _helper = GetComponent<Helper>();
         _animator = GetComponent<Animator>();
         _tree = GetComponent<BehaviorTree>();
@@ -185,8 +187,10 @@ public class HelperBT : MonoBehaviour
              switch(_item.Type)
              {
                  case WorldResource.EType.Water:
+                     _item.GetComponent<Item_Bucket_Water>().StartFilling();
 
                      break;
+
                  default:
                     _animator.SetBool("isDig", true);
                     StartCoroutine(_target.isDigCo());
@@ -196,17 +200,75 @@ public class HelperBT : MonoBehaviour
              return BehaviorTree.ENodeStatus.InProgress;
 
          }, () =>
+
          {
              Vector3 dir = _target.transform.position - transform.position;
              transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * _rotateSpeed);
-             if(!_target.isDig())
+
+             switch(_item.Type)
              {
-                 Destroy(_target.gameObject);
-                 return BehaviorTree.ENodeStatus.Succeeded;
+                 case WorldResource.EType.Water:
+                     if (!_item.GetComponent<Item_Bucket_Water>().isFilling)
+                     { 
+                         return BehaviorTree.ENodeStatus.Succeeded;
+                     }
+                     else
+                     _item.GetComponent<Item_Bucket_Water>().FillGauge();
+
+                     break;
+
+                 default:
+                     //나무, 돌
+                     //명령이 바뀌기 전까지 무한반복
+                     if (!_target.isDig())
+                     {
+                         Destroy(_target.gameObject);
+                         return BehaviorTree.ENodeStatus.Failed;
+                     }
+                     break;
+
              }
+
              return BehaviorTree.ENodeStatus.InProgress;
          }
         );
+
+
+        var MoveToHome = workRoot.Add <BTNode_Action>("물 갖고 이동하기", ()=>
+        {
+            _agent.MoveTo(_home);
+            return BehaviorTree.ENodeStatus.InProgress;
+
+        }
+        ,()=>
+        {
+            return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
+        
+        }
+        );
+
+        var Sleep = workRoot.Add<BTNode_Action>("내려놓고 자기", () =>
+         {
+             _animator.SetBool("isMove", false);
+             _item.transform.position = transform.position + Vector3.forward;
+             _item.transform.rotation = Quaternion.identity;
+             _item.transform.parent = null;
+             return BehaviorTree.ENodeStatus.InProgress;
+
+         },()=>
+         {
+        
+             return BehaviorTree.ENodeStatus.InProgress;
+        
+         }
+         );
+
+
+
+
+
+
+
 
 
 
@@ -215,6 +277,7 @@ public class HelperBT : MonoBehaviour
          {
 
              //내려놓기
+             //PutDown();
              _item.transform.position = transform.position;
              _item.transform.rotation = Quaternion.identity;
              _item.transform.parent = null;
@@ -228,8 +291,18 @@ public class HelperBT : MonoBehaviour
              return BehaviorTree.ENodeStatus.Succeeded;
          });
 
+        
 
 
 
+    }
+
+
+    private void PutDown()
+    {
+        _item.transform.position = transform.position;
+        _item.transform.rotation = Quaternion.identity;
+        _item.transform.parent = null;
+        _animator.SetBool("isDig", false);
     }
 }
