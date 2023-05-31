@@ -15,6 +15,8 @@ public class HelperBT : MonoBehaviour
 
     }
     public Transform RightHand;
+    public Transform BetweenTwoHands;
+
     public Text DebugTarget;
 
     private Vector3 _itemPosition;
@@ -107,8 +109,16 @@ public class HelperBT : MonoBehaviour
 
         var pickUpTool = woodRoot.Add<BTNode_Action>("도구 들기", () =>
          {
+             switch(_item.Type)
+             {
+                 case WorldResource.EType.Water:
+                _item.transform.SetParent(BetweenTwoHands);
+                     break;
+                 default:
+                     _item.transform.SetParent(RightHand);
+                     break;
+             }
 
-             _item.transform.SetParent(RightHand);
              _item.transform.localPosition = Vector3.zero;
              _item.transform.localRotation = Quaternion.identity;
 
@@ -117,8 +127,8 @@ public class HelperBT : MonoBehaviour
         () =>
         { 
        
-             return _item.transform.parent == RightHand ? 
-            BehaviorTree.ENodeStatus.Succeeded:BehaviorTree.ENodeStatus.InProgress;
+             return _item.transform.parent == RightHand || BetweenTwoHands ? 
+            BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
         });
 
 
@@ -138,12 +148,6 @@ public class HelperBT : MonoBehaviour
             var order = _localMemory.GetGeneric<WorldResource.EType>(BlackBoardKey.Order);
             return order == _order ? BehaviorTree.ENodeStatus.InProgress : BehaviorTree.ENodeStatus.Failed;
         });
-/*        var workDeco = workRoot.AddDecorator<BTDecoratorBase>("명령이 들어올때까지 무한 반복", () =>
-         {
-             return true;
-         
-         });*/     
-
         var target = workRoot.Add<BTNode_Action>("타겟 정하기", () =>
          {
              if(_target==null)
@@ -178,8 +182,17 @@ public class HelperBT : MonoBehaviour
 
         var CollectResource = workRoot.Add<BTNode_Action>("자원 채집하기", () =>
          {
-             _animator.SetBool("isDig", true);
-             StartCoroutine(_target.isDigCo());
+             switch(_item.Type)
+             {
+                 case WorldResource.EType.Water:
+
+                     break;
+                 default:
+                    _animator.SetBool("isDig", true);
+                    StartCoroutine(_target.isDigCo());
+                     break;
+
+             }
              return BehaviorTree.ENodeStatus.InProgress;
 
          }, () =>

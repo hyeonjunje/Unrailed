@@ -26,6 +26,9 @@ public class WorldResource : MonoBehaviour
         ResourceTracker.Instance.RegisterResource(this);
     }
 
+
+
+
     public bool isDig()
     {
         if (_resourceHp > 0)
@@ -75,5 +78,11 @@ public class WorldResource : MonoBehaviour
             // 자식 객체의 자식 객체들도 재귀적으로 탐색
             DisableAllChildColliders(child);
         }
+    }
+
+    public void Water()
+    {
+
+
     }
 }
