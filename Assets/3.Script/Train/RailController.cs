@@ -32,7 +32,8 @@ public class RailController : MonoBehaviour
 
     public float poolingTime;
     public float lifeTime = 0;
-    private void Awake()
+
+    public void Init()
     {
         trainManager = FindObjectOfType<GoalManager>();
         railChild = this.GetComponentsInChildren<Transform>();
@@ -45,9 +46,9 @@ public class RailController : MonoBehaviour
         {
             railPrefabs[i] = gameObject.transform.GetChild(i).gameObject;
         }
-
     }
-    private void OnEnable()
+
+    public void PutRail()
     {
         trainManager.railCon.Add(gameObject.GetComponent<RailController>());
         if (!isEndRail && !isStartRail)
@@ -65,25 +66,25 @@ public class RailController : MonoBehaviour
             _backPos = new Vector3(transform.position.x, transform.position.y, transform.position.z - 0.5f);
             _rightPos = new Vector3(transform.position.x + 0.5f, transform.position.y, transform.position.z);
             _leftPos = new Vector3(transform.position.x - 0.5f, transform.position.y, transform.position.z);
-            
+
             //노란 레일선  초기화
             railLine = null;
-            
+
             //위치 방향 초기화
             isFront = false;
             isBack = false;
             isLeft = false;
             isRight = false;
-            
+
             dirCount = 0;
-            
+
             //오브젝트 레이어 초기화
             foreach (Transform child in railChild)
             {
                 child.gameObject.layer = 23;
             }
             //인식불가 bool 초기화
-            
+
             isInstance = false;
         }
 
@@ -95,6 +96,16 @@ public class RailController : MonoBehaviour
             railLine.Line.SetActive(false);
         }
     }
+
+    private void Awake()
+    {
+        // Init();
+    }
+    private void OnEnable()
+    {
+        // PutRail();
+    }
+
     //todo 05 18 앞 철로가 없으면 철로를 해제 할 수 있도록 만들어 놓을것 그리고 가능하면 - 박상연
     public void RailSwitch()
     {
@@ -202,7 +213,7 @@ public class RailController : MonoBehaviour
 
 
 
-        if (isGoal)
+        /*if (isGoal)
         {
             lifeTime += Time.deltaTime;
 
@@ -212,10 +223,10 @@ public class RailController : MonoBehaviour
                 transform.position = Vector3.zero;
                 gameObject.SetActive(false);
             }
-        }
+        }*/
     }
 
-    private void OnDisable()
+/*    private void OnDisable()
     {
         trainManager.railCon.Remove(gameObject.GetComponent<RailController>());
         
@@ -235,7 +246,7 @@ public class RailController : MonoBehaviour
         //
         //    child.gameObject.layer = 23;
         //}
-    }
+    }*/
 
     public void EnqueueRail()
     {
