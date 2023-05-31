@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 [RequireComponent(typeof(BehaviorTree))]
 public class HelperBT : MonoBehaviour
@@ -14,6 +15,7 @@ public class HelperBT : MonoBehaviour
 
     }
     public Transform RightHand;
+    public Text DebugTarget;
 
     private Vector3 _itemPosition;
     private Animator _animator;
@@ -23,7 +25,9 @@ public class HelperBT : MonoBehaviour
     protected PathFindingAgent _agent;
     protected Blackboard<BlackBoardKey> _localMemory;
     protected AI_Item _item;
+
     protected WorldResource _target;
+    protected WorldResource.EType _order;
 
     private void Awake()
     {
@@ -38,23 +42,25 @@ public class HelperBT : MonoBehaviour
     {
         _localMemory = BlackboardManager.Instance.GetIndividualBlackboard<BlackBoardKey>(this);
         _localMemory.SetGeneric<DetectableTarget>(BlackBoardKey.CurrentTarget, null);
+        _localMemory.SetGeneric<WorldResource.EType>(BlackBoardKey.Order, WorldResource.EType.Wood);
 
         var BTRoot = _tree.RootNode.Add<BTNode_Selector>("BT 시작");
         BTRoot.AddService<BTServiceBase>("명령을 기다리는 Service", (float deltaTime) =>
         {
-            var order = _helper.TargetResource;
-            _localMemory.SetGeneric<WorldResource.EType>(BlackBoardKey.Order, order);
+            var order = _localMemory.GetGeneric<WorldResource.EType>(BlackBoardKey.Order);
+            _order = _helper.TargetResource;
             
         });
 
-        var dd = BTRoot.Add<BTNode_Sequence>("명령이 있나요?");
-        var deco = dd.AddDecorator<BTDecoratorBase>("명령 확인", () =>
+        var OrderRoot = BTRoot.Add<BTNode_Sequence>("명령이 있나요?");
+        var deco = OrderRoot.AddDecorator<BTDecoratorBase>("명령이 바뀌었는지 확인", () =>
          {
-             return _helper.Home != null;
+             var order = _localMemory.GetGeneric<WorldResource.EType>(BlackBoardKey.Order);
+             return order == _order;
          });
 
-        var mainSelector = dd.Add<BTNode_Sequence>("명령이 있는 경우");
-        var woodRoot = mainSelector.Add<BTNode_Sequence>("명령 : 나무/돌 캐기");
+        var mainSequence = OrderRoot.Add<BTNode_Sequence>("명령이 있는 경우");
+        var woodRoot = mainSequence.Add<BTNode_Sequence>("명령 : 나무/돌 캐기");
         //도끼 들기
         //나무로 이동하기
         //나무 베기
@@ -84,6 +90,7 @@ public class HelperBT : MonoBehaviour
             }
 
             //도구로 이동하기
+            DebugTarget.text = _item.name;
             _agent.MoveTo(_item.InteractionPoint);
             _animator.SetBool("isMove", true);
             //타겟 자원 설정
@@ -97,7 +104,7 @@ public class HelperBT : MonoBehaviour
             return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
         });
 
-        var pickUpTool = mainSelector.Add<BTNode_Action>("도구 들기", () =>
+        var pickUpTool = mainSequence.Add<BTNode_Action>("도구 들기", () =>
          {
 
              _item.transform.SetParent(RightHand);
@@ -114,9 +121,10 @@ public class HelperBT : MonoBehaviour
         });
 
 
-        var MoveToResource = mainSelector.Add<BTNode_Action>("자원으로 이동", () =>
+        var MoveToResource = mainSequence.Add<BTNode_Action>("자원으로 이동", () =>
          {
              //자원으로 이동하기
+             DebugTarget.text = _target.name;
              Vector3 position = _agent.FindCloestAroundEndPosition(_target.transform.position);
              _agent.MoveTo(position);
 
@@ -132,48 +140,37 @@ public class HelperBT : MonoBehaviour
          });
 
 
-        var CollectResource = mainSelector.Add<BTNode_Action>("자원 채집하기", () =>
+        var CollectResource = mainSequence.Add<BTNode_Action>("자원 채집하기", () =>
          {
              _animator.SetBool("isDig", true);
+             _target.isDig();
              return BehaviorTree.ENodeStatus.InProgress;
 
          }, () =>
          {
 
-             return BehaviorTree.ENodeStatus.InProgress;
+             return _target.isDig() ? BehaviorTree.ENodeStatus.InProgress : BehaviorTree.ENodeStatus.Succeeded;
          }
         );
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-        var ss = BTRoot.Add<BTNode_Action>("명령이 없는 경우", () =>
+        var OrderChange = BTRoot.Add<BTNode_Sequence>("명령이 바뀐 경우");
+        OrderChange.Add<BTNode_Action>("도구 내려놓기", () =>
          {
-             if(_helper.Home!=null)
-             {
-             _target = _helper.Home.GetGatherTarget(_helper);
-             _agent.MoveTo(_target.transform.position);
+             //내려놓기
+             _item.transform.position = transform.position;
+             _item.transform.rotation = Quaternion.identity;
+             _item.transform.parent = null;
+             _animator.SetBool("isDig", false);
 
-             }
+             //블랙보드 업데이트
+             _item = null;
+             _localMemory.SetGeneric<WorldResource.EType>(BlackBoardKey.Order, _order);
 
-             return BehaviorTree.ENodeStatus.InProgress;
-         }
-        , () =>
-         {
-
-            return BehaviorTree.ENodeStatus.InProgress;
-        });
-
+             return BehaviorTree.ENodeStatus.Succeeded;
+         });
 
 
 
