@@ -8,14 +8,14 @@ public class InGameScene : MonoBehaviour
     [SerializeField] private GameObject _loadingSceneUI;
     [SerializeField] private MapCreator _mapCreator;
 
+    [SerializeField] private MapManager _mapManager;
+
     [SerializeField] private int worldCount = 0;
 
     [SerializeField] private Transform test;
 
     // 석환이 형 isStart가 true일 때만 player가 작동할 수 있게 해줘~~
     public bool isStart { get; private set; } = false;
-
-    private bool isGenerate = false;
 
     private void Awake()
     {
@@ -27,51 +27,48 @@ public class InGameScene : MonoBehaviour
             () =>
             {
                 _loadingSceneUI.SetActive(false);
-            },
-            () =>
-            {
-                isStart = true;
+
+                RePositionAsync().Forget();
             }).Forget();
     }
 
-    // 상점에서 게임하기 게이지 50% 정도 됐을 때 실행해줘 상연아~~
-    // 로딩 다 하고 필요한거 있으면 인자로 Action 넣어도 돼~
-    // 예외처리 했으니까 게이지 50% 넘고 게이지 나갔다가 다시 들어와도 아무 문제 없을거야~
-    public void CreateMap(System.Action onFinishedAsyncEvent = null)
-    { 
-        if(isGenerate == false)
-        {
-            isGenerate = true;
-            CreateNextMapAsync(onFinishedAsyncEvent).Forget();
-        }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+            RePositionAsync().Forget();
     }
 
-    // 상점이 원으로 줄어들 때 다 줄어들면 이거 실행해줘
-    // 맵 위치 설정하는거거든. 맵 위치 설정 다 끝나고 필요한거 있으면 인자로 Action 넣어도 돼~
-    public void RePositionMap(System.Action onFinishedAsyncEvent = null)
+    /// <summary>
+    /// 역 도착하면 실행될 메소드
+    /// </summary>
+    public void ArriveStation()
     {
-        RePositionAsync(onFinishedAsyncEvent).Forget();
-        isGenerate = false;
+        // 볼트 하나 추가 해주고
+        // 조금있다가 상점보여주기
     }
 
-    private async UniTaskVoid CreateNextMapAsync(System.Action onFinishedAsyncEvent = null)
+    /// <summary>
+    /// 역 떠나면 실행될 메소드
+    /// </summary>
+    public void LeaveStation()
     {
-        await _mapCreator.CreateMapAsync(worldCount++);
-        onFinishedAsyncEvent?.Invoke();
+        // 나가기 게이지 100되면 실행될 메소드
+
+        // 상점 종료되고
+        // 맵 재위치 시켜주기
     }
+
 
     private async UniTaskVoid RePositionAsync(System.Action onFinishedAsyncEvent = null)
     {
-        await _mapCreator.RePositionAsync();
+        await _mapManager.RePositionAsync(worldCount++);
         onFinishedAsyncEvent?.Invoke();
     }
 
-    private async UniTaskVoid LoadingFirstGame(System.Action onCreateNextMapAsyncEvent = null, System.Action onPositionAsyncEvent = null)
+    private async UniTaskVoid LoadingFirstGame(System.Action onCreateNextMapAsyncEvent = null)
     {
-        await _mapCreator.CreateMapAsync(worldCount++);
+        // 맵 로드
+        await _mapManager.LoadMap();
         onCreateNextMapAsyncEvent?.Invoke();
-
-        await _mapCreator.RePositionAsync();
-        onPositionAsyncEvent?.Invoke();
     }
 }
