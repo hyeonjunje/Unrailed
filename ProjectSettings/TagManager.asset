@@ -17,6 +17,8 @@ TagManager:
   - NonStackItem
   - WoodPiece
   - IronPiece
+  - GameStartUI
+  - GameExitUI
   layers:
   - Default
   - TransparentFX
@@ -24,7 +26,7 @@ TagManager:
   - LastRail
   - Water
   - UI
-  - 
+  - Wood
   - 
   - 
   - 
@@ -42,7 +44,7 @@ TagManager:
   - 
   - 
   - Rail
-  - 
+  - Postprocessing
   - 
   - RenderObstacle
   - RenderAbove

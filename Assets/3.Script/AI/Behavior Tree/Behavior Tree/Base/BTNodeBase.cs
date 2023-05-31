@@ -105,8 +105,6 @@ public class BTNodeBase : BTElementBase
                 break;
         }
 
-        //DecoratorsPermitRunning의 기본값은 true
-        //값이 다르려면 DecoratorsPermitRunning을 외부에서 false로 바꿔줬어야..
         if (canRun != DecoratorsPermitRunning)
         {
             DecoratorsPermitRunning = canRun;
@@ -143,7 +141,6 @@ public class BTNodeBase : BTElementBase
     protected virtual void OnEnter()
     {
         //진입하기
-        //뭔가 하나라도 Add 했으면 null이 아님
         if (onEnterFn != null)
             LastStatus = onEnterFn.Invoke();
         else
@@ -251,7 +248,7 @@ public class BTNodeBase : BTElementBase
             //다 초기화 때린 상황
             if (!childPreviouslyEnabledByDecorators && childCurrentlyEnabledByDecorators)
             {
-                //다음 자식들도 다 초기화..?
+                //다음 자식들도 다 초기화
                 for (int futureIndex = childIndex + 1; futureIndex < _children.Count; ++futureIndex)
                 {
                     var futureChild = _children[futureIndex];

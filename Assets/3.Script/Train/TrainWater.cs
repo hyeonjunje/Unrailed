@@ -76,17 +76,24 @@ public class TrainWater : TrainMovement
     void Update()
     {
         TrainMovePos();
-        TrainUpgrade();
+ 
         if (!isReady)
         {
             fireTime += Time.deltaTime;
             FireColor();
             FireOn();
         }
+
+        if (!_isPlay && !isReady && !isGoal && isBurn && !isOver)
+        {
+            StartCoroutine(Warning());
+        }
     }
     
     public override void TrainUpgrade()
     {
+       
+        base.TrainUpgrade();
         //업그레이드 메서드
         switch (trainUpgradeLevel)
         {
@@ -104,7 +111,7 @@ public class TrainWater : TrainMovement
                 spareOver = 120;
                 overFireTime = 140;
                 break;
-            case 3:
+           default:
                 engineOver = 110;
                 boxOver = 120;
                 benchOver = 130;

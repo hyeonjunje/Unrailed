@@ -4,23 +4,23 @@ using UnityEngine;
 
 public class ShopItem : MonoBehaviour
 {
-    public enum ItemType { ItemEngine, ItemWaterBox, ItemChestBox, ItemWorkBench, ItemDir, ItemDynamite }
-    public ItemType itemType;
+    public TrainType itemType;
     public int itemCost;
     public int itemIdx;
     public bool _isSpawn = true;
+    BoxCollider box;
     // Start is called before the first frame update
     void Awake()
     {
-        if (itemType == ItemType.ItemDir || itemType == ItemType.ItemDynamite)
+        TryGetComponent(out box);
+        if (itemType == TrainType.StationDir || itemType == TrainType.Dynamite)
             ShopManager.Instance.newCarList.Add(this);
 
     }
     private void OnEnable()
     {
-        transform.GetChild(0).gameObject.SetActive(true);
-        transform.localPosition = Vector3.zero;
         _isSpawn = true;
+        box.enabled = true;
 
     }
     public void TradeItem(Collider col)
@@ -29,16 +29,25 @@ public class ShopItem : MonoBehaviour
 
         TrainMovement train = col.GetComponent<TrainMovement>();
 
-        if (train.trainType != TrainMovement.TrainType.Spare)
+        if (train.trainType != TrainType.Spare)
         {
             train.trainUpgradeLevel++;
+
+            if (train.trainType == itemType)
+            {
+                train.TrainUpgrade();
+                box.enabled = false;
+            }
         }
+
         else
         {
             TrainSpare spare = col.GetComponent<TrainSpare>();
             spare.ChangeTrain(itemIdx);
+            box.enabled = false;
         }
 
+        ShopManager.Instance.TrainCost();
         _isSpawn = false;
         transform.GetChild(0).gameObject.SetActive(false);
     }
@@ -46,39 +55,39 @@ public class ShopItem : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (_isSpawn && (itemType == ItemType.ItemDir || itemType == ItemType.ItemDynamite))
+        if (other.CompareTag("Train"))
         {
-            if (other.CompareTag("Train") )
+ 
+            if (_isSpawn && (itemType == TrainType.StationDir || itemType == TrainType.Dynamite))
             {
                 TrainSpare trains = other.GetComponent<TrainSpare>();
 
-                if (trains.trainIndex == 0)
+                if (trains.trainIndex == 0 && trains != null)
                 {
-                    trains.ResetTrain(1); 
+                    trains.ResetTrain(1);
                 }
-                else if (trains.trainIndex == 1)
+                else if (trains.trainIndex == 1 && trains != null)
                 {
                     trains.ResetTrain(0);
                 }
-
-                TradeItem(other);
             }
 
-            else if (other.CompareTag("ShopItem"))
-            {
-                ShopItem items = other.GetComponent<ShopItem>();
+            TradeItem(other);
 
+        }
 
-                if ((items.itemType == ItemType.ItemDir || items.itemType == ItemType.ItemDynamite) && items._isSpawn)
-                {
-                    other.gameObject.SetActive(false);
-                    other.gameObject.SetActive(true);
-                }
-            }
-            else
+        else if (other.CompareTag("ShopItem"))
+        {
+            ShopItem items = other.GetComponent<ShopItem>();
+
+            if (items._isSpawn)
             {
                 transform.localPosition = Vector3.zero;
             }
+        }
+        else
+        {
+            transform.localPosition = Vector3.zero;
         }
     }
 }

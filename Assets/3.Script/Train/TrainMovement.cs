@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-
+public enum TrainType { Engine, WaterBox, ChestBox, WorkBench, StationDir, Dynamite, Spare }
 public class TrainMovement : MonoBehaviour
 {
-    public enum TrainType { Engine,WaterBox,ChestBox,WorkBench,StationDir,Dynamite,Spare}
     public TrainType trainType;
+
     public int trainNum;
    
     public Queue<RailController> rails = new Queue<RailController>();
@@ -22,12 +22,18 @@ public class TrainMovement : MonoBehaviour
     public bool isGoal;
     public bool isBurn;
     public bool isReady;
+    protected bool _isPlay;
+
+    //게임오버
+    public bool isOver;
 
     public float trainSpeed = 0.5f;
     public float _trainRotateSpeed;
 
     public float goalSpeed = 6f;
-    private float _trainMoveSpeed;
+    public float _trainMoveSpeed;
+
+    [SerializeField] private GameObject warningIcon;
 
     // Start is called before the first frame update
     //Transform startRayPos;
@@ -40,6 +46,12 @@ public class TrainMovement : MonoBehaviour
             destroyParticle.SetActive(false);
             trainMesh.gameObject.SetActive(true);
             trainUpgradeLevel = 1;
+
+            if (trainType != TrainType.WorkBench || trainType != TrainType.StationDir || trainType != TrainType.Dynamite)
+            {
+                warningIcon = transform.GetChild(2).gameObject;
+                warningIcon.SetActive(false);
+            }
         }
     }
 
@@ -105,16 +117,22 @@ public class TrainMovement : MonoBehaviour
 
         }
     }
+
     public virtual void TrainUpgrade()
     {
+        destroyParticle.SetActive(true);
+        //destroyParticle.SetActive(false);
         //상속해서 올리기
     }
     protected void TrainOver()
     {
-        if (trainType != TrainType.Spare)
+        if (trainType != TrainType.Spare && !isOver)
         {
+            StopCoroutine(Warning());
             trainMesh.gameObject.SetActive(false);
+            destroyParticle.SetActive(false);
             destroyParticle.SetActive(true);
+            isOver = true;
         }
     }
 
@@ -132,5 +150,15 @@ public class TrainMovement : MonoBehaviour
         if (trainType != TrainType.Dynamite || trainType != TrainType.StationDir)
             //큐에 추가
             rails.Enqueue(gameObject);
+    }
+
+    public IEnumerator Warning()
+    {
+        _isPlay = true;
+        warningIcon.SetActive(true);
+        yield return new WaitForSeconds(1.5f);
+        warningIcon.SetActive(false);
+        yield return new WaitForSeconds(1.5f);
+        _isPlay = false;
     }
 }

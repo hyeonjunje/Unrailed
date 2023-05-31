@@ -80,6 +80,7 @@ public class ShopManager : MonoBehaviour
 
         GameObject shopEngineObj = Instantiate(enginePrefabs[0].gameObject, shopEnginePos[0].position, shopEnginePos[0].rotation, shopEnginePos[0]);
         shopEngineObj.transform.GetChild(0).gameObject.SetActive(false);
+
         TrainCost();
     } //위치에 스폰
     public void TrainCost()
@@ -89,18 +90,18 @@ public class ShopManager : MonoBehaviour
             switch (train.trainType)
             {
                     //==========================================Upgrade
-                case TrainMovement.TrainType.WaterBox:
+                case TrainType.WaterBox:
                     trainPrefabs[0].itemCost = train.trainUpgradeLevel;
                     shopUpgradeText[0].text = $"{train.trainUpgradeLevel}";
                     break;
    
-                case TrainMovement.TrainType.WorkBench:
+                case TrainType.WorkBench:
                     trainPrefabs[1].itemCost = train.trainUpgradeLevel;
                     shopUpgradeText[1].text = $"{train.trainUpgradeLevel}";
 
                     break;
 
-                case TrainMovement.TrainType.ChestBox:
+                case TrainType.ChestBox:
                     trainPrefabs[2].itemCost = train.trainUpgradeLevel;
                     shopUpgradeText[2].text = $"{train.trainUpgradeLevel}";
                     break;
@@ -108,19 +109,19 @@ public class ShopManager : MonoBehaviour
                     //==========================================New Car
 
 
-                case TrainMovement.TrainType.StationDir:
+                case TrainType.StationDir:
                     trainNewPrefabs[0].itemCost = train.trainUpgradeLevel;
                     shopNewTrainText[0].text = $"{train.trainUpgradeLevel}";
                     break;
 
-                case TrainMovement.TrainType.Dynamite:
+                case TrainType.Dynamite:
                     trainNewPrefabs[1].itemCost = train.trainUpgradeLevel;
                     shopNewTrainText[1].text = $"{train.trainUpgradeLevel}";
                     break;
 
                     //==========================================Engine
 
-                case TrainMovement.TrainType.Engine:
+                case TrainType.Engine:
                     enginePrefabs[0].itemCost = train.trainUpgradeLevel;
                     shopEngineText[0].text = $"{train.trainUpgradeLevel}";
                     break;
