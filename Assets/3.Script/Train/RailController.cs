@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class RailController : MonoBehaviour
 {
+    public float range = 1f;
+
     [SerializeField] private GameObject[] railPrefabs;
     [SerializeField] private RailController neighborRail;
-    [SerializeField] private GoalManager trainManager;
+    /// 나중에 [SerializeField] private GoalManager trainManager;
 
-    private Transform[] railChild;
     public TrainMovement[] trainComponents;
     public RailLine railLine;
 
@@ -25,19 +26,13 @@ public class RailController : MonoBehaviour
     public bool isStartRail;
     public bool isEndRail;
 
-    private Vector3 _frontPos;
-    private Vector3 _backPos;
-    private Vector3 _rightPos;
-    private Vector3 _leftPos;
-
     public float poolingTime;
     public float lifeTime = 0;
 
+
     public void Init()
     {
-        trainManager = FindObjectOfType<GoalManager>();
-        railChild = this.GetComponentsInChildren<Transform>();
-
+        //// 나중에 trainManager = FindObjectOfType<GoalManager>();
 
         childCount = gameObject.transform.childCount;
         railPrefabs = new GameObject[childCount];
@@ -50,7 +45,9 @@ public class RailController : MonoBehaviour
 
     public void PutRail()
     {
-        trainManager.railCon.Add(gameObject.GetComponent<RailController>());
+        Debug.Log("PutRail 합니다요");
+
+        /// 나중에 trainManager.railCon.Add(gameObject.GetComponent<RailController>());
         if (!isEndRail && !isStartRail)
         {
             //기차이동 위치값 초기화
@@ -61,12 +58,6 @@ public class RailController : MonoBehaviour
 
         if (!isGoal)
         {
-            //레일을 이동시켰을 때 인식할 레이의 위치
-            _frontPos = new Vector3(transform.position.x, transform.position.y, transform.position.z + 0.5f);
-            _backPos = new Vector3(transform.position.x, transform.position.y, transform.position.z - 0.5f);
-            _rightPos = new Vector3(transform.position.x + 0.5f, transform.position.y, transform.position.z);
-            _leftPos = new Vector3(transform.position.x - 0.5f, transform.position.y, transform.position.z);
-
             //노란 레일선  초기화
             railLine = null;
 
@@ -78,13 +69,7 @@ public class RailController : MonoBehaviour
 
             dirCount = 0;
 
-            //오브젝트 레이어 초기화
-            foreach (Transform child in railChild)
-            {
-                child.gameObject.layer = 23;
-            }
             //인식불가 bool 초기화
-
             isInstance = false;
         }
 
@@ -97,14 +82,14 @@ public class RailController : MonoBehaviour
         }
     }
 
-    private void Awake()
+/*    private void Awake()
     {
-        // Init();
+        Init();
     }
     private void OnEnable()
     {
-        // PutRail();
-    }
+        PutRail();
+    }*/
 
     //todo 05 18 앞 철로가 없으면 철로를 해제 할 수 있도록 만들어 놓을것 그리고 가능하면 - 박상연
     public void RailSwitch()
@@ -133,10 +118,10 @@ public class RailController : MonoBehaviour
         RailDir();
 
 
-        if ((Physics.Raycast(_frontPos, transform.forward, out raycastHit, 0.3f) && (!raycastHit.collider.GetComponentInParent<RailController>().isInstance))
-            || (Physics.Raycast(_rightPos, transform.right, out raycastHit, 0.3f )&& !raycastHit.collider.GetComponentInParent<RailController>().isInstance) 
-            || (Physics.Raycast(_backPos, -transform.forward, out raycastHit, 0.3f) && !raycastHit.collider.GetComponentInParent<RailController>().isInstance)
-            || (Physics.Raycast(_leftPos, -transform.right, out raycastHit, 0.3f) && !raycastHit.collider.GetComponentInParent<RailController>().isInstance))
+        if ((Physics.Raycast(transform.position, transform.forward, out raycastHit, range) && (!raycastHit.collider.GetComponentInParent<RailController>().isInstance))
+            || (Physics.Raycast(transform.position, transform.right, out raycastHit, range) && !raycastHit.collider.GetComponentInParent<RailController>().isInstance) 
+            || (Physics.Raycast(transform.position, -transform.forward, out raycastHit, range) && !raycastHit.collider.GetComponentInParent<RailController>().isInstance)
+            || (Physics.Raycast(transform.position, -transform.right, out raycastHit, range) && !raycastHit.collider.GetComponentInParent<RailController>().isInstance))
         {
             neighborRail = raycastHit.collider.GetComponentInParent<RailController>();
 
@@ -154,16 +139,11 @@ public class RailController : MonoBehaviour
                 neighborRail.railDirSelet();
                 neighborRail.RailSwitch();
                 neighborRail.railLine.Line.SetActive(true);
-
-                foreach (Transform child in neighborRail.railChild)
-                {
-                   child.gameObject.layer = 0;
-                }
             }
             //북 동 남 서 확인하여 isGoal을 확인
             if (neighborRail != null && neighborRail.isEndRail && !isEndRail)
             {
-                trainManager.TrainGoal();
+                /// 나중에 trainManager.TrainGoal();
                 neighborRail.isEndRail = false;
                 neighborRail.enabled = false;
                 neighborRail.enabled = true;
@@ -178,13 +158,13 @@ public class RailController : MonoBehaviour
     }
     void RailDir()
     {
-        isFront = Physics.Raycast(_frontPos, transform.forward, 0.3f, LayerMask.GetMask("Rail"));
+        isFront = Physics.Raycast(transform.position, transform.forward, range, LayerMask.GetMask("Rail"));
         if (isFront) return;
-        isRight = Physics.Raycast(_rightPos, transform.right, 0.3f, LayerMask.GetMask("Rail"));
+        isRight = Physics.Raycast(transform.position, transform.right, range, LayerMask.GetMask("Rail"));
         if (isRight) return;
-        isBack = Physics.Raycast(_backPos, -transform.forward, 0.3f, LayerMask.GetMask("Rail"));
+        isBack = Physics.Raycast(transform.position, -transform.forward, range, LayerMask.GetMask("Rail"));
         if (isBack) return;
-        isLeft = Physics.Raycast(_leftPos, -transform.right, 0.3f, LayerMask.GetMask("Rail"));
+        isLeft = Physics.Raycast(transform.position, -transform.right, range, LayerMask.GetMask("Rail"));
         if (isLeft) return;
 
     }
@@ -213,25 +193,25 @@ public class RailController : MonoBehaviour
 
 
 
-        /*if (isGoal)
+        if (isGoal)
         {
             lifeTime += Time.deltaTime;
 
-            if(lifeTime >= poolingTime)
+            if (lifeTime >= poolingTime)
             {
                 lifeTime = 0;
                 transform.position = Vector3.zero;
                 gameObject.SetActive(false);
             }
-        }*/
+        }
     }
 
 /*    private void OnDisable()
     {
         trainManager.railCon.Remove(gameObject.GetComponent<RailController>());
-        
 
-        if(neighborRail != null)
+
+        if (neighborRail != null)
         {
             if (!isStartRail && !neighborRail.isStartRail && !isGoal)
             {

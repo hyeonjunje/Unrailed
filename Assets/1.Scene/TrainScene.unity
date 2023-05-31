@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17320406, g: 0.21648876, b: 0.29851997, a: 1}
+  m_IndirectSpecularColor: {r: 0.17320374, g: 0.21648853, b: 0.29851925, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5392,7 +5392,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca7e03b507df59e409d6ca2ce7b8cb4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabs: {fileID: 949181838671956459, guid: e7f056a9fb625814ead261ee52427885, type: 3}
+  prefabs: {fileID: 7402043901895155594, guid: 1c3fcc82479a1c540aa989011f27cf38, type: 3}
   rails: []
   poolingVec: {x: 500, y: 500, z: 500}
   countPlus: 0
@@ -27851,6 +27851,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -27879,6 +27880,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -27907,6 +27909,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -27935,6 +27938,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -27963,6 +27967,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -27991,6 +27996,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -28019,6 +28025,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -28047,6 +28054,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -28075,6 +28083,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -28103,6 +28112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -28131,6 +28141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -28159,6 +28170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -28187,6 +28199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -28215,6 +28228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -28243,6 +28257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -28271,6 +28286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -28299,6 +28315,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -28327,6 +28344,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -28355,6 +28373,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -28383,6 +28402,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -28411,6 +28431,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -28439,6 +28460,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -28467,6 +28489,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -28495,6 +28518,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -28523,6 +28547,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -28551,6 +28576,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -28579,6 +28605,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -28607,6 +28634,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -28635,6 +28663,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -28663,6 +28692,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -28691,6 +28721,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -28719,6 +28750,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -28747,6 +28779,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -28775,6 +28808,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -28803,6 +28837,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -28831,6 +28866,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -28859,6 +28895,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -28887,6 +28924,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -28915,6 +28953,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -28943,6 +28982,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -28971,6 +29011,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -28999,6 +29040,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -29027,6 +29069,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -29055,6 +29098,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -29083,6 +29127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
@@ -29111,6 +29156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}

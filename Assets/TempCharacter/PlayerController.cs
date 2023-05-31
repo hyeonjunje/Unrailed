@@ -232,6 +232,8 @@ public class PlayerController : MonoBehaviour
     {
         if(_handItem.Count != 0 && _detectedItem.Count != 0)
         {
+            Debug.Log("와다닥 줍기");
+
             IMyItem item = _detectedItem.Peek();
             // 종류가 같으면 3개가 될 때까지 쌓는다.
             if(_handItem.Peek().CheckItemType(item))
@@ -246,7 +248,10 @@ public class PlayerController : MonoBehaviour
                         _detectedItem.Pop();
                         _handItem.Push(item);
                     }
-
+                    else
+                    {
+                        break;
+                    }
                 }
             }
         }
