@@ -73,7 +73,7 @@ public class PathFindingAgent : MonoBehaviour
     }
 
     // 갈 수 없는 가장 가까운 곳을 받으면 그 주위에 가장 가까운 갈 수 있는 지점을 반환
-    private Vector3 FindCloestAroundEndPosition(Vector3 cloestEndPosition)
+    public Vector3 FindCloestAroundEndPosition(Vector3 cloestEndPosition)
     {
         Vector3 result = Vector3.zero;
         float currentDistance = Mathf.Infinity;

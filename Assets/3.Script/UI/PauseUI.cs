@@ -9,6 +9,8 @@ public class PauseUI : MonoBehaviour
     [SerializeField] private GameObject setPauseObj;
     [SerializeField] private GameObject blurPost;
 
+    private bool isEscape;
+
     private void Awake()
     {
         setPauseObj.SetActive(false);
@@ -16,12 +18,26 @@ public class PauseUI : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !setPauseObj.activeSelf)
+        if (Input.GetKeyDown(KeyCode.Escape) )
+        {
+            isEscape = !isEscape;
+        }
+        if (!isEscape)
+        {
+            Continue();
+        }
+
+        else
         {
             blurPost.SetActive(true);
             setPauseObj.SetActive(true);
             Time.timeScale = 0;
         }
+
+    }
+    public void ClickOnContinue()
+    {
+        isEscape = false;
     }
     public void GotoLobby()
     {
