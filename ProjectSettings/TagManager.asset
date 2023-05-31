@@ -26,7 +26,7 @@ TagManager:
   - LastRail
   - Water
   - UI
-  - 
+  - Bomb
   - 
   - 
   - 
@@ -41,7 +41,7 @@ TagManager:
   - 
   - 
   - Sheep
-  - 
+  - Resource
   - 
   - Rail
   - Postprocessing

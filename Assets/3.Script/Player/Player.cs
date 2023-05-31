@@ -68,9 +68,12 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Walk();
-        Turn();
-        Dash();
+        if(transform.position.y <= 1f)
+        {
+            Walk();
+            Turn();
+            Dash();
+        }
     }
 
 
@@ -94,6 +97,7 @@ public class Player : MonoBehaviour
     {
         transform.LookAt(moveVec + transform.position);
     }
+
 
     void Dash()
     {
@@ -306,6 +310,7 @@ public class Player : MonoBehaviour
                 Debug.Log("¹° °¨Áö");
                 waterGauge.gameObject.SetActive(true);
                 waterGauge.FillGauge();
+
             if (WaterMesh.activeSelf)
             {
                 waterGauge.watergauge.gameObject.SetActive(false);
@@ -423,7 +428,7 @@ public class Player : MonoBehaviour
             {
                 if (Physics.Raycast(transform.TransformPoint(0, 0.1f, 0), transform.forward, out hit, pickUpDistance))
                 {
-                    if (hit.transform.name == "Water(Clone)" && currentStackItem[i].name == "ItemWood(Clone)")
+                    if (currentStackItem[i].name == "ItemWood(Clone)" &&  hit.transform.name == "Water(Clone)" )
                     {
                         SpawnBridge(hit.transform);
                     }
