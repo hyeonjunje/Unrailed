@@ -38,10 +38,10 @@ public abstract class MyItem : MonoBehaviour
         return itemType.Equals(item.ItemType);
     }
 
+
+    // 현재 위치 앞뒤좌우에 설치된(isInstance) 레일이 있으면 true, 없으면 false
     public virtual bool CheckConnectedRail()
     {
-        RailController result = null;
-
         Vector3[] dir = new Vector3[4] { Vector3.forward, Vector3.right, Vector3.left, Vector3.back };
         for(int i = 0; i < dir.Length; i++)
         {
@@ -49,11 +49,14 @@ public abstract class MyItem : MonoBehaviour
             {
                 if(hit.transform.childCount > 0)
                 {
-                    if (result == null)
-                        result = hit.transform.GetChild(0).GetComponent<RailController>();
+                    RailController rail = hit.transform.GetChild(0).GetComponent<RailController>();
+                    if(rail != null && rail.isInstance)
+                    {
+                        return true;
+                    }
                 }
             }
         }
-        return result != null;
+        return false;
     }
 }

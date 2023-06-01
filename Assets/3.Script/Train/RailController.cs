@@ -8,7 +8,7 @@ public class RailController : MonoBehaviour
 
     [SerializeField] private GameObject[] railPrefabs;
     [SerializeField] private RailController neighborRail;
-    /// 나중에 [SerializeField] private GoalManager trainManager;
+    [SerializeField] private GoalManager trainManager;
 
     public TrainMovement[] trainComponents;
     public RailLine railLine;
@@ -35,10 +35,14 @@ public class RailController : MonoBehaviour
     public float poolingTime;
     public float lifeTime = 0;
 
+    private bool isInit = false;
+
 
     public void Init()
     {
-        //// 나중에 trainManager = FindObjectOfType<GoalManager>();
+        isInit = true;
+
+        trainManager = FindObjectOfType<GoalManager>();
 
         childCount = gameObject.transform.childCount;
         railPrefabs = new GameObject[childCount];
@@ -51,7 +55,10 @@ public class RailController : MonoBehaviour
 
     public void PutRail()
     {
-        /// 나중에 trainManager.railCon.Add(gameObject.GetComponent<RailController>());
+        if (!isInit)
+            Init();
+
+        trainManager.railCon.Add(gameObject.GetComponent<RailController>());
         if (!isEndRail && !isStartRail)
         {
             //기차이동 위치값 초기화
@@ -90,11 +97,14 @@ public class RailController : MonoBehaviour
     {
         Init();
     }
-    /* private void OnEnable()
+
+
+    private void OnEnable()
+
     {
         PutRail();
-            SoundManager.Instance.PlaySoundEffect("Rail_Up");
-    }*/
+ 
+    }
 
     //todo 05 18 앞 철로가 없으면 철로를 해제 할 수 있도록 만들어 놓을것 그리고 가능하면 - 박상연
     public void RailSwitch()
@@ -126,7 +136,7 @@ public class RailController : MonoBehaviour
             || (Physics.Raycast(transform.position, -transform.right, out raycastHit, range, LayerMask.GetMask("Rail")) && !raycastHit.collider.GetComponentInParent<RailController>().isInstance))
 
         {
-            neighborRail = raycastHit.collider.GetComponentInParent<RailController>();
+            neighborRail = raycastHit.collider.GetComponent<RailController>();
             //북 동 남 서 확인하여 isIntance를 확인
             if (neighborRail != null && 
                 !neighborRail.isInstance && !neighborRail.isStartRail)
@@ -142,14 +152,17 @@ public class RailController : MonoBehaviour
                 neighborRail.RailSwitch();
                 neighborRail.railLine.Line.SetActive(true);
             }
+
+/*            // isGoal 업데이트
+
             //북 동 남 서 확인하여 isGoal을 확인
             if (neighborRail != null && neighborRail.isEndRail && !isEndRail)
             {
-                /// 나중에 trainManager.TrainGoal();
+                trainManager.TrainGoal();
                 neighborRail.isEndRail = false;
                 neighborRail.enabled = false;
                 neighborRail.enabled = true;
-            }
+            }*/
         }
 
         railDirSelet();
@@ -157,6 +170,20 @@ public class RailController : MonoBehaviour
 
         if (isInstance)
             railLine.Line.SetActive(true);
+
+        // 종료조건
+        if(Physics.Raycast(transform.position, Vector3.right, out raycastHit, range, LayerMask.GetMask("Rail")))
+        {
+            Debug.Log("이거 해줘");
+            RailController endRail = raycastHit.transform.GetComponent<RailController>();
+            Debug.Log(endRail.isEndRail + "  " + endRail.isInstance);
+
+            // 오른쪽에 isEndRail이 있고 isInstance되어 있으면
+            if(endRail.isEndRail && endRail.isInstance)
+            {
+                trainManager.TrainGoal();
+            }
+        }
     }
     void RailDir()
     {
@@ -201,27 +228,28 @@ public class RailController : MonoBehaviour
         }
     }
 
-/*    private void OnDisable()
-    {
-        trainManager.railCon.Remove(gameObject.GetComponent<RailController>());
-
-
-        if (neighborRail != null)
+    /*    private void OnDisable()
         {
-            if (!isStartRail && !neighborRail.isStartRail && !isGoal)
-            {
-                neighborRail.isInstance = false;
-                neighborRail.railLine.Line.SetActive(false);
-            }
-        }
+            trainManager.railCon.Remove(gameObject.GetComponent<RailController>());
 
-        //혹시 몰라 이전 레일의 레이어를 되돌리는 로직도 구현해둠 필요하면 작성
-        //foreach (Transform child in neighborRail.railChild)
-        //{
-        //
-        //    child.gameObject.layer = 23;
-        //}
-    }*/
+
+            if (neighborRail != null)
+            {
+                if (!isStartRail && !neighborRail.isStartRail && !isGoal)
+                {
+                    SoundManager.Instance.PlaySoundEffect("Rail_Up");
+                    neighborRail.isInstance = false;
+                    neighborRail.railLine.Line.SetActive(false);
+                }
+            }
+
+            //혹시 몰라 이전 레일의 레이어를 되돌리는 로직도 구현해둠 필요하면 작성
+            //foreach (Transform child in neighborRail.railChild)
+            //{
+            //
+            //    child.gameObject.layer = 23;
+            //}
+        }*/
 
     public void EnqueueRail()
     {

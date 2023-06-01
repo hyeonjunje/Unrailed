@@ -117,7 +117,10 @@ public class MyRailItem : MyItem
 
     public override Pair<Stack<MyItem>, Stack<MyItem>> PutDown(Stack<MyItem> handItem, Stack<MyItem> detectedItem)
     {
-        if (!CheckConnectedRail())
+        // 내려놓기
+        // 설치할 수 있는 곳이면 하나만 떨구고 설치
+        // 아니면 그냥 다 떨굼
+        if (!isInstallable())
         {
             while (handItem.Count != 0)
             {
@@ -132,8 +135,6 @@ public class MyRailItem : MyItem
 
             // 여기서 내려놓음
             detectedItem.Peek().GetComponent<RailController>().PutRail();
-            Debug.Log(GetConnectedRail());
-            // GetConnectedRail()?.PutRail();
         }
         return new Pair<Stack<MyItem>, Stack<MyItem>>(handItem, detectedItem);
     }
@@ -155,5 +156,28 @@ public class MyRailItem : MyItem
             }
         }
         return result;
+    }
+
+
+    // 설치할 수 있는
+    private bool isInstallable()
+    {
+        Vector3[] dir = new Vector3[4] { Vector3.forward, Vector3.right, Vector3.left, Vector3.back };
+        for (int i = 0; i < dir.Length; i++)
+        {
+            if (Physics.Raycast(player.CurrentBlockTransform.position, dir[i], out RaycastHit hit, 1f, blockLayer))
+            {
+                if (hit.transform.childCount > 0)
+                {
+                    RailController rail = hit.transform.GetChild(0).GetComponent<RailController>();
+                    if (rail != null)
+                    {
+                        if(rail == FindObjectOfType<GoalManager>().lastRail)
+                            return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }
