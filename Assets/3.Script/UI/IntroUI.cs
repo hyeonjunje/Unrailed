@@ -28,7 +28,6 @@ public class IntroUI : MonoBehaviour
         lobbyTalk.SetActive(false);
         playerTutorial.SetActive(false);
         player.gameObject.SetActive(false);
-
     }
 
     void StartGameIntro()

@@ -8,6 +8,7 @@ public class BombTest : MonoBehaviour
     public Rigidbody rig;
     public ReSource resource_a;
     public GameObject Ballon;
+    public GameObject Dynamite;
     [SerializeField] private float radius = 2f;
     [SerializeField] private float distance = 0f;
     private Player player;
@@ -24,7 +25,7 @@ public class BombTest : MonoBehaviour
         for(int i = 0; i< hitCollider.Length; i++)
         {
             resource_a = hitCollider[i].GetComponent<ReSource>();
-            if (resource_a != null )
+            if (resource_a != null && Dynamite.activeSelf)
             {
                 resource_a.SpawnItem();
             }
@@ -35,9 +36,7 @@ public class BombTest : MonoBehaviour
         {
             Debug.Log("플레이어 사망");
             ReSpawn();
-            
         }
-
         Destroy(gameObject);
     }
     
@@ -46,13 +45,13 @@ public class BombTest : MonoBehaviour
         player.transform.localPosition += Vector3.up * 10f ;
         isrespawn = true;
         Ballon.SetActive(true);
+        
     }
 
     private void Awake()
     {
         player = FindObjectOfType<Player>();
         Ballon.SetActive(false);
-        
     }
 
     public void Setup()
@@ -66,8 +65,12 @@ public class BombTest : MonoBehaviour
         {
             Setup();
         }
+       
     }
 
+   
+
+    
     /* private void OnTriggerEnter(Collider other)
      {
          if (Input.GetKeyDown(KeyCode.J))

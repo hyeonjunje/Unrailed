@@ -63,6 +63,7 @@ public class ShopManager : MonoBehaviour
     private void OnEnable()
     {
         StartCoroutine(TrainStartMove());
+       // SoundManager.Instance.PlaySoundBgm("InGame_Bgm");
     }
     public void ResetTrains()
     {
@@ -138,8 +139,11 @@ public class ShopManager : MonoBehaviour
             RandItemSpawn();
             _isShop = true;
         }
-        anim.gameObject.transform.position = endStation[0].transform.GetChild(1).transform.position;
+        // anim.gameObject.transform.position = endStation[0].transform.GetChild(1).transform.position;
+        anim.gameObject.transform.position = endStation[0].transform.position;
         anim.SetBool("isReady",true);
+        SoundManager.Instance.audioSourdEngine.Stop();
+        SoundManager.Instance.StopAllSound();
     }  // 상점 오픈 애니메이션
 
     public void ShopOff()
@@ -153,11 +157,17 @@ public class ShopManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Block")|| other.CompareTag("Item") || other.CompareTag("Items"))
+        if(other.CompareTag("Invisible"))
         {
             GameObject obj = other.transform.GetChild(0).gameObject;
             obj.SetActive(false);
         }
+
+        /*if (other.CompareTag("Block")|| other.CompareTag("Item") || other.CompareTag("Items"))
+        {
+            GameObject obj = other.transform.GetChild(0).gameObject;
+            obj.SetActive(false);
+        }*/
         if (other.CompareTag("ShopItem"))
         {
             GameObject obj = other.transform.GetChild(0).gameObject;
@@ -167,11 +177,17 @@ public class ShopManager : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Block")|| other.CompareTag("Item") || other.CompareTag("Items"))
+        if (other.CompareTag("Invisible"))
         {
             GameObject obj = other.transform.GetChild(0).gameObject;
             obj.SetActive(true);
         }
+
+        /*if (other.CompareTag("Block")|| other.CompareTag("Item") || other.CompareTag("Items"))
+        {
+            GameObject obj = other.transform.GetChild(0).gameObject;
+            obj.SetActive(true);
+        }*/
         if (other.CompareTag("ShopItem"))
         {
             GameObject obj = other.transform.GetChild(0).gameObject;
@@ -202,9 +218,9 @@ public class ShopManager : MonoBehaviour
         _isShop = false;
         trainWater.FireOff();
         test.SetActive(true);
-        yield return new WaitForSeconds(2f); 
-        SoundManager.Instance.PlaySoundBgm("Train_Engine");
+        yield return new WaitForSeconds(2f);
+        SoundManager.Instance.audioSourdEngine.Play();
         trainEngine.isReady = false;
-
+        SoundManager.Instance.PlaySoundBgm("InGame_Bgm");
     } 
 }

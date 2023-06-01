@@ -10,10 +10,15 @@ public class FollowPlayerUI : MonoBehaviour
     [SerializeField] bool EmotUI;
     private void Awake()
     {
+        SoundManager.Instance.StopAllSound();
+        SoundManager.Instance.PlaySoundBgm("Lobby_Bgm");
+
         followTarget = FindObjectOfType<Player>().transform;
 
         if (EmotUI)
         followCam = GameObject.FindGameObjectWithTag("MainCamera").transform;
+
+ 
     }
     // Update is called once per frame
     void Update()
@@ -23,6 +28,8 @@ public class FollowPlayerUI : MonoBehaviour
 
         if (EmotUI)
         {
+
+
             Vector3 orderUIVec = new Vector3(followTarget.position.x - -0.5f, followTarget.position.y + 3.87f, followTarget.position.z - 3.11f);
             transform.position = orderUIVec;
         }

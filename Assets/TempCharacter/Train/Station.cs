@@ -34,6 +34,7 @@ public class Station : MonoBehaviour
         while(true)
         {
             rail = railTransform.GetComponent<RailController>();
+            rail.isInstance = true;
 
             if(Physics.Raycast(railTransform.position, Vector3.right, out RaycastHit railHit, 1f, 1 << LayerMask.NameToLayer("Rail")))
             {
@@ -46,7 +47,9 @@ public class Station : MonoBehaviour
         }
 
         if (rail != null)
+        {
             rail.PutRail();
+        }
     }
 
     private void InitNonFirstStation()
@@ -67,6 +70,8 @@ public class Station : MonoBehaviour
         {
             rail = railTransform.GetComponent<RailController>();
             rail.isEndRail = true;
+            rail.isInstance = true;
+
             if (Physics.Raycast(railTransform.position, Vector3.right, out RaycastHit railHit, 1f, 1 << LayerMask.NameToLayer("Rail")))
             {
                 railTransform = railHit.transform;
