@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
     // 전방에 있는 오브젝트
     private Transform _currentFrontObject;
 
+
     public List<MyItem> handItemList = new List<MyItem>();
     public List<MyItem> detectedItemList = new List<MyItem>();
 
@@ -42,6 +43,8 @@ public class PlayerController : MonoBehaviour
     public Transform RightHandTransform => _rightHandTransform;
     public Transform TwoHandTransform => _twoHandTransform;
     public Transform CurrentBlockTransform => _currentblock;
+    public Transform AroundEmptyBlockTranform => BFS();
+
 
     private void Awake()
     {
@@ -99,6 +102,11 @@ public class PlayerController : MonoBehaviour
         foreach (var go in detectedItemList)
             detectedItemGameObjectList.Add(go.ToString());
         // 보면 클남 ㅋㅋ
+
+/*        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log(AroundEmptyBlockTranform.position);
+        }*/
     }
 
     private void Move()
@@ -202,5 +210,41 @@ public class PlayerController : MonoBehaviour
 
             _currentFrontObject = hit.transform;
         }
+    }
+
+    private Transform BFS()
+    {
+        // CurrentBlockTransform => _currentblock
+        // 현재 블럭에서 가장 가까운 자식이 없는 블럭을 반환하자
+
+        Queue<Transform> queue = new Queue<Transform>();
+        queue.Enqueue(_currentblock);
+
+        Vector3[] dir = new Vector3[8] { Vector3.forward, Vector3.back, Vector3.right, Vector3.left, 
+        new Vector3(1, 0, 1), new Vector3(1, 0, -1), new Vector3(-1, 0, -1), new Vector3(-1, 0, 1)};
+
+        HashSet<Transform> hashSet = new HashSet<Transform>();
+        hashSet.Add(_currentblock);
+
+        while(queue.Count != 0)
+        {
+            Transform currentBlock = queue.Dequeue();
+
+            if (currentBlock.childCount == 0)
+                return currentBlock;
+
+            for (int i = 0; i < 8; i++)
+            {
+                if(Physics.Raycast(currentBlock.position, dir[i], out RaycastHit hit, 1f, _playerStat.blockLayer))
+                {
+                    if(hashSet.Add(hit.transform))
+                    {
+                        queue.Enqueue(hit.transform);
+                    }
+                }
+            }
+        }
+
+        return null;
     }
 }

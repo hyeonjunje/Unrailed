@@ -72,7 +72,6 @@ public class TrainMovement : MonoBehaviour
                 _trainMoveSpeed = trainSpeed;
                 _trainRotateSpeed = trainSpeed * 2;
             }
-
         }
         else
         {

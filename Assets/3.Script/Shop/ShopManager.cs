@@ -47,7 +47,6 @@ public class ShopManager : MonoBehaviour
         if(Instance == null)
         {
             Instance = this;
-            
         }
         else
         {
@@ -63,7 +62,6 @@ public class ShopManager : MonoBehaviour
     private void OnEnable()
     {
         StartCoroutine(TrainStartMove());
-       // SoundManager.Instance.PlaySoundBgm("InGame_Bgm");
     }
     public void ResetTrains()
     {
@@ -159,15 +157,16 @@ public class ShopManager : MonoBehaviour
     {
         if(other.CompareTag("Invisible"))
         {
-            GameObject obj = other.transform.GetChild(0).gameObject;
-            obj.SetActive(false);
+            if(other.gameObject.layer == LayerMask.NameToLayer("Block"))
+            {
+                other.GetComponent<InvisibleBlock>().UnShow();
+            }
+            else
+            {
+                other.gameObject.SetActive(false);
+            }
         }
 
-        /*if (other.CompareTag("Block")|| other.CompareTag("Item") || other.CompareTag("Items"))
-        {
-            GameObject obj = other.transform.GetChild(0).gameObject;
-            obj.SetActive(false);
-        }*/
         if (other.CompareTag("ShopItem"))
         {
             GameObject obj = other.transform.GetChild(0).gameObject;
@@ -179,15 +178,16 @@ public class ShopManager : MonoBehaviour
     {
         if (other.CompareTag("Invisible"))
         {
-            GameObject obj = other.transform.GetChild(0).gameObject;
-            obj.SetActive(true);
+            if (other.gameObject.layer == LayerMask.NameToLayer("Block"))
+            {
+                other.GetComponent<InvisibleBlock>().Show();
+            }
+            else
+            {
+                other.gameObject.SetActive(true);
+            }
         }
 
-        /*if (other.CompareTag("Block")|| other.CompareTag("Item") || other.CompareTag("Items"))
-        {
-            GameObject obj = other.transform.GetChild(0).gameObject;
-            obj.SetActive(true);
-        }*/
         if (other.CompareTag("ShopItem"))
         {
             GameObject obj = other.transform.GetChild(0).gameObject;
@@ -217,10 +217,8 @@ public class ShopManager : MonoBehaviour
         trainEngine.isReady = false;
         _isShop = false;
         trainWater.FireOff();
-        test.SetActive(true);
         yield return new WaitForSeconds(2f);
         SoundManager.Instance.audioSourdEngine.Play();
-        trainEngine.isReady = false;
         SoundManager.Instance.PlaySoundBgm("InGame_Bgm");
     } 
 }
