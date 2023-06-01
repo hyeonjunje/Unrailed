@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.Audio;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
@@ -9,35 +11,68 @@ public class PauseUI : MonoBehaviour
     [SerializeField] private GameObject setPauseObj;
     [SerializeField] private GameObject blurPost;
 
-    private bool isEscape;
+    [Header("UI Zip")]
+    [SerializeField] private GameObject audioUI;
+    [SerializeField] private GameObject defaultUI;
+    [SerializeField] private Text title_Text;
+
+    public AudioMixer mixer;
+
+    public Slider bgmSlider;
+    public Slider sfxSlider;
+
+    private bool _isEscape;
+    private bool _isAudioSetting;
 
     private void Awake()
     {
         setPauseObj.SetActive(false);
         blurPost.SetActive(false);
+        defaultUI.SetActive(true);
+        audioUI.SetActive(false);
+
+        bgmSlider.value = 0.5f;
+        sfxSlider.value = 0.5f;
     }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) )
         {
-            isEscape = !isEscape;
+            _isEscape = !_isEscape;
         }
-        if (!isEscape)
+        if (!_isEscape)
         {
             Continue();
         }
 
         else
         {
-            blurPost.SetActive(true);
-            setPauseObj.SetActive(true);
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                _isAudioSetting = false;
+            }
+
+            if (_isAudioSetting) //오디오 버튼 켜기
+            {
+                title_Text.text = "오디오";
+            }
+            else
+            {
+                title_Text.text = "일시 정지";
+                defaultUI.SetActive(true);
+                audioUI.SetActive(false);
+            }
+
+            blurPost.SetActive(true); //포스트프로세싱 블러
+            setPauseObj.SetActive(true); //ui esc 켜기
+
             Time.timeScale = 0;
         }
 
     }
     public void ClickOnContinue()
     {
-        isEscape = false;
+        _isEscape = false;
     }
     public void GotoLobby()
     {
@@ -62,11 +97,25 @@ public class PauseUI : MonoBehaviour
     public void AudioSetting()
     {
         //현준씨 오디오 완성시 개발
+        _isAudioSetting = true;
+
+        defaultUI.SetActive(false);
+        audioUI.SetActive(true);
     }
     public void Continue()
     {
         blurPost.SetActive(false);
         setPauseObj.SetActive(false);
         Time.timeScale = 1;
+    }
+
+    public void SetBgmVolme()
+    {
+        mixer.SetFloat("BGM", Mathf.Log10(bgmSlider.value) * 20);
+    }
+
+    public void SetSfxVolme()
+    {
+        mixer.SetFloat("SFX", Mathf.Log10(sfxSlider.value) * 20);
     }
 }
