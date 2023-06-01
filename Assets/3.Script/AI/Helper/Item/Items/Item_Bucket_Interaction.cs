@@ -14,6 +14,14 @@ public class Item_Bucket_Interaction : SimpleInteraction
 
     public override bool CanPerform()
     {
+        return base.CanPerform() && !_bucket.IsOn;  
+    }
+
+    public override bool Perform()
+    {
+        _bucket.PickUp();
         return base.CanPerform() && !_bucket.IsOn;
     }
+
+
 }

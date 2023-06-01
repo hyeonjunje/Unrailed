@@ -6,13 +6,13 @@ using System.Linq;
 public class Resource : MonoBehaviour
 {
     public Transform spawnPoint;
-    int num = 0;
+    int _first = 0;
     Helper Robot;
 
     [SerializeField] WorldResource.EType DefaultResource = WorldResource.EType.Wood;
     Dictionary<WorldResource.EType, List<WorldResource>> TrackedResources = null;
 
-    [SerializeField] float PerfectKnowledgeRange = 100f;
+    [SerializeField] float PerfectKnowledgeRange = 30f;
     [SerializeField] int GatherPickRange = 10;
 
     public int NumAvailableResources { get; private set; } = 0;
@@ -46,7 +46,6 @@ public class Resource : MonoBehaviour
         {
             var type = (WorldResource.EType)value;
             TrackedResources[type] = ResourceTracker.Instance.GetResourcesInRange(type, transform.position, PerfectKnowledgeRange);
-            //Debug.Log($"{TrackedResources[type].Count}, {type}");
             //총 자원수
             NumAvailableResources += TrackedResources[type].Count;
         }
@@ -54,9 +53,11 @@ public class Resource : MonoBehaviour
 
     public WorldResource GetGatherTarget(Helper brain)
     {
+        //자원 업데이트
         PopulateResources();
         WorldResource.EType targetResource = DefaultResource;
         var resourceTypes = System.Enum.GetValues(typeof(WorldResource.EType));
+
         foreach (var typeValue in resourceTypes)
         {
             var resourceType = (WorldResource.EType)typeValue;
@@ -70,11 +71,18 @@ public class Resource : MonoBehaviour
         //자원이 있는지 확인
         if (TrackedResources[targetResource].Count == 0)
         {
-            Debug.Log($"{targetResource} :  없어요");
+            Debug.Log($"{targetResource} :  다 캤어요");
         }
-        var sortedResources = TrackedResources[targetResource].OrderBy(resource => Vector3.Distance(brain.transform.position, resource.transform.position)).ToList();
-        //return sortedResources[Random.Range(0, Mathf.Min(GatherPickRange, sortedResources.Count))];
-        return sortedResources[0];
+
+        var sortedResources = TrackedResources[targetResource]
+            //갈 수 있는 곳만 추리기
+            .Where(resource => Vector3.Distance(resource.transform.position, brain.GetComponent<PathFindingAgent>().
+                                                FindCloestAroundEndPosition(resource.transform.position)) <= 1f)
+            //가까운 순으로 정렬
+            .OrderBy(resource => Vector3.Distance(brain.transform.position, resource.transform.position))
+            .First();
+
+        return sortedResources;
 
     }
 
