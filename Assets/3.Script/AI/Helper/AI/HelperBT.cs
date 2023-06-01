@@ -81,10 +81,13 @@ public class HelperBT : MonoBehaviour
                         //플레이어가 들고 있는지 확인하기
                         if (!interaction.CanPerform())
                         {
-                            Debug.Log($"{item}는 누가 쓰고 있나봐요");
+                            Debug.Log($"{item.name}는 누가 쓰고 있어요");
                         }
-                        interaction.Perform();
-                        _item = item;
+                        else
+                        {
+                            interaction.Perform();
+                            _item = item;
+                        }
                         break;
                     }
 
@@ -111,7 +114,7 @@ public class HelperBT : MonoBehaviour
              {
                  //양동이면 양손
                  case WorldResource.EType.Water:
-                _item.transform.SetParent(BetweenTwoHands);
+                    _item.transform.SetParent(BetweenTwoHands);
                      break;
                  //다른거면 한 손
                  default:
@@ -180,7 +183,7 @@ public class HelperBT : MonoBehaviour
         
         });
 
-        var CollectResource = wood.Add<BTNode_Action>("자원 채집하기", () =>
+        var CollectResource = wood.Add<BTNode_Action>("계속 채집하기", () =>
          {
              _animator.SetBool("isDig", true);
              StartCoroutine(_target.isDigCo());
@@ -271,9 +274,6 @@ public class HelperBT : MonoBehaviour
         var OrderChange = BTRoot.Add<BTNode_Sequence>("명령이 바뀐 경우");
         OrderChange.Add<BTNode_Action>("도구 내려놓기", () =>
          {
-
-             //내려놓기
-             //PutDown();
              _item.transform.position = transform.position;
              PutDown();
 
