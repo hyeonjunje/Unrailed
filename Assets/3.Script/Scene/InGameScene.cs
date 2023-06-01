@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class InGameScene : MonoBehaviour
 {
@@ -20,7 +21,7 @@ public class InGameScene : MonoBehaviour
     private void Awake()
     {
         FileManager.LoadGame();
-        _loadingSceneUI.SetActive(true);
+/*        _loadingSceneUI.SetActive(true);
         isStart = false;
 
         LoadingFirstGame(
@@ -29,7 +30,18 @@ public class InGameScene : MonoBehaviour
                 _loadingSceneUI.SetActive(false);
 
                 RePositionAsync().Forget();
-            }).Forget();
+            }).Forget();*/
+
+
+        // 제일 오른쪽(x값이 제일 작은게 시작점)
+        List<Station> stations = FindObjectsOfType<Station>().OrderBy(elem => elem.transform.position.x).ToList();
+        for(int i = 0; i < stations.Count; i++)
+        {
+            if (i == 0)
+                stations[i].InitStation(true);
+            else
+                stations[i].InitStation(false);
+        }
     }
 
 /*    private void Update()
