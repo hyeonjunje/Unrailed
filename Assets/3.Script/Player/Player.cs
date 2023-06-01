@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
     #region 아이템 픽업 관련 변수
     private Item item;
     public GameObject WaterMesh;
+    public ParticleSystem DashEffect;
     [SerializeField] float GapOfItems = 0.25f;
     [SerializeField] float pickUpDistance;
     [SerializeField] LayerMask BlockLayer;
@@ -110,6 +111,8 @@ public class Player : MonoBehaviour
             isDash = true;
             speed *= 2;
             Invoke("DashOff", dashCool);
+            DashEffect.Play();
+
         }
     }
 
@@ -117,6 +120,7 @@ public class Player : MonoBehaviour
     {
         speed *= 0.5f;
         isDash = false;
+        DashEffect.Stop();
     }
 
    
