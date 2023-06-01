@@ -11,21 +11,17 @@ public class WorldResource : MonoBehaviour
         Stone
     }
     [SerializeField] EType _Type;
-    [SerializeField] int MinAmount = 15;
-    [SerializeField] int MaxAmount = 50;
-    [SerializeField] Transform _item;
+    public EType Type => _Type;
 
+    [SerializeField] Transform _item;
     private float _resourceScale = Mathf.Clamp01(1);
     [SerializeField] float _resourceHp = 2.7f;
 
-    public EType Type => _Type;
-    public int AvailableAmount { get; private set; } = 0;
 
     void Start()
     {
         ResourceTracker.Instance.RegisterResource(this);
     }
-
 
 
 
@@ -80,9 +76,4 @@ public class WorldResource : MonoBehaviour
         }
     }
 
-    public void Water()
-    {
-
-
-    }
 }

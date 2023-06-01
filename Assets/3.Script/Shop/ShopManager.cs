@@ -60,7 +60,11 @@ public class ShopManager : MonoBehaviour
         trainEngine = FindObjectOfType<TrainEngine>();
     }
 
-
+    private void OnEnable()
+    {
+        StartCoroutine(TrainStartMove());
+       // SoundManager.Instance.PlaySoundBgm("InGame_Bgm");
+    }
     public void ResetTrains()
     {
         trains = FindObjectsOfType<TrainMovement>();
@@ -138,6 +142,8 @@ public class ShopManager : MonoBehaviour
         // anim.gameObject.transform.position = endStation[0].transform.GetChild(1).transform.position;
         anim.gameObject.transform.position = endStation[0].transform.position;
         anim.SetBool("isReady",true);
+        SoundManager.Instance.audioSourdEngine.Stop();
+        SoundManager.Instance.StopAllSound();
     }  // 상점 오픈 애니메이션
 
     public void ShopOff()
@@ -191,23 +197,30 @@ public class ShopManager : MonoBehaviour
 
     public IEnumerator TrainStartMove() // 열차 시작 카운트다운
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(10f);
         trainEngine.anim.SetBool("CountDown", true);
 
         yield return new WaitForSeconds(0.1f);
 
         trainEngine.anim.SetBool("CountDown", false);
-        yield return new WaitForSeconds(readyCount);
-        //5초 지나는 ui 효과
+
+        for (int i = 0; i < readyCount; i++)
+        {
+            SoundManager.Instance.PlaySoundEffect("Train_Count");
+            yield return new WaitForSeconds(1f);
+        }
+
+        yield return new WaitForSeconds(0.5f);
+        //yield return new WaitForSeconds(readyCount);
+        SoundManager.Instance.PlaySoundEffect("Train_Start");
         trainEngine.isGoal = false;
         trainEngine.isReady = false;
         _isShop = false;
         trainWater.FireOff();
         test.SetActive(true);
-  
-    }
-
-
-
-
+        yield return new WaitForSeconds(2f);
+        SoundManager.Instance.audioSourdEngine.Play();
+        trainEngine.isReady = false;
+        SoundManager.Instance.PlaySoundBgm("InGame_Bgm");
+    } 
 }

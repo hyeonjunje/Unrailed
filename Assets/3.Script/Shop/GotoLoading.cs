@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class GotoLoading : MonoBehaviour
 {
@@ -9,7 +10,9 @@ public class GotoLoading : MonoBehaviour
     [SerializeField] private bool isLoad;
     [SerializeField] private float loadingCharge = 0f;
     public int loadTypeIndex;
-
+    [SerializeField] private Text btnText;
+    [SerializeField] private Image btnImage;
+    public Sprite[] triggerImage;
     private bool _isGoto;
     // Start is called before the first frame update
     void OnEnable()
@@ -17,6 +20,7 @@ public class GotoLoading : MonoBehaviour
         loadingCharge = 0;
         isLoad = false;
         _isGoto = false;
+        btnText.color = Color.white;
     }
 
     // Update is called once per frame
@@ -24,12 +28,16 @@ public class GotoLoading : MonoBehaviour
     {
         if (!isLoad)
         {
+            btnText.color = Color.white;
+            btnImage.sprite = triggerImage[0];
+
             loadingCharge = 0;
-         
         }
         else
         {
             loadingCharge += Time.deltaTime * loadingSpeed;
+            btnText.color = new Color32(16, 176, 252, 255);
+            btnImage.sprite = triggerImage[1];
 
             if (loadingCharge >= 10)
             {
@@ -53,10 +61,10 @@ public class GotoLoading : MonoBehaviour
         }
         else //Go to Next Game
         {
-            _isGoto = true;
-            isLoad = false;
-            loadingCharge = 0;
             ShopManager.Instance.ShopOff();
+            _isGoto = true;
+            loadingCharge = 0;
+            isLoad = false;
         }
     }
     private void OnDisable()
@@ -66,6 +74,14 @@ public class GotoLoading : MonoBehaviour
             ShopManager.Instance.goToLoading[i].fillAmount = 0;
         }
         _isGoto = false;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player") && !_isGoto)
+        {
+            SoundManager.Instance.PlaySoundEffect("Btn_Loading");
+        }
     }
     private void OnTriggerStay(Collider other)
     {
@@ -80,6 +96,7 @@ public class GotoLoading : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isLoad = false;
+            SoundManager.Instance.StopSoundEffect("Btn_Loading");
         }
     }
 }

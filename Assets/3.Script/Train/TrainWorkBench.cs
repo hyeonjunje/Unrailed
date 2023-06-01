@@ -23,6 +23,7 @@ public class TrainWorkBench : TrainMovement
     void Update()
     {
         TrainMovePos();
+        TrainUpgrade();
         anim.SetBool("isBurn", isBurn);
     }
 

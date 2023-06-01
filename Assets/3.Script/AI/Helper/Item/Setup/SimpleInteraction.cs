@@ -9,6 +9,10 @@ public class SimpleInteraction : BaseInteraction
     {
         return true;
     }
+    public override bool Perform()
+    {
+        return true;
+    }
 
     public override bool LockInteraction()
     {

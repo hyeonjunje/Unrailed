@@ -16,4 +16,10 @@ public class Item_Axe_Interaction : SimpleInteraction
     {
         return base.CanPerform() && !_axe.IsOn;
     }
+
+    public override bool Perform()
+    {
+        _axe.PickUp();
+        return base.CanPerform() && !_axe.IsOn;
+    }
 }

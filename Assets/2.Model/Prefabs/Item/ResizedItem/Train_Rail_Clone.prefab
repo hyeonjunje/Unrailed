@@ -7745,6 +7745,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c74f3c570a3dc42b3f85aa534387ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1
   railPrefabs:
   - {fileID: 5750340282539543552}
   - {fileID: 8552342458900479637}
@@ -7755,18 +7756,18 @@ MonoBehaviour:
   - {fileID: 6092851041733908163}
   - {fileID: 9076389145321103305}
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
   isInstance: 0
-  isGoal: 0
   isFront: 0
   isBack: 0
   isLeft: 0
   isRight: 0
+  isGoal: 0
   isStartRail: 0
   isEndRail: 0
+  isAnotherRail: 0
   poolingTime: 300
   lifeTime: 0
 --- !u!65 &3584017345647214217

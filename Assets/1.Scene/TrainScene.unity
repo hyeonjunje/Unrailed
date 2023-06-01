@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17320374, g: 0.21648853, b: 0.29851925, a: 1}
+  m_IndirectSpecularColor: {r: 0.17320406, g: 0.21648876, b: 0.29851997, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2307,6 +2307,11 @@ MonoBehaviour:
   isLoad: 0
   loadingCharge: 0
   loadTypeIndex: 0
+  btnText: {fileID: 1842505001}
+  btnImage: {fileID: 235113414}
+  triggerImage:
+  - {fileID: 21300000, guid: ff3ea8ef02b2c0b43a012f94bed79f5f, type: 3}
+  - {fileID: 21300000, guid: 2fb65446621ca2d44a94f2b214e8412e, type: 3}
 --- !u!65 &866152544
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4348,7 +4353,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1646556886}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.000001937151}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1877784555}
@@ -4531,6 +4536,11 @@ MonoBehaviour:
   isLoad: 0
   loadingCharge: 0
   loadTypeIndex: 1
+  btnText: {fileID: 1600321435}
+  btnImage: {fileID: 1877784556}
+  triggerImage:
+  - {fileID: 21300000, guid: ff3ea8ef02b2c0b43a012f94bed79f5f, type: 3}
+  - {fileID: 21300000, guid: 2fb65446621ca2d44a94f2b214e8412e, type: 3}
 --- !u!65 &1694090668
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11963,6 +11973,63 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4898120777870829214}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &2722014226097049280
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2722014226327600863, guid: 6010932c569af7f458f259e2cfa4f3f8, type: 3}
+      propertyPath: m_Name
+      value: SoundManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 2722014226327600872, guid: 6010932c569af7f458f259e2cfa4f3f8, type: 3}
+      propertyPath: m_RootOrder
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 2722014226327600872, guid: 6010932c569af7f458f259e2cfa4f3f8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2722014226327600872, guid: 6010932c569af7f458f259e2cfa4f3f8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2722014226327600872, guid: 6010932c569af7f458f259e2cfa4f3f8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2722014226327600872, guid: 6010932c569af7f458f259e2cfa4f3f8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2722014226327600872, guid: 6010932c569af7f458f259e2cfa4f3f8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2722014226327600872, guid: 6010932c569af7f458f259e2cfa4f3f8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2722014226327600872, guid: 6010932c569af7f458f259e2cfa4f3f8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2722014226327600872, guid: 6010932c569af7f458f259e2cfa4f3f8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2722014226327600872, guid: 6010932c569af7f458f259e2cfa4f3f8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2722014226327600872, guid: 6010932c569af7f458f259e2cfa4f3f8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6010932c569af7f458f259e2cfa4f3f8, type: 3}
 --- !u!4 &2723795345352875332
 Transform:
   m_ObjectHideFlags: 0
@@ -27773,7 +27840,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -27803,7 +27869,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -27833,7 +27898,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -27863,7 +27927,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -27893,7 +27956,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -27923,7 +27985,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -27953,7 +28014,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -27983,7 +28043,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -28013,7 +28072,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -28043,7 +28101,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -28073,7 +28130,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -28103,7 +28159,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -28133,7 +28188,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -28163,7 +28217,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -28193,7 +28246,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -28223,7 +28275,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -28253,7 +28304,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -28283,7 +28333,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -28313,7 +28362,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -28343,7 +28391,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -28373,7 +28420,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -28403,7 +28449,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -28433,7 +28478,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -28463,7 +28507,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -28493,7 +28536,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -28523,7 +28565,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -28553,7 +28594,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -28583,7 +28623,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -28613,7 +28652,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -28643,7 +28681,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -28673,7 +28710,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -28703,7 +28739,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -28733,7 +28768,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -28763,7 +28797,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -28793,7 +28826,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -28823,7 +28855,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -28853,7 +28884,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -28883,7 +28913,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -28913,7 +28942,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -28943,7 +28971,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -28973,7 +29000,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -29003,7 +29029,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -29033,7 +29058,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -29063,7 +29087,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -29093,7 +29116,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -29123,7 +29145,6 @@ MonoBehaviour:
   range: 1
   railPrefabs: []
   neighborRail: {fileID: 0}
-  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -29634,6 +29655,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 742385044967232861, guid: 4554d681d361f544ebc38dbc8e0e5dba, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8596961572260936522, guid: 4554d681d361f544ebc38dbc8e0e5dba, type: 3}
+      propertyPath: isStartRail
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8787937703682116294, guid: 4554d681d361f544ebc38dbc8e0e5dba, type: 3}
       propertyPath: m_Name
       value: StartStation

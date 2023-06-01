@@ -45,6 +45,7 @@ public class TrainMovement : MonoBehaviour
             fireEffect = GetComponentInChildren<ParticleSystem>();
             destroyParticle.SetActive(false);
             trainMesh.gameObject.SetActive(true);
+            isReady = true;
             trainUpgradeLevel = 1;
 
             if (trainType != TrainType.WorkBench || trainType != TrainType.StationDir || trainType != TrainType.Dynamite)
@@ -124,7 +125,7 @@ public class TrainMovement : MonoBehaviour
         //destroyParticle.SetActive(false);
         //상속해서 올리기
     }
-    protected void TrainOver()
+    public void TrainOver()
     {
         if (trainType != TrainType.Spare && !isOver)
         {
