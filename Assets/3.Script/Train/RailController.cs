@@ -58,6 +58,8 @@ public class RailController : MonoBehaviour
         if (!isInit)
             Init();
 
+        trainManager = FindObjectOfType<GoalManager>();
+
         trainManager.railCon.Add(this);
 
 /*        if (!isEndRail && !isStartRail)

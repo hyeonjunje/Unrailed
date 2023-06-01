@@ -209,7 +209,7 @@ GameObject:
   - component: {fileID: 5538702390208351594}
   m_Layer: 11
   m_Name: ItemWood
-  m_TagString: StackItem
+  m_TagString: Invisible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

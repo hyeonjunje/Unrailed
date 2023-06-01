@@ -33,6 +33,8 @@ public class MapCreator : MonoBehaviour
         await UniTask.Yield();
         SetHeightMap();
 
+
+
         return _groundList;
     }
 

@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 6075819207968078186}
   m_Layer: 0
   m_Name: ItemBlackStone06
-  m_TagString: Untagged
+  m_TagString: Invisible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

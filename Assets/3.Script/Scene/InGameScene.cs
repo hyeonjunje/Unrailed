@@ -6,14 +6,18 @@ using System.Linq;
 
 public class InGameScene : MonoBehaviour
 {
+    [Header("UI")]
     [SerializeField] private GameObject _loadingSceneUI;
-    [SerializeField] private MapCreator _mapCreator;
 
+    [Header("Manager")]
     [SerializeField] private MapManager _mapManager;
+    [SerializeField] private ShopManager _shopManager;
 
     [SerializeField] private int worldCount = 0;
 
-    [SerializeField] private Transform test;
+    List<Station> stations = new List<Station>();
+
+    private bool _isInit = false;
 
     // 석환이 형 isStart가 true일 때만 player가 작동할 수 있게 해줘~~
     public bool isStart { get; private set; } = false;
@@ -21,33 +25,31 @@ public class InGameScene : MonoBehaviour
     private void Awake()
     {
         FileManager.LoadGame();
-/*        _loadingSceneUI.SetActive(true);
+
+        // 로딩
+        _loadingSceneUI.SetActive(true);
         isStart = false;
 
+                Debug.Log(Time.realtimeSinceStartup);
+        // 로딩 시작
         LoadingFirstGame(
             () =>
             {
                 _loadingSceneUI.SetActive(false);
 
-                RePositionAsync().Forget();
-            }).Forget();*/
+                Debug.Log(Time.realtimeSinceStartup);
+                RePositionAsync(() => { SettingStation(); }).Forget();
+            }).Forget();
 
-
-        // 제일 오른쪽(x값이 제일 작은게 시작점)
-        List<Station> stations = FindObjectsOfType<Station>().OrderBy(elem => elem.transform.position.x).ToList();
-        for(int i = 0; i < stations.Count; i++)
-        {
-            if (i == 0)
-                stations[i].InitStation(true);
-            else
-                stations[i].InitStation(false);
-        }
     }
 
 /*    private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-            RePositionAsync().Forget();
+        if(isStart && !_isInit)
+        {
+            _isInit = true;
+            SettingStation();
+        }
     }*/
 
     /// <summary>
@@ -56,7 +58,9 @@ public class InGameScene : MonoBehaviour
     public void ArriveStation()
     {
         // 볼트 하나 추가 해주고
+
         // 조금있다가 상점보여주기
+        _shopManager.ShopOn();
     }
 
     /// <summary>
@@ -66,8 +70,14 @@ public class InGameScene : MonoBehaviour
     {
         // 나가기 게이지 100되면 실행될 메소드
 
+        // 새로운 역 세팅
+        _shopManager.currentStation = stations[2].transform;
+
         // 상점 종료되고
+        _shopManager.ShopOff();
+
         // 맵 재위치 시켜주기
+        RePositionAsync().Forget();
     }
 
 
@@ -82,5 +92,20 @@ public class InGameScene : MonoBehaviour
         // 맵 로드
         await _mapManager.LoadMap();
         onCreateNextMapAsyncEvent?.Invoke();
+    }
+
+    private void SettingStation()
+    {
+        // 제일 오른쪽(x값이 제일 작은게 시작점)
+        stations = FindObjectsOfType<Station>().OrderBy(elem => elem.transform.position.x).ToList();
+        for (int i = 0; i < stations.Count; i++)
+        {
+            if (i == 0)
+                stations[i].InitStation(true);
+            else
+                stations[i].InitStation(false);
+        }
+
+        _shopManager.currentStation = stations[1].transform;
     }
 }

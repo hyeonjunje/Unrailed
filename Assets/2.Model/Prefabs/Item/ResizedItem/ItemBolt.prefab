@@ -4992,7 +4992,7 @@ GameObject:
   - component: {fileID: 2519817169010711840}
   m_Layer: 0
   m_Name: ItemBolt
-  m_TagString: Items
+  m_TagString: Invisible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5106,6 +5106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBolt: 1
+  speed: 2
 --- !u!1 &5669165575817630895
 GameObject:
   m_ObjectHideFlags: 0

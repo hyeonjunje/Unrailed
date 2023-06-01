@@ -454,7 +454,7 @@ GameObject:
   - component: {fileID: -9027853760926881629}
   m_Layer: 12
   m_Name: ItemPick
-  m_TagString: NonStackItem
+  m_TagString: Invisible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

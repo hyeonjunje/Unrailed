@@ -371,7 +371,7 @@ GameObject:
   - component: {fileID: 7902225711106100694}
   m_Layer: 11
   m_Name: ItemSteel
-  m_TagString: StackItem
+  m_TagString: Invisible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

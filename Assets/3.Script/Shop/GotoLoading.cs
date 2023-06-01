@@ -61,7 +61,10 @@ public class GotoLoading : MonoBehaviour
         }
         else //Go to Next Game
         {
-            ShopManager.Instance.ShopOff();
+            // 역 떠나기
+            FindObjectOfType<InGameScene>().LeaveStation();
+            // ShopManager.Instance.ShopOff();
+
             _isGoto = true;
             loadingCharge = 0;
             isLoad = false;

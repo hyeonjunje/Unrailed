@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Station : MonoBehaviour
 {
+    [SerializeField] private LayerMask blockLayer;
+    [SerializeField] private LayerMask railLayer;
+
     private Transform _parentBlock;
     private Vector3[] _dir = new Vector3[4] { Vector3.forward, Vector3.right, Vector3.left, Vector3.back };
 
@@ -19,11 +22,13 @@ public class Station : MonoBehaviour
 
     private void InitFirstStation()
     {
+        gameObject.AddComponent<GoalManager>();
+
         // 맨 처음 정류장 앞에 가장 끝에 있는 레일만 두기
         Transform railTransform = null;
         RailController rail = null;
 
-        if (Physics.Raycast(_parentBlock.position, Vector3.back, out RaycastHit hit, 1f, 1 << LayerMask.NameToLayer("Block")))
+        if (Physics.Raycast(_parentBlock.position, Vector3.back, out RaycastHit hit, 1f, blockLayer))
         {
             if(hit.transform.childCount != 0)
             {
@@ -36,7 +41,7 @@ public class Station : MonoBehaviour
             rail = railTransform.GetComponent<RailController>();
             rail.isInstance = true;
 
-            if(Physics.Raycast(railTransform.position, Vector3.right, out RaycastHit railHit, 1f, 1 << LayerMask.NameToLayer("Rail")))
+            if(Physics.Raycast(railTransform.position, Vector3.right, out RaycastHit railHit, 1f, railLayer))
             {
                 railTransform = railHit.transform;
             }
@@ -58,7 +63,7 @@ public class Station : MonoBehaviour
         Transform railTransform = null;
         RailController rail = null;
 
-        if (Physics.Raycast(_parentBlock.position, Vector3.back, out RaycastHit hit, 1f, 1 << LayerMask.NameToLayer("Block")))
+        if (Physics.Raycast(_parentBlock.position, Vector3.back, out RaycastHit hit, 1f, blockLayer))
         {
             if (hit.transform.childCount != 0)
             {
@@ -66,13 +71,15 @@ public class Station : MonoBehaviour
             }
         }
 
+        Debug.Log(railTransform);
+
         while (true)
         {
             rail = railTransform.GetComponent<RailController>();
             rail.isEndRail = true;
             rail.isInstance = true;
 
-            if (Physics.Raycast(railTransform.position, Vector3.right, out RaycastHit railHit, 1f, 1 << LayerMask.NameToLayer("Rail")))
+            if (Physics.Raycast(railTransform.position, Vector3.right, out RaycastHit railHit, 1f, railLayer))
             {
                 railTransform = railHit.transform;
             }

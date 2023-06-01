@@ -322,7 +322,7 @@ GameObject:
   - component: {fileID: 1039576545902024545}
   m_Layer: 12
   m_Name: ItemAxe
-  m_TagString: NonStackItem
+  m_TagString: Invisible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

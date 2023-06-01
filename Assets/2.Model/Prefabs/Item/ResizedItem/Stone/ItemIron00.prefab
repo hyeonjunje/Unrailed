@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7705865897169037331}
   m_Layer: 0
   m_Name: ItemIron00
-  m_TagString: Untagged
+  m_TagString: Invisible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
