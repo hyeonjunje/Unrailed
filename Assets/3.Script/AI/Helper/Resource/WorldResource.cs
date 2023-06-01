@@ -80,9 +80,4 @@ public class WorldResource : MonoBehaviour
         }
     }
 
-    public void Water()
-    {
-
-
-    }
 }
