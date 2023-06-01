@@ -6,6 +6,7 @@ using System.Linq;
 public class Resource : MonoBehaviour
 {
     public Transform spawnPoint;
+    int num = 0;
     Helper Robot;
 
     [SerializeField] WorldResource.EType DefaultResource = WorldResource.EType.Wood;
@@ -45,7 +46,7 @@ public class Resource : MonoBehaviour
         {
             var type = (WorldResource.EType)value;
             TrackedResources[type] = ResourceTracker.Instance.GetResourcesInRange(type, transform.position, PerfectKnowledgeRange);
-            Debug.Log($"{TrackedResources[type].Count}, {type}");
+            //Debug.Log($"{TrackedResources[type].Count}, {type}");
             //ÃÑ ÀÚ¿ø¼ö
             NumAvailableResources += TrackedResources[type].Count;
         }
@@ -53,6 +54,7 @@ public class Resource : MonoBehaviour
 
     public WorldResource GetGatherTarget(Helper brain)
     {
+        PopulateResources();
         WorldResource.EType targetResource = DefaultResource;
         var resourceTypes = System.Enum.GetValues(typeof(WorldResource.EType));
         foreach (var typeValue in resourceTypes)

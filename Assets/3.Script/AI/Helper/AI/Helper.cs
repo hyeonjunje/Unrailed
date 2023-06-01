@@ -9,8 +9,10 @@ public class Helper : MonoBehaviour
     public Resource dd;
 
     public Dictionary<KeyCode, System.Action> Order;
-    [SerializeField] public WorldResource.EType TargetResource;
-    [SerializeField] public WorldResource.EType DefaultResource = WorldResource.EType.Wood;
+    [HideInInspector]
+    public WorldResource.EType TargetResource;
+    [HideInInspector]
+    public WorldResource.EType DefaultResource = WorldResource.EType.Wood;
     private void Awake()
     {
         TargetResource = DefaultResource;

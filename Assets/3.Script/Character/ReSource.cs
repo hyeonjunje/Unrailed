@@ -47,7 +47,7 @@ public class ReSource : MonoBehaviour, IDig
         }
     }
 
-    private void SpawnItem()
+    public void SpawnItem()
     {
         // 1. 아이템 생성해서 변수에 저장한다
         Transform NewItem = Instantiate(ItemPrefab, new Vector3(0, 0, 0), Quaternion.identity);

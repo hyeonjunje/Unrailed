@@ -8,7 +8,7 @@ public class RailController : MonoBehaviour
 
     [SerializeField] private GameObject[] railPrefabs;
     [SerializeField] private RailController neighborRail;
-    /// ³ªÁß¿¡ [SerializeField] private GoalManager trainManager;
+    /// ë‚˜ì¤‘ì— [SerializeField] private GoalManager trainManager;
 
     public TrainMovement[] trainComponents;
     public RailLine railLine;
@@ -16,15 +16,21 @@ public class RailController : MonoBehaviour
     public int dirCount;
     int childCount;
 
+    [Header("Instance Rail")]
     public bool isInstance;
 
-    public bool isGoal;
+    [Header("Dir Rail")]
     public bool isFront;
     public bool isBack;
     public bool isLeft;
     public bool isRight;
+
+
+    [Header("None Dir Rail")]
+    public bool isGoal;
     public bool isStartRail;
     public bool isEndRail;
+    public bool isAnotherRail;
 
     public float poolingTime;
     public float lifeTime = 0;
@@ -32,7 +38,7 @@ public class RailController : MonoBehaviour
 
     public void Init()
     {
-        //// ³ªÁß¿¡ trainManager = FindObjectOfType<GoalManager>();
+        //// ë‚˜ì¤‘ì— trainManager = FindObjectOfType<GoalManager>();
 
         childCount = gameObject.transform.childCount;
         railPrefabs = new GameObject[childCount];
@@ -45,21 +51,21 @@ public class RailController : MonoBehaviour
 
     public void PutRail()
     {
-        /// ³ªÁß¿¡ trainManager.railCon.Add(gameObject.GetComponent<RailController>());
+        /// ë‚˜ì¤‘ì— trainManager.railCon.Add(gameObject.GetComponent<RailController>());
         if (!isEndRail && !isStartRail)
         {
-            //±âÂ÷ÀÌµ¿ À§Ä¡°ª ÃÊ±âÈ­
-            //´Ü, °ñÀÌ ¾Æ´Ò¶§¿¡¸¸ È°¼ºÈ­µÈ´Ù.
-            //¸¶Áö¸· ·¹ÀÏÀÌ °ñ¿¡ ´ê¾ÒÀ» °æ¿ì ¸ğµç ·¹ÀÏÀÇ °ñÀ» ÇØÁ¦ÇÑ´Ù.
+            //ê¸°ì°¨ì´ë™ ìœ„ì¹˜ê°’ ì´ˆê¸°í™”
+            //ë‹¨, ê³¨ì´ ì•„ë‹ë•Œì—ë§Œ í™œì„±í™”ëœë‹¤.
+            //ë§ˆì§€ë§‰ ë ˆì¼ì´ ê³¨ì— ë‹¿ì•˜ì„ ê²½ìš° ëª¨ë“  ë ˆì¼ì˜ ê³¨ì„ í•´ì œí•œë‹¤.
             EnqueueRail();
         }
 
         if (!isGoal)
         {
-            //³ë¶õ ·¹ÀÏ¼±  ÃÊ±âÈ­
+            //ë…¸ë€ ë ˆì¼ì„   ì´ˆê¸°í™”
             railLine = null;
 
-            //À§Ä¡ ¹æÇâ ÃÊ±âÈ­
+            //ìœ„ì¹˜ ë°©í–¥ ì´ˆê¸°í™”
             isFront = false;
             isBack = false;
             isLeft = false;
@@ -67,11 +73,11 @@ public class RailController : MonoBehaviour
 
             dirCount = 0;
 
-            //ÀÎ½ÄºÒ°¡ bool ÃÊ±âÈ­
+            //ì¸ì‹ë¶ˆê°€ bool ì´ˆê¸°í™”
             isInstance = false;
         }
 
-        //Ã¶·Î ¿¬°á
+        //ì² ë¡œ ì—°ê²°
         RaycastOn();
 
         if (!isGoal && !isEndRail && !isStartRail)
@@ -89,7 +95,7 @@ public class RailController : MonoBehaviour
         PutRail();
     }*/
 
-    //todo 05 18 ¾Õ Ã¶·Î°¡ ¾øÀ¸¸é Ã¶·Î¸¦ ÇØÁ¦ ÇÒ ¼ö ÀÖµµ·Ï ¸¸µé¾î ³õÀ»°Í ±×¸®°í °¡´ÉÇÏ¸é - ¹Ú»ó¿¬
+    //todo 05 18 ì• ì² ë¡œê°€ ì—†ìœ¼ë©´ ì² ë¡œë¥¼ í•´ì œ í•  ìˆ˜ ìˆë„ë¡ ë§Œë“¤ì–´ ë†“ì„ê²ƒ ê·¸ë¦¬ê³  ê°€ëŠ¥í•˜ë©´ - ë°•ìƒì—°
     public void RailSwitch()
     {
         for (int i = 0; i < railPrefabs.Length; i++)
@@ -107,22 +113,20 @@ public class RailController : MonoBehaviour
     }
     public void RaycastOn()
     {
-        //½Ç °ÔÀÓ ³»¿¡¼­´Â isStartRail Ã¶·Î 2°³Á¤µµ ±ò¾ÆµÎ°í 2°³´Â ±âº» Ã¶·Î. ±× ÈÄ¿¡ ºÙÀÌ¸é Á¤»ó°¡µ¿
-        //isEndRailÀº µÎ°³¸¸ ºÙ¿©³õÀ»°Í 
+        //ì‹¤ ê²Œì„ ë‚´ì—ì„œëŠ” isStartRail ì² ë¡œ 2ê°œì •ë„ ê¹”ì•„ë‘ê³  2ê°œëŠ” ê¸°ë³¸ ì² ë¡œ. ê·¸ í›„ì— ë¶™ì´ë©´ ì •ìƒê°€ë™
+        //isEndRailì€ ë‘ê°œë§Œ ë¶™ì—¬ë†“ì„ê²ƒ 
 
         RaycastHit raycastHit = new RaycastHit();
 
         RailDir();
-
-
         if ((Physics.Raycast(transform.position, transform.forward, out raycastHit, range, LayerMask.GetMask("Rail")) && (!raycastHit.collider.GetComponentInParent<RailController>().isInstance))
             || (Physics.Raycast(transform.position, transform.right, out raycastHit, range, LayerMask.GetMask("Rail")) && !raycastHit.collider.GetComponentInParent<RailController>().isInstance) 
             || (Physics.Raycast(transform.position, -transform.forward, out raycastHit, range, LayerMask.GetMask("Rail")) && !raycastHit.collider.GetComponentInParent<RailController>().isInstance)
             || (Physics.Raycast(transform.position, -transform.right, out raycastHit, range, LayerMask.GetMask("Rail")) && !raycastHit.collider.GetComponentInParent<RailController>().isInstance))
+
         {
             neighborRail = raycastHit.collider.GetComponentInParent<RailController>();
-
-            //ºÏ µ¿ ³² ¼­ È®ÀÎÇÏ¿© isIntance¸¦ È®ÀÎ
+            //ë¶ ë™ ë‚¨ ì„œ í™•ì¸í•˜ì—¬ isIntanceë¥¼ í™•ì¸
             if (neighborRail != null && 
                 !neighborRail.isInstance && !neighborRail.isStartRail)
             {
@@ -137,10 +141,10 @@ public class RailController : MonoBehaviour
                 neighborRail.RailSwitch();
                 neighborRail.railLine.Line.SetActive(true);
             }
-            //ºÏ µ¿ ³² ¼­ È®ÀÎÇÏ¿© isGoalÀ» È®ÀÎ
+            //ë¶ ë™ ë‚¨ ì„œ í™•ì¸í•˜ì—¬ isGoalì„ í™•ì¸
             if (neighborRail != null && neighborRail.isEndRail && !isEndRail)
             {
-                /// ³ªÁß¿¡ trainManager.TrainGoal();
+                /// ë‚˜ì¤‘ì— trainManager.TrainGoal();
                 neighborRail.isEndRail = false;
                 neighborRail.enabled = false;
                 neighborRail.enabled = true;
@@ -210,7 +214,7 @@ public class RailController : MonoBehaviour
             }
         }
 
-        //È¤½Ã ¸ô¶ó ÀÌÀü ·¹ÀÏÀÇ ·¹ÀÌ¾î¸¦ µÇµ¹¸®´Â ·ÎÁ÷µµ ±¸ÇöÇØµÒ ÇÊ¿äÇÏ¸é ÀÛ¼º
+        //í˜¹ì‹œ ëª°ë¼ ì´ì „ ë ˆì¼ì˜ ë ˆì´ì–´ë¥¼ ë˜ëŒë¦¬ëŠ” ë¡œì§ë„ êµ¬í˜„í•´ë‘  í•„ìš”í•˜ë©´ ì‘ì„±
         //foreach (Transform child in neighborRail.railChild)
         //{
         //
@@ -224,7 +228,7 @@ public class RailController : MonoBehaviour
 
         for (int i = 0; i < trainComponents.Length; i++)
         {
-            //±âÂ÷¿¡ À§Ä¡°ª Ãß°¡
+            //ê¸°ì°¨ì— ìœ„ì¹˜ê°’ ì¶”ê°€
             trainComponents[i].EnqueueRailPos(gameObject.GetComponent<RailController>());
         }
     }
