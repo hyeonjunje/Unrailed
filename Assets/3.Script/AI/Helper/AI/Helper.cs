@@ -8,6 +8,9 @@ public class Helper : MonoBehaviour
     public Resource Home { get; private set; } = null;
     public Resource dd;
 
+    [HideInInspector]
+    public PathFindingAgent Agent;
+
     public Dictionary<KeyCode, System.Action> Order;
     [HideInInspector]
     public WorldResource.EType TargetResource;
@@ -15,6 +18,7 @@ public class Helper : MonoBehaviour
     public WorldResource.EType DefaultResource = WorldResource.EType.Wood;
     private void Awake()
     {
+        Agent = GetComponent<PathFindingAgent>();
         TargetResource = DefaultResource;
         Order = new Dictionary<KeyCode, Action>();
         Init();

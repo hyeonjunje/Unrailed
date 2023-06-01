@@ -56,19 +56,22 @@ public class HelperBT : MonoBehaviour
         });
 
         var OrderRoot = BTRoot.Add<BTNode_Sequence>("명령이 있나요?");
-        var deco = OrderRoot.AddDecorator<BTDecoratorBase>("명령이 바뀌었는지 확인", () =>
+        var CheckOrder = OrderRoot.AddDecorator<BTDecoratorBase>("명령이 바뀌었는지 확인", () =>
          {
              var order = _localMemory.GetGeneric<WorldResource.EType>(BlackBoardKey.Order);
              return order == _order;
          });
 
         var mainSequence = OrderRoot.Add<BTNode_Sequence>("명령이 있는 경우");
-        var woodRoot = mainSequence.Add<BTNode_Sequence>("1. 도구 찾기");
+
+
+        #region 나무 캐기, 돌 캐기, 물 떠오기 명령
+        var FindTools = mainSequence.Add<BTNode_Sequence>("1. 도구 찾기");
 
         //도끼 들기
         //나무로 이동하기
         //나무 베기
-        var MoveToItem = woodRoot.Add<BTNode_Action>("도구로 이동",()=>
+        var MoveToItem = FindTools.Add<BTNode_Action>("도구로 이동",()=>
         {
             var order = _localMemory.GetGeneric<WorldResource.EType>(BlackBoardKey.Order);
             foreach(var item in ItemManager.Instance.RegisteredObjects)
@@ -108,7 +111,7 @@ public class HelperBT : MonoBehaviour
             return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
         });
 
-        var pickUpTool = woodRoot.Add<BTNode_Action>("도구 들기", () =>
+        var PickUpTool = FindTools.Add<BTNode_Action>("도구 들기", () =>
          {
              switch(_item.Type)
              {
@@ -145,11 +148,13 @@ public class HelperBT : MonoBehaviour
             var order = _localMemory.GetGeneric<WorldResource.EType>(BlackBoardKey.Order);
             return order == _order ? BehaviorTree.ENodeStatus.InProgress : BehaviorTree.ENodeStatus.Failed;
         });
+
         var target = workRoot.Add<BTNode_Action>("타겟 정하기", () =>
          {
              if(_target == null)
              {
-                _target = _helper.Home.GetGatherTarget(_helper);
+                 //목표 자원
+                 _target = _helper.Home.GetGatherTarget(_helper);
                 Vector3 position = _agent.FindCloestAroundEndPosition(_target.transform.position);
                 _localMemory.SetGeneric<Vector3>(BlackBoardKey.Destination, position);
 
@@ -157,14 +162,18 @@ public class HelperBT : MonoBehaviour
              return BehaviorTree.ENodeStatus.Succeeded;
 
          });
+        var PossibleToWork = workRoot.Add<BTNode_Selector>("일하기 셀렉터");
 
-        var MoveToResource = workRoot.Add<BTNode_Action>("자원으로 이동", () =>
+        var PossibleSequence = PossibleToWork.Add<BTNode_Sequence>("가능", () =>
+         {
+             Vector3 pos = _agent.FindCloestAroundEndPosition(_target.transform.position);
+             return _agent.MoveTo(pos) ? BehaviorTree.ENodeStatus.InProgress : BehaviorTree.ENodeStatus.Failed;
+         }
+        );
+        var MoveToResource = PossibleSequence.Add<BTNode_Action>("자원으로 이동", () =>
          {
              //자원으로 이동하기
              DebugTarget.text = _target.name;
-             Vector3 pos = _agent.FindCloestAroundEndPosition(_target.transform.position);
-             _agent.MoveTo(pos);
-
              _animator.SetBool("isMove", true);
              return BehaviorTree.ENodeStatus.InProgress;
 
@@ -175,11 +184,31 @@ public class HelperBT : MonoBehaviour
 
          });
 
+        var ImpossibleToWork = PossibleToWork.Add<BTNode_Sequence>("불가능", () =>
+        {
+            //자원이 물 건너에 있을 때
+            Vector3 pos = _agent.FindCloestAroundEndPosition(_target.transform.position);
+            return _agent.MoveTo(pos) ? BehaviorTree.ENodeStatus.Failed : BehaviorTree.ENodeStatus.InProgress;
+
+        });
+
+        ImpossibleToWork.Add<BTNode_Action>("그거 못해요ㅠ", () =>
+         {
+             DebugTarget.text = "자는 중";
+             return BehaviorTree.ENodeStatus.InProgress;
+         },
+         () =>
+          {
+              return BehaviorTree.ENodeStatus.InProgress;
+          });
+
+
 
         var sel = workRoot.Add<BTNode_Selector>("자원 종류에 따라 다른 행동하기");
         var wood = sel.Add<BTNode_Sequence>("[나무] !",()=>
         {
-            return _item.Type == WorldResource.EType.Wood ? BehaviorTree.ENodeStatus.InProgress : BehaviorTree.ENodeStatus.Failed;
+            return _item.Type == WorldResource.EType.Wood || _item.Type ==WorldResource.EType.Stone
+            ? BehaviorTree.ENodeStatus.InProgress : BehaviorTree.ENodeStatus.Failed;
         
         });
 
@@ -206,6 +235,7 @@ public class HelperBT : MonoBehaviour
          }
         );
 
+        // 물 ==========================================================================
         var water = sel.Add<BTNode_Sequence>("[물] !",()=>
         {
             return _item.Type == WorldResource.EType.Water ? BehaviorTree.ENodeStatus.InProgress : BehaviorTree.ENodeStatus.Failed;
@@ -266,13 +296,13 @@ public class HelperBT : MonoBehaviour
          
          });
 
-
+        #endregion
 
 
 
 
         var OrderChange = BTRoot.Add<BTNode_Sequence>("명령이 바뀐 경우");
-        OrderChange.Add<BTNode_Action>("도구 내려놓기", () =>
+        OrderChange.Add<BTNode_Action>("도구 내려놓고 자기", () =>
          {
              _item.transform.position = transform.position;
              PutDown();

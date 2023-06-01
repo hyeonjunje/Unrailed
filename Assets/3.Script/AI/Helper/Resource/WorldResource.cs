@@ -17,7 +17,6 @@ public class WorldResource : MonoBehaviour
     private float _resourceScale = Mathf.Clamp01(1);
     [SerializeField] float _resourceHp = 2.7f;
 
-
     void Start()
     {
         ResourceTracker.Instance.RegisterResource(this);
