@@ -93,6 +93,7 @@ public class RailController : MonoBehaviour
     /* private void OnEnable()
     {
         PutRail();
+            SoundManager.Instance.PlaySoundEffect("Rail_Up");
     }*/
 
     //todo 05 18 앞 철로가 없으면 철로를 해제 할 수 있도록 만들어 놓을것 그리고 가능하면 - 박상연
