@@ -135,7 +135,8 @@ public class ShopManager : MonoBehaviour
             RandItemSpawn();
             _isShop = true;
         }
-        anim.gameObject.transform.position = endStation[0].transform.GetChild(1).transform.position;
+        // anim.gameObject.transform.position = endStation[0].transform.GetChild(1).transform.position;
+        anim.gameObject.transform.position = endStation[0].transform.position;
         anim.SetBool("isReady",true);
     }  // 상점 오픈 애니메이션
 
@@ -150,11 +151,17 @@ public class ShopManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Block")|| other.CompareTag("Item") || other.CompareTag("Items"))
+        if(other.CompareTag("Invisible"))
         {
             GameObject obj = other.transform.GetChild(0).gameObject;
             obj.SetActive(false);
         }
+
+        /*if (other.CompareTag("Block")|| other.CompareTag("Item") || other.CompareTag("Items"))
+        {
+            GameObject obj = other.transform.GetChild(0).gameObject;
+            obj.SetActive(false);
+        }*/
         if (other.CompareTag("ShopItem"))
         {
             GameObject obj = other.transform.GetChild(0).gameObject;
@@ -164,11 +171,17 @@ public class ShopManager : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Block")|| other.CompareTag("Item") || other.CompareTag("Items"))
+        if (other.CompareTag("Invisible"))
         {
             GameObject obj = other.transform.GetChild(0).gameObject;
             obj.SetActive(true);
         }
+
+        /*if (other.CompareTag("Block")|| other.CompareTag("Item") || other.CompareTag("Items"))
+        {
+            GameObject obj = other.transform.GetChild(0).gameObject;
+            obj.SetActive(true);
+        }*/
         if (other.CompareTag("ShopItem"))
         {
             GameObject obj = other.transform.GetChild(0).gameObject;
