@@ -90,11 +90,11 @@ public class RailController : MonoBehaviour
     {
         Init();
     }
-    /* private void OnEnable()
+  private void OnEnable()
     {
         PutRail();
-            SoundManager.Instance.PlaySoundEffect("Rail_Up");
-    }*/
+ 
+    }
 
     //todo 05 18 앞 철로가 없으면 철로를 해제 할 수 있도록 만들어 놓을것 그리고 가능하면 - 박상연
     public void RailSwitch()
@@ -201,27 +201,28 @@ public class RailController : MonoBehaviour
         }
     }
 
-/*    private void OnDisable()
-    {
-        trainManager.railCon.Remove(gameObject.GetComponent<RailController>());
-
-
-        if (neighborRail != null)
+    /*    private void OnDisable()
         {
-            if (!isStartRail && !neighborRail.isStartRail && !isGoal)
-            {
-                neighborRail.isInstance = false;
-                neighborRail.railLine.Line.SetActive(false);
-            }
-        }
+            trainManager.railCon.Remove(gameObject.GetComponent<RailController>());
 
-        //혹시 몰라 이전 레일의 레이어를 되돌리는 로직도 구현해둠 필요하면 작성
-        //foreach (Transform child in neighborRail.railChild)
-        //{
-        //
-        //    child.gameObject.layer = 23;
-        //}
-    }*/
+
+            if (neighborRail != null)
+            {
+                if (!isStartRail && !neighborRail.isStartRail && !isGoal)
+                {
+                    SoundManager.Instance.PlaySoundEffect("Rail_Up");
+                    neighborRail.isInstance = false;
+                    neighborRail.railLine.Line.SetActive(false);
+                }
+            }
+
+            //혹시 몰라 이전 레일의 레이어를 되돌리는 로직도 구현해둠 필요하면 작성
+            //foreach (Transform child in neighborRail.railChild)
+            //{
+            //
+            //    child.gameObject.layer = 23;
+            //}
+        }*/
 
     public void EnqueueRail()
     {

@@ -30,6 +30,7 @@ public class SoundManager : MonoBehaviour
 
     public AudioSource[] audioSourceEffects;
     public AudioSource[] audioSourceBGM;
+    public AudioSource audioSourdEngine;
 
     public Sound[] soundsEffect;
     public Sound[] soundsBgm;
@@ -39,7 +40,7 @@ public class SoundManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playSoundName = new string[audioSourceEffects.Length];
+        playSoundName = new string[audioSourceEffects.Length + audioSourceBGM.Length];
     }
     public void PlaySoundEffect(string _Name)
     {
@@ -86,11 +87,15 @@ public class SoundManager : MonoBehaviour
             }
         }
     }
-    public void StopAllSoundEffect()
+    public void StopAllSound()
     {
         for (int i = 0; i < audioSourceEffects.Length; i++)
         {
             audioSourceEffects[i].Stop();
+        }
+        for (int i = 0; i < audioSourceBGM.Length; i++)
+        {
+            audioSourceBGM[i].Stop();
         }
     }
     // Update is called once per frame

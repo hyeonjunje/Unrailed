@@ -63,6 +63,7 @@ public class ShopManager : MonoBehaviour
     private void OnEnable()
     {
         StartCoroutine(TrainStartMove());
+       // SoundManager.Instance.PlaySoundBgm("InGame_Bgm");
     }
     public void ResetTrains()
     {
@@ -140,6 +141,8 @@ public class ShopManager : MonoBehaviour
         }
         anim.gameObject.transform.position = endStation[0].transform.GetChild(1).transform.position;
         anim.SetBool("isReady",true);
+        SoundManager.Instance.audioSourdEngine.Stop();
+        SoundManager.Instance.StopAllSound();
     }  // 상점 오픈 애니메이션
 
     public void ShopOff()
@@ -202,9 +205,9 @@ public class ShopManager : MonoBehaviour
         _isShop = false;
         trainWater.FireOff();
         test.SetActive(true);
-        yield return new WaitForSeconds(2f); 
-        SoundManager.Instance.PlaySoundBgm("Train_Engine");
+        yield return new WaitForSeconds(2f);
+        SoundManager.Instance.audioSourdEngine.Play();
         trainEngine.isReady = false;
-
+        SoundManager.Instance.PlaySoundBgm("InGame_Bgm");
     } 
 }

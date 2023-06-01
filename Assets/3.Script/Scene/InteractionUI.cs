@@ -17,12 +17,14 @@ public class InteractionUI : MonoBehaviour
     public void GameStart()
     {
         //goto ÈÄ¿¡ ¹Ù²Ü °Í
+        SoundManager.Instance.PlaySoundEffect("Btn_Click");
         SceneManager.LoadScene("TrainScene");
   
     }
     public void GameExit()
     {
         //goto ÈÄ¿¡ ¹Ù²Ü °Í
+        SoundManager.Instance.PlaySoundEffect("Btn_Click");
         Application.Quit();
     }
 
@@ -30,6 +32,7 @@ public class InteractionUI : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            SoundManager.Instance.PlaySoundEffect("Btn_OnMouse");
             image.sprite = triggerImage[1];
             text.color = new Color32(255, 196, 118, 255);
         }
