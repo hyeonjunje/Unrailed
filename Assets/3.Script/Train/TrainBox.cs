@@ -26,6 +26,7 @@ public class TrainBox : TrainMovement
     void Update()
     {
         TrainMovePos();
+        TrainUpgrade();
         if (!isBurn)
         {
             GiveMeItem();
