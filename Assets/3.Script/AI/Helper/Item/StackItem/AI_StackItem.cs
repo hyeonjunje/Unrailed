@@ -28,7 +28,7 @@ public abstract class AI_StackItem : MonoBehaviour
         transform.SetParent(parent);
         transform.localPosition = pos;
         transform.localRotation = Quaternion.identity;
-        transform.localScale = Vector3.one;
+        transform.localScale = Vector3.one * 2;
     }
 
     public virtual bool CheckItemType(AI_StackItem item)
