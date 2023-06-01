@@ -53,10 +53,10 @@ public class GotoLoading : MonoBehaviour
         }
         else //Go to Next Game
         {
-            _isGoto = true;
-            isLoad = false;
-            loadingCharge = 0;
             ShopManager.Instance.ShopOff();
+            _isGoto = true;
+            loadingCharge = 0;
+            isLoad = false;
         }
     }
     private void OnDisable()

@@ -8,6 +8,8 @@ public class TrainEngine : TrainMovement
     public List<TrainMovement> trains = new List<TrainMovement>();
 
     public Animator anim;
+    [SerializeField] private int startCount;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -24,11 +26,11 @@ public class TrainEngine : TrainMovement
     void Update()
     {
         TrainMovePos();
-
+        TrainUpgrade();
         if (!isBurn)
         {
             EngineCool();
-            
+
             if (isReady)
             {
                 for (int i = 0; i < trains.Count; i++)
@@ -64,10 +66,11 @@ public class TrainEngine : TrainMovement
             }
         }
 
-        if(!_isPlay &&!isReady && !isGoal && !isBurn && rails.Count < 5 && !isOver)
+        if (!_isPlay && !isReady && !isGoal && !isBurn && rails.Count < 5 && !isOver)
         {
             StartCoroutine(Warning());
         }
+
     }
     public void EngineFire()
     {
