@@ -6,6 +6,8 @@ public class GoalManager : MonoBehaviour
 {
     public List<RailController> railCon = new List<RailController>();
 
+    public RailController lastRail => railCon[railCon.Count - 1];
+
     public void TrainGoal()
     {
 

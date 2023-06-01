@@ -8,7 +8,7 @@ public class RailController : MonoBehaviour
 
     [SerializeField] private GameObject[] railPrefabs;
     [SerializeField] private RailController neighborRail;
-    /// 나중에 [SerializeField] private GoalManager trainManager;
+    [SerializeField] private GoalManager trainManager;
 
     public TrainMovement[] trainComponents;
     public RailLine railLine;
@@ -35,10 +35,14 @@ public class RailController : MonoBehaviour
     public float poolingTime;
     public float lifeTime = 0;
 
+    private bool isInit = false;
+
 
     public void Init()
     {
-        //// 나중에 trainManager = FindObjectOfType<GoalManager>();
+        isInit = true;
+
+        trainManager = FindObjectOfType<GoalManager>();
 
         childCount = gameObject.transform.childCount;
         railPrefabs = new GameObject[childCount];
@@ -51,7 +55,10 @@ public class RailController : MonoBehaviour
 
     public void PutRail()
     {
-        /// 나중에 trainManager.railCon.Add(gameObject.GetComponent<RailController>());
+        if (!isInit)
+            Init();
+
+        trainManager.railCon.Add(gameObject.GetComponent<RailController>());
         if (!isEndRail && !isStartRail)
         {
             //기차이동 위치값 초기화
@@ -90,7 +97,10 @@ public class RailController : MonoBehaviour
     {
         Init();
     }
-  private void OnEnable()
+
+
+    private void OnEnable()
+
     {
         PutRail();
  
@@ -126,7 +136,7 @@ public class RailController : MonoBehaviour
             || (Physics.Raycast(transform.position, -transform.right, out raycastHit, range, LayerMask.GetMask("Rail")) && !raycastHit.collider.GetComponentInParent<RailController>().isInstance))
 
         {
-            neighborRail = raycastHit.collider.GetComponentInParent<RailController>();
+            neighborRail = raycastHit.collider.GetComponent<RailController>();
             //북 동 남 서 확인하여 isIntance를 확인
             if (neighborRail != null && 
                 !neighborRail.isInstance && !neighborRail.isStartRail)
@@ -142,14 +152,17 @@ public class RailController : MonoBehaviour
                 neighborRail.RailSwitch();
                 neighborRail.railLine.Line.SetActive(true);
             }
+
+/*            // isGoal 업데이트
+
             //북 동 남 서 확인하여 isGoal을 확인
             if (neighborRail != null && neighborRail.isEndRail && !isEndRail)
             {
-                /// 나중에 trainManager.TrainGoal();
+                trainManager.TrainGoal();
                 neighborRail.isEndRail = false;
                 neighborRail.enabled = false;
                 neighborRail.enabled = true;
-            }
+            }*/
         }
 
         railDirSelet();
@@ -157,6 +170,20 @@ public class RailController : MonoBehaviour
 
         if (isInstance)
             railLine.Line.SetActive(true);
+
+        // 종료조건
+        if(Physics.Raycast(transform.position, Vector3.right, out raycastHit, range, LayerMask.GetMask("Rail")))
+        {
+            Debug.Log("이거 해줘");
+            RailController endRail = raycastHit.transform.GetComponent<RailController>();
+            Debug.Log(endRail.isEndRail + "  " + endRail.isInstance);
+
+            // 오른쪽에 isEndRail이 있고 isInstance되어 있으면
+            if(endRail.isEndRail && endRail.isInstance)
+            {
+                trainManager.TrainGoal();
+            }
+        }
     }
     void RailDir()
     {

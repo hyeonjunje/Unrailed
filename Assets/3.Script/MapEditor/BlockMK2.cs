@@ -22,6 +22,7 @@ public class BlockMK2 : MonoBehaviour
 
     private int _index;
     private Renderer _renderer;
+    private InvisibleBlock _invisibleBlock;
     private GameObject _itemPrefab;
     private BlockTransformerData _blockTransformerData;
 
@@ -34,6 +35,7 @@ public class BlockMK2 : MonoBehaviour
     private void Awake()
     {
         _renderer = GetComponent<MeshRenderer>();
+        _invisibleBlock = GetComponent<InvisibleBlock>();
     }
 
     // 블럭 Init 작업
@@ -41,6 +43,7 @@ public class BlockMK2 : MonoBehaviour
     {
         _index = index;
         _renderer.material = material;
+        _invisibleBlock.isEmpty = false;
         _itemPrefab = itemPrefab;
         _blockTransformerData = blockTransformerData;
 
@@ -74,6 +77,7 @@ public class BlockMK2 : MonoBehaviour
 
         if(index == (int)EBlock.empty)
         {
+            _invisibleBlock.isEmpty = true;
             _renderer.enabled = false;
             transform.tag = "Empty";
         }
