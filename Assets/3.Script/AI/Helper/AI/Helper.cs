@@ -6,7 +6,10 @@ using System;
 public class Helper : MonoBehaviour
 {
     public Resource Home { get; private set; } = null;
-    public Resource dd;
+    public Resource Map;
+
+    [HideInInspector]
+    public PathFindingAgent Agent;
 
     public Dictionary<KeyCode, System.Action> Order;
     [HideInInspector]
@@ -15,12 +18,13 @@ public class Helper : MonoBehaviour
     public WorldResource.EType DefaultResource = WorldResource.EType.Wood;
     private void Awake()
     {
+        Agent = GetComponent<PathFindingAgent>();
         TargetResource = DefaultResource;
         Order = new Dictionary<KeyCode, Action>();
         Init();
 
         //나중에 완성되면 빼기
-        Home = dd;
+        Home = Map;
     }
 
     public void SetHome(Resource _Home)
@@ -32,17 +36,22 @@ public class Helper : MonoBehaviour
     {
         Order[KeyCode.Alpha1] = () =>
         {
-            TargetResource = WorldResource.EType.Wood;
+            TargetResource = WorldResource.EType.Stone;
         };
 
         Order[KeyCode.Alpha2] = () =>
         {
-            TargetResource = WorldResource.EType.Stone;
+            TargetResource = WorldResource.EType.Wood;
         };
 
         Order[KeyCode.Alpha3] = () =>
         {
             TargetResource = WorldResource.EType.Water;
+        };
+
+        Order[KeyCode.Alpha4] = () =>
+        {
+            TargetResource = WorldResource.EType.Resource;
         };
     }
 
