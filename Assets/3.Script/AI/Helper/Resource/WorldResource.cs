@@ -40,7 +40,8 @@ public class WorldResource : MonoBehaviour
 
     public IEnumerator isDigCo()
     {
-        WaitForSeconds wait = new WaitForSeconds(0.8f);
+        WaitForSeconds wait = new WaitForSeconds(0.7f);
+
             yield return wait;
         while(_resourceHp > 0)
         {

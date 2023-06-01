@@ -80,12 +80,13 @@ public class Resource : MonoBehaviour
             //가까운 순으로 정렬
             .OrderBy(resource => Vector3.Distance(brain.transform.position, resource.transform.position))
             //가장 가까운 자원 반환
-            .First();
-        if (sortedResources != null)
+            .FirstOrDefault();
+        return sortedResources;
+/*        if (sortedResources != null)
             return sortedResources;
         else
             Debug.Log("없어요");
-            return null;
+            return null;*/
 
 
 

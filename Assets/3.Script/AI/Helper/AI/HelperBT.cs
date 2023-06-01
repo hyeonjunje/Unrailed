@@ -14,27 +14,39 @@ public class HelperBT : MonoBehaviour
         public string Name;
 
     }
-    public Transform RightHand;
-    public Transform BetweenTwoHands;
+
+    [Header("Transform")]
+    [SerializeField] private Transform _rayStartTransform;
+    [SerializeField] private Transform _rightHandTransform;
+    [SerializeField] private Transform _twoHandTransform;
+
+
+    private Transform _currentblock;
+    public Transform RayStartTransfrom => _rayStartTransform;
+    public Transform CurrentBlockTransform => _currentblock;
+    public Transform RightHandTransform => _rightHandTransform;
+    public Transform TwoHandTransform => _twoHandTransform;
 
     public Text DebugTarget;
 
     private Vector3 _home;
     private Animator _animator;
+    private float _rotateSpeed = 10;
 
     protected Helper _helper;
     protected BehaviorTree _tree;
     protected PathFindingAgent _agent;
     protected Blackboard<BlackBoardKey> _localMemory;
     protected AI_Item _item;
+    protected AI_Stack _stack;
 
-    private float _rotateSpeed = 10;
 
     protected WorldResource _target;
     protected WorldResource.EType _order;
 
     private void Awake()
     {
+        _stack = GetComponent<AI_Stack>();
         _home = transform.position;
         _helper = GetComponent<Helper>();
         _animator = GetComponent<Animator>();
@@ -62,16 +74,13 @@ public class HelperBT : MonoBehaviour
              return order == _order;
          });
 
-        var mainSequence = OrderRoot.Add<BTNode_Sequence>("명령이 있는 경우");
+        var MainSequence = OrderRoot.Add<BTNode_Sequence>("명령이 있는 경우");
 
 
         #region 나무 캐기, 돌 캐기, 물 떠오기 명령
-        var FindTools = mainSequence.Add<BTNode_Sequence>("1. 도구 찾기");
+        var FindTools = MainSequence.Add<BTNode_Sequence>("1. 도구 찾기");
 
-        //도끼 들기
-        //나무로 이동하기
-        //나무 베기
-        var MoveToItem = FindTools.Add<BTNode_Action>("도구로 이동",()=>
+        var MoveToItem = FindTools.Add<BTNode_Action>("도구 정하기, 이동하기",()=>
         {
             var order = _localMemory.GetGeneric<WorldResource.EType>(BlackBoardKey.Order);
             foreach(var item in ItemManager.Instance.RegisteredObjects)
@@ -96,12 +105,6 @@ public class HelperBT : MonoBehaviour
                         break;
                     }
 
-                }
-                else
-                {
-                    //도구가 필요 없을때
-                    Debug.Log("나르세요");
-                    //return BehaviorTree.ENodeStatus.Succeeded;
                 }
 
             }
@@ -128,11 +131,11 @@ public class HelperBT : MonoBehaviour
                  {
                      //양동이면 양손
                      case WorldResource.EType.Water:
-                         _item.transform.SetParent(BetweenTwoHands);
+                         _item.transform.SetParent(TwoHandTransform);
                          break;
                      //곡괭이, 도끼면 한 손
                      default:
-                         _item.transform.SetParent(RightHand);
+                         _item.transform.SetParent(RightHandTransform);
                          break;
                  }
 
@@ -154,7 +157,7 @@ public class HelperBT : MonoBehaviour
         });
 
 
-        var workRoot = mainSequence.Add<BTNode_Sequence>("2. 일하기",()=>
+        var workRoot = MainSequence.Add<BTNode_Sequence>("2. 일하기",()=>
         {
             //타겟 자원 설정
             return BehaviorTree.ENodeStatus.InProgress;
@@ -221,9 +224,9 @@ public class HelperBT : MonoBehaviour
 
 
         var sel = workRoot.Add<BTNode_Selector>("자원 종류에 따라 다른 행동하기");
-        var wood = sel.Add<BTNode_Sequence>("[나무, 돌, 자원]",()=>
+        var wood = sel.Add<BTNode_Sequence>("[나무, 돌]",()=>
         {
-            return _target.Type != WorldResource.EType.Water
+        return _target.Type == WorldResource.EType.Wood || _target.Type == WorldResource.EType.Stone
             ? BehaviorTree.ENodeStatus.InProgress : BehaviorTree.ENodeStatus.Failed;
         
         });
@@ -234,6 +237,19 @@ public class HelperBT : MonoBehaviour
              switch(_target.Type)
              {
                  case WorldResource.EType.Resource:
+                     _currentblock = _target.transform;
+                     _stack.DetectGroundBlock(_target);
+                     if (_stack._handItem.Count==0)
+                     {
+                         _stack.InteractiveItemSpace();
+
+                     }
+                     else if(_stack._handItem.Count==3)
+                     {
+                         Debug.Log("더는 못들어,,,,");
+                     }
+                     else
+                      _stack.InteractiveItem();
                      break;
 
                  default:
@@ -256,11 +272,14 @@ public class HelperBT : MonoBehaviour
              {
                  //자원
                  case WorldResource.EType.Resource:
+                     ResourceTracker.Instance.DeRegisterResource(_target);
+                     Destroy(_target);
                      //들기
-                     break;
+                     return BehaviorTree.ENodeStatus.Succeeded;
 
-                 default:
+
                      //나무, 돌
+                 default:
                      if (!_target.isDig())
                      {
                          Destroy(_target.gameObject);
@@ -268,14 +287,13 @@ public class HelperBT : MonoBehaviour
                          return BehaviorTree.ENodeStatus.Succeeded;
                      }
 
-                     break;
+                        return BehaviorTree.ENodeStatus.InProgress;
 
 
              }
 
 
 
-             return BehaviorTree.ENodeStatus.InProgress;
          }
         );
 
@@ -348,8 +366,12 @@ public class HelperBT : MonoBehaviour
         var OrderChange = BTRoot.Add<BTNode_Sequence>("명령이 바뀐 경우");
         OrderChange.Add<BTNode_Action>("도구 내려놓고 자기", () =>
          {
+             if(_item!=null)
+             {
              _item.transform.position = transform.position;
              PutDown();
+
+             }
 
              //블랙보드 업데이트
              _item = null;
