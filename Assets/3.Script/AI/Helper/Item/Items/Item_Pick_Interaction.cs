@@ -16,4 +16,10 @@ public class Item_Pick_Interaction : SimpleInteraction
     {
         return base.CanPerform() && !_pick.IsOn;
     }
+
+    public override bool Perform()
+    {
+        _pick.PickUp();
+        return base.CanPerform() && !_pick.IsOn;
+    }
 }

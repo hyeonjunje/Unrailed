@@ -3,23 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Item_Bucket_Water : MonoBehaviour
+public class Item_Bucket_Water : SimpleInteraction
 {
+    protected Item_Bucket _bucket;
     public Slider Watergauge;
     public GameObject WaterMesh;
-    public GameObject Target;
-
-    public RectTransform UItransform;
-    public bool isFilling = false;
-    private float currentGauge = Mathf.Clamp(0, 0, 1);
-    private Vector3 distance = Vector3.up * 0.4f;
-    private float fillSpeed = 50f;
-    private float _maxGauge = 100f;
-
 
     private void Awake()
     {
+        _bucket = GetComponent<Item_Bucket>();
         WaterMesh.SetActive(false);
+    }
+    public override bool Perform()
+    {
+        FillGauge();
+        return !Stop();
+    }
+
+    public override bool CanPerform()
+    {
+        //양동이를 든 상태라면 가능
+        return base.CanPerform() && _bucket.IsOn;
     }
 
     public void FillGauge()
@@ -32,10 +36,14 @@ public class Item_Bucket_Water : MonoBehaviour
         else
         {
             WaterMesh.SetActive(true);
-            Watergauge.gameObject.SetActive(false);
             Watergauge.value = Mathf.MoveTowards(Watergauge.value, 1f, Time.deltaTime);
+            Watergauge.gameObject.SetActive(false);
         }
 
+    }
+    private void OnDisable()
+    {
+        Watergauge.value = 0;
     }
 
     public bool Stop()
