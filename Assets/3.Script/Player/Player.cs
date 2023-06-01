@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     [SerializeField] public Transform rayStart;
     [SerializeField] WaterGauge waterGauge;
     [SerializeField] public float DropDistance = 1.5f;
+    [SerializeField] public GameObject Balloon;
     #endregion
     #region 이동 관련 변수
     public float speed = 5f;
@@ -31,6 +32,8 @@ public class Player : MonoBehaviour
     [SerializeField] LayerMask NonStackItemLayer;
     public List<GameObject> currentStackItem = new List<GameObject>();
     public GameObject currentNonStackItem;
+    [SerializeField] Transform Bolt;
+    [SerializeField] Transform playerbody;
     #endregion
     #region 버튼을 눌렀는가?
     bool isDashKeyDown;
@@ -63,6 +66,7 @@ public class Player : MonoBehaviour
         DetectWater();
         FirstPickUpItem();
         SetBridge();
+        Ground();
     }
 
 
@@ -242,8 +246,7 @@ public class Player : MonoBehaviour
         Item.transform.localRotation = Quaternion.identity;
         currentStackItem.Add(Item);
     }
-
-    void SetItemBetweenTwoHands(RaycastHit[] Item)
+        void SetItemBetweenTwoHands(RaycastHit[] Item)
     {
         for (int i = 0; i < Item.Length; i++)
         {
@@ -296,6 +299,11 @@ public class Player : MonoBehaviour
                 SetItemBetweenTwoHands(other.gameObject, GapOfItems);
             }
         }
+        if (other.transform.name == "ItemBolt(Clone)")
+        {
+            Debug.Log("나사 획득");
+            AddBolt(Bolt.gameObject);
+        }
         /*}*/
     }
     #endregion
@@ -304,24 +312,26 @@ public class Player : MonoBehaviour
     {
         RaycastHit hit;
         Debug.DrawRay(transform.position, transform.forward * pickUpDistance, Color.red);
-        //if (Physics.Raycast(rayStart.position, Vector3.down, out hit, 10f, BlockLayer))
         if (Physics.Raycast(transform.position, transform.forward, out hit, pickUpDistance, waterlayer))
         {
-                Debug.Log("물 감지");
-                waterGauge.gameObject.SetActive(true);
-                waterGauge.FillGauge();
+            if (currentNonStackItem == null)
+                return;
 
+            if (hit.collider.name == "Water(Clone)" && currentNonStackItem.name == "Item_Bucket(Clone)")
+            {
+                Debug.Log("물 감지");
+                waterGauge.FillGauge();
+                waterGauge.watergauge.gameObject.SetActive(true);
+            }
             if (WaterMesh.activeSelf)
             {
                 waterGauge.watergauge.gameObject.SetActive(false);
             }
-
         }
         else
         {
-            waterGauge.gameObject.SetActive(false);
+            waterGauge.watergauge.gameObject.SetActive(false);
             waterGauge.StopFilling();
-
         }
     }
     void DigUp()
@@ -333,7 +343,7 @@ public class Player : MonoBehaviour
             Debug.Log("발사" + hit.transform.name);
             IDig target = hit.collider.GetComponent<IDig>();
 
-            if (target != null)
+            if (target != null && currentNonStackItem != null)
             {
                 if (hit.transform.name == "Tree01(Clone)" &&  currentNonStackItem.name == "ItemAxe(Clone)")
                 {
@@ -423,14 +433,17 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             RaycastHit hit;
-            Debug.DrawRay(transform.TransformPoint(0, 0.1f, 0), transform.forward * pickUpDistance, Color.red);
+            Debug.DrawRay(transform.TransformPoint(0, 0.2f, 0), transform.forward * pickUpDistance, Color.red);
             for (int i = 0; i < currentStackItem.Count; i++)
             {
-                if (Physics.Raycast(transform.TransformPoint(0, 0.1f, 0), transform.forward, out hit, pickUpDistance))
+                if (Physics.Raycast(transform.TransformPoint(0, 0.2f, 0), transform.forward, out hit, pickUpDistance,waterlayer))
                 {
+                    Debug.Log(currentStackItem[i].name + "   " + hit.transform.name);
+
                     if (currentStackItem[i].name == "ItemWood(Clone)" &&  hit.transform.name == "Water(Clone)" )
                     {
                         SpawnBridge(hit.transform);
+                        return;
                     }
 
                 }
@@ -439,7 +452,6 @@ public class Player : MonoBehaviour
     }
     void SpawnBridge(Transform WhiteBlock)
     {
-        Transform parent = WhiteBlock.parent;
 
         Transform NewRiver = Instantiate(ItemPrefab, new Vector3(0, 0, 0), Quaternion.identity);
         NewRiver.parent = WhiteBlock.parent;
@@ -448,6 +460,25 @@ public class Player : MonoBehaviour
         Destroy(WhiteBlock.gameObject);
 
     }
+
+    void Ground()
+    {
+        if (transform.position.y <= 0.6f)
+        {
+            Balloon.SetActive(false);
+        }
+    }
+
+    void AddBolt(GameObject Bolt)
+    {
+        Bolt.transform.SetParent(rightHand);
+        Bolt.transform.localPosition = Vector3.zero;
+        Bolt.transform.localRotation = Quaternion.identity;
+        Destroy(Bolt);
+    }
+
+
+   
 }
 
       
