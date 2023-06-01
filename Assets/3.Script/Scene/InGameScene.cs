@@ -32,11 +32,11 @@ public class InGameScene : MonoBehaviour
             }).Forget();
     }
 
-    private void Update()
+/*    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
             RePositionAsync().Forget();
-    }
+    }*/
 
     /// <summary>
     /// 역 도착하면 실행될 메소드
