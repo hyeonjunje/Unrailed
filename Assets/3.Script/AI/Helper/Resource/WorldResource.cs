@@ -8,7 +8,8 @@ public class WorldResource : MonoBehaviour
     {
         Wood,
         Water,
-        Stone
+        Stone,
+        Resource
     }
     [SerializeField] EType _Type;
     public EType Type => _Type;
@@ -22,7 +23,7 @@ public class WorldResource : MonoBehaviour
         ResourceTracker.Instance.RegisterResource(this);
     }
 
-
+    //자원 캐기
 
     public bool isDig()
     {

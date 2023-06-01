@@ -82,24 +82,32 @@ public class HelperBT : MonoBehaviour
                     foreach (var interaction in item.Interactions)
                     {
                         //플레이어가 들고 있는지 확인하기
-                        if (!interaction.CanPerform())
-                        {
-                            Debug.Log($"{item.name}는 누가 쓰고 있어요");
-                        }
-                        else
+                        if (interaction.CanPerform())
                         {
                             interaction.Perform();
                             _item = item;
+                            _agent.MoveTo(_item.InteractionPoint);
+                            DebugTarget.text = _item.name;
+                        }
+                        else
+                        {
+                            //누군가 사용중일때
                         }
                         break;
                     }
 
                 }
+                else
+                {
+                    //도구가 필요 없을때
+                    Debug.Log("나르세요");
+                    //return BehaviorTree.ENodeStatus.Succeeded;
+                }
+
             }
 
             //도구로 이동하기
-            DebugTarget.text = _item.name;
-            _agent.MoveTo(_item.InteractionPoint);
+
             _animator.SetBool("isMove", true);
 
 
@@ -113,28 +121,36 @@ public class HelperBT : MonoBehaviour
 
         var PickUpTool = FindTools.Add<BTNode_Action>("도구 들기", () =>
          {
-             switch(_item.Type)
+             if(_item!=null)
              {
-                 //양동이면 양손
-                 case WorldResource.EType.Water:
-                    _item.transform.SetParent(BetweenTwoHands);
-                     break;
-                 //다른거면 한 손
-                 default:
-                     _item.transform.SetParent(RightHand);
-                     break;
+
+                 switch (_item.Type)
+                 {
+                     //양동이면 양손
+                     case WorldResource.EType.Water:
+                         _item.transform.SetParent(BetweenTwoHands);
+                         break;
+                     //곡괭이, 도끼면 한 손
+                     default:
+                         _item.transform.SetParent(RightHand);
+                         break;
+                 }
+
+                 _item.transform.localPosition = Vector3.zero;
+                 _item.transform.localRotation = Quaternion.identity;
+
+                return BehaviorTree.ENodeStatus.InProgress;
              }
 
-             _item.transform.localPosition = Vector3.zero;
-             _item.transform.localRotation = Quaternion.identity;
-
-             return BehaviorTree.ENodeStatus.InProgress;
+             else
+                 return BehaviorTree.ENodeStatus.Succeeded;
          },
         () =>
         { 
+                 return BehaviorTree.ENodeStatus.Succeeded;
        
-             return _item.transform.parent == RightHand || BetweenTwoHands ? 
-            BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
+/*             return _item.transform.parent == RightHand || BetweenTwoHands ? 
+            BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;*/
         });
 
 
@@ -205,17 +221,28 @@ public class HelperBT : MonoBehaviour
 
 
         var sel = workRoot.Add<BTNode_Selector>("자원 종류에 따라 다른 행동하기");
-        var wood = sel.Add<BTNode_Sequence>("[나무] !",()=>
+        var wood = sel.Add<BTNode_Sequence>("[나무, 돌, 자원]",()=>
         {
-            return _item.Type == WorldResource.EType.Wood || _item.Type ==WorldResource.EType.Stone
+            return _target.Type != WorldResource.EType.Water
             ? BehaviorTree.ENodeStatus.InProgress : BehaviorTree.ENodeStatus.Failed;
         
         });
 
         var CollectResource = wood.Add<BTNode_Action>("계속 채집하기", () =>
          {
-             _animator.SetBool("isDig", true);
-             StartCoroutine(_target.isDigCo());
+
+             switch(_target.Type)
+             {
+                 case WorldResource.EType.Resource:
+                     break;
+
+                 default:
+                     _animator.SetBool("isDig", true);
+                     StartCoroutine(_target.isDigCo());
+
+                     break;
+
+             }
              return BehaviorTree.ENodeStatus.InProgress;
 
          }, () =>
@@ -224,19 +251,36 @@ public class HelperBT : MonoBehaviour
              Vector3 dir = _target.transform.position - transform.position;
              transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * _rotateSpeed);
 
-             if (!_target.isDig())
+
+             switch(_target.Type)
              {
-                 Destroy(_target.gameObject);
-                 _animator.SetBool("isDig", false);
-                 return BehaviorTree.ENodeStatus.Succeeded;
+                 //자원
+                 case WorldResource.EType.Resource:
+                     //들기
+                     break;
+
+                 default:
+                     //나무, 돌
+                     if (!_target.isDig())
+                     {
+                         Destroy(_target.gameObject);
+                         _animator.SetBool("isDig", false);
+                         return BehaviorTree.ENodeStatus.Succeeded;
+                     }
+
+                     break;
+
+
              }
+
+
 
              return BehaviorTree.ENodeStatus.InProgress;
          }
         );
 
         // 물 ==========================================================================
-        var water = sel.Add<BTNode_Sequence>("[물] !",()=>
+        var water = sel.Add<BTNode_Sequence>("[물]",()=>
         {
             return _item.Type == WorldResource.EType.Water ? BehaviorTree.ENodeStatus.InProgress : BehaviorTree.ENodeStatus.Failed;
 
