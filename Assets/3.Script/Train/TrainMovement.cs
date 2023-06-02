@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Linq;
 
 public enum TrainType { Engine, WaterBox, ChestBox, WorkBench, StationDir, Dynamite, Spare }
@@ -35,6 +36,8 @@ public class TrainMovement : MonoBehaviour
     public float _trainMoveSpeed;
 
     [SerializeField] private GameObject warningIcon;
+    public Animator overText;
+    private InGameScene manager;
 
     // Start is called before the first frame update
     //Transform startRayPos;
@@ -57,7 +60,8 @@ public class TrainMovement : MonoBehaviour
         }
 
         cameraTarget = GameObject.FindGameObjectWithTag("Cinemachine").GetComponentsInChildren<Cinemachine.CinemachineVirtualCamera>();
-
+        overText = GameObject.FindGameObjectWithTag("Cinemachine").GetComponent<Animator>();
+        manager = FindObjectOfType<InGameScene>();
         if (trainType == TrainType.Engine)
         {
             cameraTarget[0].Follow = transform;
@@ -170,10 +174,18 @@ public class TrainMovement : MonoBehaviour
         }
         if(trainType == TrainType.Spare)
         {
-            CameraSwitch(3);
+            StartCoroutine(OverAnim());
         }
-
-        
+    }
+    public IEnumerator OverAnim()
+    {
+        CameraSwitch(3);
+        yield return new WaitForSeconds(2.5f);
+        overText.SetBool("GameOver", true);
+        yield return new WaitForSeconds(1.5f);
+        manager._loadingSceneUI.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene("IntroScene");
     }
 
     public void RotateTrain()
