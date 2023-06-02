@@ -62,7 +62,9 @@ public class HelperBT : MonoBehaviour
         var BTRoot = _tree.RootNode.Add<BTNode_Selector>("BT 시작");
         BTRoot.AddService<BTServiceBase>("명령을 기다리는 Service", (float deltaTime) =>
         {
+            // 전 명령 
             var order = _localMemory.GetGeneric<WorldResource.EType>(BlackBoardKey.Order);
+            // 현재 명령
             _order = _helper.TargetResource;
 
         });
@@ -151,9 +153,6 @@ public class HelperBT : MonoBehaviour
         () =>
         {
             return BehaviorTree.ENodeStatus.Succeeded;
-
-            /*             return _item.transform.parent == RightHand || BetweenTwoHands ? 
-                        BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;*/
         });
 
 
@@ -211,7 +210,7 @@ public class HelperBT : MonoBehaviour
 
         });
 
-        ImpossibleToWork.Add<BTNode_Action>("그거 못해요ㅠ", () =>
+        ImpossibleToWork.Add<BTNode_Action>("그거 못해요", () =>
          {
              DebugTarget.text = "자는 중";
              return BehaviorTree.ENodeStatus.InProgress;
@@ -343,9 +342,8 @@ public class HelperBT : MonoBehaviour
              switch (_target.Type)
              {
                  case WorldResource.EType.Water:
-                     _item.transform.position = transform.position + Vector3.left;
-                     PutDown();
-                     DebugTarget.text = "자는 중";
+                         //PutDown();
+                         DebugTarget.text = "자는 중";
                      break;
 
                  case WorldResource.EType.Resource:
@@ -359,35 +357,49 @@ public class HelperBT : MonoBehaviour
         , () =>
          {
 
-             switch (_target.Type)
+             switch(_target.Type)
              {
-                 case WorldResource.EType.Water:
-                     //물이면 자고
-                     return BehaviorTree.ENodeStatus.InProgress;
-
-                 //자원이 세 개면 내려놓기
                  case WorldResource.EType.Resource:
                      return _stack._handItem.Count == 3 ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.Failed;
+                 case WorldResource.EType.Water:
+                     return BehaviorTree.ENodeStatus.InProgress;
+
+
 
              }
 
              return BehaviorTree.ENodeStatus.InProgress;
+             //자원
+
+
+             //물
+             /*             var order = _localMemory.GetGeneric<WorldResource.EType>(BlackBoardKey.Order);
+                          return order == _order ? BehaviorTree.ENodeStatus.InProgress : BehaviorTree.ENodeStatus.Failed;*/
 
          });
 
         var Carrying = water.Add<BTNode_Action>("자원 운반하기", () =>
         {
+            if(_target!=null)
+            {
+                _agent.MoveTo(_home);
 
-            _agent.MoveTo(_home);
+            }
             return BehaviorTree.ENodeStatus.InProgress;
         },
         () =>
         {
+            if (_target != null)
+            {
+
+                return _agent.AtDestination ? BehaviorTree.ENodeStatus.InProgress : BehaviorTree.ENodeStatus.InProgress;
+            }
+            else
+                return BehaviorTree.ENodeStatus.InProgress;
             //나중에 바꾸기
-            return _agent.AtDestination ? BehaviorTree.ENodeStatus.InProgress : BehaviorTree.ENodeStatus.InProgress;
         }
         );
-            
+
 
 
 
@@ -399,22 +411,31 @@ public class HelperBT : MonoBehaviour
         var OrderChange = BTRoot.Add<BTNode_Sequence>("명령이 바뀐 경우");
         OrderChange.Add<BTNode_Action>("도구 내려놓고 자기", () =>
          {
-             if(_item!=null)
-             {
-             _item.transform.position = transform.position;
+             //_target = null;
              PutDown();
+             /*             if (_item != null)
+                          {
+                              foreach (var interaction in _item.Interactions)
+                              {
+                                  //내려놓기
+                                  if (!interaction.CanPerform())
+                                  {
+                                      interaction.Perform();
+                                  }
+                                  break;
+                              }
+                              PutDown();
 
-             }
+                          }*/
 
              //블랙보드 업데이트
-             _item = null;
-             _target = null;
-             _localMemory.SetGeneric<WorldResource.EType>(BlackBoardKey.Order, _order);
+             //_item = null;
+
 
              return BehaviorTree.ENodeStatus.Succeeded;
          });
 
-        
+
 
 
 
@@ -423,10 +444,33 @@ public class HelperBT : MonoBehaviour
 
     private void PutDown()
     {
-        //_item.transform.position = transform.position;
-        _item.transform.rotation = Quaternion.identity;
-        _item.transform.parent = null;
-        _animator.SetBool("isDig", false);
-        _animator.SetBool("isMove", false);
-    }
+        if (_item != null)
+        {
+            foreach (var interaction in _item.Interactions)
+            {
+                //내려놓기
+                if (!interaction.CanPerform())
+                {
+                    interaction.Perform();
+                }
+                break;
+            }
+            _item.transform.position = transform.position + Vector3.left;
+            _item.transform.rotation = Quaternion.identity;
+            _item.transform.parent = null;
+
+            _item = null;
+            _target = null;
+            _localMemory.SetGeneric<WorldResource.EType>(BlackBoardKey.Order, _order);
+
+            _animator.SetBool("isDig", false);
+            _animator.SetBool("isMove", false);
+
+        }
+
+
+
+
+
+}
 }
