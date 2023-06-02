@@ -207,7 +207,6 @@ public class PlayerController : MonoBehaviour
             // Ä³½Ì
             if (_currentFrontObject == hit.transform)
                 return;
-
             _currentFrontObject = hit.transform;
         }
     }

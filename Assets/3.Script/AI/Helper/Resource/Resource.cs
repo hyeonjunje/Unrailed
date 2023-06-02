@@ -6,7 +6,6 @@ using System.Linq;
 public class Resource : MonoBehaviour
 {
     public Transform spawnPoint;
-    int _first = 0;
     Helper Robot;
 
     [SerializeField] WorldResource.EType DefaultResource = WorldResource.EType.Wood;
@@ -75,14 +74,21 @@ public class Resource : MonoBehaviour
         }
 
         var sortedResources = TrackedResources[targetResource]
-            //갈 수 있는 곳만 추리기
-            .Where(resource => Vector3.Distance(resource.transform.position, brain.GetComponent<PathFindingAgent>().
+            //갈 수 있는 곳에 있는 자원만 추리기
+            .Where(resource => Vector3.Distance(resource.transform.position, brain.Agent.
                                                 FindCloestAroundEndPosition(resource.transform.position)) <= 1f)
             //가까운 순으로 정렬
             .OrderBy(resource => Vector3.Distance(brain.transform.position, resource.transform.position))
-            .First();
-
+            //가장 가까운 자원 반환
+            .FirstOrDefault();
         return sortedResources;
+/*        if (sortedResources != null)
+            return sortedResources;
+        else
+            Debug.Log("없어요");
+            return null;*/
+
+
 
     }
 

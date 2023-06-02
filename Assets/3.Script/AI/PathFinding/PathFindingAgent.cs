@@ -27,14 +27,16 @@ public class PathFindingAgent : MonoBehaviour
 
 
     // 해당 위치로 이동하는 메소드
-    public void MoveTo(Vector3 targetPos, bool isLastRotate = false)
+    public bool MoveTo(Vector3 targetPos, bool isLastRotate = false)
     {
         if(PathFinding(targetPos))
         {
             if (_moveCo != null)
                 StopCoroutine(_moveCo);
             _moveCo = StartCoroutine(MoveCo(isLastRotate));
+            return true;
         }
+        return false;
     }
 
     // 랜덤 위치로 이동하는 메소드

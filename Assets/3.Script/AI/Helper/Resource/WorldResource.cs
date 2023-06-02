@@ -8,7 +8,8 @@ public class WorldResource : MonoBehaviour
     {
         Wood,
         Water,
-        Stone
+        Stone,
+        Resource
     }
     [SerializeField] EType _Type;
     public EType Type => _Type;
@@ -17,13 +18,12 @@ public class WorldResource : MonoBehaviour
     private float _resourceScale = Mathf.Clamp01(1);
     [SerializeField] float _resourceHp = 2.7f;
 
-
     void Start()
     {
         ResourceTracker.Instance.RegisterResource(this);
     }
 
-
+    //자원 캐기
 
     public bool isDig()
     {
@@ -40,7 +40,8 @@ public class WorldResource : MonoBehaviour
 
     public IEnumerator isDigCo()
     {
-        WaitForSeconds wait = new WaitForSeconds(0.8f);
+        WaitForSeconds wait = new WaitForSeconds(0.7f);
+
             yield return wait;
         while(_resourceHp > 0)
         {
