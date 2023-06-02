@@ -22,6 +22,8 @@ public class TrainWater : TrainMovement
     [SerializeField] private float _G;
     [SerializeField] private float _B;
 
+    private bool _isFireSound;
+
     int engineOver;
     int boxOver;
     int benchOver;
@@ -83,10 +85,17 @@ public class TrainWater : TrainMovement
             FireColor();
             FireOn();
         }
+
+        if (!_isPlay && !isReady && !isGoal && isBurn && !isOver)
+        {
+            StartCoroutine(Warning());
+        }
     }
     
     public override void TrainUpgrade()
     {
+       
+        base.TrainUpgrade();
         //업그레이드 메서드
         switch (trainUpgradeLevel)
         {
@@ -104,7 +113,7 @@ public class TrainWater : TrainMovement
                 spareOver = 120;
                 overFireTime = 140;
                 break;
-            case 3:
+           default:
                 engineOver = 110;
                 boxOver = 120;
                 benchOver = 130;
@@ -124,14 +133,18 @@ public class TrainWater : TrainMovement
 
             fireEffect.gameObject.SetActive(true);
 
-
+            if (!_isFireSound)
+            {
+                SoundManager.Instance.PlaySoundBgm("Train_Fire");
+                _isFireSound = true;
+            }
             //게임 오버
             if (overFireTime < fireTime)
             {
                 for (int i = 0; i < trains.Length; i++)
                 {
                     fireTime = 0;
-                    TrainOver();
+                    trains[i].TrainOver();
                     //bool값으로 게임오버 시 시간이 안가는 조건문 만들기
                 }
             }
@@ -140,11 +153,14 @@ public class TrainWater : TrainMovement
 
     public void FireOff()
     {
+        SoundManager.Instance.PlaySoundEffect("Player_WaterExport");
+        SoundManager.Instance.StopSoundBgm("Train_Fire");
         fireTime = 0;
         isBurn = false;
         _Red = 0;
         _Green = 100;
         _Blue = 80;
+        _isFireSound = false;
 
         for (int i = 0; i < trains.Length; i++)
         {

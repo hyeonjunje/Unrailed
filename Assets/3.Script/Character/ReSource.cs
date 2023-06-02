@@ -1,15 +1,23 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ReSource : MonoBehaviour, IDig
 {
-    [SerializeField] int ResourceHp = 3;
+
+    [SerializeField] float ResourceHp = 2.7f;
     [SerializeField] float Delay = 0.5f;
     [SerializeField] Transform ItemPrefab;
     private float ResourceScale = 1f;
-    private float CurrentTime = 0f;
+    private bool isPlayerLooking = false;
     private bool isDig = false;// 처음에 false였던 이유 : Player가 참으로 바꿔줘야 되는 걸까?
+    //Coroutine co;
+    //public bool IsDig
+    //{
+    //    get { return isDig; }
+    //    set { isDig=value; }
+    //}
 
   
     public void OnDig(Vector3 hitposition)
@@ -19,7 +27,11 @@ public class ReSource : MonoBehaviour, IDig
             StartCoroutine(OnDig_co());
         }
     }
-
+    /*public void OffDig()
+    {
+        StopAllCoroutines();
+    }*/
+   
     private void DisableAllChildColliders(Transform parent)
     {
         foreach (Transform child in parent)
@@ -35,7 +47,7 @@ public class ReSource : MonoBehaviour, IDig
         }
     }
 
-    private void SpawnItem()
+    public void SpawnItem()
     {
         // 1. 아이템 생성해서 변수에 저장한다
         Transform NewItem = Instantiate(ItemPrefab, new Vector3(0, 0, 0), Quaternion.identity);
@@ -48,34 +60,28 @@ public class ReSource : MonoBehaviour, IDig
 
     private IEnumerator OnDig_co()
     {
-        isDig = true;
-
-        yield return new WaitForSeconds(Delay);
-
-        if (ResourceHp > 0)
+        if (!isDig)
         {
-            ResourceHp--;
-            ResourceScale -= 0.25f;
-            transform.localScale = new Vector3(ResourceScale, ResourceScale, ResourceScale);
-        }
-        if (ResourceHp == 0)
-        {
-            SpawnItem();
-            Destroy(gameObject, 0.5f);
-        }
-        isDig = false;
+            isDig = true;
+            yield return new WaitForSeconds(Delay);
 
-        /*CurrentTime = 0;
-        while (true)
-        {
-            CurrentTime += Time.deltaTime;
-            if (CurrentTime >= Delay)
+            if (ResourceHp > 0)
             {
-                isDig = false;
-                break;
+                ResourceHp--;
+                ResourceScale -= 0.3f;
+                transform.localScale = new Vector3(ResourceScale, ResourceScale, ResourceScale);
             }
+            if (ResourceHp < 0.1f)
+            {
+                SpawnItem();
+                Destroy(gameObject, 0f);
+                ResourceScale = 1;
+            }
+            isDig = false;
+            //yield return null;
 
-        }*/
+        }
 
     }
+
 }

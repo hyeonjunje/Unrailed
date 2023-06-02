@@ -18,6 +18,8 @@ public class TrainBox : TrainMovement
         trainUpgradeLevel = 2;
         workBench = FindObjectOfType<TrainWorkBench>();
         fireEffect.gameObject.SetActive(false);
+
+        StartCoroutine(Warning()); //첫 목재 석재 넣어라
     }
 
     // Update is called once per frame
@@ -32,6 +34,7 @@ public class TrainBox : TrainMovement
     }
     public override void TrainUpgrade()
     {
+        base.TrainUpgrade();
         //업그레이드 메서드
         switch (trainUpgradeLevel)
         {
@@ -42,7 +45,7 @@ public class TrainBox : TrainMovement
                 maxItem = 4;
 
                 break;
-            case 3:
+            default:
                 maxItem = 6;
                 break;
         }

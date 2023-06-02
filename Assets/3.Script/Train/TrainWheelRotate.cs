@@ -5,11 +5,13 @@ using UnityEngine;
 public class TrainWheelRotate : MonoBehaviour
 {
     [SerializeField] bool isBolt;
+
+    [SerializeField] float speed = 2;
     void Update()
     {
         if (!isBolt)
         {
-            transform.Rotate(Vector3.right * 200 * Time.deltaTime);
+            transform.Rotate(Vector3.right * 200 * Time.deltaTime * speed);
         }
         else
         {

@@ -451,10 +451,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3781425049581601411}
   - component: {fileID: -4974513044502097341}
-  - component: {fileID: -9027853760926881629}
-  m_Layer: 0
+  - component: {fileID: -5712747344957167094}
+  m_Layer: 12
   m_Name: ItemPick
-  m_TagString: Items
+  m_TagString: Invisible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -467,7 +467,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8647543255831081959}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.25, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7381289248710445666}
@@ -487,7 +487,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-9027853760926881629
+--- !u!114 &-5712747344957167094
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -496,10 +496,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 8647543255831081959}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 293f033d1dfd9254ab8fef8e66c2838d, type: 3}
+  m_Script: {fileID: 11500000, guid: 73ca2dcde514f144c88866bac8ad366a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stackInterval: 0.15
   itemType: 3
+  blockLayer:
+    serializedVersion: 2
+    m_Bits: 1073741824
 --- !u!1 &9046565917231300933
 GameObject:
   m_ObjectHideFlags: 0

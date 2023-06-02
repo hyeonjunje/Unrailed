@@ -14,7 +14,7 @@ GameObject:
   m_Layer: 0
   m_Name: Train_Spare
   m_TagString: Train
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -51,11 +51,11 @@ MonoBehaviour:
   trainUpgradeLevel: 1
   targetCount: 0
   destroyParticle: {fileID: 0}
-  shop: {fileID: 0}
   fireEffect: {fileID: 0}
   isGoal: 0
   isBurn: 0
   isReady: 0
+  isOver: 0
   trainSpeed: 0.5
   _trainRotateSpeed: 0
   goalSpeed: 6
@@ -64,7 +64,6 @@ MonoBehaviour:
   - {fileID: 7649597831721704386, guid: 1585c0c4fca12564d86e68989f30ac49, type: 3}
   spawnTrainList: []
   trainIndex: 0
-  _test: 0
 --- !u!65 &-6203773368989941952
 BoxCollider:
   m_ObjectHideFlags: 0

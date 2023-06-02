@@ -23,8 +23,8 @@ public class TrainWorkBench : TrainMovement
     void Update()
     {
         TrainMovePos();
-        anim.SetBool("isBurn", isBurn);
         TrainUpgrade();
+        anim.SetBool("isBurn", isBurn);
     }
 
     public void MakingRail()
@@ -34,10 +34,18 @@ public class TrainWorkBench : TrainMovement
             anim.SetInteger("GetRails", spawnIndex);
         }
         //스폰되는 레일 로직 쓰기
+
+        if(spawnIndex > 0 && !_isPlay && !isReady && !isGoal && !isBurn && !isOver)
+        {
+
+                StartCoroutine(Warning());
+            
+        }
      
     }
     public override void TrainUpgrade()
     {
+        base.TrainUpgrade();
         //업그레이드 메서드
         switch (trainUpgradeLevel)
         {
@@ -48,7 +56,7 @@ public class TrainWorkBench : TrainMovement
                 spawnSpeed = 1.8f;
 
                 break;
-            case 3:
+            default:
                 spawnSpeed = 0;
                 break;
         }

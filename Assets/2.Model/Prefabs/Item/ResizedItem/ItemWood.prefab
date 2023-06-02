@@ -205,11 +205,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1554482166082667595}
-  - component: {fileID: 8536145126633037366}
   - component: {fileID: 5538702390208351594}
-  m_Layer: 0
+  - component: {fileID: -2125460109316306497}
+  m_Layer: 11
   m_Name: ItemWood
-  m_TagString: Items
+  m_TagString: Invisible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -222,26 +222,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7187630036778189682}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.75, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3131435051608569199}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8536145126633037366
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7187630036778189682}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 293f033d1dfd9254ab8fef8e66c2838d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemType: 0
 --- !u!65 &5538702390208351594
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -255,6 +242,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-2125460109316306497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7187630036778189682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21243c6dceb6b2c408bec1c29a3d38e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stackInterval: 0.15
+  itemType: 0
+  blockLayer:
+    serializedVersion: 2
+    m_Bits: 1073741824
 --- !u!1 &7761388225402387580
 GameObject:
   m_ObjectHideFlags: 0

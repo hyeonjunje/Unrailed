@@ -7,9 +7,7 @@ public class ShopManager : MonoBehaviour
 {
     public static ShopManager Instance = null;
 
-    public List<TrainStation> endStation = new List<TrainStation>();
     public List<ShopItem> newCarList = new List<ShopItem>();
-  
 
     public TrainMovement[] trains;
 
@@ -34,12 +32,10 @@ public class ShopManager : MonoBehaviour
     public int trainCoin;
     public int itemIdx;
 
-
-    [SerializeField] private GameObject test;
-
     bool _isShop;
-
     public Image[] goToLoading;
+
+    public Transform currentStation = null;
 
     private void Awake()
     {
@@ -47,25 +43,55 @@ public class ShopManager : MonoBehaviour
         if(Instance == null)
         {
             Instance = this;
-            
         }
         else
         {
             Destroy(gameObject);
         }
 
-        trains = FindObjectsOfType<TrainMovement>();
         anim = GetComponentInParent<Animator>();
+        trains = FindObjectsOfType<TrainMovement>();
         trainWater = FindObjectOfType<TrainWater>();
         trainEngine = FindObjectOfType<TrainEngine>();
     }
 
+    public void StartTrainMove()
+    {
+        trains = FindObjectsOfType<TrainMovement>();
+        trainWater = FindObjectOfType<TrainWater>();
+        trainEngine = FindObjectOfType<TrainEngine>();
+
+        StartCoroutine(TrainStartMove());
+    }
+
+    public void ShopOn()
+    {
+        if (!_isShop)
+        {
+            RandItemSpawn();
+            _isShop = true;
+        }
+
+        Debug.Log("상점으로 위치 이동");
+        anim.transform.position = currentStation.position;
+
+        anim.SetBool("isReady", true);
+        SoundManager.Instance.audioSourdEngine.Stop();
+        SoundManager.Instance.StopAllSound();
+    }  // 상점 오픈 애니메이션
+
+    public void ShopOff()
+    {
+        anim.SetBool("isReady", false);
+        StartCoroutine(TrainStartMove());
+    } //상점 클로즈 애니메이션
 
     public void ResetTrains()
     {
         trains = FindObjectsOfType<TrainMovement>();
     }
-    public void RandItemSpawn()
+
+    private void RandItemSpawn()
     {
         for (int i = 0; i < shopUpgradeTrainPos.Length; i++)
         {
@@ -80,8 +106,10 @@ public class ShopManager : MonoBehaviour
 
         GameObject shopEngineObj = Instantiate(enginePrefabs[0].gameObject, shopEnginePos[0].position, shopEnginePos[0].rotation, shopEnginePos[0]);
         shopEngineObj.transform.GetChild(0).gameObject.SetActive(false);
+
         TrainCost();
     } //위치에 스폰
+
     public void TrainCost()
     {
         foreach(TrainMovement train in trains)
@@ -89,18 +117,18 @@ public class ShopManager : MonoBehaviour
             switch (train.trainType)
             {
                     //==========================================Upgrade
-                case TrainMovement.TrainType.WaterBox:
+                case TrainType.WaterBox:
                     trainPrefabs[0].itemCost = train.trainUpgradeLevel;
                     shopUpgradeText[0].text = $"{train.trainUpgradeLevel}";
                     break;
    
-                case TrainMovement.TrainType.WorkBench:
+                case TrainType.WorkBench:
                     trainPrefabs[1].itemCost = train.trainUpgradeLevel;
                     shopUpgradeText[1].text = $"{train.trainUpgradeLevel}";
 
                     break;
 
-                case TrainMovement.TrainType.ChestBox:
+                case TrainType.ChestBox:
                     trainPrefabs[2].itemCost = train.trainUpgradeLevel;
                     shopUpgradeText[2].text = $"{train.trainUpgradeLevel}";
                     break;
@@ -108,52 +136,48 @@ public class ShopManager : MonoBehaviour
                     //==========================================New Car
 
 
-                case TrainMovement.TrainType.StationDir:
+                case TrainType.StationDir:
                     trainNewPrefabs[0].itemCost = train.trainUpgradeLevel;
                     shopNewTrainText[0].text = $"{train.trainUpgradeLevel}";
                     break;
 
-                case TrainMovement.TrainType.Dynamite:
+                case TrainType.Dynamite:
                     trainNewPrefabs[1].itemCost = train.trainUpgradeLevel;
                     shopNewTrainText[1].text = $"{train.trainUpgradeLevel}";
                     break;
 
                     //==========================================Engine
 
-                case TrainMovement.TrainType.Engine:
+                case TrainType.Engine:
                     enginePrefabs[0].itemCost = train.trainUpgradeLevel;
                     shopEngineText[0].text = $"{train.trainUpgradeLevel}";
                     break;
             }
         }
     } // 코스트 출력 
-    public void ShopOn()
-    {
-        if (!_isShop)
-        {
-            RandItemSpawn();
-            _isShop = true;
-        }
-        anim.gameObject.transform.position = endStation[0].transform.GetChild(1).transform.position;
-        anim.SetBool("isReady",true);
-    }  // 상점 오픈 애니메이션
-
-    public void ShopOff()
-    {
-        endStation[0].newGameStart[0].SetActive(false);
-        endStation[0].newGameStart[1].SetActive(true);
-        endStation.Clear();
-        anim.SetBool("isReady", false);
-        StartCoroutine(TrainStartMove());
-    } //상점 클로즈 애니메이션
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Block")|| other.CompareTag("Item") || other.CompareTag("Items"))
+        if(other.CompareTag("Invisible"))
         {
-            GameObject obj = other.transform.GetChild(0).gameObject;
-            obj.SetActive(false);
+            // 블럭
+            if(other.gameObject.layer == LayerMask.NameToLayer("Block"))
+            {
+                other.GetComponent<InvisibleBlock>().UnShow();
+            }
+            // 블럭에 부착된 아이템, 지형지물
+            else
+            {
+                other.gameObject.SetActive(false);
+            }
         }
+
+        // 새, 도적, 동물 등등
+        if(other.CompareTag("InvisibleObject"))
+        {
+            other.transform.GetChild(0).gameObject.SetActive(false);
+        }
+
         if (other.CompareTag("ShopItem"))
         {
             GameObject obj = other.transform.GetChild(0).gameObject;
@@ -163,11 +187,24 @@ public class ShopManager : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Block")|| other.CompareTag("Item") || other.CompareTag("Items"))
+        if (other.CompareTag("Invisible"))
         {
-            GameObject obj = other.transform.GetChild(0).gameObject;
-            obj.SetActive(true);
+            if (other.gameObject.layer == LayerMask.NameToLayer("Block"))
+            {
+                other.GetComponent<InvisibleBlock>().Show();
+            }
+            else
+            {
+                other.gameObject.SetActive(true);
+            }
         }
+
+        // 새, 도적, 동물 등등
+        if (other.CompareTag("InvisibleObject"))
+        {
+            other.transform.GetChild(0).gameObject.SetActive(true);
+        }
+
         if (other.CompareTag("ShopItem"))
         {
             GameObject obj = other.transform.GetChild(0).gameObject;
@@ -175,25 +212,31 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-    public IEnumerator TrainStartMove() // 열차 시작 카운트다운
+    private IEnumerator TrainStartMove() // 열차 시작 카운트다운
     {
-        yield return new WaitForSeconds(1f);
+        trainEngine.isReady = true;
+
+        yield return new WaitForSeconds(10f);
         trainEngine.anim.SetBool("CountDown", true);
 
         yield return new WaitForSeconds(0.1f);
 
         trainEngine.anim.SetBool("CountDown", false);
-        yield return new WaitForSeconds(readyCount);
-        //5초 지나는 ui 효과
+
+        for (int i = 0; i < readyCount; i++)
+        {
+            SoundManager.Instance.PlaySoundEffect("Train_Count");
+            yield return new WaitForSeconds(1f);
+        }
+
+        yield return new WaitForSeconds(0.5f);
+        SoundManager.Instance.PlaySoundEffect("Train_Start");
         trainEngine.isGoal = false;
         trainEngine.isReady = false;
         _isShop = false;
         trainWater.FireOff();
-        test.SetActive(true);
-  
-    }
-
-
-
-
+        yield return new WaitForSeconds(2f);
+        SoundManager.Instance.audioSourdEngine.Play();
+        SoundManager.Instance.PlaySoundBgm("InGame_Bgm");
+    } 
 }

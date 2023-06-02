@@ -13,6 +13,14 @@ TagManager:
   - Block
   - ShopItem
   - Train
+  - StackItem
+  - NonStackItem
+  - WoodPiece
+  - IronPiece
+  - GameStartUI
+  - GameExitUI
+  - Invisible
+  - InvisibleObject
   layers:
   - Default
   - TransparentFX
@@ -20,13 +28,13 @@ TagManager:
   - LastRail
   - Water
   - UI
+  - Bomb
   - 
   - 
   - 
   - 
-  - 
-  - 
-  - 
+  - StackItemLayer
+  - NonStackItemLayer
   - 
   - 
   - 
@@ -35,10 +43,10 @@ TagManager:
   - 
   - 
   - Sheep
-  - 
+  - Resource
   - 
   - Rail
-  - 
+  - Postprocessing
   - 
   - RenderObstacle
   - RenderAbove

@@ -1970,7 +1970,7 @@ GameObject:
   - component: {fileID: 719931797230727653}
   m_Layer: 0
   m_Name: ItemBridge
-  m_TagString: Untagged
+  m_TagString: Invisible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

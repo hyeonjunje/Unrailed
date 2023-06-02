@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,7 +25,7 @@ public class BlockBundle
             block.transform.localPosition += Vector3.up * initPos;
     }
 
-    public IEnumerator RePositionCo()
+    public async UniTaskVoid RePositionAsync()
     {
         float currentTime = 0f;
 
@@ -44,11 +45,9 @@ public class BlockBundle
             currentTime += Time.deltaTime;
 
             for(int i = 0; i < _blockBundle.Count; i++)
-            {
                 _blockBundle[i].transform.localPosition = Vector3.Lerp(originPosList[i], targetPosList[i], currentTime * _moveSpeed);
-            }
 
-            yield return null;
+            await UniTask.Yield();
         }
     }
 }
@@ -58,7 +57,7 @@ public class MapSlicer : MonoBehaviour
     [SerializeField] private float _moveSpeed = 5f;
     [SerializeField] private float _initPos = 40f;
 
-    public List<BlockBundle> SliceMap(List<List<BlockMK2>> groundList)
+    public async UniTask<List<BlockBundle>> SliceMap(List<List<BlockMK2>> groundList)
     {
         int width = groundList[0].Count;
         int height = groundList.Count;
@@ -82,6 +81,9 @@ public class MapSlicer : MonoBehaviour
         for (int i = 0; i < width; i++)
         {
             currentBorderY += Random.Range(-1, 2);
+            // 예외 처리
+            if (currentBorderY < 0 || currentBorderY >= height)
+                currentBorderY = height / 2 - 1;
             borderYList.Add(currentBorderY);
         }
 
@@ -131,7 +133,7 @@ public class MapSlicer : MonoBehaviour
         return result;
     }
 
-    // 두 블럭번들을 적절히 섞는 메소드
+    // 두 블럭들을 적절히 섞는 메소드
     private List<BlockBundle> ShuffleBlockBundle(List<BlockBundle> blockBundleLower, List<BlockBundle> blockBundleUpper)
     {
         List<BlockBundle> separatedBlockList = new List<BlockBundle>();

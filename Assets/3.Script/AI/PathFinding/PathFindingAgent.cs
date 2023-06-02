@@ -27,14 +27,16 @@ public class PathFindingAgent : MonoBehaviour
 
 
     // 해당 위치로 이동하는 메소드
-    public void MoveTo(Vector3 targetPos, bool isLastRotate = false)
+    public bool MoveTo(Vector3 targetPos, bool isLastRotate = false)
     {
         if(PathFinding(targetPos))
         {
             if (_moveCo != null)
                 StopCoroutine(_moveCo);
             _moveCo = StartCoroutine(MoveCo(isLastRotate));
+            return true;
         }
+        return false;
     }
 
     // 랜덤 위치로 이동하는 메소드
@@ -73,7 +75,7 @@ public class PathFindingAgent : MonoBehaviour
     }
 
     // 갈 수 없는 가장 가까운 곳을 받으면 그 주위에 가장 가까운 갈 수 있는 지점을 반환
-    private Vector3 FindCloestAroundEndPosition(Vector3 cloestEndPosition)
+    public Vector3 FindCloestAroundEndPosition(Vector3 cloestEndPosition)
     {
         Vector3 result = Vector3.zero;
         float currentDistance = Mathf.Infinity;

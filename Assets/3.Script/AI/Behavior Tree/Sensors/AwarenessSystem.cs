@@ -53,7 +53,7 @@ public class TrackedTarget
     }
 
 }
-[RequireComponent(typeof(EnemyAI))]
+//[RequireComponent(typeof(EnemyAI))]
 public class AwarenessSystem : MonoBehaviour
 {
 

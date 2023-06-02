@@ -20,6 +20,7 @@ public class WaterGauge : MonoBehaviour
     private float currentGauge = 0f;
     private bool isFilling = false;
 
+
     private void Awake()
     {
         Setup(Target);
@@ -28,7 +29,7 @@ public class WaterGauge : MonoBehaviour
 
     void Update()
     {
-        if (isFilling)
+        if (isFilling )
         {
             FillGauge();
         }
@@ -50,6 +51,10 @@ public class WaterGauge : MonoBehaviour
             watergauge.gameObject.SetActive(true);
 
         }
+        else
+        {
+            watergauge.gameObject.SetActive(false);
+        }
     }
         
 
@@ -67,10 +72,10 @@ public class WaterGauge : MonoBehaviour
        float targetGauge = Mathf.Clamp(currentGauge + Time.deltaTime * fillSpeed, 0f, minGauge); //minGauge = 100f //value가 0이면 꽉찬상태
        currentGauge = Mathf.Lerp(currentGauge, targetGauge, 5f);
        watergauge.value = minGauge - currentGauge;
+    
 
 
-
-        if ( currentGauge >= minGauge)
+        if ( currentGauge >= minGauge )
         {
             isFilling = false;
         }
@@ -94,11 +99,8 @@ public class WaterGauge : MonoBehaviour
     {
         isFilling = false;
         currentGauge = 0;
-        if (WaterMesh.activeSelf)
-        {
-            watergauge.gameObject.SetActive(false);
-        }
 
+       
 
     }
     
