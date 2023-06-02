@@ -10,17 +10,17 @@ public class Station : MonoBehaviour
     private Transform _parentBlock;
     private Vector3[] _dir = new Vector3[4] { Vector3.forward, Vector3.right, Vector3.left, Vector3.back };
 
-    public void InitStation(bool isStart = false)
+    public void InitStation(bool isStart = false, GameObject trainPrefab = null)
     {
         _parentBlock = transform.parent;
 
         if (isStart)
-            InitFirstStation();
+            InitFirstStation(trainPrefab);
         else
             InitNonFirstStation();
     }
 
-    private void InitFirstStation()
+    private void InitFirstStation(GameObject trainPrefab)
     {
         gameObject.AddComponent<GoalManager>();
 
@@ -54,6 +54,12 @@ public class Station : MonoBehaviour
         if (rail != null)
         {
             rail.PutRail();
+
+            if(trainPrefab != null)
+            {
+                Debug.LogWarning("여기서 기차 초기화해주면 돼");
+                Instantiate(trainPrefab, Vector3.zero, Quaternion.identity, rail.transform);
+            }
         }
     }
 

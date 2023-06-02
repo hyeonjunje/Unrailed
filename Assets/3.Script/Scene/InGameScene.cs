@@ -10,47 +10,34 @@ public class InGameScene : MonoBehaviour
     [SerializeField] private GameObject _loadingSceneUI;
 
     [Header("Manager")]
-    [SerializeField] private MapManager _mapManager;
+    [SerializeField] private WorldManager _worldManager;
+
+    // [SerializeField] private MapManager _mapManager;
     [SerializeField] private ShopManager _shopManager;
 
     [SerializeField] private int worldCount = 0;
-
-    List<Station> stations = new List<Station>();
-
-    private bool _isInit = false;
 
     // 석환이 형 isStart가 true일 때만 player가 작동할 수 있게 해줘~~
     public bool isStart { get; private set; } = false;
 
     private void Awake()
     {
+        // 게임 로드
         FileManager.LoadGame();
 
         // 로딩
         _loadingSceneUI.SetActive(true);
         isStart = false;
 
-                Debug.Log(Time.realtimeSinceStartup);
         // 로딩 시작
         LoadingFirstGame(
             () =>
             {
                 _loadingSceneUI.SetActive(false);
-
-                Debug.Log(Time.realtimeSinceStartup);
-                RePositionAsync(() => { SettingStation(); }).Forget();
+                RePositionAsync().Forget();
             }).Forget();
-
     }
 
-/*    private void Update()
-    {
-        if(isStart && !_isInit)
-        {
-            _isInit = true;
-            SettingStation();
-        }
-    }*/
 
     /// <summary>
     /// 역 도착하면 실행될 메소드
@@ -71,7 +58,7 @@ public class InGameScene : MonoBehaviour
         // 나가기 게이지 100되면 실행될 메소드
 
         // 새로운 역 세팅
-        _shopManager.currentStation = stations[2].transform;
+        _shopManager.currentStation = _worldManager.stations[2].transform;
 
         // 상점 종료되고
         _shopManager.ShopOff();
@@ -83,29 +70,14 @@ public class InGameScene : MonoBehaviour
 
     private async UniTaskVoid RePositionAsync(System.Action onFinishedAsyncEvent = null)
     {
-        await _mapManager.RePositionAsync(worldCount++);
+        await _worldManager.RePositionAsync(worldCount++);
         onFinishedAsyncEvent?.Invoke();
     }
 
     private async UniTaskVoid LoadingFirstGame(System.Action onCreateNextMapAsyncEvent = null)
     {
-        // 맵 로드
-        await _mapManager.LoadMap();
+        // 맵 생성
+        await _worldManager.GenerateWorld();
         onCreateNextMapAsyncEvent?.Invoke();
-    }
-
-    private void SettingStation()
-    {
-        // 제일 오른쪽(x값이 제일 작은게 시작점)
-        stations = FindObjectsOfType<Station>().OrderBy(elem => elem.transform.position.x).ToList();
-        for (int i = 0; i < stations.Count; i++)
-        {
-            if (i == 0)
-                stations[i].InitStation(true);
-            else
-                stations[i].InitStation(false);
-        }
-
-        _shopManager.currentStation = stations[1].transform;
     }
 }
