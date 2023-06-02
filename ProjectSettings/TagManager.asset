@@ -21,6 +21,7 @@ TagManager:
   - GameExitUI
   - Invisible
   - InvisibleObject
+  - Cinemachine
   layers:
   - Default
   - TransparentFX
