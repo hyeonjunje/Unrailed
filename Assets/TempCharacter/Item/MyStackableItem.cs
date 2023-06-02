@@ -42,7 +42,6 @@ public class MyStackableItem : MyItem
         {
             if (handItem.Peek().CheckItemType(detectedItem.Peek()))
             {
-                // 그냥 쌓는다.
                 while (handItem.Count != 0)
                 {
                     detectedItem.Push(handItem.Pop());
@@ -51,45 +50,15 @@ public class MyStackableItem : MyItem
             }
             else
             {
-                Stack<MyItem> temp = new Stack<MyItem>(handItem);
-                handItem.Clear();
-
-                // 한계까지 든다
-                while(handItem.Count < 3)
+                if(handItem.Count <= 3 && detectedItem.Count <= 3)
                 {
-                    if (detectedItem.Count == 0)
-                        break;
-                    handItem.Push(detectedItem.Pop());
-                    handItem.Peek().RePosition(player.TwoHandTransform, Vector3.up * (handItem.Count - 1) * stackInterval);
-                }
-
-                // 다른 타입이니까 내 손에 있는거는 다른곳에 놓는다.
-                Transform aroundTransform = player.AroundEmptyBlockTranform;
-                int count = 0;
-                while(temp.Count != 0)
-                {
-                    temp.Pop().RePosition(aroundTransform, Vector3.up * 0.5f + Vector3.up * count++ * stackInterval);
-                }
-            }
-        }
-        else if (detectedItemType == EItemType.rail)
-        {
-            if (IsRailInteractive(detectedItem.Peek().GetComponent<RailController>()))
-            {
-                Stack<MyItem> temp = new Stack<MyItem>(handItem);
-                handItem.Clear();
-
-                // 한계까지 든다
-                while (handItem.Count < 3)
-                {
-                    if (detectedItem.Count == 0)
-                        break;
-                    handItem.Push(detectedItem.Pop());
-                    handItem.Peek().RePosition(player.TwoHandTransform, Vector3.up * (handItem.Count - 1) * stackInterval);
-                }
-
-                if(detectedItem.Count == 0)
-                {
+                    Stack<MyItem> temp = new Stack<MyItem>(handItem);
+                    handItem.Clear();
+                    while(detectedItem.Count != 0)
+                    {
+                        handItem.Push(detectedItem.Pop());
+                        handItem.Peek().RePosition(player.TwoHandTransform, Vector3.up * (handItem.Count - 1) * stackInterval);
+                    }
                     while(temp.Count != 0)
                     {
                         detectedItem.Push(temp.Pop());
@@ -98,11 +67,43 @@ public class MyStackableItem : MyItem
                 }
                 else
                 {
-                    Transform aroundTransform = player.AroundEmptyBlockTranform;
+                    // 핸드아이템은 다른데 두고
+                    // detected아이템을 한계까지 든다.
                     int count = 0;
+                    Transform aroundTransform = player.AroundEmptyBlockTranform;
+                    while (handItem.Count != 0)
+                    {
+                        handItem.Peek().RePosition(aroundTransform, Vector3.up * 0.5f + Vector3.up * count++ * stackInterval);
+                        handItem.Pop();
+                    }
+
+                    while(handItem.Count < 3)
+                    {
+                        if (detectedItem.Count == 0)
+                            break;
+                        handItem.Push(detectedItem.Pop());
+                        handItem.Peek().RePosition(player.TwoHandTransform, Vector3.up * (handItem.Count - 1) * stackInterval);
+                    }
+                }
+            }
+        }
+        else if (detectedItemType == EItemType.rail)
+        {
+            if (!CheckConnectedRail())
+            {
+                if (handItem.Count <= 3 && detectedItem.Count <= 3)
+                {
+                    Stack<MyItem> temp = new Stack<MyItem>(handItem);
+                    handItem.Clear();
+                    while (detectedItem.Count != 0)
+                    {
+                        handItem.Push(detectedItem.Pop());
+                        handItem.Peek().RePosition(player.TwoHandTransform, Vector3.up * (handItem.Count - 1) * stackInterval);
+                    }
                     while (temp.Count != 0)
                     {
-                        temp.Pop().RePosition(aroundTransform, Vector3.up * 0.5f + Vector3.up * count++ * stackInterval);
+                        detectedItem.Push(temp.Pop());
+                        detectedItem.Peek().RePosition(player.CurrentBlockTransform, Vector3.up * 0.5f + Vector3.up * (detectedItem.Count - 1) * stackInterval);
                     }
                 }
             }
@@ -118,7 +119,7 @@ public class MyStackableItem : MyItem
             if (detectedItem.Count == 0)
                 break;
             handItem.Push(detectedItem.Pop());
-            handItem.Peek().RePosition(player.TwoHandTransform, Vector3.up * (handItem.Count - 1) * stackInterval);
+            handItem.Peek().RePosition(player.TwoHandTransform, Vector3.up * stackInterval);
         }
 
         return new Pair<Stack<MyItem>, Stack<MyItem>>(handItem, detectedItem);
@@ -129,7 +130,7 @@ public class MyStackableItem : MyItem
         while(handItem.Count != 0)
         {
             detectedItem.Push(handItem.Pop());
-            detectedItem.Peek().RePosition(player.CurrentBlockTransform, Vector3.up * 0.5f + Vector3.up * (detectedItem.Count - 1) * stackInterval);
+            detectedItem.Peek().RePosition(player.CurrentBlockTransform, Vector3.up * 0.5f + Vector3.up * stackInterval);
         }
 
         return new Pair<Stack<MyItem>, Stack<MyItem>>(handItem, detectedItem);

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,7 +9,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform _rayStartTransform;
     [SerializeField] private Transform _rightHandTransform;
     [SerializeField] private Transform _twoHandTransform;
-    [SerializeField] private Transform _railPreview;
 
     // 상태  => 이건 상태패턴??
     private bool _isDash = false;
@@ -31,8 +31,13 @@ public class PlayerController : MonoBehaviour
     // 전방에 있는 오브젝트
     private Transform _currentFrontObject;
 
-    Vector3[] dir = new Vector3[8] { Vector3.forward, Vector3.back, Vector3.right, Vector3.left,
-        new Vector3(1, 0, 1), new Vector3(1, 0, -1), new Vector3(-1, 0, -1), new Vector3(-1, 0, 1)};
+
+    public List<MyItem> handItemList = new List<MyItem>();
+    public List<MyItem> detectedItemList = new List<MyItem>();
+
+    public List<string> handItemGameObjectList = new List<string>();
+    public List<string> detectedItemGameObjectList = new List<string>();
+
 
     // 프로퍼티
     public Transform RightHandTransform => _rightHandTransform;
@@ -45,6 +50,7 @@ public class PlayerController : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody>();
         _playerInput = GetComponent<PlayerInput>();
+
 
         _playerStat = GetComponent<PlayerStat>();
 
@@ -72,9 +78,6 @@ public class PlayerController : MonoBehaviour
         DetectGroundBlock();
         DetectFrontObject();
 
-        // 레일 미리보기 확인
-        CheckPutDownRail();
-
         // 아이템 상호작용
         if (_playerInput.IsSpace)
             InteractiveItemSpace();
@@ -85,6 +88,25 @@ public class PlayerController : MonoBehaviour
 
         // 기차 상호작용
         InteractiveTrain();
+
+        // 보지마슈
+        handItemList = _handItem.ToList();
+        detectedItemList = _detectedItem.ToList();
+
+        handItemGameObjectList = new List<string>();
+        detectedItemGameObjectList = new List<string>();
+
+        foreach (var go in handItemList)
+            handItemGameObjectList.Add(go.ToString());
+
+        foreach (var go in detectedItemList)
+            detectedItemGameObjectList.Add(go.ToString());
+        // 보면 클남 ㅋㅋ
+
+/*        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log(AroundEmptyBlockTranform.position);
+        }*/
     }
 
     private void Move()
@@ -178,31 +200,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // 레일을 이을 수 있는 상황이라면 preview 레일을 활성화시킨다.
-    private void CheckPutDownRail()
-    {
-        if (_handItem.Count != 0 && _handItem.Peek().ItemType == EItemType.rail)
-        {
-            for (int i = 0; i < 4; i++)
-            {
-                if (Physics.Raycast(_currentblock.position, dir[i], out RaycastHit hit, _playerStat.detectRange, _playerStat.blockLayer))
-                {
-                    // 현재 땅 위에 아무것도 없고 주위에 마지막 레일이 있다면
-                    if (_currentblock.childCount == 0 && hit.transform.childCount != 0 && hit.transform.GetChild(0).GetComponent<RailController>() == FindObjectOfType<GoalManager>().lastRail)
-                    {
-                        _railPreview.gameObject.SetActive(true);
-                        _railPreview.SetParent(null);
-                        _railPreview.position = _currentblock.position + Vector3.up * 0.5f;
-                        _railPreview.rotation = Quaternion.identity;
-                        return;
-                    }
-                }
-            }
-        }
-        if (_railPreview.gameObject.activeSelf)
-            _railPreview.gameObject.SetActive(false);
-    }
-
     private void DetectFrontObject()
     {
         if (Physics.Raycast(_rayStartTransform.position, transform.forward, out RaycastHit hit, _playerStat.detectRange))
@@ -222,6 +219,9 @@ public class PlayerController : MonoBehaviour
         Queue<Transform> queue = new Queue<Transform>();
         queue.Enqueue(_currentblock);
 
+        Vector3[] dir = new Vector3[8] { Vector3.forward, Vector3.back, Vector3.right, Vector3.left, 
+        new Vector3(1, 0, 1), new Vector3(1, 0, -1), new Vector3(-1, 0, -1), new Vector3(-1, 0, 1)};
+
         HashSet<Transform> hashSet = new HashSet<Transform>();
         hashSet.Add(_currentblock);
 
@@ -233,9 +233,15 @@ public class PlayerController : MonoBehaviour
                 return currentBlock;
 
             for (int i = 0; i < 8; i++)
+            {
                 if(Physics.Raycast(currentBlock.position, dir[i], out RaycastHit hit, 1f, _playerStat.blockLayer))
+                {
                     if(hashSet.Add(hit.transform))
+                    {
                         queue.Enqueue(hit.transform);
+                    }
+                }
+            }
         }
 
         return null;
