@@ -72,11 +72,11 @@ public class TrainMovement : MonoBehaviour
                 _trainMoveSpeed = trainSpeed;
                 _trainRotateSpeed = trainSpeed * 2;
             }
-
         }
         else
         {
             _trainMoveSpeed = 0;
+            return;
         }
 
         if (rails.Count != 0)
@@ -106,8 +106,14 @@ public class TrainMovement : MonoBehaviour
 
                 if (trainType == TrainType.Engine)
                 {
-                    isReady = true;
-                    ShopManager.Instance.ShopOn();
+                    if(!isReady)
+                    {
+                        isReady = true;
+                        // ¿ª µµÂøÇÏ±â
+                        FindObjectOfType<InGameScene>().ArriveStation();
+
+                        // ShopManager.Instance.ShopOn();
+                    }
                 }
             }
             else

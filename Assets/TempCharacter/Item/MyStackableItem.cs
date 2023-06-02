@@ -65,6 +65,26 @@ public class MyStackableItem : MyItem
                         detectedItem.Peek().RePosition(player.CurrentBlockTransform, Vector3.up * 0.5f + Vector3.up * (detectedItem.Count - 1) * stackInterval);
                     }
                 }
+                else
+                {
+                    // 핸드아이템은 다른데 두고
+                    // detected아이템을 한계까지 든다.
+                    int count = 0;
+                    Transform aroundTransform = player.AroundEmptyBlockTranform;
+                    while (handItem.Count != 0)
+                    {
+                        handItem.Peek().RePosition(aroundTransform, Vector3.up * 0.5f + Vector3.up * count++ * stackInterval);
+                        handItem.Pop();
+                    }
+
+                    while(handItem.Count < 3)
+                    {
+                        if (detectedItem.Count == 0)
+                            break;
+                        handItem.Push(detectedItem.Pop());
+                        handItem.Peek().RePosition(player.TwoHandTransform, Vector3.up * (handItem.Count - 1) * stackInterval);
+                    }
+                }
             }
         }
         else if (detectedItemType == EItemType.rail)

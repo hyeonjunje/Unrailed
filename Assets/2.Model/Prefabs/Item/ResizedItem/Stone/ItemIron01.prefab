@@ -209,7 +209,7 @@ GameObject:
   - component: {fileID: 4242338099088655088}
   m_Layer: 0
   m_Name: ItemIron01
-  m_TagString: Untagged
+  m_TagString: Invisible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -19,6 +19,7 @@ TagManager:
   - IronPiece
   - GameStartUI
   - GameExitUI
+  - Invisible
   layers:
   - Default
   - TransparentFX

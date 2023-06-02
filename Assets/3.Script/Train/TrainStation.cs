@@ -15,6 +15,6 @@ public class TrainStation : MonoBehaviour
     }
     private void OnEnable()
     {
-        shop.endStation.Add(this.gameObject.GetComponent<TrainStation>());
+        // shop.endStation.Add(this.gameObject.GetComponent<TrainStation>());
     }
 }
