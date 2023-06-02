@@ -15,7 +15,7 @@ public class AI_StackableItem : AI_StackItem
                     break;
 
                 handItem.Push(detectedItem.Pop());
-                handItem.Peek().RePosition(_helper.TwoHandTransform, Vector3.up * (handItem.Count - 1) * stackInterval);
+                handItem.Peek().RePosition(_helper.TwoHandTransform, Vector3.up * (handItem.Count) * stackInterval);
             }
         }
 
@@ -100,6 +100,7 @@ public class AI_StackableItem : AI_StackItem
                 break;
             handItem.Push(detectedItem.Pop());
             handItem.Peek().RePosition(_helper.TwoHandTransform, Vector3.up * stackInterval);
+            
         }
 
         return new Pair<Stack<AI_StackItem>, Stack<AI_StackItem>>(handItem, detectedItem);
@@ -110,8 +111,9 @@ public class AI_StackableItem : AI_StackItem
         while (handItem.Count != 0)
         {
             detectedItem.Push(handItem.Pop());
-            detectedItem.Peek().RePosition(_helper.CurrentBlockTransform, Vector3.up * 0.5f + Vector3.up * stackInterval);
+            detectedItem.Peek().PutDownResource(_helper.CurrentBlockTransform, Vector3.up * 0.5f + Vector3.up * stackInterval*handItem.Count);
         }
+
 
         return new Pair<Stack<AI_StackItem>, Stack<AI_StackItem>>(handItem, detectedItem);
     }

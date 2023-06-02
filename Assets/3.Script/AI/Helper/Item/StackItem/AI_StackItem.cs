@@ -9,10 +9,12 @@ public abstract class AI_StackItem : MonoBehaviour
     [SerializeField] protected LayerMask blockLayer;
 
     protected HelperBT _helper;
+    protected WorldResource _resource;
 
     protected virtual void Awake()
     {
         _helper = FindObjectOfType<HelperBT>();
+        _resource = GetComponent<WorldResource>();
     }
 
 
@@ -28,8 +30,21 @@ public abstract class AI_StackItem : MonoBehaviour
         transform.SetParent(parent);
         transform.localPosition = pos;
         transform.localRotation = Quaternion.identity;
-        transform.localScale = Vector3.one * 2;
+        transform.localScale = Vector3.one;
     }
+
+    public virtual void PutDownResource(Transform parent, Vector3 pos)
+    {
+        transform.SetParent(parent);
+        transform.localPosition = pos;
+        transform.localRotation = Quaternion.identity;
+        transform.localScale = Vector3.one;
+        ResourceTracker.Instance.DeRegisterResource(_resource);
+        Destroy(_resource);
+    }
+
+
+
 
     public virtual bool CheckItemType(AI_StackItem item)
     {

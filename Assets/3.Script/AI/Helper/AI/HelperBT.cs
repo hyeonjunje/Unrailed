@@ -22,10 +22,14 @@ public class HelperBT : MonoBehaviour
 
 
     private Transform _currentblock;
+    private Transform _aroundEmptyBlockTranform;
+
     public Transform RayStartTransfrom => _rayStartTransform;
     public Transform CurrentBlockTransform => _currentblock;
     public Transform RightHandTransform => _rightHandTransform;
     public Transform TwoHandTransform => _twoHandTransform;
+
+    public Transform AroundEmptyBlockTranform => _aroundEmptyBlockTranform;
 
     public Text DebugTarget;
 
@@ -119,7 +123,6 @@ public class HelperBT : MonoBehaviour
                          }
 
                      }
-
                  }
 
 
@@ -135,8 +138,7 @@ public class HelperBT : MonoBehaviour
 
          }, () =>
          {
-
-             return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
+            return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
          });
 
         var PickUpTool = FindTools.Add<BTNode_Action>("도구 들기", () =>
@@ -197,15 +199,21 @@ public class HelperBT : MonoBehaviour
              {
                  //목표 자원
                  _target = _helper.Home.GetGatherTarget(_helper);
-                 Vector3 position = _agent.FindCloestAroundEndPosition(_target.transform.position);
-                 _localMemory.SetGeneric<Vector3>(BlackBoardKey.Destination, position);
+
+                 if (_target != null)
+                 {
+                     Vector3 position = _agent.FindCloestAroundEndPosition(_target.transform.position);
+                     _localMemory.SetGeneric<Vector3>(BlackBoardKey.Destination, position);
+                     return BehaviorTree.ENodeStatus.Succeeded;
+
+                 }
 
              }
-             return BehaviorTree.ENodeStatus.Succeeded;
+                     return BehaviorTree.ENodeStatus.InProgress;
 
          });
-        var PossibleToWork = workRoot.Add<BTNode_Selector>("일하기 셀렉터");
 
+        var PossibleToWork = workRoot.Add<BTNode_Selector>("일하기 셀렉터");
         var PossibleSequence = PossibleToWork.Add<BTNode_Sequence>("가능", () =>
          {
              Vector3 pos = _agent.FindCloestAroundEndPosition(_target.transform.position);
@@ -237,7 +245,7 @@ public class HelperBT : MonoBehaviour
 
         ImpossibleToWork.Add<BTNode_Action>("그거 못해요", () =>
          {
-             DebugTarget.text = "못해요!";
+             DebugTarget.text = "못해요!!";
              _animator.SetBool(isMove, false);
              return BehaviorTree.ENodeStatus.InProgress;
          },
@@ -291,6 +299,33 @@ public class HelperBT : MonoBehaviour
 
         var Filling = water.Add<BTNode_Action>("물 채우기", () =>
        {
+
+
+           switch(_target.Type)
+           {
+
+               case WorldResource.EType.Water:
+                   break;
+
+               case WorldResource.EType.Resource:
+                    _stack.DetectGroundBlock(_target);
+
+                   if (_stack._handItem.Count == 0)
+                   {
+                       _stack.InteractiveItemSpace();
+                   }
+                   //그 후 쌓기
+                   else
+                   {
+                       _stack.InteractiveItem();
+                   }
+                   break;
+
+
+
+           }
+
+
            return BehaviorTree.ENodeStatus.InProgress;
 
        }
@@ -318,20 +353,6 @@ public class HelperBT : MonoBehaviour
                      break;
 
                  case WorldResource.EType.Resource:
-                    //자원이라면 세개 쌓기
-                     _currentblock = _target.transform;
-                     _stack.DetectGroundBlock(_target);
-                     if (_stack._handItem.Count == 0)
-                     {
-                         _stack.InteractiveItemSpace();
-                     }
-
-                     else
-                     {
-                         _stack.InteractiveItem();
-                     }
-                     ResourceTracker.Instance.DeRegisterResource(_target);
-                     Destroy(_target);
                      return BehaviorTree.ENodeStatus.Succeeded;
 
              }
@@ -407,7 +428,21 @@ public class HelperBT : MonoBehaviour
         },
         () =>
         {
-            return _agent.AtDestination ? BehaviorTree.ENodeStatus.InProgress : BehaviorTree.ENodeStatus.InProgress;
+            return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
+        }
+        );
+
+        var PutDownResource = water.Add<BTNode_Action>("자원 내려놓기", () =>
+         {
+             _currentblock = _stack.BFS();
+             _stack.PutDown();
+             _target = null;
+             _currentblock = null;
+            return BehaviorTree.ENodeStatus.InProgress;
+         },
+        () =>
+        {
+            return _stack._handItem.Count == 0 ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
         }
         );
 
@@ -441,11 +476,7 @@ public class HelperBT : MonoBehaviour
 
     }
 
-    
-
-
-
-
+  
 
     private void PutDown()
     {
@@ -460,9 +491,12 @@ public class HelperBT : MonoBehaviour
                 }
                 break;
             }
-            _item.transform.position = transform.position + Vector3.left;
+
             _item.transform.rotation = Quaternion.identity;
-            _item.transform.parent = null;
+            _item.transform.parent = _stack.BFS();
+            _item.transform.localPosition = (Vector3.up * 0.5f) + (Vector3.up * 0.15f);
+
+
 
             _animator.SetBool(isDig, false);
             _animator.SetBool(isMove, false);
