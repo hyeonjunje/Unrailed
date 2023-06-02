@@ -13655,6 +13655,7 @@ MonoBehaviour:
   listToQue: []
   trainMesh: {fileID: 0}
   trainUpgradeLevel: 0
+  cameraTarget: []
   targetCount: 0
   destroyParticle: {fileID: 6125585367919043976}
   fireEffect: {fileID: 4091468557059071737}
@@ -13664,7 +13665,7 @@ MonoBehaviour:
   isOver: 0
   trainSpeed: 0.5
   _trainRotateSpeed: 0
-  goalSpeed: 6
+  goalSpeed: 3
   _trainMoveSpeed: 0
   warningIcon: {fileID: 0}
   fireTime: 0
@@ -38030,6 +38031,7 @@ MonoBehaviour:
   listToQue: []
   trainMesh: {fileID: 0}
   trainUpgradeLevel: 0
+  cameraTarget: []
   targetCount: 0
   destroyParticle: {fileID: 2260269115326545816}
   fireEffect: {fileID: 0}
@@ -38039,7 +38041,7 @@ MonoBehaviour:
   isOver: 0
   trainSpeed: 0.5
   _trainRotateSpeed: 0
-  goalSpeed: 6
+  goalSpeed: 3
   _trainMoveSpeed: 0
   warningIcon: {fileID: 0}
   prefabsRail: {fileID: 0}
@@ -38415,6 +38417,7 @@ MonoBehaviour:
   listToQue: []
   trainMesh: {fileID: 0}
   trainUpgradeLevel: 0
+  cameraTarget: []
   targetCount: 0
   destroyParticle: {fileID: 1362392345428749233}
   fireEffect: {fileID: 0}
@@ -38424,7 +38427,7 @@ MonoBehaviour:
   isOver: 0
   trainSpeed: 0.5
   _trainRotateSpeed: 0
-  goalSpeed: 6
+  goalSpeed: 3
   _trainMoveSpeed: 0
   warningIcon: {fileID: 0}
   woods: []
@@ -67647,6 +67650,7 @@ MonoBehaviour:
   listToQue: []
   trainMesh: {fileID: 0}
   trainUpgradeLevel: 0
+  cameraTarget: []
   targetCount: 0
   destroyParticle: {fileID: 5137061486537832277}
   fireEffect: {fileID: 0}
@@ -67656,7 +67660,7 @@ MonoBehaviour:
   isOver: 0
   trainSpeed: 0.5
   _trainRotateSpeed: 0
-  goalSpeed: 6
+  goalSpeed: 3
   _trainMoveSpeed: 0
   warningIcon: {fileID: 0}
   smokeMesh:
@@ -68496,6 +68500,7 @@ MonoBehaviour:
   listToQue: []
   trainMesh: {fileID: 0}
   trainUpgradeLevel: 1
+  cameraTarget: []
   targetCount: 0
   destroyParticle: {fileID: 0}
   fireEffect: {fileID: 0}
@@ -68505,7 +68510,7 @@ MonoBehaviour:
   isOver: 0
   trainSpeed: 0.5
   _trainRotateSpeed: 0
-  goalSpeed: 6
+  goalSpeed: 3
   _trainMoveSpeed: 0
   warningIcon: {fileID: 0}
   trainSpare:

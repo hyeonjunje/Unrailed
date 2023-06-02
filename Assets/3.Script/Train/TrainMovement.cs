@@ -12,9 +12,10 @@ public class TrainMovement : MonoBehaviour
    
     public Queue<RailController> rails = new Queue<RailController>();
     public List<RailController> listToQue = new List<RailController>();
-
     public Transform trainMesh;
     public int trainUpgradeLevel;
+
+    public Cinemachine.CinemachineVirtualCamera[] cameraTarget;
     [SerializeField] private int targetCount;
     [SerializeField] protected GameObject destroyParticle;
     public ParticleSystem fireEffect;
@@ -39,7 +40,7 @@ public class TrainMovement : MonoBehaviour
     //Transform startRayPos;
     protected void GetMesh()
     {
-        if(trainType != TrainType.Spare)
+        if (trainType != TrainType.Spare)
         {
             trainMesh = transform.GetChild(0).GetComponent<Transform>();
             fireEffect = GetComponentInChildren<ParticleSystem>();
@@ -54,8 +55,18 @@ public class TrainMovement : MonoBehaviour
                 warningIcon.SetActive(false);
             }
         }
-    }
 
+        cameraTarget = GameObject.FindGameObjectWithTag("Cinemachine").GetComponentsInChildren<Cinemachine.CinemachineVirtualCamera>();
+
+        if (trainType == TrainType.Engine)
+        {
+            cameraTarget[0].Follow = transform;
+        }
+    }
+    private void Start()
+    {
+        CameraSwitch(1);
+    }
     protected void TrainMovePos()
     {
         listToQue = rails.ToList();
@@ -124,7 +135,22 @@ public class TrainMovement : MonoBehaviour
 
         }
     }
+    public void CameraSwitch(int num)
+    {
 
+        if(num== 2)
+        {
+            cameraTarget[1].Follow = GoalManager.Instance.lastRail.transform;
+        }
+        for (int i = 0; i < cameraTarget.Length; i++)
+        {
+            cameraTarget[i].gameObject.SetActive(true);
+            if (i != num -1)
+            {
+                cameraTarget[i].gameObject.SetActive(false);
+            }
+        }
+    }
     public virtual void TrainUpgrade()
     {
         destroyParticle.SetActive(true);
@@ -142,6 +168,12 @@ public class TrainMovement : MonoBehaviour
             destroyParticle.SetActive(true);
             isOver = true;
         }
+        if(trainType == TrainType.Spare)
+        {
+            CameraSwitch(3);
+        }
+
+        
     }
 
     public void RotateTrain()

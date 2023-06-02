@@ -60,6 +60,7 @@ public class InGameScene : MonoBehaviour
             // 볼트 하나 추가 해주고
 
             // 조금있다가 상점보여주기
+
             _shopManager.ShopOn();
         }
     }
