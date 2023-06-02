@@ -5,16 +5,15 @@ using System.Linq;
 
 public class Resource : MonoBehaviour
 {
-    public Transform spawnPoint;
+    public bool NonethisResourceType { get; private set; } = false;
+    
     Helper Robot;
 
     [SerializeField] WorldResource.EType DefaultResource = WorldResource.EType.Wood;
     Dictionary<WorldResource.EType, List<WorldResource>> TrackedResources = null;
 
-    [SerializeField] float PerfectKnowledgeRange = 30f;
-    [SerializeField] int GatherPickRange = 10;
 
-    public int NumAvailableResources { get; private set; } = 0;
+    [SerializeField] float PerfectKnowledgeRange = 30f;
 
     void Awake()
     {
@@ -28,15 +27,7 @@ public class Resource : MonoBehaviour
         PopulateResources();
     }
 
-    private void Update()
-    {
-        if (TrackedResources == null)
-            PopulateResources();
-    }
-
-
-
-    void PopulateResources()
+    private void PopulateResources()
     {
         //자원 세팅
         var resourceTypes = System.Enum.GetValues(typeof(WorldResource.EType));
@@ -46,7 +37,6 @@ public class Resource : MonoBehaviour
             var type = (WorldResource.EType)value;
             TrackedResources[type] = ResourceTracker.Instance.GetResourcesInRange(type, transform.position, PerfectKnowledgeRange);
             //총 자원수
-            NumAvailableResources += TrackedResources[type].Count;
         }
     }
 
@@ -68,10 +58,13 @@ public class Resource : MonoBehaviour
             }
         }
         //자원이 있는지 확인
-        if (TrackedResources[targetResource].Count == 0)
+        if (TrackedResources[targetResource].Count <1)
         {
-            Debug.Log($"{targetResource} :  다 캤어요");
+            NonethisResourceType = true;
+            Debug.Log($"{targetResource} :  자원이 이제 없어요");
         }
+        else
+            NonethisResourceType = false;
 
         var sortedResources = TrackedResources[targetResource]
             //갈 수 있는 곳에 있는 자원만 추리기
