@@ -229,6 +229,7 @@ public class HelperBT : MonoBehaviour
         var ImpossibleToWork = PossibleToWork.Add<BTNode_Sequence>("불가능", () =>
         {
             //자원이 물 건너에 있을 때
+
             Vector3 pos = _agent.FindCloestAroundEndPosition(_target.transform.position);
             return _agent.MoveTo(pos) ? BehaviorTree.ENodeStatus.Failed : BehaviorTree.ENodeStatus.InProgress;
 
@@ -236,7 +237,8 @@ public class HelperBT : MonoBehaviour
 
         ImpossibleToWork.Add<BTNode_Action>("그거 못해요", () =>
          {
-             DebugTarget.text = "자는 중";
+             DebugTarget.text = "못해요!";
+             _animator.SetBool(isMove, false);
              return BehaviorTree.ENodeStatus.InProgress;
          },
          () =>
@@ -305,6 +307,7 @@ public class HelperBT : MonoBehaviour
                          {
                              if (interaction.Perform())
                              {
+                                 _animator.SetBool(isMove, false);
                                  return BehaviorTree.ENodeStatus.InProgress;
                              }
                              else
@@ -344,6 +347,7 @@ public class HelperBT : MonoBehaviour
              switch (_target.Type)
              {
                  case WorldResource.EType.Water:
+                     _animator.SetBool(isMove, true);
                      _agent.MoveTo(_home);
                      break;
 
@@ -365,7 +369,7 @@ public class HelperBT : MonoBehaviour
              {
                  case WorldResource.EType.Water:
                      PutDown();
-                     DebugTarget.text = "자는 중";
+                     DebugTarget.text = "다 했어요";
                      break;
 
                  case WorldResource.EType.Resource:
@@ -426,7 +430,7 @@ public class HelperBT : MonoBehaviour
         var CantDoAnything = BTRoot.Add<BTNode_Sequence>("명령을 수행할 수 없는 경우");
         CantDoAnything.Add<BTNode_Action>("자기", () =>
         {
-
+            DebugTarget.text = "못해요!";
             return BehaviorTree.ENodeStatus.InProgress;
         }, () =>
          {

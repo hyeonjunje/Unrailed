@@ -76,17 +76,12 @@ public class Resource : MonoBehaviour
         var sortedResources = TrackedResources[targetResource]
             //갈 수 있는 곳에 있는 자원만 추리기
             .Where(resource => Vector3.Distance(resource.transform.position, brain.Agent.
-                                                FindCloestAroundEndPosition(resource.transform.position)) <= 1f)
+                                                FindCloestAroundEndPosition(resource.transform.position)) <= 1.5f)
             //가까운 순으로 정렬
             .OrderBy(resource => Vector3.Distance(brain.transform.position, resource.transform.position))
             //가장 가까운 자원 반환
             .FirstOrDefault();
         return sortedResources;
-/*        if (sortedResources != null)
-            return sortedResources;
-        else
-            Debug.Log("없어요");
-            return null;*/
 
 
 
