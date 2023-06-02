@@ -21,7 +21,7 @@ public class MyNonStackableItem : MyItem
             handItem.Push(detectedItem.Pop());
             detectedItem.Push(temp);
             handItem.Peek().RePosition(player.RightHandTransform, Vector3.zero);
-            detectedItem.Peek().RePosition(player.CurrentBlockTransform, Vector3.up * 0.5f);
+            detectedItem.Peek().RePosition(player.AroundEmptyBlockTranform, Vector3.up * 0.5f);
         }
         else if(detectedItemType == EItemType.wood || detectedItemType == EItemType.steel)
         {
@@ -35,11 +35,11 @@ public class MyNonStackableItem : MyItem
                 handItem.Peek().RePosition(player.TwoHandTransform, Vector3.up * i * stackInterval);
             }
             detectedItem.Push(temp);
-            detectedItem.Peek().RePosition(player.CurrentBlockTransform, Vector3.up * 0.5f + Vector3.up * (detectedItem.Count - 1) * stackInterval);
+            detectedItem.Peek().RePosition(player.AroundEmptyBlockTranform, Vector3.up * 0.5f);
         }
         else if(detectedItemType == EItemType.rail)
         {
-            if(!CheckConnectedRail())
+            if (IsRailInteractive(detectedItem.Peek().GetComponent<RailController>()))
             {
                 MyItem temp = handItem.Pop();
                 for (int i = 0; i < 3; i++)
@@ -51,7 +51,7 @@ public class MyNonStackableItem : MyItem
                     handItem.Peek().RePosition(player.TwoHandTransform, Vector3.up * i * stackInterval);
                 }
                 detectedItem.Push(temp);
-                detectedItem.Peek().RePosition(player.CurrentBlockTransform, Vector3.up * 0.5f + Vector3.up * (detectedItem.Count - 1) * stackInterval);
+                detectedItem.Peek().RePosition(player.AroundEmptyBlockTranform, Vector3.up * 0.5f);
             }
         }
 
@@ -70,7 +70,7 @@ public class MyNonStackableItem : MyItem
     {
         // ±×³É ¶³±Å
         detectedItem.Push(handItem.Pop());
-        detectedItem.Peek().RePosition(player.CurrentBlockTransform, Vector3.up * 0.5f);
+        detectedItem.Peek().RePosition(player.AroundEmptyBlockTranform, Vector3.up * 0.5f);
         return new Pair<Stack<MyItem>, Stack<MyItem>>(handItem, detectedItem);
     }
 }

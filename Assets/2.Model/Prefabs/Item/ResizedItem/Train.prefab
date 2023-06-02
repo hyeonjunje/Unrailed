@@ -13662,7 +13662,7 @@ MonoBehaviour:
   isBurn: 0
   isReady: 0
   isOver: 0
-  trainSpeed: 0.5
+  trainSpeed: 0.01
   _trainRotateSpeed: 0
   goalSpeed: 6
   _trainMoveSpeed: 0
@@ -38037,7 +38037,7 @@ MonoBehaviour:
   isBurn: 0
   isReady: 0
   isOver: 0
-  trainSpeed: 0.5
+  trainSpeed: 0.01
   _trainRotateSpeed: 0
   goalSpeed: 6
   _trainMoveSpeed: 0
@@ -38422,7 +38422,7 @@ MonoBehaviour:
   isBurn: 0
   isReady: 0
   isOver: 0
-  trainSpeed: 0.5
+  trainSpeed: 0.01
   _trainRotateSpeed: 0
   goalSpeed: 6
   _trainMoveSpeed: 0
@@ -67654,7 +67654,7 @@ MonoBehaviour:
   isBurn: 0
   isReady: 0
   isOver: 0
-  trainSpeed: 0.5
+  trainSpeed: 0.01
   _trainRotateSpeed: 0
   goalSpeed: 6
   _trainMoveSpeed: 0
@@ -68503,7 +68503,7 @@ MonoBehaviour:
   isBurn: 0
   isReady: 0
   isOver: 0
-  trainSpeed: 0.5
+  trainSpeed: 0.01
   _trainRotateSpeed: 0
   goalSpeed: 6
   _trainMoveSpeed: 0
