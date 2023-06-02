@@ -60,7 +60,9 @@ public class BlockMK2 : MonoBehaviour
         _renderer.enabled = true;
         transform.localScale = Vector3.one;
         transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
-        transform.tag = "Untagged";
+
+        Debug.LogWarning("너가 태그를 없앴어...  20230602 제현준");
+        // transform.tag = "Untagged";
     }
 
     // 블럭에 맞는 item들 생성
@@ -79,13 +81,13 @@ public class BlockMK2 : MonoBehaviour
         {
             _invisibleBlock.isEmpty = true;
             _renderer.enabled = false;
-            transform.tag = "Empty";
+            // transform.tag = "Empty";
         }
         else if(index == (int)EBlock.water)
         {
             transform.localScale -= Vector3.up * 0.2f;
             transform.position -= Vector3.up * 0.1f;
-            transform.tag = "Water";
+            // transform.tag = "Water";
         }
         else if(index == (int)EBlock.tree1 || index == (int)EBlock.tree2)
         {

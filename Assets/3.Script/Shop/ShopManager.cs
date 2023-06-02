@@ -55,15 +55,6 @@ public class ShopManager : MonoBehaviour
         trainEngine = FindObjectOfType<TrainEngine>();
     }
 
-    private void OnEnable()
-    {
-        /*trains = FindObjectsOfType<TrainMovement>();
-        trainWater = FindObjectOfType<TrainWater>();
-        trainEngine = FindObjectOfType<TrainEngine>();
-
-        StartCoroutine(TrainStartMove());*/
-    }
-
     public void StartTrainMove()
     {
         trains = FindObjectsOfType<TrainMovement>();
