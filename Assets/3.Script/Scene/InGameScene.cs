@@ -6,19 +6,23 @@ using System.Linq;
 
 public class InGameScene : MonoBehaviour
 {
+    [Header("테스트")]
+    [SerializeField] private bool isTest = false;
+
     [Header("UI")]
     [SerializeField] private GameObject _loadingSceneUI;
 
     [Header("Manager")]
     [SerializeField] private WorldManager _worldManager;
 
-    // [SerializeField] private MapManager _mapManager;
     [SerializeField] private ShopManager _shopManager;
 
     [SerializeField] private int worldCount = 0;
 
     // 석환이 형 isStart가 true일 때만 player가 작동할 수 있게 해줘~~
     public bool isStart { get; private set; } = false;
+
+    private bool _isEnding = false;
 
     private void Awake()
     {
@@ -30,11 +34,13 @@ public class InGameScene : MonoBehaviour
         isStart = false;
 
         // 로딩 시작
-        LoadingFirstGame(
+        LoadingFirstGame(isTest, 
             () =>
             {
                 _loadingSceneUI.SetActive(false);
                 RePositionAsync().Forget();
+
+                _shopManager.StartTrainMove();
             }).Forget();
     }
 
@@ -44,10 +50,18 @@ public class InGameScene : MonoBehaviour
     /// </summary>
     public void ArriveStation()
     {
-        // 볼트 하나 추가 해주고
+        // 만약 마지막 역이라면 엔딩
+        if(_isEnding)
+        {
+            Debug.Log("엔딩입니다~~~~");
+        }
+        else
+        {
+            // 볼트 하나 추가 해주고
 
-        // 조금있다가 상점보여주기
-        _shopManager.ShopOn();
+            // 조금있다가 상점보여주기
+            _shopManager.ShopOn();
+        }
     }
 
     /// <summary>
@@ -64,7 +78,10 @@ public class InGameScene : MonoBehaviour
         _shopManager.ShopOff();
 
         // 맵 재위치 시켜주기
-        RePositionAsync().Forget();
+        UnitaskInvoke(1.5f, () => { RePositionAsync().Forget(); }).Forget();
+
+        // 맵은 2개 밖에 없으니까 한번 역을 떠나면 엔딩준비 완료
+        _isEnding = true;
     }
 
 
@@ -74,10 +91,17 @@ public class InGameScene : MonoBehaviour
         onFinishedAsyncEvent?.Invoke();
     }
 
-    private async UniTaskVoid LoadingFirstGame(System.Action onCreateNextMapAsyncEvent = null)
+    private async UniTaskVoid LoadingFirstGame(bool isTest, System.Action onCreateNextMapAsyncEvent = null)
     {
         // 맵 생성
-        await _worldManager.GenerateWorld();
+        await _worldManager.GenerateWorld(isTest);
         onCreateNextMapAsyncEvent?.Invoke();
+    }
+
+    private async UniTaskVoid UnitaskInvoke(float time, System.Action action)
+    {
+        await UniTask.Delay(System.TimeSpan.FromSeconds(time));
+
+        action?.Invoke();
     }
 }

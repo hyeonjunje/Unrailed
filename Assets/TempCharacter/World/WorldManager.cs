@@ -29,13 +29,22 @@ public class WorldManager : MonoBehaviour
     // 역들을 보관할 리스트
     public List<Station> stations { get; private set; } = new List<Station>();
 
-    public async UniTask GenerateWorld()
+    public async UniTask GenerateWorld(bool isTest)
     {
         // 맵 싸그리 생성
         MapData[] mapData = new MapData[2];
         _worldCount = mapData.Length;
-        mapData[0] = FileManager.MapsData.mapsData[5];
-        mapData[1] = FileManager.MapsData.mapsData[7];
+
+        if (isTest)
+        {
+            mapData[0] = FileManager.MapsData.mapsData[3];
+            mapData[1] = FileManager.MapsData.mapsData[4];
+        }
+        else
+        {
+            mapData[0] = FileManager.MapsData.mapsData[5];
+            mapData[1] = FileManager.MapsData.mapsData[7];
+        }
 
         for (int i = 0; i < _worldCount; i++)
         {

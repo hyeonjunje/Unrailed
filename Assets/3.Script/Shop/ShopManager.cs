@@ -49,14 +49,18 @@ public class ShopManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        trains = FindObjectsOfType<TrainMovement>();
         anim = GetComponentInParent<Animator>();
+        trains = FindObjectsOfType<TrainMovement>();
         trainWater = FindObjectOfType<TrainWater>();
         trainEngine = FindObjectOfType<TrainEngine>();
     }
 
-    private void OnEnable()
+    public void StartTrainMove()
     {
+        trains = FindObjectsOfType<TrainMovement>();
+        trainWater = FindObjectOfType<TrainWater>();
+        trainEngine = FindObjectOfType<TrainEngine>();
+
         StartCoroutine(TrainStartMove());
     }
 
@@ -156,14 +160,22 @@ public class ShopManager : MonoBehaviour
     {
         if(other.CompareTag("Invisible"))
         {
+            // 블럭
             if(other.gameObject.layer == LayerMask.NameToLayer("Block"))
             {
                 other.GetComponent<InvisibleBlock>().UnShow();
             }
+            // 블럭에 부착된 아이템, 지형지물
             else
             {
                 other.gameObject.SetActive(false);
             }
+        }
+
+        // 새, 도적, 동물 등등
+        if(other.CompareTag("InvisibleObject"))
+        {
+            other.transform.GetChild(0).gameObject.SetActive(false);
         }
 
         if (other.CompareTag("ShopItem"))
@@ -185,6 +197,12 @@ public class ShopManager : MonoBehaviour
             {
                 other.gameObject.SetActive(true);
             }
+        }
+
+        // 새, 도적, 동물 등등
+        if (other.CompareTag("InvisibleObject"))
+        {
+            other.transform.GetChild(0).gameObject.SetActive(true);
         }
 
         if (other.CompareTag("ShopItem"))
