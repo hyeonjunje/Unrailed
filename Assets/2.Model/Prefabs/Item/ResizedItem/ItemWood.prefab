@@ -207,6 +207,8 @@ GameObject:
   - component: {fileID: 1554482166082667595}
   - component: {fileID: 5538702390208351594}
   - component: {fileID: -2125460109316306497}
+  - component: {fileID: -1283254355168865540}
+  - component: {fileID: 8685167762156443745}
   m_Layer: 11
   m_Name: ItemWood
   m_TagString: Invisible
@@ -252,6 +254,38 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21243c6dceb6b2c408bec1c29a3d38e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stackInterval: 0.15
+  itemType: 0
+  blockLayer:
+    serializedVersion: 2
+    m_Bits: 1073741824
+--- !u!114 &-1283254355168865540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7187630036778189682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6b1a865e950d5f408bb5a448e1e2ef9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Type: 3
+  _item: {fileID: 0}
+  _resourceHp: 2.7
+--- !u!114 &8685167762156443745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7187630036778189682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12ef5afdee7780d408c7d572ec25cb90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   stackInterval: 0.15
