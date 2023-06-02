@@ -53,13 +53,15 @@ public class Station : MonoBehaviour
 
         if (rail != null)
         {
-            rail.PutRail();
-
             if(trainPrefab != null)
             {
                 Debug.LogWarning("여기서 기차 초기화해주면 돼");
-                Instantiate(trainPrefab, Vector3.zero, Quaternion.identity, rail.transform);
+                Transform trainTransform = Instantiate(trainPrefab, rail.transform).transform;
+                trainTransform.localPosition = Vector3.left;
+                trainTransform.localRotation = Quaternion.identity;
             }
+
+            rail.PutRail();
         }
     }
 
