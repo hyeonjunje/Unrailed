@@ -232,8 +232,8 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 1
   saturate:
-    m_OverrideState: 0
-    m_Value: 1
+    m_OverrideState: 1
+    m_Value: 0
     min: -2
     max: 3
   brightness:
@@ -242,8 +242,8 @@ MonoBehaviour:
     min: 0
     max: 2
   contrast:
-    m_OverrideState: 0
-    m_Value: 1.02
+    m_OverrideState: 1
+    m_Value: 1
     min: 0.5
     max: 1.5
   daltonize:

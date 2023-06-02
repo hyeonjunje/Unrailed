@@ -136,6 +136,7 @@ public class TrainMovement : MonoBehaviour
         if (trainType != TrainType.Spare && !isOver)
         {
             StopCoroutine(Warning());
+            SoundManager.Instance.PlaySoundEffect("Train_Broken");
             trainMesh.gameObject.SetActive(false);
             destroyParticle.SetActive(false);
             destroyParticle.SetActive(true);
