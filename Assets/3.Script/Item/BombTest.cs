@@ -14,12 +14,15 @@ public class BombTest : MonoBehaviour
     private Player player;
     public float speed = 0.5f;
     public bool isrespawn = false;
+    public ParticleSystem ExplosionEffect;
 
     IEnumerator Explosion()
     {
         yield return new WaitForSeconds(3f);
+        //ExplosionEffect.Play();
 
         Debug.Log("≈Õ¡≥¥Ÿ");
+
 
         Collider[] hitCollider = Physics.OverlapSphere(transform.position, radius, banglayer);
         for(int i = 0; i< hitCollider.Length; i++)
@@ -28,7 +31,9 @@ public class BombTest : MonoBehaviour
             if (resource_a != null && Dynamite.activeSelf)
             {
                 resource_a.SpawnItem();
+
             }
+
             Destroy(hitCollider[i].gameObject);
         }
         distance = Vector3.Distance(transform.position, player.transform.position);
@@ -38,8 +43,10 @@ public class BombTest : MonoBehaviour
             ReSpawn();
         }
         Destroy(gameObject);
+       //ExplosionEffect.Stop();
+
     }
-    
+
     public void ReSpawn()
     {
         player.transform.localPosition += Vector3.up * 10f ;
@@ -57,6 +64,7 @@ public class BombTest : MonoBehaviour
     public void Setup()
     {
         StartCoroutine(Explosion());
+
     }
 
     private void Update()
@@ -64,8 +72,10 @@ public class BombTest : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Setup();
+
+
         }
-       
+
     }
 
    

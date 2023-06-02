@@ -320,7 +320,6 @@ public class Player : MonoBehaviour
         {
             if (currentNonStackItem == null)
                 return;
-
             if (hit.collider.name == "Water(Clone)" && currentNonStackItem.name == "Item_Bucket(Clone)")
             {
                 Debug.Log("¹° °¨Áö");
