@@ -49,14 +49,27 @@ public class ShopManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        trains = FindObjectsOfType<TrainMovement>();
         anim = GetComponentInParent<Animator>();
+        trains = FindObjectsOfType<TrainMovement>();
         trainWater = FindObjectOfType<TrainWater>();
         trainEngine = FindObjectOfType<TrainEngine>();
     }
 
     private void OnEnable()
     {
+        /*trains = FindObjectsOfType<TrainMovement>();
+        trainWater = FindObjectOfType<TrainWater>();
+        trainEngine = FindObjectOfType<TrainEngine>();
+
+        StartCoroutine(TrainStartMove());*/
+    }
+
+    public void StartTrainMove()
+    {
+        trains = FindObjectsOfType<TrainMovement>();
+        trainWater = FindObjectOfType<TrainWater>();
+        trainEngine = FindObjectOfType<TrainEngine>();
+
         StartCoroutine(TrainStartMove());
     }
 

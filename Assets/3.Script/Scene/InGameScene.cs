@@ -6,13 +6,15 @@ using System.Linq;
 
 public class InGameScene : MonoBehaviour
 {
+    [Header("테스트")]
+    [SerializeField] private bool isTest = false;
+
     [Header("UI")]
     [SerializeField] private GameObject _loadingSceneUI;
 
     [Header("Manager")]
     [SerializeField] private WorldManager _worldManager;
 
-    // [SerializeField] private MapManager _mapManager;
     [SerializeField] private ShopManager _shopManager;
 
     [SerializeField] private int worldCount = 0;
@@ -30,11 +32,13 @@ public class InGameScene : MonoBehaviour
         isStart = false;
 
         // 로딩 시작
-        LoadingFirstGame(
+        LoadingFirstGame(isTest, 
             () =>
             {
                 _loadingSceneUI.SetActive(false);
                 RePositionAsync().Forget();
+
+                _shopManager.StartTrainMove();
             }).Forget();
     }
 
@@ -74,10 +78,10 @@ public class InGameScene : MonoBehaviour
         onFinishedAsyncEvent?.Invoke();
     }
 
-    private async UniTaskVoid LoadingFirstGame(System.Action onCreateNextMapAsyncEvent = null)
+    private async UniTaskVoid LoadingFirstGame(bool isTest, System.Action onCreateNextMapAsyncEvent = null)
     {
         // 맵 생성
-        await _worldManager.GenerateWorld();
+        await _worldManager.GenerateWorld(isTest);
         onCreateNextMapAsyncEvent?.Invoke();
     }
 }
