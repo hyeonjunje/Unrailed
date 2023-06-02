@@ -58,14 +58,19 @@ public class RailController : MonoBehaviour
         if (!isInit)
             Init();
 
-        trainManager.railCon.Add(gameObject.GetComponent<RailController>());
-        if (!isEndRail && !isStartRail)
+        trainManager = FindObjectOfType<GoalManager>();
+
+        trainManager.railCon.Add(this);
+
+/*        if (!isEndRail && !isStartRail)
         {
             //기차이동 위치값 초기화
             //단, 골이 아닐때에만 활성화된다.
             //마지막 레일이 골에 닿았을 경우 모든 레일의 골을 해제한다.
             EnqueueRail();
-        }
+        }*/
+
+        EnqueueRail();
 
         if (!isGoal)
         {
@@ -99,12 +104,10 @@ public class RailController : MonoBehaviour
     }
 
 
-    private void OnEnable()
-
+/*    private void OnEnable()
     {
         PutRail();
- 
-    }
+    }*/
 
     //todo 05 18 앞 철로가 없으면 철로를 해제 할 수 있도록 만들어 놓을것 그리고 가능하면 - 박상연
     public void RailSwitch()
@@ -174,13 +177,24 @@ public class RailController : MonoBehaviour
         // 종료조건
         if(Physics.Raycast(transform.position, Vector3.right, out raycastHit, range, LayerMask.GetMask("Rail")))
         {
-            Debug.Log("이거 해줘");
             RailController endRail = raycastHit.transform.GetComponent<RailController>();
-            Debug.Log(endRail.isEndRail + "  " + endRail.isInstance);
-
             // 오른쪽에 isEndRail이 있고 isInstance되어 있으면
             if(endRail.isEndRail && endRail.isInstance)
             {
+                while(endRail != null)
+                {
+                    Debug.Log(endRail.transform.position);
+                    endRail.PutRail();
+
+                    if (Physics.Raycast(endRail.transform.position, Vector3.right, out raycastHit, range, LayerMask.GetMask("Rail")))
+                    {
+                        endRail = raycastHit.transform.GetComponent<RailController>();
+                    }
+                    else
+                    {
+                        endRail = null;
+                    }
+                }
                 trainManager.TrainGoal();
             }
         }
@@ -258,7 +272,7 @@ public class RailController : MonoBehaviour
         for (int i = 0; i < trainComponents.Length; i++)
         {
             //기차에 위치값 추가
-            trainComponents[i].EnqueueRailPos(gameObject.GetComponent<RailController>());
+            trainComponents[i].EnqueueRailPos(this);
         }
     }
 }

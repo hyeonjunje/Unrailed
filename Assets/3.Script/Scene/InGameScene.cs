@@ -6,49 +6,38 @@ using System.Linq;
 
 public class InGameScene : MonoBehaviour
 {
+    [Header("UI")]
     [SerializeField] private GameObject _loadingSceneUI;
-    [SerializeField] private MapCreator _mapCreator;
 
-    [SerializeField] private MapManager _mapManager;
+    [Header("Manager")]
+    [SerializeField] private WorldManager _worldManager;
+
+    // [SerializeField] private MapManager _mapManager;
+    [SerializeField] private ShopManager _shopManager;
 
     [SerializeField] private int worldCount = 0;
-
-    [SerializeField] private Transform test;
 
     // 석환이 형 isStart가 true일 때만 player가 작동할 수 있게 해줘~~
     public bool isStart { get; private set; } = false;
 
     private void Awake()
     {
+        // 게임 로드
         FileManager.LoadGame();
-/*        _loadingSceneUI.SetActive(true);
+
+        // 로딩
+        _loadingSceneUI.SetActive(true);
         isStart = false;
 
+        // 로딩 시작
         LoadingFirstGame(
             () =>
             {
                 _loadingSceneUI.SetActive(false);
-
                 RePositionAsync().Forget();
-            }).Forget();*/
-
-
-        // 제일 오른쪽(x값이 제일 작은게 시작점)
-        List<Station> stations = FindObjectsOfType<Station>().OrderBy(elem => elem.transform.position.x).ToList();
-        for(int i = 0; i < stations.Count; i++)
-        {
-            if (i == 0)
-                stations[i].InitStation(true);
-            else
-                stations[i].InitStation(false);
-        }
+            }).Forget();
     }
 
-/*    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-            RePositionAsync().Forget();
-    }*/
 
     /// <summary>
     /// 역 도착하면 실행될 메소드
@@ -56,7 +45,9 @@ public class InGameScene : MonoBehaviour
     public void ArriveStation()
     {
         // 볼트 하나 추가 해주고
+
         // 조금있다가 상점보여주기
+        _shopManager.ShopOn();
     }
 
     /// <summary>
@@ -66,21 +57,27 @@ public class InGameScene : MonoBehaviour
     {
         // 나가기 게이지 100되면 실행될 메소드
 
+        // 새로운 역 세팅
+        _shopManager.currentStation = _worldManager.stations[2].transform;
+
         // 상점 종료되고
+        _shopManager.ShopOff();
+
         // 맵 재위치 시켜주기
+        RePositionAsync().Forget();
     }
 
 
     private async UniTaskVoid RePositionAsync(System.Action onFinishedAsyncEvent = null)
     {
-        await _mapManager.RePositionAsync(worldCount++);
+        await _worldManager.RePositionAsync(worldCount++);
         onFinishedAsyncEvent?.Invoke();
     }
 
     private async UniTaskVoid LoadingFirstGame(System.Action onCreateNextMapAsyncEvent = null)
     {
-        // 맵 로드
-        await _mapManager.LoadMap();
+        // 맵 생성
+        await _worldManager.GenerateWorld();
         onCreateNextMapAsyncEvent?.Invoke();
     }
 }

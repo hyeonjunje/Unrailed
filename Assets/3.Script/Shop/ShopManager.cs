@@ -7,9 +7,7 @@ public class ShopManager : MonoBehaviour
 {
     public static ShopManager Instance = null;
 
-    public List<TrainStation> endStation = new List<TrainStation>();
     public List<ShopItem> newCarList = new List<ShopItem>();
-  
 
     public TrainMovement[] trains;
 
@@ -34,12 +32,10 @@ public class ShopManager : MonoBehaviour
     public int trainCoin;
     public int itemIdx;
 
-
-    [SerializeField] private GameObject test;
-
     bool _isShop;
-
     public Image[] goToLoading;
+
+    public Transform currentStation = null;
 
     private void Awake()
     {
@@ -47,7 +43,6 @@ public class ShopManager : MonoBehaviour
         if(Instance == null)
         {
             Instance = this;
-            
         }
         else
         {
@@ -63,13 +58,36 @@ public class ShopManager : MonoBehaviour
     private void OnEnable()
     {
         StartCoroutine(TrainStartMove());
-       // SoundManager.Instance.PlaySoundBgm("InGame_Bgm");
     }
+
+    public void ShopOn()
+    {
+        if (!_isShop)
+        {
+            RandItemSpawn();
+            _isShop = true;
+        }
+
+        Debug.Log("상점으로 위치 이동");
+        anim.transform.position = currentStation.position;
+
+        anim.SetBool("isReady", true);
+        SoundManager.Instance.audioSourdEngine.Stop();
+        SoundManager.Instance.StopAllSound();
+    }  // 상점 오픈 애니메이션
+
+    public void ShopOff()
+    {
+        anim.SetBool("isReady", false);
+        StartCoroutine(TrainStartMove());
+    } //상점 클로즈 애니메이션
+
     public void ResetTrains()
     {
         trains = FindObjectsOfType<TrainMovement>();
     }
-    public void RandItemSpawn()
+
+    private void RandItemSpawn()
     {
         for (int i = 0; i < shopUpgradeTrainPos.Length; i++)
         {
@@ -87,6 +105,7 @@ public class ShopManager : MonoBehaviour
 
         TrainCost();
     } //위치에 스폰
+
     public void TrainCost()
     {
         foreach(TrainMovement train in trains)
@@ -132,42 +151,21 @@ public class ShopManager : MonoBehaviour
             }
         }
     } // 코스트 출력 
-    public void ShopOn()
-    {
-        if (!_isShop)
-        {
-            RandItemSpawn();
-            _isShop = true;
-        }
-        // anim.gameObject.transform.position = endStation[0].transform.GetChild(1).transform.position;
-        anim.gameObject.transform.position = endStation[0].transform.position;
-        anim.SetBool("isReady",true);
-        SoundManager.Instance.audioSourdEngine.Stop();
-        SoundManager.Instance.StopAllSound();
-    }  // 상점 오픈 애니메이션
-
-    public void ShopOff()
-    {
-        endStation[0].newGameStart[0].SetActive(false);
-        endStation[0].newGameStart[1].SetActive(true);
-        endStation.Clear();
-        anim.SetBool("isReady", false);
-        StartCoroutine(TrainStartMove());
-    } //상점 클로즈 애니메이션
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Invisible"))
         {
-            GameObject obj = other.transform.GetChild(0).gameObject;
-            obj.SetActive(false);
+            if(other.gameObject.layer == LayerMask.NameToLayer("Block"))
+            {
+                other.GetComponent<InvisibleBlock>().UnShow();
+            }
+            else
+            {
+                other.gameObject.SetActive(false);
+            }
         }
 
-        /*if (other.CompareTag("Block")|| other.CompareTag("Item") || other.CompareTag("Items"))
-        {
-            GameObject obj = other.transform.GetChild(0).gameObject;
-            obj.SetActive(false);
-        }*/
         if (other.CompareTag("ShopItem"))
         {
             GameObject obj = other.transform.GetChild(0).gameObject;
@@ -179,15 +177,16 @@ public class ShopManager : MonoBehaviour
     {
         if (other.CompareTag("Invisible"))
         {
-            GameObject obj = other.transform.GetChild(0).gameObject;
-            obj.SetActive(true);
+            if (other.gameObject.layer == LayerMask.NameToLayer("Block"))
+            {
+                other.GetComponent<InvisibleBlock>().Show();
+            }
+            else
+            {
+                other.gameObject.SetActive(true);
+            }
         }
 
-        /*if (other.CompareTag("Block")|| other.CompareTag("Item") || other.CompareTag("Items"))
-        {
-            GameObject obj = other.transform.GetChild(0).gameObject;
-            obj.SetActive(true);
-        }*/
         if (other.CompareTag("ShopItem"))
         {
             GameObject obj = other.transform.GetChild(0).gameObject;
@@ -195,8 +194,10 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-    public IEnumerator TrainStartMove() // 열차 시작 카운트다운
+    private IEnumerator TrainStartMove() // 열차 시작 카운트다운
     {
+        trainEngine.isReady = true;
+
         yield return new WaitForSeconds(10f);
         trainEngine.anim.SetBool("CountDown", true);
 
@@ -211,16 +212,13 @@ public class ShopManager : MonoBehaviour
         }
 
         yield return new WaitForSeconds(0.5f);
-        //yield return new WaitForSeconds(readyCount);
         SoundManager.Instance.PlaySoundEffect("Train_Start");
         trainEngine.isGoal = false;
         trainEngine.isReady = false;
         _isShop = false;
         trainWater.FireOff();
-        test.SetActive(true);
         yield return new WaitForSeconds(2f);
         SoundManager.Instance.audioSourdEngine.Play();
-        trainEngine.isReady = false;
         SoundManager.Instance.PlaySoundBgm("InGame_Bgm");
     } 
 }

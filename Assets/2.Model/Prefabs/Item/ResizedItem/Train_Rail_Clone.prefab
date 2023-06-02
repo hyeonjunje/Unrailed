@@ -7704,6 +7704,7 @@ GameObject:
   - component: {fileID: 7402043901895155595}
   - component: {fileID: 1998094057646125469}
   - component: {fileID: 3584017345647214217}
+  - component: {fileID: -4388053969770183316}
   m_Layer: 23
   m_Name: Train_Rail_Clone
   m_TagString: Untagged
@@ -7756,6 +7757,7 @@ MonoBehaviour:
   - {fileID: 6092851041733908163}
   - {fileID: 9076389145321103305}
   neighborRail: {fileID: 0}
+  trainManager: {fileID: 0}
   trainComponents: []
   railLine: {fileID: 0}
   dirCount: 0
@@ -7783,6 +7785,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.3, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-4388053969770183316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7402043901895155594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8f896b79ed82e54a86f253773d8ac86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stackInterval: 0.15
+  itemType: 2
+  blockLayer:
+    serializedVersion: 2
+    m_Bits: 1073741824
 --- !u!1 &7419329411036280246
 GameObject:
   m_ObjectHideFlags: 0
