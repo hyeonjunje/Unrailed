@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviour
         DetectFrontObject();
 
         // 레일 미리보기 확인
-       // CheckPutDownRail();
+        CheckPutDownRail();
 
         // 아이템 상호작용
         if (_playerInput.IsSpace)

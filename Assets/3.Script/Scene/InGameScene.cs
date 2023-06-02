@@ -10,7 +10,7 @@ public class InGameScene : MonoBehaviour
     [SerializeField] private bool isTest = false;
 
     [Header("UI")]
-    [SerializeField] private GameObject _loadingSceneUI;
+     public GameObject _loadingSceneUI;
 
     [Header("Manager")]
     [SerializeField] private WorldManager _worldManager;
