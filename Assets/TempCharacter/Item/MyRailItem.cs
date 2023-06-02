@@ -16,8 +16,7 @@ public class MyRailItem : MyItem
         // 종류가 같다면 줍는다.
         if (handItem.Peek().CheckItemType(detectedItem.Peek()))
         {
-            // 연결되어 있지 않는 레일이라면 
-            if(!detectedItem.Peek().CheckConnectedRail())
+            if (IsRailInteractive(detectedItem.Peek().GetComponent<RailController>()))
             {
                 while (handItem.Count < 3)
                 {
@@ -43,51 +42,61 @@ public class MyRailItem : MyItem
             MyItem temp = detectedItem.Pop();
             while (handItem.Count != 0)
             {
-                if(CheckConnectedRail())
-                {
-                    detectedItem.Push(handItem.Pop());
-                    detectedItem.Peek().RePosition(player.CurrentBlockTransform, Vector3.up * 0.5f + Vector3.up * (detectedItem.Count - 1) * stackInterval);
+                // 하나를 놓는데 연결할 수 있는 곳이라면 하나만 놓음
+                detectedItem.Push(handItem.Pop());
+                detectedItem.Peek().RePosition(player.CurrentBlockTransform, Vector3.up * 0.5f + Vector3.up * (detectedItem.Count - 1) * stackInterval);
+
+                if (IsInstallable())
                     break;
-                }
-                else
-                {
-                    detectedItem.Push(handItem.Pop());
-                    detectedItem.Peek().RePosition(player.CurrentBlockTransform, Vector3.up * 0.5f + Vector3.up * (detectedItem.Count - 1) * stackInterval);
-                }
             }
 
-            if(handItem.Count != 0)
+            // 손에 남았으면 빌 때까지 다른데에 놓음
+            Transform aroundTransform = player.AroundEmptyBlockTranform;
+            int count = 0;
+            while(handItem.Count != 0)
             {
-                Debug.Log("다른데 내려놓는다.");
+                handItem.Pop().RePosition(aroundTransform, Vector3.up * 0.5f + Vector3.up * count++ * stackInterval);
             }
-            else
-            {
-                handItem.Push(temp);
-                handItem.Peek().RePosition(player.RightHandTransform, Vector3.zero);
-            }
+
+            // 그리고 도구를 집는다.
+            handItem.Push(temp);
+            handItem.Peek().RePosition(player.RightHandTransform, Vector3.zero);
         }
         else if (detectedItemType == EItemType.wood || detectedItemType == EItemType.steel)
         {
-            // 여기 만약 이어질 수 있는 곳이라면 레일 하나만 놓고 나머지는 다른데 놓아야함
-            if (handItem.Count <= 3 && detectedItem.Count <= 3)
+            Stack<MyItem> temp = new Stack<MyItem>(handItem);
+            handItem.Clear();
+
+            // 한계까지 든다
+            while (handItem.Count < 3)
             {
-                Stack<MyItem> temp = new Stack<MyItem>(handItem);
-                handItem.Clear();
-                while (detectedItem.Count != 0)
-                {
-                    handItem.Push(detectedItem.Pop());
-                    handItem.Peek().RePosition(player.TwoHandTransform, Vector3.up * (handItem.Count - 1) * stackInterval);
-                }
+                if (detectedItem.Count == 0)
+                    break;
+                handItem.Push(detectedItem.Pop());
+                handItem.Peek().RePosition(player.TwoHandTransform, Vector3.up * (handItem.Count - 1) * stackInterval);
+            }
+
+            if (detectedItem.Count == 0)
+            {
                 while (temp.Count != 0)
                 {
                     detectedItem.Push(temp.Pop());
                     detectedItem.Peek().RePosition(player.CurrentBlockTransform, Vector3.up * 0.5f + Vector3.up * (detectedItem.Count - 1) * stackInterval);
                 }
             }
+            else
+            {
+                Transform aroundTransform = player.AroundEmptyBlockTranform;
+                int count = 0;
+                while (temp.Count != 0)
+                {
+                    temp.Pop().RePosition(aroundTransform, Vector3.up * 0.5f + Vector3.up * count++ * stackInterval);
+                }
+            }
         }
         else if (detectedItemType == EItemType.rail)
         {
-            if (!CheckConnectedRail())
+            if (IsRailInteractive(detectedItem.Peek().GetComponent<RailController>()))
             {
                 while (handItem.Count != 0)
                 {
@@ -102,16 +111,17 @@ public class MyRailItem : MyItem
 
     public override Pair<Stack<MyItem>, Stack<MyItem>> PickUp(Stack<MyItem> handItem, Stack<MyItem> detectedItem)
     {
-        if(!detectedItem.Peek().CheckConnectedRail())
+        if(IsRailInteractive(detectedItem.Peek().GetComponent<RailController>()))
         {
             for (int i = 0; i < 3; i++)
             {
                 if (detectedItem.Count == 0)
                     break;
                 handItem.Push(detectedItem.Pop());
-                handItem.Peek().RePosition(player.TwoHandTransform, Vector3.up * stackInterval);
+                handItem.Peek().RePosition(player.TwoHandTransform, Vector3.up * (handItem.Count - 1) * stackInterval);
             }
         }
+
         return new Pair<Stack<MyItem>, Stack<MyItem>>(handItem, detectedItem);
     }
 
@@ -120,15 +130,7 @@ public class MyRailItem : MyItem
         // 내려놓기
         // 설치할 수 있는 곳이면 하나만 떨구고 설치
         // 아니면 그냥 다 떨굼
-        if (!isInstallable())
-        {
-            while (handItem.Count != 0)
-            {
-                detectedItem.Push(handItem.Pop());
-                detectedItem.Peek().RePosition(player.CurrentBlockTransform, Vector3.up * 0.5f + Vector3.up * (detectedItem.Count - 1) * stackInterval);
-            }
-        }
-        else
+        if(IsInstallable())
         {
             detectedItem.Push(handItem.Pop());
             detectedItem.Peek().RePosition(player.CurrentBlockTransform, Vector3.up * 0.5f + Vector3.up * (detectedItem.Count - 1) * stackInterval);
@@ -136,48 +138,14 @@ public class MyRailItem : MyItem
             // 여기서 내려놓음
             detectedItem.Peek().GetComponent<RailController>().PutRail();
         }
+        else
+        {
+            while (handItem.Count != 0)
+            {
+                detectedItem.Push(handItem.Pop());
+                detectedItem.Peek().RePosition(player.CurrentBlockTransform, Vector3.up * 0.5f + Vector3.up * (detectedItem.Count - 1) * stackInterval);
+            }
+        }
         return new Pair<Stack<MyItem>, Stack<MyItem>>(handItem, detectedItem);
-    }
-
-    private RailController GetConnectedRail()
-    {
-        RailController result = null;
-
-        Vector3[] dir = new Vector3[4] { Vector3.forward, Vector3.right, Vector3.left, Vector3.back };
-        for (int i = 0; i < dir.Length; i++)
-        {
-            if (Physics.Raycast(player.CurrentBlockTransform.position, dir[i], out RaycastHit hit, 1f, blockLayer))
-            {
-                if (hit.transform.childCount > 0)
-                {
-                    if(result == null)
-                        result = hit.transform.GetChild(0).GetComponent<RailController>();
-                }
-            }
-        }
-        return result;
-    }
-
-
-    // 설치할 수 있는
-    private bool isInstallable()
-    {
-        Vector3[] dir = new Vector3[4] { Vector3.forward, Vector3.right, Vector3.left, Vector3.back };
-        for (int i = 0; i < dir.Length; i++)
-        {
-            if (Physics.Raycast(player.CurrentBlockTransform.position, dir[i], out RaycastHit hit, 1f, blockLayer))
-            {
-                if (hit.transform.childCount > 0)
-                {
-                    RailController rail = hit.transform.GetChild(0).GetComponent<RailController>();
-                    if (rail != null)
-                    {
-                        if(rail == FindObjectOfType<GoalManager>().lastRail)
-                            return true;
-                    }
-                }
-            }
-        }
-        return false;
     }
 }
