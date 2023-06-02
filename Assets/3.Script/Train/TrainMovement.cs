@@ -73,6 +73,7 @@ public class TrainMovement : MonoBehaviour
     }
     protected void TrainMovePos()
     {
+
         listToQue = rails.ToList();
 
         if (!isReady)
