@@ -31,7 +31,7 @@ public class HelperBT : MonoBehaviour
 
     public Transform AroundEmptyBlockTranform => _aroundEmptyBlockTranform;
 
-    public Text DebugTarget;
+    public Image Emote;
 
     private Vector3 _home;
     private float _rotateSpeed = 10;
@@ -45,6 +45,7 @@ public class HelperBT : MonoBehaviour
 
     protected WorldResource _target;
     protected WorldResource.EType _order;
+    protected EmoteManager _emote;
 
 
     private Animator _animator;
@@ -53,6 +54,7 @@ public class HelperBT : MonoBehaviour
 
     private void Awake()
     {
+        _emote = FindObjectOfType<EmoteManager>();
         _stack = GetComponent<AI_Stack>();
         _home = transform.position;
         _helper = GetComponent<Helper>();
@@ -108,14 +110,15 @@ public class HelperBT : MonoBehaviour
                              {
                                  interaction.Perform();
                                  _item = item;
+                                 Emote.sprite = _emote.GetEmote(_item.Id());
                                  _agent.MoveTo(_item.InteractionPoint);
-                                 DebugTarget.text = _item.name;
                                  _animator.SetBool(isMove, true);
                              }
                              else
                              {
                                  //누군가 사용중이거나
                                  //물이 떠져있는데 물을 또 떠오라하거나 등등
+                                 Emote.sprite = _emote.GetEmote(_emote.WarningEmote);
                                  Debug.Log($"{_item} : 사용할 수 없는 상황이에요.");
                                  return BehaviorTree.ENodeStatus.Failed;
                              }
@@ -202,6 +205,7 @@ public class HelperBT : MonoBehaviour
 
                  if (_target != null)
                  {
+                     Emote.sprite = _emote.GetEmote((int)_target.Type+10);
                      Vector3 position = _agent.FindCloestAroundEndPosition(_target.transform.position);
                      _localMemory.SetGeneric<Vector3>(BlackBoardKey.Destination, position);
                      return BehaviorTree.ENodeStatus.Succeeded;
@@ -209,21 +213,24 @@ public class HelperBT : MonoBehaviour
                  }
 
              }
-                     return BehaviorTree.ENodeStatus.InProgress;
+             return BehaviorTree.ENodeStatus.InProgress;
 
          });
 
         var PossibleToWork = workRoot.Add<BTNode_Selector>("일하기 셀렉터");
         var PossibleSequence = PossibleToWork.Add<BTNode_Sequence>("가능", () =>
          {
-             Vector3 pos = _agent.FindCloestAroundEndPosition(_target.transform.position);
-             return _agent.MoveTo(pos) ? BehaviorTree.ENodeStatus.InProgress : BehaviorTree.ENodeStatus.Failed;
+             if(_target!=null)
+             {
+                Vector3 pos = _agent.FindCloestAroundEndPosition(_target.transform.position);
+                 return _agent.MoveTo(pos) ? BehaviorTree.ENodeStatus.InProgress : BehaviorTree.ENodeStatus.Failed;
+             }
+             return BehaviorTree.ENodeStatus.InProgress;
          }
         );
         var MoveToResource = PossibleSequence.Add<BTNode_Action>("자원으로 이동", () =>
          {
              //자원으로 이동하기
-             DebugTarget.text = _target.name;
              _animator.SetBool(isMove, true);
              return BehaviorTree.ENodeStatus.InProgress;
 
@@ -245,7 +252,7 @@ public class HelperBT : MonoBehaviour
 
         ImpossibleToWork.Add<BTNode_Action>("그거 못해요", () =>
          {
-             DebugTarget.text = "못해요!!";
+             Emote.sprite = _emote.GetEmote(_emote.WarningEmote);
              _animator.SetBool(isMove, false);
              return BehaviorTree.ENodeStatus.InProgress;
          },
@@ -390,7 +397,7 @@ public class HelperBT : MonoBehaviour
              {
                  case WorldResource.EType.Water:
                      PutDown();
-                     DebugTarget.text = "다 했어요";
+                     Emote.sprite = _emote.GetEmote(_emote.WarningEmote);
                      break;
 
                  case WorldResource.EType.Resource:
@@ -465,7 +472,7 @@ public class HelperBT : MonoBehaviour
         var CantDoAnything = BTRoot.Add<BTNode_Sequence>("명령을 수행할 수 없는 경우");
         CantDoAnything.Add<BTNode_Action>("자기", () =>
         {
-            DebugTarget.text = "못해요!";
+            Emote.sprite = _emote.GetEmote(_emote.WarningEmote);
             return BehaviorTree.ENodeStatus.InProgress;
         }, () =>
          {

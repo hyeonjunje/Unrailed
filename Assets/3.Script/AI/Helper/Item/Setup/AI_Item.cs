@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AI_Item : MonoBehaviour
 {
-    [SerializeField] public WorldResource.EType Type = WorldResource.EType.Wood;
+    public WorldResource.EType Type = WorldResource.EType.Wood;
     [SerializeField] protected Transform _InteractionMarker;
     public Vector3 InteractionPoint => _InteractionMarker != null ? _InteractionMarker.position : transform.position;
     protected List<BaseInteraction> CachedInteractions = null;
@@ -27,6 +27,11 @@ public class AI_Item : MonoBehaviour
     private void OnDestroy()
     {
         ItemManager.Instance.DeregisterItem(this);
+    }
+
+    public virtual int Id()
+    {
+        return 0;
     }
 
 }

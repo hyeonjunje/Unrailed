@@ -26,7 +26,6 @@ public class AI_Stack : MonoBehaviour
     {
         if (_handItem.Count == 0 && _detectedItem.Count != 0)  // 줍기
         {
-            Debug.Log("줍기");
 
             Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = _detectedItem.Peek().PickUp(_handItem, _detectedItem);
             _handItem = p.first;
@@ -38,7 +37,6 @@ public class AI_Stack : MonoBehaviour
     {
         if (_handItem.Count != 0 && _detectedItem.Count == 0) // 버리기
         {
-            Debug.Log("버리기");
 
             Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = _handItem.Peek().PutDown(_handItem, _detectedItem);
             _handItem = p.first;
