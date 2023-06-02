@@ -16,6 +16,8 @@ public class PauseUI : MonoBehaviour
     [SerializeField] private GameObject defaultUI;
     [SerializeField] private Text title_Text;
 
+    [SerializeField] private Text bgmValueText;
+    [SerializeField] private Text sfxValueText;
     public AudioMixer mixer;
 
     public Slider bgmSlider;
@@ -55,6 +57,9 @@ public class PauseUI : MonoBehaviour
             if (_isAudioSetting) //오디오 버튼 켜기
             {
                 title_Text.text = "오디오";
+
+                bgmValueText.text = Mathf.FloorToInt(bgmSlider.value * 100).ToString();
+                sfxValueText.text = Mathf.FloorToInt(sfxSlider.value * 100).ToString();
             }
             else
             {
