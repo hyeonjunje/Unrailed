@@ -188,13 +188,13 @@ public class HelperBT : MonoBehaviour
          });
 
 
-        workRoot.AddDecorator<BTDecoratorBase>("여기 가둬ㅠ", () =>
+/*        workRoot.AddDecorator<BTDecoratorBase>("여기 가둬ㅠ", () =>
          {
              var order = _localMemory.GetGeneric<WorldResource.EType>(BlackBoardKey.Order);
 
              return order == _order;
          });
-
+*/
 
         var target = workRoot.Add<BTNode_Action>("타겟 정하기", () =>
          {
@@ -250,7 +250,7 @@ public class HelperBT : MonoBehaviour
 
         });
 
-        ImpossibleToWork.Add<BTNode_Action>("그거 못해요", () =>
+        ImpossibleToWork.Add<BTNode_Action>("타겟이 갈 수 없는 곳에 있어요", () =>
          {
              Emote.sprite = _emote.GetEmote(_emote.WarningEmote);
              _animator.SetBool(isMove, false);
@@ -264,10 +264,17 @@ public class HelperBT : MonoBehaviour
 
 
         var sel = workRoot.Add<BTNode_Selector>("자원 종류에 따라 다른 행동하기");
+
         var wood = sel.Add<BTNode_Sequence>("[나무, 돌]", () =>
          {
-             return _target.Type == WorldResource.EType.Wood || _target.Type == WorldResource.EType.Stone
-                ? BehaviorTree.ENodeStatus.InProgress : BehaviorTree.ENodeStatus.Failed;
+
+             if (_target != null)
+             {
+                 return _target.Type == WorldResource.EType.Wood || _target.Type == WorldResource.EType.Stone
+                    ? BehaviorTree.ENodeStatus.InProgress : BehaviorTree.ENodeStatus.Failed;
+             }
+
+             else return BehaviorTree.ENodeStatus.Failed;
 
          });
 
@@ -301,22 +308,19 @@ public class HelperBT : MonoBehaviour
          {
              return _target.Type == WorldResource.EType.Water || _target.Type == WorldResource.EType.Resource
              ? BehaviorTree.ENodeStatus.InProgress : BehaviorTree.ENodeStatus.Failed;
-
          });
 
-        var Filling = water.Add<BTNode_Action>("물 채우기", () =>
-       {
-
-
-           switch(_target.Type)
+        var Filling = water.Add<BTNode_Action>("물 채우기 / 자원 들기", () =>
+         {
+           switch (_target.Type)
            {
 
                case WorldResource.EType.Water:
                    break;
 
                case WorldResource.EType.Resource:
-                    _stack.DetectGroundBlock(_target);
-
+                   _stack.DetectGroundBlock(_target);
+                   //처음 드는 거 
                    if (_stack._handItem.Count == 0)
                    {
                        _stack.InteractiveItemSpace();
@@ -327,9 +331,6 @@ public class HelperBT : MonoBehaviour
                        _stack.InteractiveItem();
                    }
                    break;
-
-
-
            }
 
 
@@ -402,33 +403,32 @@ public class HelperBT : MonoBehaviour
 
                  case WorldResource.EType.Resource:
                      break;
-
-
              }
 
              return BehaviorTree.ENodeStatus.InProgress;
          }
         , () =>
          {
-             switch(_target.Type)
+             switch (_target.Type)
              {
                  case WorldResource.EType.Resource:
-                     return _stack._handItem.Count == 3 ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.Failed;
+                     if (_helper.Home.NonethisResourceType)
+                     {
+                         return BehaviorTree.ENodeStatus.Succeeded;
+                     }
+                     else
+                         //세 개 들었으면 옮기기
+                         return _stack._handItem.Count == 3 ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.Failed;
 
                  case WorldResource.EType.Water:
                      return BehaviorTree.ENodeStatus.InProgress;
              }
-
              return BehaviorTree.ENodeStatus.InProgress;
 
          });
 
         var Carrying = water.Add<BTNode_Action>("자원 운반하기", () =>
         {
-            //만들거
-            //1. 내려놓기
-            //2. 다시 이동하기
-
             //나중에 기차 좌표로 바꾸기
             _agent.MoveTo(_home);
             return BehaviorTree.ENodeStatus.InProgress;
@@ -449,12 +449,17 @@ public class HelperBT : MonoBehaviour
          },
         () =>
         {
+            //더 이상 채집할 자원이 없는경우
+            if (_helper.Home.NonethisResourceType)
+            {
+                Emote.sprite = _emote.GetEmote(_emote.WarningEmote);
+                _animator.SetBool(isMove, false);
+                return BehaviorTree.ENodeStatus.InProgress;
+            }
+            //더 있는 경우
             return _stack._handItem.Count == 0 ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
         }
         );
-
-
-
 
         #endregion
 

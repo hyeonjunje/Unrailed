@@ -5,14 +5,16 @@ using System.Linq;
 
 public class Resource : MonoBehaviour
 {
-    public Transform spawnPoint;
+    public bool NonethisResourceType { get; private set; } = false;
+    
     Helper Robot;
 
     [SerializeField] WorldResource.EType DefaultResource = WorldResource.EType.Wood;
     Dictionary<WorldResource.EType, List<WorldResource>> TrackedResources = null;
 
+
     [SerializeField] float PerfectKnowledgeRange = 30f;
-    [SerializeField] int GatherPickRange = 10;
+    //[SerializeField] int GatherPickRange = 10;
 
     public int NumAvailableResources { get; private set; } = 0;
 
@@ -36,7 +38,7 @@ public class Resource : MonoBehaviour
 
 
 
-    void PopulateResources()
+    private void PopulateResources()
     {
         //자원 세팅
         var resourceTypes = System.Enum.GetValues(typeof(WorldResource.EType));
@@ -68,9 +70,10 @@ public class Resource : MonoBehaviour
             }
         }
         //자원이 있는지 확인
-        if (TrackedResources[targetResource].Count == 0)
+        if (TrackedResources[targetResource].Count <= 1)
         {
-            Debug.Log($"{targetResource} :  다 캤어요");
+            NonethisResourceType = true;
+            Debug.Log($"{targetResource} :  거의 다 캤어요");
         }
 
         var sortedResources = TrackedResources[targetResource]
