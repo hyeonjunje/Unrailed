@@ -4989,7 +4989,6 @@ GameObject:
   - component: {fileID: 8528741607162919662}
   - component: {fileID: 219683248801925550}
   - component: {fileID: 2364456155266723814}
-  - component: {fileID: 2519817169010711840}
   m_Layer: 0
   m_Name: ItemBolt
   m_TagString: Invisible
@@ -5044,19 +5043,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1.54, z: 1}
   m_Center: {x: 0, y: 0.51, z: 0}
---- !u!114 &2519817169010711840
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4186585146093093111}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 293f033d1dfd9254ab8fef8e66c2838d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemType: 5
 --- !u!1 &5485166357370565014
 GameObject:
   m_ObjectHideFlags: 0
