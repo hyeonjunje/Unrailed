@@ -15,6 +15,9 @@ public class EmoteManager : MonoBehaviour
     public int BucketEmote = 3;
     [HideInInspector]
     public int WarningEmote = 4;
+    [HideInInspector]
+    public int SleepEmote = 5;
+
 
     [HideInInspector]
     public int WoodEmote = 10;
@@ -24,7 +27,6 @@ public class EmoteManager : MonoBehaviour
     public int StoneEmote = 12;
     [HideInInspector]
     public int ResourceEmote = 13;
-
 
 
     Dictionary<int, Sprite> _portraitData;
@@ -42,11 +44,12 @@ public class EmoteManager : MonoBehaviour
         _portraitData.Add(PickEmote, Portrait[1]);
         _portraitData.Add(BucketEmote, Portrait[2]);
         _portraitData.Add(WarningEmote, Portrait[3]);
+        _portraitData.Add(SleepEmote, Portrait[4]);
 
-        _portraitData.Add(WoodEmote, Portrait[4]);
-        _portraitData.Add(WaterEmote, Portrait[5]);
-        _portraitData.Add(StoneEmote, Portrait[6]);
-        _portraitData.Add(ResourceEmote, Portrait[7]);
+        _portraitData.Add(WoodEmote, Portrait[5]);
+        _portraitData.Add(WaterEmote, Portrait[6]);
+        _portraitData.Add(StoneEmote, Portrait[7]);
+        _portraitData.Add(ResourceEmote, Portrait[8]);
     }
 
     public Sprite GetEmote(int id)

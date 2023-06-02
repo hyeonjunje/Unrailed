@@ -187,15 +187,6 @@ public class HelperBT : MonoBehaviour
              return order == _order ? BehaviorTree.ENodeStatus.InProgress : BehaviorTree.ENodeStatus.Failed;
          });
 
-
-/*        workRoot.AddDecorator<BTDecoratorBase>("여기 가둬ㅠ", () =>
-         {
-             var order = _localMemory.GetGeneric<WorldResource.EType>(BlackBoardKey.Order);
-
-             return order == _order;
-         });
-*/
-
         var target = workRoot.Add<BTNode_Action>("타겟 정하기", () =>
          {
              if (_target == null)
@@ -398,7 +389,7 @@ public class HelperBT : MonoBehaviour
              {
                  case WorldResource.EType.Water:
                      PutDown();
-                     Emote.sprite = _emote.GetEmote(_emote.WarningEmote);
+                     Emote.sprite = _emote.GetEmote(_emote.SleepEmote);
                      break;
 
                  case WorldResource.EType.Resource:
@@ -412,6 +403,9 @@ public class HelperBT : MonoBehaviour
              switch (_target.Type)
              {
                  case WorldResource.EType.Resource:
+
+                     _helper.Home.GetGatherTarget(_helper);
+                     //자원이 더 이상 없다면 
                      if (_helper.Home.NonethisResourceType)
                      {
                          return BehaviorTree.ENodeStatus.Succeeded;
@@ -456,14 +450,24 @@ public class HelperBT : MonoBehaviour
                 _animator.SetBool(isMove, false);
                 return BehaviorTree.ENodeStatus.InProgress;
             }
-            //더 있는 경우
-            return _stack._handItem.Count == 0 ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
+
+            else
+            {
+                var order = _localMemory.GetGeneric<WorldResource.EType>(BlackBoardKey.Order);
+                if (order == _order)
+                {
+                    return _stack._handItem.Count == 0 ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
+                }
+                else
+                    _localMemory.SetGeneric<WorldResource.EType>(BlackBoardKey.Order, _order);
+                    return BehaviorTree.ENodeStatus.Succeeded;
+
+            
+            }
         }
         );
 
         #endregion
-
-
 
 
         var OrderChange = BTRoot.Add<BTNode_Sequence>("명령이 바뀐 경우");
@@ -471,6 +475,8 @@ public class HelperBT : MonoBehaviour
          {
              PutDown();
              var reset = Reset();
+             //타겟이 없다면 자기
+             //있다면 다음 명령 수행하기
              return reset ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.Failed;
          });
 
@@ -481,8 +487,13 @@ public class HelperBT : MonoBehaviour
             return BehaviorTree.ENodeStatus.InProgress;
         }, () =>
          {
-
-            return BehaviorTree.ENodeStatus.InProgress;
+             var order = _localMemory.GetGeneric<WorldResource.EType>(BlackBoardKey.Order);
+             if(order!=_order)
+             {
+                _localMemory.SetGeneric<WorldResource.EType>(BlackBoardKey.Order, _order);
+                 return BehaviorTree.ENodeStatus.Succeeded;
+             }
+             return BehaviorTree.ENodeStatus.InProgress;
          });
 
 
@@ -507,8 +518,6 @@ public class HelperBT : MonoBehaviour
             _item.transform.rotation = Quaternion.identity;
             _item.transform.parent = _stack.BFS();
             _item.transform.localPosition = (Vector3.up * 0.5f) + (Vector3.up * 0.15f);
-
-
 
             _animator.SetBool(isDig, false);
             _animator.SetBool(isMove, false);
