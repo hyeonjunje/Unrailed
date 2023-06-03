@@ -19,6 +19,9 @@ public class PlayerController : MonoBehaviour
     [Header("UI")]
     [SerializeField] private WaterGauge _waterGauge;
 
+    [Header("Particle")]
+    [SerializeField] private ParticleSystem _fireeffect;
+    [SerializeField] private ParticleSystem _dasheffect;
     // 상태  => 이건 상태패턴??
     private bool _isDash = false;
     private bool _isInteractive = false;
@@ -28,6 +31,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _rigidbody;
     private PlayerInput _playerInput;
     private PlayerStat _playerStat;
+    private Animator _animator;
 
     // 물건
     // 종류가 다르면 안됨
@@ -58,7 +62,6 @@ public class PlayerController : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody>();
         _playerInput = GetComponent<PlayerInput>();
-
         _playerStat = GetComponent<PlayerStat>();
 
         InitPlayer();
@@ -98,6 +101,7 @@ public class PlayerController : MonoBehaviour
 
         // 기차 상호작용
         InteractiveTrain();
+        OffFire();      //기차 불끄기
     }
 
     private void Move()
@@ -111,6 +115,7 @@ public class PlayerController : MonoBehaviour
             _isDash = true;
             _currentSpeed = _playerStat.dashSpeed;
             Invoke("DashOff", _playerStat.dashDuration);
+            _dasheffect.Play();
         }
 
         transform.position += _playerInput.Dir * _currentSpeed * Time.deltaTime;
@@ -121,6 +126,8 @@ public class PlayerController : MonoBehaviour
     {
         _currentSpeed = _playerStat.moveSpeed;
         _isDash = false;
+        _dasheffect.Stop();
+
     }
 
     // spacebar 누를 때
@@ -332,6 +339,22 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OffFire()
+    {
+        if(CurrentHandItem.ItemType == EItemType.bucket && 
+            _currentFrontObject.gameObject.name == "Train_Water_Tank(1)")
+        {
+            if(_waterGauge.IsFillWater())
+            {
+                // 불꺼주기 넣어야 해
+                _fireeffect.Stop();
+
+                CurrentHandItem.ActiveWater(false);
+                _waterGauge.ResetWater();
+            }
+        }
+    }
+
     public bool SetBridge() // 다리 놓기
     {
         if (_currentFrontObject == null)
@@ -360,21 +383,17 @@ public class PlayerController : MonoBehaviour
     {
         if (_currentFrontObject == null)
             return;
-
         if (!_isInteractive)
             return;
-
         // 여기 애니메이션
         if (_currentFrontObject.gameObject.layer == LayerMask.NameToLayer("diggable"))
         {
             if (CurrentHandItem == null)
                 return;
-
             ReSource resource = _currentFrontObject.GetComponent<ReSource>();
             if (resource == null)
                 return;
-
-            if(CurrentHandItem.ItemType == EItemType.axe && resource.ResourceType == EResource.tree)
+            if (CurrentHandItem.ItemType == EItemType.axe && resource.ResourceType == EResource.tree)
             {
                 resource.Dig();
                 _isInteractive = false;
@@ -391,10 +410,8 @@ public class PlayerController : MonoBehaviour
     {
         if (_currentFrontObject == null)
             return;
-
         if (!_isInteractive)
             return;
-
         if (_currentFrontObject.gameObject.layer == LayerMask.NameToLayer("attackable"))
         {
             if (CurrentHandItem != null)
