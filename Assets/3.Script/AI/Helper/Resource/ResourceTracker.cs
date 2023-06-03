@@ -7,7 +7,7 @@ public class ResourceTracker : MonoBehaviour
 {
     public static ResourceTracker Instance { get; private set; } = null;
 
-    Dictionary<WorldResource.EType, List<WorldResource>> TrackedResources = new Dictionary<WorldResource.EType, List<WorldResource>>();
+    private Dictionary<WorldResource.EType, List<WorldResource>> _trackedResources = new Dictionary<WorldResource.EType, List<WorldResource>>();
 
     void Awake()
     {
@@ -21,7 +21,7 @@ public class ResourceTracker : MonoBehaviour
         var resourceTypes = System.Enum.GetValues(typeof(WorldResource.EType));
         foreach (var value in resourceTypes)
         {
-            TrackedResources[(WorldResource.EType)value] = new List<WorldResource>();
+            _trackedResources[(WorldResource.EType)value] = new List<WorldResource>();
         }
 
         Instance = this;
@@ -29,18 +29,18 @@ public class ResourceTracker : MonoBehaviour
 
     public void RegisterResource(WorldResource resource)
     {
-        TrackedResources[resource.Type].Add(resource);
+        _trackedResources[resource.Type].Add(resource);
     }
 
     public void DeRegisterResource(WorldResource resource)
     {
 
-          TrackedResources[resource.Type].Remove(resource);
+          _trackedResources[resource.Type].Remove(resource);
     }
 
 
 
-    float Distance2D(Vector3 pos1, Vector3 pos2)
+    private float Distance2D(Vector3 pos1, Vector3 pos2)
     {
         return Mathf.Sqrt((pos1.x - pos2.x) * (pos1.x - pos2.x) +
                           (pos1.z - pos2.z) * (pos1.z - pos2.z));
@@ -48,6 +48,6 @@ public class ResourceTracker : MonoBehaviour
 
     public List<WorldResource> GetResourcesInRange(WorldResource.EType type, Vector3 location, float range)
     {
-        return TrackedResources[type].Where(resource => Distance2D(resource.transform.position, location) <= range).ToList();
+        return _trackedResources[type].Where(resource => Distance2D(resource.transform.position, location) <= range).ToList();
     }
 }

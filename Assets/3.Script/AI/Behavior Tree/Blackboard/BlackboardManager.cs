@@ -6,18 +6,18 @@ using UnityEngine;
 public class Blackboard<BlackboardKeyType>
 {
     //저장공간
-    Dictionary<BlackboardKeyType, object> GenericValues = new Dictionary<BlackboardKeyType, object>();
+    private Dictionary<BlackboardKeyType, object> _genericValues = new Dictionary<BlackboardKeyType, object>();
 
     //키 설정하기
     public void SetGeneric<T>(BlackboardKeyType key, T value)
     {
-        GenericValues[key] = value;
+        _genericValues[key] = value;
     }
     // 키 가져오기
     public T GetGeneric<T>(BlackboardKeyType key)
     {
         object value;
-        if (GenericValues.TryGetValue(key, out value))
+        if (_genericValues.TryGetValue(key, out value))
             return (T)value;
 
         throw new System.ArgumentException($"해당 키에 해당하는 값이 없습니다");

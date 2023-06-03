@@ -6,14 +6,10 @@ using System.Linq;
 public class Resource : MonoBehaviour
 {
     public bool NonethisResourceType { get; private set; } = false;
-    
-    // Helper Robot;
 
-    [SerializeField] WorldResource.EType DefaultResource = WorldResource.EType.Wood;
-    Dictionary<WorldResource.EType, List<WorldResource>> TrackedResources = null;
-
-
-    [SerializeField] float PerfectKnowledgeRange = 30f;
+    private WorldResource.EType _defaultResource = WorldResource.EType.Wood;
+    private Dictionary<WorldResource.EType, List<WorldResource>> _trackedResources = null;
+    private float _range = 30f;
 
     public void SetHome(BaseAI robot)
     {
@@ -28,7 +24,7 @@ public class Resource : MonoBehaviour
 
     private void Update()
     {
-        if(TrackedResources==null)
+        if(_trackedResources==null)
         {
             PopulateResources();
         }
@@ -38,11 +34,11 @@ public class Resource : MonoBehaviour
     {
         //자원 세팅
         var resourceTypes = System.Enum.GetValues(typeof(WorldResource.EType));
-        TrackedResources = new Dictionary<WorldResource.EType, List<WorldResource>>();
+        _trackedResources = new Dictionary<WorldResource.EType, List<WorldResource>>();
         foreach (var value in resourceTypes)
         {
             var type = (WorldResource.EType)value;
-            TrackedResources[type] = ResourceTracker.Instance.GetResourcesInRange(type, transform.position, PerfectKnowledgeRange);
+            _trackedResources[type] = ResourceTracker.Instance.GetResourcesInRange(type, transform.position, _range);
             //총 자원수
         }
     }
@@ -51,7 +47,7 @@ public class Resource : MonoBehaviour
     {
         //자원 업데이트
         PopulateResources();
-        WorldResource.EType targetResource = DefaultResource;
+        WorldResource.EType targetResource = _defaultResource;
         var resourceTypes = System.Enum.GetValues(typeof(WorldResource.EType));
 
         foreach (var typeValue in resourceTypes)
@@ -65,7 +61,7 @@ public class Resource : MonoBehaviour
             }
         }
         //자원이 있는지 확인
-        if (TrackedResources[targetResource].Count <1)
+        if (_trackedResources[targetResource].Count <1)
         {
             NonethisResourceType = true;
             Debug.Log($"{targetResource} :  자원이 이제 없어요");
@@ -73,7 +69,7 @@ public class Resource : MonoBehaviour
         else
             NonethisResourceType = false;
 
-        var sortedResources = TrackedResources[targetResource]
+        var sortedResources = _trackedResources[targetResource]
             //갈 수 있는 곳에 있는 자원만 추리기
             .Where(resource => Vector3.Distance(resource.transform.position, brain.Agent.
                                                 FindCloestAroundEndPosition(resource.transform.position)) <= 1.5f)
@@ -92,7 +88,7 @@ public class Resource : MonoBehaviour
         PopulateResources();
         WorldResource.EType targetResource = WorldResource.EType.Resource;
         //자원이 있는지 확인
-        if (TrackedResources[targetResource].Count < 1)
+        if (_trackedResources[targetResource].Count < 1)
         {
             NonethisResourceType = true;
             Debug.Log($"{targetResource} :  훔칠 자원이 이제 없어요");
@@ -100,7 +96,7 @@ public class Resource : MonoBehaviour
         else
             NonethisResourceType = false;
 
-        var sortedResources = TrackedResources[targetResource]
+        var sortedResources = _trackedResources[targetResource]
             //갈 수 있는 곳에 있는 자원만 추리기
             .Where(resource => Vector3.Distance(resource.transform.position, brain.
                                                 FindCloestAroundEndPosition(resource.transform.position)) <= 1.5f)
@@ -120,13 +116,13 @@ public class Resource : MonoBehaviour
         var resourceTypes = System.Enum.GetValues(typeof(WorldResource.EType));
 
         //자원이 있는지 확인
-        if (TrackedResources[targetResource].Count < 1)
+        if (_trackedResources[targetResource].Count < 1)
         {
             Debug.Log($"{targetResource} :  자원이 이제 없어요");
             return false;
         }
 
-        var sortedResources = TrackedResources[targetResource]
+        var sortedResources = _trackedResources[targetResource]
             //갈 수 있는 곳에 있는 자원만 추리기
             .Where(resource => Vector3.Distance(resource.transform.position, brain.
                                                 FindCloestAroundEndPosition(resource.transform.position)) <= 1.5f)

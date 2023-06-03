@@ -6,12 +6,11 @@ public class AI_Stack : MonoBehaviour
 {
     public Stack<AI_StackItem> _handItem = new Stack<AI_StackItem>();
     private Stack<AI_StackItem> _detectedItem = new Stack<AI_StackItem>();
+    [SerializeField] private LayerMask BlockLayer;
 
     private Transform _currentblock;
 
-    public LayerMask BlockLayer;
     public Transform AroundEmptyBlockTranform => BFS();
-
 
     private BaseAI _ai;
 

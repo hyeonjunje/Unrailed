@@ -10,10 +10,9 @@ public class EnemyBT2 : BaseAI
         public static readonly BlackBoardKey NewDestination = new BlackBoardKey() { Name = "NewDestination" };
 
         public string Name;
-
     }
 
-    protected Blackboard<BlackBoardKey> _localMemory;
+    private Blackboard<BlackBoardKey> _localMemory;
 
     private void Awake()
     {
@@ -106,8 +105,8 @@ public class EnemyBT2 : BaseAI
          });
 
 
-        var dd = MainSeq.Add<BTNode_Sequence>("3");
-        dd.Add<BTNode_Action>("쌓기",
+        var StackResource = MainSeq.Add<BTNode_Sequence>("3");
+        StackResource.Add<BTNode_Action>("쌓기",
             ()=>
             {
                 return BehaviorTree.ENodeStatus.InProgress;
@@ -127,9 +126,8 @@ public class EnemyBT2 : BaseAI
             });
 
 
-
-        var runRoot = MainSeq.Add<BTNode_Sequence>("4");
-        runRoot.Add<BTNode_Action>("도망",
+        var RunRoot = MainSeq.Add<BTNode_Sequence>("4");
+        RunRoot.Add<BTNode_Action>("도망",
             () =>
             {
                 Vector3 position = _agent.MoveToClosestEndPosition();
@@ -144,8 +142,8 @@ public class EnemyBT2 : BaseAI
 
         //내려놓기
 
-        var discardRoot = runRoot.Add<BTNode_Sequence>("4");
-        discardRoot.Add<BTNode_Action>("버리기",
+        var DiscardRoot = RunRoot.Add<BTNode_Sequence>("5");
+        DiscardRoot.Add<BTNode_Action>("버리기",
             () =>
             {
                 _stack.ThrowResource();
@@ -163,8 +161,8 @@ public class EnemyBT2 : BaseAI
 
 
 
-        var wanderRoot = BTRoot.Add<BTNode_Sequence>("목표 못 찾음 : 무작위 이동");
-        wanderRoot.Add<BTNode_Action>("무작위 이동중",
+        var WanderRoot = BTRoot.Add<BTNode_Sequence>("목표 못 찾음");
+        WanderRoot.Add<BTNode_Action>("무작위 이동중",
         () =>
         {
             _animator.SetBool(isMove, true);
