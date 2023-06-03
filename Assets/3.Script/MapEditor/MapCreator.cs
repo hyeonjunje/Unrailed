@@ -13,6 +13,9 @@ public class MapCreator : MonoBehaviour
     [SerializeField] private BlockTransformerData[] _blockTransformerData;
     [SerializeField] private Material[] _blocksMaterial;
 
+    [Header("AI")]
+    [SerializeField] private Helper _robot;
+
     [Header("ETC")]
     [SerializeField] private float _intervalTimeToMoveBlockBundle = 0.1f;  // 블럭 번들들이 떨어지는 시간간격
 
@@ -28,6 +31,9 @@ public class MapCreator : MonoBehaviour
     public async UniTask<List<List<BlockMK2>>> CreateMapAsync(MapData mapData, Transform parent)
     {
         InitMap(mapData, parent);
+
+        // PathFindingField.Instance.InitData(parent);
+
         await UniTask.Yield();
         InitBlock(mapData);
         await UniTask.Yield();

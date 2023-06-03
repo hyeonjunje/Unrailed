@@ -453,6 +453,9 @@ GameObject:
   - component: {fileID: 1965801728169059979}
   - component: {fileID: -7846037446522698610}
   - component: {fileID: 976386269881512772}
+  - component: {fileID: 2227067540309483334}
+  - component: {fileID: 7170884920037564104}
+  - component: {fileID: 5859823085303779038}
   m_Layer: 12
   m_Name: Item_Bucket
   m_TagString: Invisible
@@ -527,6 +530,46 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2227067540309483334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4929098378042273858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82f21774889fd3c4e8ad92d752427b94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Type: 1
+  _InteractionMarker: {fileID: 7263903360590251961}
+--- !u!114 &7170884920037564104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4929098378042273858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97fe11da3d45e6649ac129fc6dbb168a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5859823085303779038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4929098378042273858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10f7b735faf3fb743ba287e358e48325, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Watergauge: {fileID: 0}
+  WaterMesh: {fileID: 8121563740313692291}
 --- !u!1 &8121563740313692291
 GameObject:
   m_ObjectHideFlags: 0

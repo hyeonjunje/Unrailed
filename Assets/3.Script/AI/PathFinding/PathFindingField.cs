@@ -43,13 +43,8 @@ public class PathFindingField : MonoBehaviour
         }
 
         Instance = this;
-        InitData(_map);
     }
     #endregion
-
-
-    [SerializeField] private Transform _map;
-
     private bool[,] _mapData;
 
     public int MinX { get; private set; }
@@ -59,7 +54,7 @@ public class PathFindingField : MonoBehaviour
 
 
     // 맵 데이터 초기화
-    private void InitData(Transform map)
+    public void InitData(Transform map)
     {
         MinX = Mathf.RoundToInt(map.GetChild(0).GetChild(0).localPosition.x);
         MinY = Mathf.RoundToInt(map.GetChild(0).GetChild(0).localPosition.z);

@@ -7,7 +7,7 @@ public class Resource : MonoBehaviour
 {
     public bool NonethisResourceType { get; private set; } = false;
     
-    Helper Robot;
+    // Helper Robot;
 
     [SerializeField] WorldResource.EType DefaultResource = WorldResource.EType.Wood;
     Dictionary<WorldResource.EType, List<WorldResource>> TrackedResources = null;
@@ -15,16 +15,23 @@ public class Resource : MonoBehaviour
 
     [SerializeField] float PerfectKnowledgeRange = 30f;
 
-    void Awake()
+    public void SetHome(BaseAI robot)
     {
-        //나중에 로봇 생성 여기로 바꾸기
-        Robot = FindObjectOfType<Helper>();
-        Robot.SetHome(this);
+        robot.SetHome(this);
     }
+
 
     private void Start()
     {
         PopulateResources();
+    }
+
+    private void Update()
+    {
+        if(TrackedResources==null)
+        {
+            PopulateResources();
+        }
     }
 
     private void PopulateResources()

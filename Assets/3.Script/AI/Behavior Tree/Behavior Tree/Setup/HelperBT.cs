@@ -395,9 +395,9 @@ public class HelperBT : BaseAI
              {
                  case WorldResource.EType.Resource:
 
-                     _helper.Home.GetGatherTarget(_helper);
+                     Home.GetGatherTarget(_helper);
                      //자원이 더 이상 없다면 
-                     if (_helper.Home.NonethisResourceType)
+                     if (Home.NonethisResourceType)
                      {
                          return BehaviorTree.ENodeStatus.Succeeded;
                      }
@@ -435,7 +435,7 @@ public class HelperBT : BaseAI
         () =>
         {
             //더 이상 채집할 자원이 없는경우
-            if (_helper.Home.NonethisResourceType)
+            if (Home.NonethisResourceType)
             {
                 Emote.sprite = _emote.GetEmote(_emote.WarningEmote);
                 _animator.SetBool(isMove, false);
