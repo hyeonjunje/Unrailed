@@ -20,7 +20,7 @@ public class MyNonStackableItem : MyItem
             MyItem temp = handItem.Pop();
             handItem.Push(detectedItem.Pop());
             detectedItem.Push(temp);
-            handItem.Peek().RePosition(player.RightHandTransform, Vector3.zero);
+            handItem.Peek().RePosition(handItem.Peek().equipment, Vector3.zero);
             detectedItem.Peek().RePosition(player.AroundEmptyBlockTranform, Vector3.up * 0.5f);
         }
         else if(detectedItemType == EItemType.wood || detectedItemType == EItemType.steel)
@@ -32,7 +32,7 @@ public class MyNonStackableItem : MyItem
                     break;
 
                 handItem.Push(detectedItem.Pop());
-                handItem.Peek().RePosition(player.TwoHandTransform, Vector3.up * i * stackInterval);
+                handItem.Peek().RePosition(handItem.Peek().equipment, Vector3.up * i * stackInterval);
             }
             detectedItem.Push(temp);
             detectedItem.Peek().RePosition(player.AroundEmptyBlockTranform, Vector3.up * 0.5f);
@@ -48,7 +48,7 @@ public class MyNonStackableItem : MyItem
                         break;
 
                     handItem.Push(detectedItem.Pop());
-                    handItem.Peek().RePosition(player.TwoHandTransform, Vector3.up * i * stackInterval);
+                    handItem.Peek().RePosition(handItem.Peek().equipment, Vector3.up * i * stackInterval);
                 }
                 detectedItem.Push(temp);
                 detectedItem.Peek().RePosition(player.AroundEmptyBlockTranform, Vector3.up * 0.5f);
@@ -62,7 +62,7 @@ public class MyNonStackableItem : MyItem
     {
         // 그냥 주워
         handItem.Push(detectedItem.Pop());
-        handItem.Peek().RePosition(player.RightHandTransform, Vector3.zero);
+        handItem.Peek().RePosition(handItem.Peek().equipment, Vector3.zero);
         return new Pair<Stack<MyItem>, Stack<MyItem>>(handItem, detectedItem);
     }
 

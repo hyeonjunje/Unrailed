@@ -15,7 +15,7 @@ public class MyStackableItem : MyItem
                     break;
 
                 handItem.Push(detectedItem.Pop());
-                handItem.Peek().RePosition(player.TwoHandTransform, Vector3.up * (handItem.Count - 1) * stackInterval);
+                handItem.Peek().RePosition(handItem.Peek().equipment, Vector3.up * (handItem.Count - 1) * stackInterval);
             }
         }
 
@@ -36,7 +36,7 @@ public class MyStackableItem : MyItem
                 detectedItem.Peek().RePosition(player.CurrentBlockTransform, Vector3.up * 0.5f + Vector3.up * (detectedItem.Count - 1) * stackInterval);
             }
             handItem.Push(temp);
-            handItem.Peek().RePosition(player.RightHandTransform, Vector3.zero);
+            handItem.Peek().RePosition(handItem.Peek().equipment, Vector3.zero);
         }
         else if (detectedItemType == EItemType.wood || detectedItemType == EItemType.steel)
         {
@@ -60,7 +60,7 @@ public class MyStackableItem : MyItem
                     if (detectedItem.Count == 0)
                         break;
                     handItem.Push(detectedItem.Pop());
-                    handItem.Peek().RePosition(player.TwoHandTransform, Vector3.up * (handItem.Count - 1) * stackInterval);
+                    handItem.Peek().RePosition(handItem.Peek().equipment, Vector3.up * (handItem.Count - 1) * stackInterval);
                 }
 
                 // 다른 타입이니까 내 손에 있는거는 다른곳에 놓는다.
@@ -85,7 +85,7 @@ public class MyStackableItem : MyItem
                     if (detectedItem.Count == 0)
                         break;
                     handItem.Push(detectedItem.Pop());
-                    handItem.Peek().RePosition(player.TwoHandTransform, Vector3.up * (handItem.Count - 1) * stackInterval);
+                    handItem.Peek().RePosition(handItem.Peek().equipment, Vector3.up * (handItem.Count - 1) * stackInterval);
                 }
 
                 if(detectedItem.Count == 0)
@@ -118,7 +118,7 @@ public class MyStackableItem : MyItem
             if (detectedItem.Count == 0)
                 break;
             handItem.Push(detectedItem.Pop());
-            handItem.Peek().RePosition(player.TwoHandTransform, Vector3.up * (handItem.Count - 1) * stackInterval);
+            handItem.Peek().RePosition(handItem.Peek().equipment, Vector3.up * (handItem.Count - 1) * stackInterval);
         }
 
         return new Pair<Stack<MyItem>, Stack<MyItem>>(handItem, detectedItem);
@@ -126,10 +126,11 @@ public class MyStackableItem : MyItem
 
     public override Pair<Stack<MyItem>, Stack<MyItem>> PutDown(Stack<MyItem> handItem, Stack<MyItem> detectedItem)
     {
+        Transform aroundTransform = player.AroundEmptyBlockTranform;
         while(handItem.Count != 0)
         {
             detectedItem.Push(handItem.Pop());
-            detectedItem.Peek().RePosition(player.CurrentBlockTransform, Vector3.up * 0.5f + Vector3.up * (detectedItem.Count - 1) * stackInterval);
+            detectedItem.Peek().RePosition(aroundTransform, Vector3.up * 0.5f + Vector3.up * (detectedItem.Count - 1) * stackInterval);
         }
 
         return new Pair<Stack<MyItem>, Stack<MyItem>>(handItem, detectedItem);
