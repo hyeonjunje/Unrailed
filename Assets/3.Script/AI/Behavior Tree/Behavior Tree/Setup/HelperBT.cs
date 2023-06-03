@@ -18,12 +18,6 @@ public class HelperBT : BaseAI
 
     protected Blackboard<BlackBoardKey> _localMemory;
 
-
-
-
-    //BFS
-
-
     //기차 위치로 나중에 바꾸기
     private Vector3 _home;
     private float _rotateSpeed = 10;
