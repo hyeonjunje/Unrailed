@@ -2,15 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class BoxItem
+{
+    public BoxItem(EItemType type) { itemType = type; }
+    public EItemType itemType;
+}
+
 public class TrainBox : TrainMovement
 {
-    public List<Item> woods = new List<Item>();
-    public List<Item> steels = new List<Item>();
+    public List<BoxItem> woods = new List<BoxItem>();
+    public List<BoxItem> steels = new List<BoxItem>();
 
     [SerializeField] private TrainWorkBench workBench;
     public Player player;
 
     public int maxItem;
+    public bool madeReady;
     // Start is called before the first frame update
     void Awake()
     {
@@ -29,7 +37,7 @@ public class TrainBox : TrainMovement
         TrainUpgrade();
         if (!isBurn)
         {
-            GiveMeItem();
+            
         }
     }
     public override void TrainUpgrade()
@@ -52,17 +60,21 @@ public class TrainBox : TrainMovement
     }
     private void RelayItems()
     {
-        woods.Remove(woods[0]);
-        steels.Remove(steels[0]);
         workBench.MakingRail();
-    }
-    public void GiveMeItem()
+    } 
+    public void GiveMeItem(EItemType itemtype, Stack<MyItem> itemCount)
     {
-        //아이템 보관은 플레이어 다 만들어지면 ㄱㄱ
-        //최대 보유량 3개
-        //나무3개 철 3개
-        //최대 보유량 매직넘버링 말고 최대값 변수로 구현
-        //목재와 철 1개씩 존재할 경우 if문으로 RelayItems 실행
-        //RelayItems();
+        switch (itemtype)
+        {
+            case EItemType.wood:
+                    woods.Add(new BoxItem(itemtype));
+                itemCount.Peek();
+                break;
+
+            case EItemType.steel:
+                steels.Add(new BoxItem(itemtype));
+                itemCount.Peek();
+                break;
+        }
     }
 }
