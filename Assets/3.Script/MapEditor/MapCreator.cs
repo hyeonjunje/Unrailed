@@ -28,11 +28,12 @@ public class MapCreator : MonoBehaviour
     /// <param name="mapData">생성할 맵의 데이터</param>
     /// <param name="parent">맵의 부모</param>
     /// <returns>블럭들의 2차원 리스트(맵)</returns>
-    public async UniTask<List<List<BlockMK2>>> CreateMapAsync(MapData mapData, Transform parent)
+    public async UniTask<List<List<BlockMK2>>> CreateMapAsync(MapData mapData, Transform parent, bool isInit = false)
     {
         InitMap(mapData, parent);
 
-        // PathFindingField.Instance.InitData(parent);
+        if(isInit)
+            PathFindingField.Instance.InitData(parent);
 
         await UniTask.Yield();
         InitBlock(mapData);
