@@ -7748,14 +7748,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   range: 1
   railPrefabs:
-  - {fileID: 5750340282539543552}
-  - {fileID: 8552342458900479637}
-  - {fileID: 413432475128371764}
-  - {fileID: 7010335106942881063}
-  - {fileID: 4881840825783717322}
-  - {fileID: 2679033301684200986}
-  - {fileID: 6092851041733908163}
-  - {fileID: 9076389145321103305}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   neighborRail: {fileID: 0}
   trainManager: {fileID: 0}
   trainComponents: []
@@ -7797,11 +7797,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8f896b79ed82e54a86f253773d8ac86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _equipPart: 1
   stackInterval: 0.15
   itemType: 2
   blockLayer:
     serializedVersion: 2
     m_Bits: 1073741824
+  equipment: {fileID: 0}
 --- !u!1 &7419329411036280246
 GameObject:
   m_ObjectHideFlags: 0

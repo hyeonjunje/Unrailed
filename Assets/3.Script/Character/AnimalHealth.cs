@@ -4,32 +4,41 @@ using UnityEngine;
 
 public class AnimalHealth : MonoBehaviour
 {
-    public bool isHit = false;
-    [SerializeField] public int AnimalHp = 0;
-    public float Delay = 0.5f;
-    public void OnHit()
+    [SerializeField] private int _animalHp = 8;
+
+    private int _currentHp;
+    private int CurrentHp
     {
-        if (!isHit)
+        get { return _currentHp; }
+        set
         {
-            StartCoroutine(Hit_co());
+            _currentHp = value;
+
+            if(_currentHp == 0)
+            {
+                Death();
+            }
         }
     }
-    public IEnumerator Hit_co()
+
+    private void Awake()
     {
-        isHit = true;
+        CurrentHp = _animalHp;
+    }
 
-        yield return new WaitForSeconds(Delay);
+    public void Hit()
+    {
+        CurrentHp--;
+    }
 
-        if(AnimalHp > 0 )
-        {
-            AnimalHp--;
-        }
-        if(AnimalHp <= 0)
-        {
-            Destroy(gameObject);
-            Debug.Log("파티클 만들어야해");
-        }
-        isHit = false;
+    public void Explosion()
+    {
+        while (CurrentHp != 0)
+            Hit();
+    }
 
+    private void Death()
+    {
+        Destroy(gameObject);
     }
 }

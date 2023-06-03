@@ -367,10 +367,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6337666441607593902}
-  - component: {fileID: 7902225711106100694}
   - component: {fileID: -3462433737144489711}
   - component: {fileID: -3919680238707899546}
   - component: {fileID: 2041796836823661044}
+  - component: {fileID: 2379784295272391688}
   m_Layer: 11
   m_Name: ItemSteel
   m_TagString: Invisible
@@ -393,19 +393,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &7902225711106100694
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9043740789192840749}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &-3462433737144489711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -418,11 +405,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21243c6dceb6b2c408bec1c29a3d38e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _equipPart: 1
   stackInterval: 0.15
   itemType: 1
   blockLayer:
     serializedVersion: 2
     m_Bits: 1073741824
+  equipment: {fileID: 0}
 --- !u!114 &-3919680238707899546
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -455,3 +444,16 @@ MonoBehaviour:
   _Type: 3
   _item: {fileID: 0}
   _resourceHp: 2.7
+--- !u!65 &2379784295272391688
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9043740789192840749}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}

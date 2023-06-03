@@ -40,8 +40,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - attackable
+  - diggable
   - 
   - Sheep
   - Resource

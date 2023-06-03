@@ -317,7 +317,7 @@ public class Player : MonoBehaviour
 
     void DetectWater()
     {
-        RaycastHit hit;
+        /*RaycastHit hit;
         Debug.DrawRay(transform.position, transform.forward * pickUpDistance, Color.red);
         if (Physics.Raycast(transform.position, transform.forward, out hit, pickUpDistance, waterlayer))
         {
@@ -338,7 +338,7 @@ public class Player : MonoBehaviour
         {
             waterGauge.watergauge.gameObject.SetActive(false);
             waterGauge.StopFilling();
-        }
+        }*/
     }
     void DigUp()
     {
@@ -485,7 +485,7 @@ public class Player : MonoBehaviour
 
     void Attack()
     {
-        RaycastHit hit;
+        /*RaycastHit hit;
         Debug.DrawRay(transform.TransformPoint(0, 0.5f, 0), transform.forward * pickUpDistance, Color.blue);
         if(Physics.Raycast(transform.TransformPoint(0, 0.5f, 0), transform.forward, out hit, pickUpDistance))
         {
@@ -512,7 +512,7 @@ public class Player : MonoBehaviour
 
             }
 
-        }
+        }*/
     }
    
 }
