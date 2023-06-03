@@ -5,87 +5,51 @@ using UnityEngine;
 public class BombTest : MonoBehaviour
 {
     [SerializeField] private LayerMask banglayer;
-    public Rigidbody rig;
-    public ReSource resource_a;
-    public GameObject Ballon;
-    public GameObject Dynamite;
     [SerializeField] private float radius = 2f;
-    [SerializeField] private float distance = 0f;
-    private Player player;
-    public float speed = 0.5f;
-    public bool isrespawn = false;
-    public ParticleSystem ExplosionEffect;
-
-    IEnumerator Explosion()
-    {
-        yield return new WaitForSeconds(3f);
-        //ExplosionEffect.Play();
-
-        Debug.Log("터졌다");
-
-
-        Collider[] hitCollider = Physics.OverlapSphere(transform.position, radius, banglayer);
-        for(int i = 0; i< hitCollider.Length; i++)
-        {
-            resource_a = hitCollider[i].GetComponent<ReSource>();
-            if (resource_a != null && Dynamite.activeSelf)
-            {
-                resource_a.SpawnItem();
-
-            }
-
-            Destroy(hitCollider[i].gameObject);
-        }
-        distance = Vector3.Distance(transform.position, player.transform.position);
-        if(distance < radius) //거리가 radius 보다 작으면
-        {
-            Debug.Log("플레이어 사망");
-            ReSpawn();
-        }
-        Destroy(gameObject);
-       //ExplosionEffect.Stop();
-
-    }
-
-    public void ReSpawn()
-    {
-        player.transform.localPosition += Vector3.up * 10f ;
-        isrespawn = true;
-        Ballon.SetActive(true);
-        
-    }
-
-    private void Awake()
-    {
-        player = FindObjectOfType<Player>();
-        Ballon.SetActive(false);
-    }
-
-    public void Setup()
-    {
-        StartCoroutine(Explosion());
-
-    }
+    [SerializeField] private ParticleSystem ExplosionEffect;
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Setup();
-
-
         }
-
     }
 
-   
+    public void Setup()
+    {
+        StartCoroutine(ExplosionCo());
+    }
 
-    
-    /* private void OnTriggerEnter(Collider other)
-     {
-         if (Input.GetKeyDown(KeyCode.J))
-         {
 
-         }
-     }*/
+    private IEnumerator ExplosionCo()
+    {
+        ExplosionEffect.Play();
+        yield return new WaitForSeconds(3f);
+
+        // 터질 수 있는거 감지해서 터짐
+        Collider[] hitCollider = Physics.OverlapSphere(transform.position, radius, banglayer);
+        for(int i = 0; i< hitCollider.Length; i++)
+        {
+            ReSource resource = hitCollider[i].GetComponent<ReSource>();
+            AnimalHealth animal = hitCollider[i].GetComponent<AnimalHealth>();
+            if (resource != null)
+            {
+                resource.Explosion();
+            }
+            else if(animal != null)
+            {
+                animal.Explosion();
+            }
+        }
+
+        // 플레이어 터짐
+        PlayerController player = FindObjectOfType<PlayerController>();
+        if(player != null && Vector3.Distance(transform.position, player.transform.position) < radius)
+        {
+            player.Respawn();
+        }
+
+        Destroy(gameObject);
+    }
 }

@@ -3,18 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum EItemType { wood, steel, rail, pick, axe, bucket, train, animal };
+public enum EEquipPart { rightHand, twoHand }
 
 public abstract class MyItem : MonoBehaviour
 {
+    [SerializeField] private EEquipPart _equipPart;
     [SerializeField] protected float stackInterval = 0.15f;
     [SerializeField] protected EItemType itemType;
     [SerializeField] protected LayerMask blockLayer;
+
+    [HideInInspector] public Transform equipment;
 
     protected PlayerController player;
 
     protected virtual void Awake()
     {
         player = FindObjectOfType<PlayerController>();
+
+        switch (_equipPart)
+        {
+            case EEquipPart.rightHand:
+                equipment = player.RightHandTransform;
+                break;
+            case EEquipPart.twoHand:
+                equipment = player.TwoHandTransform;
+                break;
+        }
     }
 
 
@@ -72,5 +86,10 @@ public abstract class MyItem : MonoBehaviour
 
         return rail != FindObjectOfType<GoalManager>().lastRail && rail.isInstance != true;
     }
-    
+
+
+    public virtual void ActiveWater(bool falg)
+    {
+
+    }
 }
