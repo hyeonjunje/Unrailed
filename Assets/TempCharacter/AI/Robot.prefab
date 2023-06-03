@@ -1054,7 +1054,7 @@ MonoBehaviour:
   randomRange: 5
   throwLayer:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 537133073
   finalNodeList: []
 --- !u!114 &455940595194180520
 MonoBehaviour:
@@ -1099,6 +1099,7 @@ MonoBehaviour:
   _rayStartTransform: {fileID: 5763946073286303437}
   _rightHandTransform: {fileID: 5763946073581887022}
   _twoHandTransform: {fileID: 5763946072319312555}
+  Home: {fileID: 0}
   Emote: {fileID: 5763946073402118200}
 --- !u!114 &455940595194180521
 MonoBehaviour:

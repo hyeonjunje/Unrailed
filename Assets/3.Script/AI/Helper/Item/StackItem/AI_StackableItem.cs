@@ -24,7 +24,9 @@ public class AI_StackableItem : AI_StackItem
         else
         {
             //아니라면 손에 있는걸 갖다놓고 다시 와야함
-            if (handItem.Count <= 3 && detectedItem.Count <= 3)
+
+            Debug.Log("타입이 달라요");
+/*            if (handItem.Count <= 3 && detectedItem.Count <= 3)
             {
                 Stack<AI_StackItem> temp = new Stack<AI_StackItem>(handItem);
                 _aiStack.PutDown();
@@ -39,7 +41,7 @@ public class AI_StackableItem : AI_StackItem
                     detectedItem.Push(temp.Pop());
                     detectedItem.Peek().RePosition(_ai.CurrentBlockTransform, Vector3.up * 0.5f + Vector3.up * (detectedItem.Count - 1) * stackInterval);
                 }
-            }
+            }*/
         }
 
 
