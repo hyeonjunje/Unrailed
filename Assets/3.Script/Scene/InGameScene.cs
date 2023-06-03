@@ -19,6 +19,8 @@ public class InGameScene : MonoBehaviour
 
     [SerializeField] private int worldCount = 0;
 
+    [SerializeField] private BaseAI _robot;
+
     // 석환이 형 isStart가 true일 때만 player가 작동할 수 있게 해줘~~
     public bool isStart { get; private set; } = false;
 
@@ -38,7 +40,11 @@ public class InGameScene : MonoBehaviour
             () =>
             {
                 _loadingSceneUI.SetActive(false);
-                RePositionAsync().Forget();
+                RePositionAsync(
+                    () =>
+                    {
+                        Instantiate(_robot, Vector3.up * 0.5f, Quaternion.identity).SetHome(FindObjectOfType<Resource>());
+                    }).Forget();
 
                 _shopManager.StartTrainMove();
             }).Forget();

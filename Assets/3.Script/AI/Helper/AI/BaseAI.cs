@@ -27,4 +27,9 @@ public class BaseAI : MonoBehaviour
 
     public Resource Home;
 
+    public void SetHome(Resource _Home)
+    {
+        Home = _Home;
+    }
+
 }

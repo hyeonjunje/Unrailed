@@ -20,6 +20,9 @@ public abstract class MyItem : MonoBehaviour
     {
         player = FindObjectOfType<PlayerController>();
 
+        if (player == null)
+            return;
+
         switch (_equipPart)
         {
             case EEquipPart.rightHand:

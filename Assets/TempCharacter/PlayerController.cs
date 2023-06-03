@@ -219,6 +219,21 @@ public class PlayerController : MonoBehaviour
             _handItem = p.first;
             _detectedItem = p.second;
         }
+
+        if(_handItem.Count != 0)
+        {
+            if(CurrentHandItem.ItemType == EItemType.pick || CurrentHandItem.ItemType == EItemType.axe || CurrentHandItem.ItemType == EItemType.bucket)
+            {
+                CurrentHandItem.GetComponent<SimpleInteraction>().Perform();
+            }
+        }
+        if(_detectedItem.Count != 0)
+        {
+            if (_detectedItem.Peek().ItemType == EItemType.pick || _detectedItem.Peek().ItemType == EItemType.axe || _detectedItem.Peek().ItemType == EItemType.bucket)
+            {
+                _detectedItem.Peek().GetComponent<SimpleInteraction>().Perform();
+            }
+        }
     }
 
     // 안 누를 때
@@ -380,6 +395,17 @@ public class PlayerController : MonoBehaviour
         {
             if (CurrentHandItem != null && CurrentHandItem.ItemType == EItemType.bucket)
             {
+
+
+                foreach (var interaction in CurrentHandItem.GetComponent<AI_Item>().Interactions)
+                {
+                    if (interaction.CanPerform())
+                    {
+                        interaction.Perform();
+                    }
+                }
+
+
                 if (!_waterGauge.IsFillWater())
                 {
 
@@ -396,7 +422,9 @@ public class PlayerController : MonoBehaviour
                 else
                 {
                     CurrentHandItem.ActiveWater(true);
+
                     _isCharge = false;
+
                 }
             }
         }

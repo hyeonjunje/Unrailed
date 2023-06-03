@@ -18,22 +18,21 @@ public class Node
 public class PathFindingField : MonoBehaviour
 {
     #region ΩÃ±€≈Ê
-    public static PathFindingField Instance { get; private set; } = null;
+    /// public static PathFindingField Instance { get; private set; } = null;
 
-/*    private static PathFindingField _instance = null;
+    private static PathFindingField _instance = null;
     public static PathFindingField Instance
     {
         get
         {
-            if(_instance == null)
+            if (_instance == null)
             {
                 _instance = FindObjectOfType<PathFindingField>();
             }
-            _instance.InitData(_instance._map);
             return _instance;
         }
-    }*/
-
+    }
+/*
     private void Awake()
     {
         if (Instance != null)
@@ -43,13 +42,8 @@ public class PathFindingField : MonoBehaviour
         }
 
         Instance = this;
-        InitData(_map);
-    }
+    }*/
     #endregion
-
-
-    [SerializeField] private Transform _map;
-
     private bool[,] _mapData;
 
     public int MinX { get; private set; }
@@ -59,15 +53,15 @@ public class PathFindingField : MonoBehaviour
 
 
     // ∏  µ•¿Ã≈Õ √ ±‚»≠
-    private void InitData(Transform map)
+    public void InitData(Transform map)
     {
-        MinX = Mathf.RoundToInt(map.GetChild(0).GetChild(0).localPosition.x);
-        MinY = Mathf.RoundToInt(map.GetChild(0).GetChild(0).localPosition.z);
+        MinX = Mathf.RoundToInt(map.GetChild(0).localPosition.x);
+        MinY = Mathf.RoundToInt(map.GetChild(0).localPosition.z);
 
         Width = (MinX * -1 + 1) * 2;
         Height = (MinY * -1 + 1) * 2;
 
-        _mapData = new bool[Height, Width];
+        _mapData = new bool[Height, Width * 2];
         for (int i = 0; i < Height; i++)
             for (int j = 0; j < Width; j++)
                 _mapData[i,j] = true;

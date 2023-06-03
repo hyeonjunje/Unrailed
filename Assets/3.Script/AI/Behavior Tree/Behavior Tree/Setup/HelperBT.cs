@@ -11,18 +11,13 @@ public class HelperBT : BaseAI
     {
         public static readonly BlackBoardKey Order = new BlackBoardKey() { Name = "Order" };
         public static readonly BlackBoardKey Destination = new BlackBoardKey() { Name = "Destination" };
+        public static readonly BlackBoardKey ResourceType = new BlackBoardKey() { Name = "ResourceType" };
 
         public string Name;
 
     }
 
     protected Blackboard<BlackBoardKey> _localMemory;
-
-
-
-
-    //BFS
-
 
     //기차 위치로 나중에 바꾸기
     private Vector3 _home;
@@ -186,7 +181,7 @@ public class HelperBT : BaseAI
                  //목표 자원
                  _target = Home.GetGatherTarget(_helper);
 
-                 if (_target != null)
+                 if (_target != null)       
                  {
                      Emote.sprite = _emote.GetEmote((int)_target.Type+10);
                      Vector3 position = _agent.FindCloestAroundEndPosition(_target.transform.position);
@@ -302,16 +297,23 @@ public class HelperBT : BaseAI
 
                case WorldResource.EType.Resource:
                    _stack.DetectGroundBlock(_target);
+
+
+                         if (_stack._handItem.Count == 0)
+                         {
+                             _stack.InteractiveItemSpace();
+                         }
+                         //그 후 쌓기
+                         else
+                         {
+                            if (Home.dd(_agent))
+                            {
+                              _stack.InteractiveItem();
+                            }
+
+                         }
                    //처음 드는 거 
-                   if (_stack._handItem.Count == 0)
-                   {
-                       _stack.InteractiveItemSpace();
-                   }
-                   //그 후 쌓기
-                   else
-                   {
-                       _stack.InteractiveItem();
-                   }
+
                    break;
            }
 
@@ -395,15 +397,20 @@ public class HelperBT : BaseAI
              {
                  case WorldResource.EType.Resource:
 
-                     _helper.Home.GetGatherTarget(_helper);
+                     Home.GetGatherTarget(_helper);
                      //자원이 더 이상 없다면 
-                     if (_helper.Home.NonethisResourceType)
+                     if (!Home.dd(_agent))
                      {
                          return BehaviorTree.ENodeStatus.Succeeded;
                      }
                      else
-                         //세 개 들었으면 옮기기
+                     {
                          return _stack._handItem.Count == 3 ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.Failed;
+
+                     }
+                         //세 개 들었으면 옮기기
+
+
 
                  case WorldResource.EType.Water:
                      return BehaviorTree.ENodeStatus.InProgress;
@@ -428,14 +435,16 @@ public class HelperBT : BaseAI
          {
              _currentblock = _stack.AroundEmptyBlockTranform;
              _stack.PutDown();
+
              _target = null;
              _currentblock = null;
             return BehaviorTree.ENodeStatus.InProgress;
          },
         () =>
         {
+            Home.GetGatherTarget(_helper);
             //더 이상 채집할 자원이 없는경우
-            if (_helper.Home.NonethisResourceType)
+            if (Home.NonethisResourceType)
             {
                 Emote.sprite = _emote.GetEmote(_emote.WarningEmote);
                 _animator.SetBool(isMove, false);

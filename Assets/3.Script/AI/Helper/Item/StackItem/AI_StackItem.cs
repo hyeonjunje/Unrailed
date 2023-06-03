@@ -12,11 +12,21 @@ public abstract class AI_StackItem : MonoBehaviour
     protected WorldResource _resource;
     protected AI_Stack _aiStack;
 
+    public EItemType IItemType => itemType;
+
     protected virtual void Awake()
     {
-        _ai = FindObjectOfType<BaseAI>();
-        _aiStack = FindObjectOfType<AI_Stack>();
-        _resource = GetComponent<WorldResource>();
+        Init();
+    }
+
+    protected void Init()
+    {
+        if(_ai == null)
+        {
+            _ai = FindObjectOfType<BaseAI>();
+            _aiStack = FindObjectOfType<AI_Stack>();
+            _resource = GetComponent<WorldResource>();
+        }
     }
 
 
@@ -42,8 +52,8 @@ public abstract class AI_StackItem : MonoBehaviour
         transform.localPosition = pos;
         transform.localRotation = Quaternion.identity;
         transform.localScale = Vector3.one;
-        ResourceTracker.Instance.DeRegisterResource(_resource);
-        Destroy(_resource);
+        //ResourceTracker.Instance.DeRegisterResource(_resource);
+        //Destroy(_resource);
     }
 
 
