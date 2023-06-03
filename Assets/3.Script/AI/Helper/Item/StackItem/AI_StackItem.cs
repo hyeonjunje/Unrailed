@@ -8,12 +8,14 @@ public abstract class AI_StackItem : MonoBehaviour
     [SerializeField] protected EItemType itemType;
     [SerializeField] protected LayerMask blockLayer;
 
-    protected HelperBT _helper;
+    protected BaseAI _ai;
     protected WorldResource _resource;
+    protected AI_Stack _aiStack;
 
     protected virtual void Awake()
     {
-        _helper = FindObjectOfType<HelperBT>();
+        _ai = FindObjectOfType<BaseAI>();
+        _aiStack = FindObjectOfType<AI_Stack>();
         _resource = GetComponent<WorldResource>();
     }
 
@@ -22,6 +24,7 @@ public abstract class AI_StackItem : MonoBehaviour
 
     public abstract Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> PickUp(Stack<AI_StackItem> handItem, Stack<AI_StackItem> detectedItem);  // 줍는 메소드
     public abstract Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> PutDown(Stack<AI_StackItem> handItem, Stack<AI_StackItem> detectedItem);  // 버리는 메소드
+    public abstract Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> EnemyPutDown(Stack<AI_StackItem> handItem, Stack<AI_StackItem> detectedItem);  // 버리는 메소드
     public abstract Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> Change(Stack<AI_StackItem> handItem, Stack<AI_StackItem> detectedItem);   // 교체하는 메소드
     public abstract Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> AutoGain(Stack<AI_StackItem> handItem, Stack<AI_StackItem> detectedItem);  // 자동으로 먹는 메소드
 
@@ -44,6 +47,16 @@ public abstract class AI_StackItem : MonoBehaviour
     }
 
 
+    public virtual void ThrowResource()
+    {
+        transform.gameObject.AddComponent<Rigidbody>();
+        transform.SetParent(null);
+        ResourceTracker.Instance.DeRegisterResource(_resource);
+        Destroy(_resource);
+        Destroy(gameObject, 2);
+    }
+
+
 
 
     public virtual bool CheckItemType(AI_StackItem item)
@@ -58,7 +71,7 @@ public abstract class AI_StackItem : MonoBehaviour
         Vector3[] dir = new Vector3[4] { Vector3.forward, Vector3.right, Vector3.left, Vector3.back };
         for (int i = 0; i < dir.Length; i++)
         {
-            if (Physics.Raycast(_helper.CurrentBlockTransform.position, dir[i], out RaycastHit hit, 1f, blockLayer))
+            if (Physics.Raycast(_ai.CurrentBlockTransform.position, dir[i], out RaycastHit hit, 1f, blockLayer))
             {
                 if (hit.transform.childCount > 0)
                 {

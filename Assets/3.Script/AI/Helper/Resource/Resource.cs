@@ -74,10 +74,36 @@ public class Resource : MonoBehaviour
             .OrderBy(resource => Vector3.Distance(brain.transform.position, resource.transform.position))
             //가장 가까운 자원 반환
             .FirstOrDefault();
+
         return sortedResources;
-
-
-
     }
+
+
+    public WorldResource TargettoSteal(PathFindingAgent brain)
+    {
+        //자원 업데이트
+        PopulateResources();
+        WorldResource.EType targetResource = WorldResource.EType.Resource;
+        //자원이 있는지 확인
+        if (TrackedResources[targetResource].Count < 1)
+        {
+            NonethisResourceType = true;
+            Debug.Log($"{targetResource} :  훔칠 자원이 이제 없어요");
+        }
+        else
+            NonethisResourceType = false;
+
+        var sortedResources = TrackedResources[targetResource]
+            //갈 수 있는 곳에 있는 자원만 추리기
+            .Where(resource => Vector3.Distance(resource.transform.position, brain.
+                                                FindCloestAroundEndPosition(resource.transform.position)) <= 1.5f)
+            //가까운 순으로 정렬
+            .OrderBy(resource => Vector3.Distance(brain.transform.position, resource.transform.position))
+            //가장 가까운 자원 반환
+            .FirstOrDefault();
+        return sortedResources;
+    }
+
+
 
 }
