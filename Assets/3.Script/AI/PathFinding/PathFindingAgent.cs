@@ -49,11 +49,12 @@ public class PathFindingAgent : MonoBehaviour
     }
 
     // 가장 가까운 버릴 수 있는 위치 찾아서 이동 (회전까지 덤으로)
-    public void MoveToClosestEndPosition()
+    public Vector3 MoveToClosestEndPosition()
     {
         Vector3 cloestEndPosition = FindCloestEndPosition();
         Vector3 targetPos = FindCloestAroundEndPosition(cloestEndPosition);
         MoveTo(targetPos, true);
+        return targetPos;
     }
 
     // 갈 수 없는 가장 가까운 곳 반환

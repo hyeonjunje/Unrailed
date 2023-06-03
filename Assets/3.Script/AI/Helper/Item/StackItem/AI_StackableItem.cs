@@ -15,7 +15,7 @@ public class AI_StackableItem : AI_StackItem
                     break;
 
                 handItem.Push(detectedItem.Pop());
-                handItem.Peek().RePosition(_helper.TwoHandTransform, Vector3.up * (handItem.Count) * stackInterval);
+                handItem.Peek().RePosition(_ai.TwoHandTransform, Vector3.up * (handItem.Count) * stackInterval);
             }
         }
 
@@ -33,10 +33,10 @@ public class AI_StackableItem : AI_StackItem
             while (handItem.Count != 0)
             {
                 detectedItem.Push(handItem.Pop());
-                detectedItem.Peek().RePosition(_helper.CurrentBlockTransform, Vector3.up * 0.5f + Vector3.up * (detectedItem.Count - 1) * stackInterval);
+                detectedItem.Peek().RePosition(_ai.CurrentBlockTransform, Vector3.up * 0.5f + Vector3.up * (detectedItem.Count - 1) * stackInterval);
             }
             handItem.Push(temp);
-            handItem.Peek().RePosition(_helper.RightHandTransform, Vector3.zero);
+            handItem.Peek().RePosition(_ai.RightHandTransform, Vector3.zero);
         }
         else if (detectedItemType == EItemType.wood || detectedItemType == EItemType.steel)
         {
@@ -45,7 +45,7 @@ public class AI_StackableItem : AI_StackItem
                 while (handItem.Count != 0)
                 {
                     detectedItem.Push(handItem.Pop());
-                    detectedItem.Peek().RePosition(_helper.CurrentBlockTransform, Vector3.up * 0.5f + Vector3.up * (detectedItem.Count - 1) * stackInterval);
+                    detectedItem.Peek().RePosition(_ai.CurrentBlockTransform, Vector3.up * 0.5f + Vector3.up * (detectedItem.Count - 1) * stackInterval);
                 }
             }
             else
@@ -57,12 +57,12 @@ public class AI_StackableItem : AI_StackItem
                     while (detectedItem.Count != 0)
                     {
                         handItem.Push(detectedItem.Pop());
-                        handItem.Peek().RePosition(_helper.TwoHandTransform, Vector3.up * (handItem.Count - 1) * stackInterval);
+                        handItem.Peek().RePosition(_ai.TwoHandTransform, Vector3.up * (handItem.Count - 1) * stackInterval);
                     }
                     while (temp.Count != 0)
                     {
                         detectedItem.Push(temp.Pop());
-                        detectedItem.Peek().RePosition(_helper.CurrentBlockTransform, Vector3.up * 0.5f + Vector3.up * (detectedItem.Count - 1) * stackInterval);
+                        detectedItem.Peek().RePosition(_ai.CurrentBlockTransform, Vector3.up * 0.5f + Vector3.up * (detectedItem.Count - 1) * stackInterval);
                     }
                 }
             }
@@ -78,12 +78,12 @@ public class AI_StackableItem : AI_StackItem
                     while (detectedItem.Count != 0)
                     {
                         handItem.Push(detectedItem.Pop());
-                        handItem.Peek().RePosition(_helper.TwoHandTransform, Vector3.up * (handItem.Count - 1) * stackInterval);
+                        handItem.Peek().RePosition(_ai.TwoHandTransform, Vector3.up * (handItem.Count - 1) * stackInterval);
                     }
                     while (temp.Count != 0)
                     {
                         detectedItem.Push(temp.Pop());
-                        detectedItem.Peek().RePosition(_helper.CurrentBlockTransform, Vector3.up * 0.5f + Vector3.up * (detectedItem.Count - 1) * stackInterval);
+                        detectedItem.Peek().RePosition(_ai.CurrentBlockTransform, Vector3.up * 0.5f + Vector3.up * (detectedItem.Count - 1) * stackInterval);
                     }
                 }
             }
@@ -99,7 +99,7 @@ public class AI_StackableItem : AI_StackItem
             if (detectedItem.Count == 0)
                 break;
             handItem.Push(detectedItem.Pop());
-            handItem.Peek().RePosition(_helper.TwoHandTransform, Vector3.up * stackInterval);
+            handItem.Peek().RePosition(_ai.TwoHandTransform, Vector3.up * stackInterval);
             
         }
 
@@ -111,10 +111,30 @@ public class AI_StackableItem : AI_StackItem
         while (handItem.Count != 0)
         {
             detectedItem.Push(handItem.Pop());
-            detectedItem.Peek().PutDownResource(_helper.CurrentBlockTransform, Vector3.up * 0.5f + Vector3.up * stackInterval*handItem.Count);
+            detectedItem.Peek().PutDownResource(_ai.CurrentBlockTransform, Vector3.up * 0.5f + Vector3.up * stackInterval*handItem.Count);
         }
 
 
         return new Pair<Stack<AI_StackItem>, Stack<AI_StackItem>>(handItem, detectedItem);
     }
+
+    public override Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> EnemyPutDown(Stack<AI_StackItem> handItem, Stack<AI_StackItem> detectedItem)
+    {
+        while (handItem.Count != 0)
+        {
+            detectedItem.Push(handItem.Pop());
+            detectedItem.Peek().ThrowResource();
+        }
+
+
+        return new Pair<Stack<AI_StackItem>, Stack<AI_StackItem>>(handItem, detectedItem);
+    }
+
+
+
+
+
+
+
+
 }

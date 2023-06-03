@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 [RequireComponent(typeof(BehaviorTree))]
-public class EnemyBT : MonoBehaviour
+public class EnemyBT : BaseAI
 {
     public class BlackBoardKey : BlackboardKeyBase
     {
@@ -25,10 +25,9 @@ public class EnemyBT : MonoBehaviour
     [SerializeField] private string _wood;
 
     private Vector3 _itemPosition;
-    private Animator _animator;
+    public Transform TwoHandTransform => _twoHandTransform;
 
-    protected BehaviorTree _tree;
-    protected PathFindingAgent _agent;
+
     protected AwarenessSystem _sensors;
     protected Blackboard<BlackBoardKey> _localMemory;
 
@@ -53,6 +52,14 @@ public class EnemyBT : MonoBehaviour
 
         BTRoot.AddService<BTServiceBase>("목표 찾는 Service", (float deltaTime) =>
         {
+            if(!Home.NonethisResourceType)
+            {
+                _target = Home.TargettoSteal(_agent);
+
+            }
+
+
+
             if (_sensors.ActiveTargets == null || _sensors.ActiveTargets.Count == 0)
             {
                 _localMemory.SetGeneric<DetectableTarget>(BlackBoardKey.CurrentTarget, null);

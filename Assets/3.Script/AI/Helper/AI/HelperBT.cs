@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+
 [RequireComponent(typeof(BehaviorTree))]
-public class HelperBT : MonoBehaviour
+public class HelperBT : BaseAI
 {
     public class BlackBoardKey : BlackboardKeyBase
     {
@@ -15,48 +16,39 @@ public class HelperBT : MonoBehaviour
 
     }
 
-    [Header("Transform")]
-    [SerializeField] private Transform _rayStartTransform;
-    [SerializeField] private Transform _rightHandTransform;
-    [SerializeField] private Transform _twoHandTransform;
+    protected Blackboard<BlackBoardKey> _localMemory;
 
 
-    private Transform _currentblock;
-    private Transform _aroundEmptyBlockTranform;
 
-    public Transform RayStartTransfrom => _rayStartTransform;
-    public Transform CurrentBlockTransform => _currentblock;
-    public Transform RightHandTransform => _rightHandTransform;
-    public Transform TwoHandTransform => _twoHandTransform;
 
-    public Transform AroundEmptyBlockTranform => _aroundEmptyBlockTranform;
+    //BFS
 
-    public Image Emote;
 
+    //기차 위치로 나중에 바꾸기
     private Vector3 _home;
     private float _rotateSpeed = 10;
 
     protected Helper _helper;
-    protected BehaviorTree _tree;
-    protected Blackboard<BlackBoardKey> _localMemory;
-    protected PathFindingAgent _agent;
+    //도구
     protected AI_Item _item;
-    protected AI_Stack _stack;
 
-    protected WorldResource _target;
+    //명령
     protected WorldResource.EType _order;
+
+    //이모티콘
+    public Image Emote;
     protected EmoteManager _emote;
 
 
-    private Animator _animator;
-    private int isMove = Animator.StringToHash("isMove");
+
     private int isDig = Animator.StringToHash("isDig");
 
     private void Awake()
     {
-        _emote = FindObjectOfType<EmoteManager>();
-        _stack = GetComponent<AI_Stack>();
         _home = transform.position;
+        _emote = FindObjectOfType<EmoteManager>();
+
+        _stack = GetComponent<AI_Stack>();
         _helper = GetComponent<Helper>();
         _animator = GetComponent<Animator>();
         _tree = GetComponent<BehaviorTree>();
@@ -192,7 +184,7 @@ public class HelperBT : MonoBehaviour
              if (_target == null)
              {
                  //목표 자원
-                 _target = _helper.Home.GetGatherTarget(_helper);
+                 _target = Home.GetGatherTarget(_helper);
 
                  if (_target != null)
                  {
@@ -271,7 +263,6 @@ public class HelperBT : MonoBehaviour
 
         var CollectResource = wood.Add<BTNode_Action>("계속 채집하기", () =>
          {
-
              _animator.SetBool(isDig, true);
              StartCoroutine(_target.isDigCo());
 
@@ -435,7 +426,7 @@ public class HelperBT : MonoBehaviour
 
         var PutDownResource = water.Add<BTNode_Action>("자원 내려놓기", () =>
          {
-             _currentblock = _stack.BFS();
+             _currentblock = _stack.AroundEmptyBlockTranform;
              _stack.PutDown();
              _target = null;
              _currentblock = null;
@@ -516,7 +507,7 @@ public class HelperBT : MonoBehaviour
             }
 
             _item.transform.rotation = Quaternion.identity;
-            _item.transform.parent = _stack.BFS();
+            _item.transform.parent = _stack.AroundEmptyBlockTranform;
             _item.transform.localPosition = (Vector3.up * 0.5f) + (Vector3.up * 0.15f);
 
             _animator.SetBool(isDig, false);

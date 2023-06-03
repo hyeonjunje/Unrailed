@@ -10,8 +10,10 @@ public class AI_Stack : MonoBehaviour
     private Transform _currentblock;
 
     public LayerMask BlockLayer;
+    public Transform AroundEmptyBlockTranform => BFS();
 
-    HelperBT _helper;
+
+    private HelperBT _helper;
 
 
     private void Awake()
@@ -45,9 +47,26 @@ public class AI_Stack : MonoBehaviour
             _detectedItem.Clear();
         }
 
+    }
 
+
+    public void ThrowResource()
+    {
+        if (_handItem.Count != 0 && _detectedItem.Count == 0) // ¹ö¸®±â
+        {
+
+            Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = _handItem.Peek().EnemyPutDown(_handItem, _detectedItem);
+            _handItem = p.first;
+            _detectedItem = p.second;
+
+            _detectedItem.Clear();
+        }
 
     }
+
+
+
+
 
 
     public void InteractiveItem()
@@ -70,13 +89,10 @@ public class AI_Stack : MonoBehaviour
 
     public Transform BFS()
     {
-
         if (Physics.Raycast(_helper.RayStartTransfrom.position, Vector3.down, out RaycastHit hit, 1, BlockLayer))
         {
-            // Ä³½Ì
             _currentblock = hit.transform;
         }
-
 
         Queue<Transform> queue = new Queue<Transform>();
         queue.Enqueue(_currentblock);
