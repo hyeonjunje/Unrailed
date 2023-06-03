@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17320374, g: 0.21648853, b: 0.29851925, a: 1}
+  m_IndirectSpecularColor: {r: 0.17320406, g: 0.21648876, b: 0.29851997, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5619,6 +5619,7 @@ MonoBehaviour:
   _twoHandTransform: {fileID: 1233461012}
   _railPreview: {fileID: 11767506}
   _balloonObject: {fileID: 514168352}
+  _runParticle: {fileID: 0}
   _bridgePrefab: {fileID: 4200122292908817017, guid: 2ccfc14ef7c25cf4fbdd0a00834bdaca, type: 3}
   _waterGauge: {fileID: 1398922685}
 --- !u!54 &1028261386
@@ -7410,6 +7411,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1357918035}
   m_CullTransparentMesh: 1
+--- !u!1001 &1371125816
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2233568204844776570, guid: a967c81037c3d4a40a12a2d6d3573cbb, type: 3}
+      propertyPath: m_RootOrder
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233568204844776570, guid: a967c81037c3d4a40a12a2d6d3573cbb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233568204844776570, guid: a967c81037c3d4a40a12a2d6d3573cbb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233568204844776570, guid: a967c81037c3d4a40a12a2d6d3573cbb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233568204844776570, guid: a967c81037c3d4a40a12a2d6d3573cbb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233568204844776570, guid: a967c81037c3d4a40a12a2d6d3573cbb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233568204844776570, guid: a967c81037c3d4a40a12a2d6d3573cbb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233568204844776570, guid: a967c81037c3d4a40a12a2d6d3573cbb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233568204844776570, guid: a967c81037c3d4a40a12a2d6d3573cbb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233568204844776570, guid: a967c81037c3d4a40a12a2d6d3573cbb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233568204844776570, guid: a967c81037c3d4a40a12a2d6d3573cbb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233568204844776571, guid: a967c81037c3d4a40a12a2d6d3573cbb, type: 3}
+      propertyPath: m_Name
+      value: RailSpawner
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a967c81037c3d4a40a12a2d6d3573cbb, type: 3}
 --- !u!1 &1378814388
 GameObject:
   m_ObjectHideFlags: 0
@@ -10310,6 +10368,10 @@ PrefabInstance:
     - target: {fileID: 1037296278098704639, guid: 828b3260d15f399419509140ce21e11d, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4768628231389393331, guid: 828b3260d15f399419509140ce21e11d, type: 3}
+      propertyPath: detectableLayer.m_Bits
+      value: 50724880
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 828b3260d15f399419509140ce21e11d, type: 3}
