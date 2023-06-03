@@ -19,11 +19,12 @@ public class Player : MonoBehaviour
     bool isDash;
     Vector3 moveVec;
     [SerializeField] float dashCool = 0.3f;
+    public ParticleSystem DashEffect;
+
     #endregion
     #region 아이템 픽업 관련 변수
     private Item item;
     public GameObject WaterMesh;
-    public ParticleSystem DashEffect;
     [SerializeField] float GapOfItems = 0.25f;
     [SerializeField] float pickUpDistance;
     [SerializeField] LayerMask BlockLayer;
@@ -49,6 +50,7 @@ public class Player : MonoBehaviour
     #endregion
     Rigidbody rb;
 
+
     private void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -68,6 +70,7 @@ public class Player : MonoBehaviour
         FirstPickUpItem();
         SetBridge();
         Ground();
+        Attack();
     }
 
 
@@ -314,13 +317,12 @@ public class Player : MonoBehaviour
 
     void DetectWater()
     {
-        RaycastHit hit;
+        /*RaycastHit hit;
         Debug.DrawRay(transform.position, transform.forward * pickUpDistance, Color.red);
         if (Physics.Raycast(transform.position, transform.forward, out hit, pickUpDistance, waterlayer))
         {
             if (currentNonStackItem == null)
                 return;
-
             if (hit.collider.name == "Water(Clone)" && currentNonStackItem.name == "Item_Bucket(Clone)")
             {
                 Debug.Log("물 감지");
@@ -336,7 +338,7 @@ public class Player : MonoBehaviour
         {
             waterGauge.watergauge.gameObject.SetActive(false);
             waterGauge.StopFilling();
-        }
+        }*/
     }
     void DigUp()
     {
@@ -405,7 +407,7 @@ public class Player : MonoBehaviour
 
     private IEnumerator DigCoroutine(IDig target, Vector3 hitPoint)
     {
-        float digTime = 1.5f; 
+        float digTime = 1.2f; 
         float elapsedTime = 0f;
 
         while (elapsedTime < digTime)
@@ -481,7 +483,37 @@ public class Player : MonoBehaviour
         Destroy(Bolt);
     }
 
+    void Attack()
+    {
+        /*RaycastHit hit;
+        Debug.DrawRay(transform.TransformPoint(0, 0.5f, 0), transform.forward * pickUpDistance, Color.blue);
+        if(Physics.Raycast(transform.TransformPoint(0, 0.5f, 0), transform.forward, out hit, pickUpDistance))
+        {
+            Debug.Log("소 감지");
+            if(hit.collider.name == "Enemy_Cow")
+            {
+                AnimalHealth animalHealth = hit.transform.GetComponent<AnimalHealth>();
 
+                if(animalHealth != null && currentNonStackItem != null)
+                {
+                    animalHealth.OnHit();
+                    _animator.SetBool("isAttack", true);
+                }
+               
+                if(currentNonStackItem.name == "Item_Bucket(Clone)")
+                {
+                    animalHealth.AnimalHp = 8;
+                    _animator.SetBool("isAttack", false);
+                }
+            }
+            else
+            {
+                _animator.SetBool("isAttack", false);
+
+            }
+
+        }*/
+    }
    
 }
 

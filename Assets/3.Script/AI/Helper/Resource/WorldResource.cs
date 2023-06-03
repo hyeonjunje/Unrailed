@@ -45,7 +45,7 @@ public class WorldResource : MonoBehaviour
             yield return wait;
         while(_resourceHp > 0)
         {
-            _resourceScale -= 0.3f;
+            _resourceScale -= 0.25f;
             _resourceHp--;
             transform.localScale = new Vector3(_resourceScale, _resourceScale, _resourceScale);
             yield return wait;

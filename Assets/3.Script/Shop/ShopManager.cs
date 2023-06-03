@@ -82,6 +82,7 @@ public class ShopManager : MonoBehaviour
 
     public void ShopOff()
     {
+        trainEngine.CameraSwitch(1);
         anim.SetBool("isReady", false);
         StartCoroutine(TrainStartMove());
     } //상점 클로즈 애니메이션
@@ -238,5 +239,6 @@ public class ShopManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         SoundManager.Instance.audioSourdEngine.Play();
         SoundManager.Instance.PlaySoundBgm("InGame_Bgm");
+        
     } 
 }

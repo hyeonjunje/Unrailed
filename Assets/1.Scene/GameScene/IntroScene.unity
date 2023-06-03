@@ -1452,9 +1452,11 @@ MonoBehaviour:
   rayStart: {fileID: 0}
   waterGauge: {fileID: 0}
   DropDistance: 1.5
+  Balloon: {fileID: 0}
   speed: 15
   dashCool: 0.3
   WaterMesh: {fileID: 0}
+  DashEffect: {fileID: 0}
   GapOfItems: 0.25
   pickUpDistance: 0
   BlockLayer:
@@ -1472,6 +1474,8 @@ MonoBehaviour:
     m_Bits: 0
   currentStackItem: []
   currentNonStackItem: {fileID: 0}
+  Bolt: {fileID: 0}
+  playerbody: {fileID: 0}
   isGetItemKeyDown: 0
   isHaveItem: 0
 --- !u!1 &123156602

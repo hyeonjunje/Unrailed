@@ -3,18 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum EItemType { wood, steel, rail, pick, axe, bucket, train, animal };
+public enum EEquipPart { rightHand, twoHand }
 
 public abstract class MyItem : MonoBehaviour
 {
+    [SerializeField] private EEquipPart _equipPart;
     [SerializeField] protected float stackInterval = 0.15f;
     [SerializeField] protected EItemType itemType;
     [SerializeField] protected LayerMask blockLayer;
+
+    [HideInInspector] public Transform equipment;
 
     protected PlayerController player;
 
     protected virtual void Awake()
     {
         player = FindObjectOfType<PlayerController>();
+
+        if (player == null)
+            return;
+
+        switch (_equipPart)
+        {
+            case EEquipPart.rightHand:
+                equipment = player.RightHandTransform;
+                break;
+            case EEquipPart.twoHand:
+                equipment = player.TwoHandTransform;
+                break;
+        }
     }
 
 
@@ -39,24 +56,43 @@ public abstract class MyItem : MonoBehaviour
     }
 
 
-    // 현재 위치 앞뒤좌우에 설치된(isInstance) 레일이 있으면 true, 없으면 false
-    public virtual bool CheckConnectedRail()
+    // 현재 위치 앞뒤좌우에 가장 최신 레일이 있으면 true, 없으면 false
+    // true면 설치할 수 있습니다.
+    public virtual bool IsInstallable()
     {
         Vector3[] dir = new Vector3[4] { Vector3.forward, Vector3.right, Vector3.left, Vector3.back };
-        for(int i = 0; i < dir.Length; i++)
+        for (int i = 0; i < dir.Length; i++)
         {
-            if(Physics.Raycast(player.CurrentBlockTransform.position, dir[i], out RaycastHit hit, 1f, blockLayer))
+            if (Physics.Raycast(player.CurrentBlockTransform.position, dir[i], out RaycastHit hit, 1f, blockLayer))
             {
-                if(hit.transform.childCount > 0)
+                if (hit.transform.childCount > 0)
                 {
                     RailController rail = hit.transform.GetChild(0).GetComponent<RailController>();
-                    if(rail != null && rail.isInstance)
+                    if (rail != null)
                     {
-                        return true;
+                        if (rail == FindObjectOfType<GoalManager>().lastRail)
+                            return true;
                     }
                 }
             }
         }
         return false;
+    }
+
+
+    // 검사할 레일이 이미 설치되어 있거나 가장 최신레일이면 false 아니면 true
+    // true면 상호작용할 수 있다.
+    public virtual bool IsRailInteractive(RailController rail)
+    {
+        if (rail == null)
+            return true;
+
+        return rail != FindObjectOfType<GoalManager>().lastRail && rail.isInstance != true;
+    }
+
+
+    public virtual void ActiveWater(bool falg)
+    {
+
     }
 }
