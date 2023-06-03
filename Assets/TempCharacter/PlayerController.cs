@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     [Header("Object")]
     [SerializeField] private Transform _railPreview;
     [SerializeField] private GameObject _balloonObject;
+    [SerializeField] private GameObject _runParticle;
 
     [Header("Prefabs")]
     [SerializeField] private GameObject _bridgePrefab;
@@ -22,48 +23,49 @@ public class PlayerController : MonoBehaviour
     [Header("Particle")]
     [SerializeField] private ParticleSystem _fireeffect;
     [SerializeField] private ParticleSystem _dasheffect;
-    // »óÅÂ  => ÀÌ°Ç »óÅÂÆĞÅÏ??
+    // ìƒíƒœ  => ì´ê±´ ìƒíƒœíŒ¨í„´??
     private bool _isDash = false;
     private bool _isInteractive = false;
     private bool _isRespawn = false;
+    private bool _isCharge = false;
 
-    // ÄÄÆ÷³ÍÆ®
+    // ì»´í¬ë„ŒíŠ¸
     private Rigidbody _rigidbody;
     private PlayerInput _playerInput;
     private PlayerStat _playerStat;
     private Animator _animator;
 
-    // ¹°°Ç
-    // Á¾·ù°¡ ´Ù¸£¸é ¾ÈµÊ
+    // ë¬¼ê±´
+    // ì¢…ë¥˜ê°€ ë‹¤ë¥´ë©´ ì•ˆë¨
     private Stack<MyItem> _handItem = new Stack<MyItem>();
     private Stack<MyItem> _detectedItem = new Stack<MyItem>();
 
-    // ÇÃ·¹ÀÌ¾î ¼öÄ¡
+    // í”Œë ˆì´ì–´ ìˆ˜ì¹˜
     private float _currentSpeed;
-    // ÇöÀç »óÈ£ÀÛ¿ë ÄğÅ¸ÀÓ
+    // í˜„ì¬ ìƒí˜¸ì‘ìš© ì¿¨íƒ€ì„
     private float _currentInteractCoolTime;
 
-    // ÇöÀç ¼­ ÀÖ´Â ºí·°
+    // í˜„ì¬ ì„œ ìˆëŠ” ë¸”ëŸ­
     private Transform _currentblock;
-    // Àü¹æ¿¡ ÀÖ´Â ¿ÀºêÁ§Æ®
+    // ì „ë°©ì— ìˆëŠ” ì˜¤ë¸Œì íŠ¸
     private Transform _currentFrontObject;
 
     Vector3[] dir = new Vector3[8] { Vector3.forward, Vector3.back, Vector3.right, Vector3.left,
         new Vector3(1, 0, 1), new Vector3(1, 0, -1), new Vector3(-1, 0, -1), new Vector3(-1, 0, 1)};
 
-    // ÇÁ·ÎÆÛÆ¼
+    // í”„ë¡œí¼í‹°
     public Transform RightHandTransform => _rightHandTransform;
     public Transform TwoHandTransform => _twoHandTransform;
     public Transform CurrentBlockTransform => _currentblock;
     public Transform AroundEmptyBlockTranform => BFS();
-    public MyItem CurrentHandItem => _handItem.Count == 0 ? null : _handItem.Peek();  // ÇöÀç µé°í ÀÖ´Â ¾ÆÀÌÅÛ
+    public MyItem CurrentHandItem => _handItem.Count == 0 ? null : _handItem.Peek();  // í˜„ì¬ ë“¤ê³  ìˆëŠ” ì•„ì´í…œ
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _playerInput = GetComponent<PlayerInput>();
         _playerStat = GetComponent<PlayerStat>();
-
+        _runParticle.SetActive(false);
         InitPlayer();
     }
 
@@ -76,32 +78,35 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // ÇÃ·¹ÀÌ¾î ¿òÁ÷ÀÓ
+        // í”Œë ˆì´ì–´ ì›€ì§ì„
         Move();
+
+
+
     }
 
     private void Update()
     {
-        // ÇöÀç ¶¥, Àü¹æ ¹°Ã¼ °¨Áö
+        // í˜„ì¬ ë•…, ì „ë°© ë¬¼ì²´ ê°ì§€
         DetectGroundBlock();
         DetectFrontObject();
 
-        // ·¹ÀÏ ¹Ì¸®º¸±â È®ÀÎ
+        // ë ˆì¼ ë¯¸ë¦¬ë³´ê¸° í™•ì¸
         CheckPutDownRail();
 
-        // ¾ÆÀÌÅÛ »óÈ£ÀÛ¿ë
+        // ì•„ì´í…œ ìƒí˜¸ì‘ìš©
         if (_playerInput.IsSpace)
             InteractiveItemSpace();
         InteractivItem();
 
-        // È¯°æ »óÈ£ÀÛ¿ë
-        DetectWater();  // ¹° ¶ß±â
-        DigUp();        // Ä³±â
-        Attack();       // °ø°İ
+        // í™˜ê²½ ìƒí˜¸ì‘ìš©
+        DetectWater();  // ë¬¼ ëœ¨ê¸°
+        DigUp();        // ìºê¸°
+        Attack();       // ê³µê²©
 
-        // ±âÂ÷ »óÈ£ÀÛ¿ë
+        // ê¸°ì°¨ ìƒí˜¸ì‘ìš©
         InteractiveTrain();
-        OffFire();      //±âÂ÷ ºÒ²ô±â
+        OffFire();      //ê¸°ì°¨ ë¶ˆë„ê¸°
     }
 
     private void Move()
@@ -109,10 +114,11 @@ public class PlayerController : MonoBehaviour
         if (_isRespawn)
             return;
 
-        // ¿òÁ÷ÀÓ, È¸Àü, ´ë½Ã±îÁö
-        if(_playerInput.IsShift && !_isDash)
+        // ì›€ì§ì„, íšŒì „, ëŒ€ì‹œê¹Œì§€
+        if (_playerInput.IsShift && !_isDash)
         {
             _isDash = true;
+            _runParticle.SetActive(true);
             _currentSpeed = _playerStat.dashSpeed;
             Invoke("DashOff", _playerStat.dashDuration);
             _dasheffect.Play();
@@ -125,35 +131,89 @@ public class PlayerController : MonoBehaviour
     private void DashOff()
     {
         _currentSpeed = _playerStat.moveSpeed;
+        _runParticle.SetActive(false);
         _isDash = false;
         _dasheffect.Stop();
 
     }
 
-    // spacebar ´©¸¦ ¶§
+    // spacebar ëˆ„ë¥¼ ë•Œ
     private void InteractiveItemSpace()
     {
-        // ³ª¹« µé°í ÀÖ°í ¾Õ¿¡ ¹°ÀÌ ÀÖÀ» ¶§´Â ÇÏÁö¸¶
+        // ë‚˜ë¬´ ë“¤ê³  ìˆê³  ì•ì— ë¬¼ì´ ìˆì„ ë•ŒëŠ” í•˜ì§€ë§ˆ
 
-        if (_handItem.Count == 0 && _detectedItem.Count != 0)  // Áİ±â
+        if (_handItem.Count == 0 && _detectedItem.Count != 0)  // ì¤ê¸°
         {
-            Debug.Log("Áİ±â");
+            Debug.Log("ì¤ê¸°");
+            if (_currentFrontObject != null && _currentFrontObject.gameObject.layer == LayerMask.NameToLayer("WorkBench"))
+            {
+                TrainWorkBench bench = _currentFrontObject.GetComponent<TrainWorkBench>();
 
-            Pair<Stack<MyItem>, Stack<MyItem>> p = _detectedItem.Peek().PickUp(_handItem, _detectedItem);
-            _handItem = p.first;
-            _detectedItem = p.second;
+                if (_currentFrontObject.GetComponentInChildren<RailController>() != null)
+                {
+                    RailController[] rail = _currentFrontObject.GetComponentsInChildren<RailController>();
+
+                    for (int i = 0; i < rail.Length; i++)
+                    {
+                        Debug.Log("ë¹¼ë‚´ê¸°");
+                        //ë ˆì¼ì˜ ë¶€ëª¨ë¥¼ ë‹¤ì‹œ ì •ì ìƒíƒœì¸ í’€ë§ìœ¼ë¡œ ì´ë™
+                        rail[i].transform.parent = bench.railPool.transform;
+                    }
+                }
+            }
+            else
+            {
+                Pair<Stack<MyItem>, Stack<MyItem>> p = _detectedItem.Peek().PickUp(_handItem, _detectedItem);
+                _handItem = p.first;
+                _detectedItem = p.second;
+            }
         }
-        else if(_handItem.Count != 0 && _detectedItem.Count == 0) // ¹ö¸®±â
-        {
-            Debug.Log("¹ö¸®±â");
 
-            Pair<Stack<MyItem>, Stack<MyItem>> p = _handItem.Peek().PutDown(_handItem, _detectedItem);
-            _handItem = p.first;
-            _detectedItem = p.second;
-        }
-        else if(_handItem.Count != 0 && _detectedItem.Count != 0) // ±³Ã¼
+        else if (_handItem.Count != 0 && _detectedItem.Count == 0) // ë²„ë¦¬ê¸°
         {
-            Debug.Log("±³Ã¼");
+            if (_currentFrontObject != null && _currentFrontObject.gameObject.layer == LayerMask.NameToLayer("Box"))
+            {
+                TrainBox box = _currentFrontObject.GetComponent<TrainBox>();
+
+                if (CurrentHandItem.ItemType == EItemType.wood)
+                {
+                    if (box.woods.Count < box.maxItem)
+                    {
+                        for (int i = 0; i < _handItem.Count; i++)
+                        {
+                            Debug.Log("ë‚©í’ˆ");
+                            box.GiveMeItem(CurrentHandItem.ItemType, _handItem);
+                        }
+                        _handItem.Clear();
+
+                    }
+                    else return;
+                }
+                else if (CurrentHandItem.ItemType == EItemType.steel)
+                {
+                    if (box.steels.Count < box.maxItem)
+                    {
+                        for (int i = 0; i < _handItem.Count; i++)
+                        {
+                            Debug.Log("ë‚©í’ˆ");
+                            box.GiveMeItem(CurrentHandItem.ItemType, _handItem);
+                        }
+                        _handItem.Clear();
+                    }
+                    else return;
+                }
+            }
+            else
+            {
+                Debug.Log("ë²„ë¦¬ê¸°");
+                Pair<Stack<MyItem>, Stack<MyItem>> p = _handItem.Peek().PutDown(_handItem, _detectedItem);
+                _handItem = p.first;
+                _detectedItem = p.second;
+            }
+        }
+        else if (_handItem.Count != 0 && _detectedItem.Count != 0) // êµì²´
+        {
+            Debug.Log("êµì²´");
 
             Pair<Stack<MyItem>, Stack<MyItem>> p = _handItem.Peek().Change(_handItem, _detectedItem);
             _handItem = p.first;
@@ -161,12 +221,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // ¾È ´©¸¦ ¶§
+    // ì•ˆ ëˆ„ë¥¼ ë•Œ
     private void InteractivItem()
     {
-        if(_handItem.Count != 0 && _detectedItem.Count != 0)
+        if (_handItem.Count != 0 && _detectedItem.Count != 0)
         {
-            Debug.Log("¿Í´Ù´Ú Áİ±â");
+            Debug.Log("ì™€ë‹¤ë‹¥ ì¤ê¸°");
 
             Pair<Stack<MyItem>, Stack<MyItem>> p = _handItem.Peek().AutoGain(_handItem, _detectedItem);
             _handItem = p.first;
@@ -178,7 +238,6 @@ public class PlayerController : MonoBehaviour
     {
 
     }
-
     private void InteractiveTrain()
     {
 
@@ -188,20 +247,20 @@ public class PlayerController : MonoBehaviour
     {
         if (Physics.Raycast(_rayStartTransform.position, Vector3.down, out RaycastHit hit, _playerStat.detectRange, _playerStat.blockLayer))
         {
-            // Ä³½Ì
+            // ìºì‹±
             if (_currentblock == hit.transform)
                 return;
 
             _currentblock = hit.transform;
             _detectedItem = new Stack<MyItem>();
-            for(int i = 0; i < _currentblock.childCount; i++)
+            for (int i = 0; i < _currentblock.childCount; i++)
             {
                 MyItem item = _currentblock.GetChild(i).GetComponent<MyItem>();
                 if (item != null)
                     _detectedItem.Push(item);
             }
 
-            if(_balloonObject.activeSelf)
+            if (_balloonObject.activeSelf)
             {
                 _balloonObject.SetActive(false);
                 _isRespawn = false;
@@ -213,7 +272,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // ·¹ÀÏÀ» ÀÌÀ» ¼ö ÀÖ´Â »óÈ²ÀÌ¶ó¸é preview ·¹ÀÏÀ» È°¼ºÈ­½ÃÅ²´Ù.
+    // ë ˆì¼ì„ ì´ì„ ìˆ˜ ìˆëŠ” ìƒí™©ì´ë¼ë©´ preview ë ˆì¼ì„ í™œì„±í™”ì‹œí‚¨ë‹¤.
     private void CheckPutDownRail()
     {
         if (_handItem.Count != 0 && _handItem.Peek().ItemType == EItemType.rail)
@@ -222,7 +281,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (Physics.Raycast(_currentblock.position, dir[i], out RaycastHit hit, _playerStat.detectRange, _playerStat.blockLayer))
                 {
-                    // ÇöÀç ¶¥ À§¿¡ ¾Æ¹«°Íµµ ¾ø°í ÁÖÀ§¿¡ ¸¶Áö¸· ·¹ÀÏÀÌ ÀÖ´Ù¸é
+                    // í˜„ì¬ ë•… ìœ„ì— ì•„ë¬´ê²ƒë„ ì—†ê³  ì£¼ìœ„ì— ë§ˆì§€ë§‰ ë ˆì¼ì´ ìˆë‹¤ë©´
                     if (_currentblock.childCount == 0 && hit.transform.childCount != 0 && hit.transform.GetChild(0).GetComponent<RailController>() == FindObjectOfType<GoalManager>().lastRail)
                     {
                         _railPreview.gameObject.SetActive(true);
@@ -242,9 +301,10 @@ public class PlayerController : MonoBehaviour
     {
         if (Physics.Raycast(_rayStartTransform.position, transform.forward, out RaycastHit hit, _playerStat.detectRange, _playerStat.detectableLayer))
         {
-            if(!_isInteractive)
+            if (!_isInteractive)
             {
                 _currentInteractCoolTime += Time.deltaTime;
+
                 if (_currentInteractCoolTime > _playerStat.interactiveCoolTime)
                 {
                     _currentInteractCoolTime = 0;
@@ -255,7 +315,7 @@ public class PlayerController : MonoBehaviour
             if (hit.transform.GetComponent<MyItem>() != null)
                 return;
 
-            // Ä³½Ì
+            // ìºì‹±
             if (_currentFrontObject == hit.transform)
                 return;
             _currentFrontObject = hit.transform;
@@ -272,7 +332,7 @@ public class PlayerController : MonoBehaviour
     private Transform BFS()
     {
         // CurrentBlockTransform => _currentblock
-        // ÇöÀç ºí·°¿¡¼­ °¡Àå °¡±î¿î ÀÚ½ÄÀÌ ¾ø´Â ºí·°À» ¹İÈ¯ÇÏÀÚ
+        // í˜„ì¬ ë¸”ëŸ­ì—ì„œ ê°€ì¥ ê°€ê¹Œìš´ ìì‹ì´ ì—†ëŠ” ë¸”ëŸ­ì„ ë°˜í™˜í•˜ì
 
         Queue<Transform> queue = new Queue<Transform>();
         queue.Enqueue(_currentblock);
@@ -280,7 +340,7 @@ public class PlayerController : MonoBehaviour
         HashSet<Transform> hashSet = new HashSet<Transform>();
         hashSet.Add(_currentblock);
 
-        while(queue.Count != 0)
+        while (queue.Count != 0)
         {
             Transform currentBlock = queue.Dequeue();
 
@@ -288,19 +348,19 @@ public class PlayerController : MonoBehaviour
                 return currentBlock;
 
             for (int i = 0; i < 8; i++)
-                if(Physics.Raycast(currentBlock.position, dir[i], out RaycastHit hit, 1f, _playerStat.blockLayer))
-                    if(hashSet.Add(hit.transform))
+                if (Physics.Raycast(currentBlock.position, dir[i], out RaycastHit hit, 1f, _playerStat.blockLayer))
+                    if (hashSet.Add(hit.transform))
                         queue.Enqueue(hit.transform);
         }
 
         return null;
     }
 
-    // ¼Õ¿¡ ÀÖ´Â ¹°°ÇÀ» ¶³±¸´Â ¸Ş¼Òµå
+    // ì†ì— ìˆëŠ” ë¬¼ê±´ì„ ë–¨êµ¬ëŠ” ë©”ì†Œë“œ
     private void PutDownItem()
     {
         Debug.Log(_handItem.Count);
-        if(_handItem.Count != 0)
+        if (_handItem.Count != 0)
         {
             Pair<Stack<MyItem>, Stack<MyItem>> p = _handItem.Peek().PutDown(_handItem, _detectedItem);
             _handItem = p.first;
@@ -308,27 +368,35 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    #region ¹Î°æÀÌ Çü
-    private void DetectWater()  // ¹° °¨Áö
+    #region ë¯¼ê²½ì´ í˜•
+    private void DetectWater()  // ë¬¼ ê°ì§€
     {
         if (_currentFrontObject == null)
         {
             return;
         }
 
-        if(_currentFrontObject.gameObject.layer == LayerMask.NameToLayer("Water"))
+        if (_currentFrontObject.gameObject.layer == LayerMask.NameToLayer("Water"))
         {
-            if(CurrentHandItem != null && CurrentHandItem.ItemType == EItemType.bucket)
+            if (CurrentHandItem != null && CurrentHandItem.ItemType == EItemType.bucket)
             {
-                if(!_waterGauge.IsFillWater())
+                if (!_waterGauge.IsFillWater())
                 {
-                    // ¹° Ã¤¿ì±â
+
+                    if (!_isCharge)
+                    {
+                        SoundManager.Instance.PlaySoundEffect("Player_WaterImport");
+                        _isCharge = true;
+                    }
+                    // ë¬¼ ì±„ìš°ê¸°
                     _waterGauge.gameObject.SetActive(true);
+
                     _waterGauge.FillGauge();
                 }
                 else
                 {
                     CurrentHandItem.ActiveWater(true);
+                    _isCharge = false;
                 }
             }
         }
@@ -346,7 +414,7 @@ public class PlayerController : MonoBehaviour
         {
             if(_waterGauge.IsFillWater())
             {
-                // ºÒ²¨ÁÖ±â ³Ö¾î¾ß ÇØ
+                // ë¶ˆêº¼ì£¼ê¸° ë„£ì–´ì•¼ í•´
                 _fireeffect.Stop();
 
                 CurrentHandItem.ActiveWater(false);
@@ -355,7 +423,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public bool SetBridge() // ´Ù¸® ³õ±â
+    public bool SetBridge() // ë‹¤ë¦¬ ë†“ê¸°
     {
         if (_currentFrontObject == null)
             return false;
@@ -379,13 +447,13 @@ public class PlayerController : MonoBehaviour
         return false;
     }
 
-    private void DigUp() // Ä³±â
+    private void DigUp() // ìºê¸°
     {
         if (_currentFrontObject == null)
             return;
         if (!_isInteractive)
             return;
-        // ¿©±â ¾Ö´Ï¸ŞÀÌ¼Ç
+        // ì—¬ê¸° ì• ë‹ˆë©”ì´ì…˜
         if (_currentFrontObject.gameObject.layer == LayerMask.NameToLayer("diggable"))
         {
             if (CurrentHandItem == null)
@@ -393,12 +461,13 @@ public class PlayerController : MonoBehaviour
             ReSource resource = _currentFrontObject.GetComponent<ReSource>();
             if (resource == null)
                 return;
+
             if (CurrentHandItem.ItemType == EItemType.axe && resource.ResourceType == EResource.tree)
             {
                 resource.Dig();
                 _isInteractive = false;
             }
-            else if(CurrentHandItem.ItemType == EItemType.pick && resource.ResourceType == EResource.steel)
+            else if (CurrentHandItem.ItemType == EItemType.pick && resource.ResourceType == EResource.steel)
             {
                 resource.Dig();
                 _isInteractive = false;
@@ -406,7 +475,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Attack()  // °ø°İ
+    private void Attack()  // ê³µê²©
     {
         if (_currentFrontObject == null)
             return;
@@ -419,7 +488,7 @@ public class PlayerController : MonoBehaviour
                 if (CurrentHandItem.ItemType == EItemType.pick || CurrentHandItem.ItemType == EItemType.axe)
                 {
                     AnimalHealth animal = _currentFrontObject.GetComponent<AnimalHealth>();
-                    if(animal != null)
+                    if (animal != null)
                     {
                         animal.Hit();
                         _isInteractive = false;
@@ -429,7 +498,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void AddBolt(GameObject bolt) // ÄÚÀÏ ¸Ô±â
+    private void AddBolt(GameObject bolt) // ì½”ì¼ ë¨¹ê¸°
     {
         Destroy(bolt);
     }
@@ -440,7 +509,7 @@ public class PlayerController : MonoBehaviour
 
         InitPlayer();
 
-        // Á×À¸¸é µé°í ÀÖ´Â°Å ´Ù ³õÀÚ
+        // ì£½ìœ¼ë©´ ë“¤ê³  ìˆëŠ”ê±° ë‹¤ ë†“ì
         PutDownItem();
 
         transform.position += Vector3.up * 10f;
