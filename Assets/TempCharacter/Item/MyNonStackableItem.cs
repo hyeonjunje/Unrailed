@@ -20,8 +20,8 @@ public class MyNonStackableItem : MyItem
             MyItem temp = handItem.Pop();
             handItem.Push(detectedItem.Pop());
             detectedItem.Push(temp);
-            handItem.Peek().RePosition(player.RightHandTransform, Vector3.zero);
-            detectedItem.Peek().RePosition(player.CurrentBlockTransform, Vector3.up * 0.5f);
+            handItem.Peek().RePosition(handItem.Peek().equipment, Vector3.zero);
+            detectedItem.Peek().RePosition(player.AroundEmptyBlockTranform, Vector3.up * 0.5f);
         }
         else if(detectedItemType == EItemType.wood || detectedItemType == EItemType.steel)
         {
@@ -32,14 +32,14 @@ public class MyNonStackableItem : MyItem
                     break;
 
                 handItem.Push(detectedItem.Pop());
-                handItem.Peek().RePosition(player.TwoHandTransform, Vector3.up * i * stackInterval);
+                handItem.Peek().RePosition(handItem.Peek().equipment, Vector3.up * i * stackInterval);
             }
             detectedItem.Push(temp);
-            detectedItem.Peek().RePosition(player.CurrentBlockTransform, Vector3.up * 0.5f + Vector3.up * (detectedItem.Count - 1) * stackInterval);
+            detectedItem.Peek().RePosition(player.AroundEmptyBlockTranform, Vector3.up * 0.5f);
         }
         else if(detectedItemType == EItemType.rail)
         {
-            if(!CheckConnectedRail())
+            if (IsRailInteractive(detectedItem.Peek().GetComponent<RailController>()))
             {
                 MyItem temp = handItem.Pop();
                 for (int i = 0; i < 3; i++)
@@ -48,10 +48,10 @@ public class MyNonStackableItem : MyItem
                         break;
 
                     handItem.Push(detectedItem.Pop());
-                    handItem.Peek().RePosition(player.TwoHandTransform, Vector3.up * i * stackInterval);
+                    handItem.Peek().RePosition(handItem.Peek().equipment, Vector3.up * i * stackInterval);
                 }
                 detectedItem.Push(temp);
-                detectedItem.Peek().RePosition(player.CurrentBlockTransform, Vector3.up * 0.5f + Vector3.up * (detectedItem.Count - 1) * stackInterval);
+                detectedItem.Peek().RePosition(player.AroundEmptyBlockTranform, Vector3.up * 0.5f);
             }
         }
 
@@ -62,7 +62,7 @@ public class MyNonStackableItem : MyItem
     {
         // 弊成 林况
         handItem.Push(detectedItem.Pop());
-        handItem.Peek().RePosition(player.RightHandTransform, Vector3.zero);
+        handItem.Peek().RePosition(handItem.Peek().equipment, Vector3.zero);
         return new Pair<Stack<MyItem>, Stack<MyItem>>(handItem, detectedItem);
     }
 
@@ -70,7 +70,7 @@ public class MyNonStackableItem : MyItem
     {
         // 弊成 冻迸
         detectedItem.Push(handItem.Pop());
-        detectedItem.Peek().RePosition(player.CurrentBlockTransform, Vector3.up * 0.5f);
+        detectedItem.Peek().RePosition(player.AroundEmptyBlockTranform, Vector3.up * 0.5f);
         return new Pair<Stack<MyItem>, Stack<MyItem>>(handItem, detectedItem);
     }
 }

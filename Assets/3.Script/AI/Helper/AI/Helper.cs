@@ -5,7 +5,6 @@ using System;
 
 public class Helper : MonoBehaviour
 {
-    public Resource Home { get; private set; } = null;
     public Resource Map;
 
     [HideInInspector]
@@ -24,13 +23,9 @@ public class Helper : MonoBehaviour
         Init();
 
         //나중에 완성되면 빼기
-        Home = Map;
+        //Home = Map;
     }
 
-    public void SetHome(Resource _Home)
-    {
-        Home = _Home;
-    }
 
     void Init()
     {

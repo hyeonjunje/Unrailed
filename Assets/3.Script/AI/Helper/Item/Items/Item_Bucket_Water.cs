@@ -5,9 +5,11 @@ using UnityEngine.UI;
 
 public class Item_Bucket_Water : SimpleInteraction
 {
-    protected Item_Bucket _bucket;
     public Slider Watergauge;
     public GameObject WaterMesh;
+
+    protected Item_Bucket _bucket;
+    protected bool _full = false;
 
     private void Awake()
     {
@@ -17,14 +19,16 @@ public class Item_Bucket_Water : SimpleInteraction
 
     public override bool Perform()
     {
+        Debug.Log("물 떠용");
         FillGauge();
         return !Stop();
     }
 
     public override bool CanPerform()
     {
+        Debug.Log(_bucket.IsOn);
         //양동이를 든 상태라면 가능
-        return base.CanPerform() && _bucket.IsOn;
+        return base.CanPerform() && _bucket.IsOn && !_bucket.Full;
     }
 
     public void FillGauge()
@@ -51,6 +55,8 @@ public class Item_Bucket_Water : SimpleInteraction
     {
         if(Watergauge.value>=1)
         {
+            _bucket.BucketisFull();
+            Debug.Log("물 다떴어용");
             return true;
         }
         return false;

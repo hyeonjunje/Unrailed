@@ -54,7 +54,7 @@ public class WorldManager : MonoBehaviour
             Transform currentParent = new GameObject("World " + i).transform;
             currentParent.position = parentPosition;
 
-            entireMap[i] = await _mapCreator.CreateMapAsync(mapData[i], currentParent);
+            entireMap[i] = await _mapCreator.CreateMapAsync(mapData[i], currentParent, i == 0);
         }
 
         // 맵을 제외한 오브젝트 초기화 (플레이어, 역, 기차, AI)

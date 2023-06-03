@@ -318,7 +318,8 @@ GameObject:
   - component: {fileID: -4514339180840174343}
   - component: {fileID: -8707084220548812272}
   - component: {fileID: -5560814190645310811}
-  m_Layer: 0
+  - component: {fileID: -8486133773397834221}
+  m_Layer: 18
   m_Name: Tree01
   m_TagString: Invisible
   m_Icon: {fileID: 0}
@@ -352,9 +353,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23a928c34e8b1d145b10ced7a2ec071b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ResourceHp: 3
-  Delay: 1
-  ItemPrefab: {fileID: 1554482166082667595, guid: b6e1b227b7cc406449be17199cf61543, type: 3}
+  resourceType: 0
+  resourceHp: 3
+  _scaleAmountOfChange: 0.2
+  itemPrefab: {fileID: 7187630036778189682, guid: b6e1b227b7cc406449be17199cf61543, type: 3}
 --- !u!65 &-8707084220548812272
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -381,6 +383,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   originPos: {x: 0, y: 0, z: 0}
+--- !u!114 &-8486133773397834221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5019990921700754394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6b1a865e950d5f408bb5a448e1e2ef9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Type: 0
+  _item: {fileID: 1554482166082667595, guid: b6e1b227b7cc406449be17199cf61543, type: 3}
+  _resourceHp: 2.7
 --- !u!1 &5019990921733027023
 GameObject:
   m_ObjectHideFlags: 0

@@ -196,6 +196,7 @@ public class RailController : MonoBehaviour
                     }
                 }
                 trainManager.TrainGoal();
+                trainComponents[0].CameraSwitch(2);
             }
         }
     }

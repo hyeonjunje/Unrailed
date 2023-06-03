@@ -14,7 +14,7 @@ public class Item_Bucket_Interaction : SimpleInteraction
 
     public override bool CanPerform()
     {
-        return base.CanPerform() && !_bucket.IsOn;  
+        return base.CanPerform() && !_bucket.IsOn && !_bucket.Full;
     }
 
     public override bool Perform()
