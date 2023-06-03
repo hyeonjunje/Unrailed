@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6873662507441089658}
   - component: {fileID: 2224869442075505343}
   - component: {fileID: 7705865897169037331}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: ItemIron00
   m_TagString: Invisible
   m_Icon: {fileID: 0}
@@ -46,9 +46,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23a928c34e8b1d145b10ced7a2ec071b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ResourceHp: 3
-  Delay: 1
-  ItemPrefab: {fileID: 6337666441607593902, guid: e9ea948b5baee254a94c64ecba50279d, type: 3}
+  resourceType: 1
+  resourceHp: 3
+  _scaleAmountOfChange: 0.2
+  itemPrefab: {fileID: 9043740789192840749, guid: e9ea948b5baee254a94c64ecba50279d, type: 3}
 --- !u!65 &2224869442075505343
 BoxCollider:
   m_ObjectHideFlags: 0
