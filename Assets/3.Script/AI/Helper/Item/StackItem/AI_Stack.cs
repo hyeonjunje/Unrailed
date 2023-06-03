@@ -13,12 +13,12 @@ public class AI_Stack : MonoBehaviour
     public Transform AroundEmptyBlockTranform => BFS();
 
 
-    private HelperBT _helper;
+    private BaseAI _ai;
 
 
     private void Awake()
     {
-        _helper = GetComponent<HelperBT>();
+        _ai = GetComponent<BaseAI>();
 
         _handItem = new Stack<AI_StackItem>();
         _detectedItem = new Stack<AI_StackItem>();
@@ -33,11 +33,31 @@ public class AI_Stack : MonoBehaviour
             _handItem = p.first;
             _detectedItem = p.second;
         }
+
+        else if (_handItem.Count != 0 && _detectedItem.Count == 0) // 버리기
+        {
+            Debug.Log("버리기");
+
+            Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = _handItem.Peek().PutDown(_handItem, _detectedItem);
+            _handItem = p.first;
+            _detectedItem = p.second;
+        }
+        else if (_handItem.Count != 0 && _detectedItem.Count != 0) // 교체
+        {
+            Debug.Log("교체");
+
+            Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = _handItem.Peek().Change(_handItem, _detectedItem);
+            _handItem = p.first;
+            _detectedItem = p.second;
+        }
+
+
+
     }
 
     public void PutDown()
     {
-        if (_handItem.Count != 0 && _detectedItem.Count == 0) // 버리기
+        if (_handItem.Count != 0 && _detectedItem.Count == 0) // 내려놓기
         {
 
             Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = _handItem.Peek().PutDown(_handItem, _detectedItem);
@@ -64,11 +84,6 @@ public class AI_Stack : MonoBehaviour
 
     }
 
-
-
-
-
-
     public void InteractiveItem()
     {
 
@@ -78,6 +93,10 @@ public class AI_Stack : MonoBehaviour
             _handItem = p.first;
             _detectedItem = p.second;
         }
+
+
+
+
     }
     public void DetectGroundBlock(WorldResource resource)
     {
@@ -89,19 +108,22 @@ public class AI_Stack : MonoBehaviour
 
     public Transform BFS()
     {
-        if (Physics.Raycast(_helper.RayStartTransfrom.position, Vector3.down, out RaycastHit hit, 1, BlockLayer))
+        if (Physics.Raycast(_ai.RayStartTransfrom.position, Vector3.down, out RaycastHit hit, 1, BlockLayer))
         {
             _currentblock = hit.transform;
         }
 
         Queue<Transform> queue = new Queue<Transform>();
-        queue.Enqueue(_currentblock);
+        HashSet<Transform> hashSet = new HashSet<Transform>();
+
+        if(_currentblock!=null)
+        {
+            queue.Enqueue(_currentblock);
+            hashSet.Add(_currentblock);
+        }
 
         Vector3[] dir = new Vector3[8] { Vector3.forward, Vector3.back, Vector3.right, Vector3.left,
         new Vector3(1, 0, 1), new Vector3(1, 0, -1), new Vector3(-1, 0, -1), new Vector3(-1, 0, 1)};
-
-        HashSet<Transform> hashSet = new HashSet<Transform>();
-        hashSet.Add(_currentblock);
 
         while (queue.Count != 0)
         {

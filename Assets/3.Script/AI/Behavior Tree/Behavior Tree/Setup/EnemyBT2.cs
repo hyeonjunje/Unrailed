@@ -8,7 +8,6 @@ public class EnemyBT2 : BaseAI
     {
         public static readonly BlackBoardKey CurrentTarget = new BlackBoardKey() { Name = "CurrentTarget" };
         public static readonly BlackBoardKey NewDestination = new BlackBoardKey() { Name = "NewDestination" };
-        public static readonly BlackBoardKey RandomDestination = new BlackBoardKey() { Name = "RandomDestination" };
 
         public string Name;
 
@@ -29,8 +28,6 @@ public class EnemyBT2 : BaseAI
         _localMemory = BlackboardManager.Instance.GetIndividualBlackboard<BlackBoardKey>(this);
         _localMemory.SetGeneric<WorldResource>(BlackBoardKey.CurrentTarget, null);
 
-
-
         var BTRoot = _tree.RootNode.Add<BTNode_Selector>("BT 시작");
 
         BTRoot.AddService<BTServiceBase>("훔칠 거 찾는 Service", (float deltaTime) =>
@@ -47,7 +44,7 @@ public class EnemyBT2 : BaseAI
                 return;
         });
 
-        var HaveTarget = BTRoot.Add<BTNode_Sequence>("훔칠 거 있나요?");
+        var HaveTarget = BTRoot.Add<BTNode_Selector>("훔칠 거 있나요?");
         var CheckTarget = HaveTarget.AddDecorator<BTDecoratorBase>("훔칠 거 있는지 거르는 DECO", () =>
         {
             //타겟이 있으면 true 없으면 false
@@ -81,7 +78,7 @@ public class EnemyBT2 : BaseAI
         stealRoot.Add<BTNode_Action>("타겟 존재 : 훔치기 실행",
         () =>
         {
-            _animator.SetBool("Lifting", true);
+            _animator.SetBool(isMove, false);
             if(_target!=null)
             {
                 _stack.DetectGroundBlock(_target);
@@ -135,9 +132,7 @@ public class EnemyBT2 : BaseAI
         runRoot.Add<BTNode_Action>("도망",
             () =>
             {
-                //구석으로 가서 버리기
                 Vector3 position = _agent.MoveToClosestEndPosition();
-                //_currentblock.position = position;
                 return BehaviorTree.ENodeStatus.InProgress;
 
             },
@@ -153,9 +148,9 @@ public class EnemyBT2 : BaseAI
         discardRoot.Add<BTNode_Action>("버리기",
             () =>
             {
-                _animator.SetBool("Lifting", false);
                 _stack.ThrowResource();
                 _target = null;
+                _animator.SetBool(isMove, true);
 
 
                 return BehaviorTree.ENodeStatus.InProgress;
@@ -172,6 +167,7 @@ public class EnemyBT2 : BaseAI
         wanderRoot.Add<BTNode_Action>("무작위 이동중",
         () =>
         {
+            _animator.SetBool(isMove, true);
             _agent.MoveToRandomPosition();
             return BehaviorTree.ENodeStatus.InProgress;
         },

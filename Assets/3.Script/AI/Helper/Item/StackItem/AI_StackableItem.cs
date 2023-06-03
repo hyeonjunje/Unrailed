@@ -19,6 +19,30 @@ public class AI_StackableItem : AI_StackItem
             }
         }
 
+        else
+        {
+            //아니라면 손에 있는걸 갖다놓고 다시 와야함
+            if (handItem.Count <= 3 && detectedItem.Count <= 3)
+            {
+                Stack<AI_StackItem> temp = new Stack<AI_StackItem>(handItem);
+                _aiStack.PutDown();
+
+                while (detectedItem.Count != 0)
+                {
+                    handItem.Push(detectedItem.Pop());
+                    handItem.Peek().RePosition(_ai.TwoHandTransform, Vector3.up * (handItem.Count - 1) * stackInterval);
+                }
+                while (temp.Count != 0)
+                {
+                    detectedItem.Push(temp.Pop());
+                    detectedItem.Peek().RePosition(_ai.CurrentBlockTransform, Vector3.up * 0.5f + Vector3.up * (detectedItem.Count - 1) * stackInterval);
+                }
+            }
+        }
+
+
+
+
         return new Pair<Stack<AI_StackItem>, Stack<AI_StackItem>>(handItem, detectedItem);
     }
 
@@ -53,7 +77,9 @@ public class AI_StackableItem : AI_StackItem
                 if (handItem.Count <= 3 && detectedItem.Count <= 3)
                 {
                     Stack<AI_StackItem> temp = new Stack<AI_StackItem>(handItem);
-                    handItem.Clear();
+                    _aiStack.PutDown();
+                    //handItem.Peek().PutDownResource(_aiStack.AroundEmptyBlockTranform, Vector3.up * 0.5f + Vector3.up * (detectedItem.Count - 1) * stackInterval);
+                    //handItem.Clear();
                     while (detectedItem.Count != 0)
                     {
                         handItem.Push(detectedItem.Pop());

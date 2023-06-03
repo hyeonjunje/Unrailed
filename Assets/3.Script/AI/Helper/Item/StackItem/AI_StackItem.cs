@@ -10,10 +10,12 @@ public abstract class AI_StackItem : MonoBehaviour
 
     protected BaseAI _ai;
     protected WorldResource _resource;
+    protected AI_Stack _aiStack;
 
     protected virtual void Awake()
     {
         _ai = FindObjectOfType<BaseAI>();
+        _aiStack = FindObjectOfType<AI_Stack>();
         _resource = GetComponent<WorldResource>();
     }
 
@@ -49,11 +51,9 @@ public abstract class AI_StackItem : MonoBehaviour
     {
         transform.gameObject.AddComponent<Rigidbody>();
         transform.SetParent(null);
-/*        transform.localPosition = pos;
-        transform.localRotation = Quaternion.identity;
-        transform.localScale = Vector3.one;*/
         ResourceTracker.Instance.DeRegisterResource(_resource);
         Destroy(_resource);
+        Destroy(gameObject, 2);
     }
 
 
