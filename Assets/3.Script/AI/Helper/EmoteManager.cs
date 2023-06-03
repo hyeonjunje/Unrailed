@@ -29,8 +29,8 @@ public class EmoteManager : MonoBehaviour
     public int ResourceEmote = 13;
 
 
-    Dictionary<int, Sprite> _portraitData;
-    public Sprite[] Portrait;
+    private Dictionary<int, Sprite> _portraitData;
+    [SerializeField] private Sprite[] _portrait;
 
     private void Awake()
     {
@@ -40,16 +40,16 @@ public class EmoteManager : MonoBehaviour
 
     private void Init()
     {
-        _portraitData.Add(AxeEmote, Portrait[0]);
-        _portraitData.Add(PickEmote, Portrait[1]);
-        _portraitData.Add(BucketEmote, Portrait[2]);
-        _portraitData.Add(WarningEmote, Portrait[3]);
-        _portraitData.Add(SleepEmote, Portrait[4]);
+        _portraitData.Add(AxeEmote, _portrait[0]);
+        _portraitData.Add(PickEmote, _portrait[1]);
+        _portraitData.Add(BucketEmote, _portrait[2]);
+        _portraitData.Add(WarningEmote, _portrait[3]);
+        _portraitData.Add(SleepEmote, _portrait[4]);
 
-        _portraitData.Add(WoodEmote, Portrait[5]);
-        _portraitData.Add(WaterEmote, Portrait[6]);
-        _portraitData.Add(StoneEmote, Portrait[7]);
-        _portraitData.Add(ResourceEmote, Portrait[8]);
+        _portraitData.Add(WoodEmote, _portrait[5]);
+        _portraitData.Add(WaterEmote, _portrait[6]);
+        _portraitData.Add(StoneEmote, _portrait[7]);
+        _portraitData.Add(ResourceEmote, _portrait[8]);
     }
 
     public Sprite GetEmote(int id)

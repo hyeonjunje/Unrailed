@@ -16,8 +16,6 @@ public class BTDecoratorBase : BTElementBase
 
     public virtual bool Evaluate()
     {
-        //null이 아니라면 OnEvaluateFn을 호출하여 평가 결과 얻기
-        //null이라면 false 반환
         LastEvaluationResult = onEvaluateFn != null ? onEvaluateFn() : false;
 
         return LastEvaluationResult;
