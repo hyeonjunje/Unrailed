@@ -6,6 +6,8 @@ public class AI_StackableItem : AI_StackItem
 {
     public override Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> AutoGain(Stack<AI_StackItem> handItem, Stack<AI_StackItem> detectedItem)
     {
+        Init();
+
         // 종류가 같다면 줍는다.
         if (handItem.Peek().CheckItemType(detectedItem.Peek()))
         {
@@ -49,6 +51,8 @@ public class AI_StackableItem : AI_StackItem
     public override Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> Change(Stack<AI_StackItem> handItem, Stack<AI_StackItem> detectedItem)
     {
         // handItem은 무조건 StackableItem
+
+        Init();
 
         EItemType detectedItemType = detectedItem.Peek().ItemType;
         if (detectedItemType == EItemType.axe || detectedItemType == EItemType.pick || detectedItemType == EItemType.bucket)
@@ -120,13 +124,14 @@ public class AI_StackableItem : AI_StackItem
 
     public override Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> PickUp(Stack<AI_StackItem> handItem, Stack<AI_StackItem> detectedItem)
     {
+        Init();
+
         for (int i = 0; i < 3; i++)
         {
             if (detectedItem.Count == 0)
                 break;
             handItem.Push(detectedItem.Pop());
             handItem.Peek().RePosition(_ai.TwoHandTransform, Vector3.up * stackInterval);
-            
         }
 
         return new Pair<Stack<AI_StackItem>, Stack<AI_StackItem>>(handItem, detectedItem);
@@ -134,6 +139,8 @@ public class AI_StackableItem : AI_StackItem
 
     public override Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> PutDown(Stack<AI_StackItem> handItem, Stack<AI_StackItem> detectedItem)
     {
+        Init();
+
         while (handItem.Count != 0)
         {
             detectedItem.Push(handItem.Pop());
@@ -146,6 +153,8 @@ public class AI_StackableItem : AI_StackItem
 
     public override Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> EnemyPutDown(Stack<AI_StackItem> handItem, Stack<AI_StackItem> detectedItem)
     {
+        Init();
+
         while (handItem.Count != 0)
         {
             detectedItem.Push(handItem.Pop());

@@ -328,7 +328,18 @@ public class PlayerController : MonoBehaviour
         {
             if(CurrentHandItem != null && CurrentHandItem.ItemType == EItemType.bucket)
             {
-                if(!_waterGauge.IsFillWater())
+
+
+                foreach (var interaction in CurrentHandItem.GetComponent<AI_Item>().Interactions)
+                {
+                    if (interaction.CanPerform())
+                    {
+                        interaction.Perform();
+                    }
+                }
+
+
+                if (!_waterGauge.IsFillWater())
                 {
                     // 물 채우기
                     _waterGauge.gameObject.SetActive(true);
@@ -337,6 +348,14 @@ public class PlayerController : MonoBehaviour
                 else
                 {
                     CurrentHandItem.ActiveWater(true);
+
+
+
+
+
+
+                    // 여기야 여기
+
                 }
             }
         }
