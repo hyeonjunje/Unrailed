@@ -4,22 +4,22 @@ using UnityEngine;
 
 public static class BoidHelper
 {
-    const int numViewDirections = 100;
+    private const int _numViewDirections = 100;
     public static readonly Vector3[] Directions;
 
     static BoidHelper()
     {
         //X, Z축 방향으로 장애물에 막히지 않는 경로 탐색을 도와주는
         //RayCast를 쏘기 위한 Directions
-        Directions = new Vector3[BoidHelper.numViewDirections];
+        Directions = new Vector3[BoidHelper._numViewDirections];
 
         float goldenRatio = (1 + Mathf.Sqrt(5)) / 2;
         //1.6
         float angleIncrement = Mathf.PI * 2 * goldenRatio;
         
-        for (int i = 0; i < numViewDirections; i++)
+        for (int i = 0; i < _numViewDirections; i++)
         {
-            float t = (float)i / numViewDirections;
+            float t = (float)i / _numViewDirections;
             float inclination = Mathf.Acos(1 - 2 * t);
             float azimuth = angleIncrement * i;
 

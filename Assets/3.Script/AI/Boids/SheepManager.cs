@@ -7,7 +7,7 @@ public class SheepManager : MonoBehaviour
     public FlockSettings Settings;
     public ComputeShader Compute;
 
-    const int threadGroupSize = 64;
+    private const int threadGroupSize = 64;
 
 
     private Flock[] _flock;

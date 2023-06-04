@@ -11,12 +11,12 @@ public class WorldResource : MonoBehaviour
         Stone,
         Resource
     }
-    [SerializeField] EType _Type;
+    private EType _Type;
     public EType Type => _Type;
 
-    [SerializeField] Transform _item;
+    [SerializeField] private Transform _item;
+    [SerializeField] private float _resourceHp = 2.7f;
     private float _resourceScale = Mathf.Clamp01(1);
-    [SerializeField] float _resourceHp = 2.7f;
 
     void Start()
     {

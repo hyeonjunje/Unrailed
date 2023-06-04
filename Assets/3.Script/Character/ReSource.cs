@@ -49,7 +49,7 @@ public class ReSource : MonoBehaviour
         GameObject itemObject = Instantiate(itemPrefab, parent);
         itemObject.transform.localPosition = Vector3.up * 0.5f;
         itemObject.transform.localRotation = Quaternion.identity;
-
+        ResourceTracker.Instance.DeRegisterResource(gameObject.GetComponent<WorldResource>());
         Destroy(gameObject);
     }
 }

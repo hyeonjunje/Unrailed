@@ -17,13 +17,13 @@ public class FlockBT : MonoBehaviour
     [SerializeField] private float _wanderRange = 3f;
 
 
-    protected BehaviorTree _tree;
-    protected Blackboard<BlackBoardKey> _localMemory;
+    private BehaviorTree _tree;
+    private Blackboard<BlackBoardKey> _localMemory;
 
-    protected PathFindingAgent _agent;
-    protected Transform _transform;
-    
-    protected Flock _flock;
+    private PathFindingAgent _agent;
+    private Transform _transform;
+
+    private Flock _flock;
 
     private void Awake()
     {

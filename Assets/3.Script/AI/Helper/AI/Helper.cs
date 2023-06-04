@@ -5,32 +5,23 @@ using System;
 
 public class Helper : MonoBehaviour
 {
-    public Resource Home { get; private set; } = null;
-    public Resource Map;
-
     [HideInInspector]
     public PathFindingAgent Agent;
-
+    [HideInInspector]
     public Dictionary<KeyCode, System.Action> Order;
     [HideInInspector]
     public WorldResource.EType TargetResource;
     [HideInInspector]
     public WorldResource.EType DefaultResource = WorldResource.EType.Wood;
+
     private void Awake()
     {
         Agent = GetComponent<PathFindingAgent>();
         TargetResource = DefaultResource;
         Order = new Dictionary<KeyCode, Action>();
         Init();
-
-        //나중에 완성되면 빼기
-        Home = Map;
     }
 
-    public void SetHome(Resource _Home)
-    {
-        Home = _Home;
-    }
 
     void Init()
     {
