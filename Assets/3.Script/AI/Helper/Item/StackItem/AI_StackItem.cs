@@ -8,6 +8,8 @@ public abstract class AI_StackItem : MonoBehaviour
     [SerializeField] protected EItemType itemType;
     [SerializeField] protected LayerMask blockLayer;
 
+    public bool CheckType = false;
+
     protected BaseAI _ai;
     protected WorldResource _resource;
     protected AI_Stack _aiStack;
@@ -61,8 +63,8 @@ public abstract class AI_StackItem : MonoBehaviour
     {
         transform.gameObject.AddComponent<Rigidbody>();
         transform.SetParent(null);
-        ResourceTracker.Instance.DeRegisterResource(_resource);
-        Destroy(_resource);
+        //ResourceTracker.Instance.DeRegisterResource(_resource);
+        //Destroy(_resource);
         Destroy(gameObject, 2);
     }
 

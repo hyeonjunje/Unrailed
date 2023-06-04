@@ -26,6 +26,9 @@ public class AI_StackableItem : AI_StackItem
             //아니라면 손에 있는걸 갖다놓고 다시 와야함
 
             Debug.Log("타입이 달라요");
+            detectedItem.Clear();
+            CheckType = true;
+
 /*            if (handItem.Count <= 3 && detectedItem.Count <= 3)
             {
                 Stack<AI_StackItem> temp = new Stack<AI_StackItem>(handItem);

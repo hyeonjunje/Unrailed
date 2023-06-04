@@ -10,6 +10,7 @@ public class Resource : MonoBehaviour
     private WorldResource.EType _defaultResource = WorldResource.EType.Wood;
     private Dictionary<WorldResource.EType, List<WorldResource>> _trackedResources = null;
     private float _range = 30f;
+    private AI_Stack _stack;
 
     public void SetHome(BaseAI robot)
     {
@@ -26,6 +27,7 @@ public class Resource : MonoBehaviour
     {
         if(_trackedResources==null)
         {
+            _stack = FindObjectOfType<AI_Stack>();
             PopulateResources();
         }
     }
@@ -107,40 +109,6 @@ public class Resource : MonoBehaviour
         return sortedResources;
     }
 
-
-    public bool dd(PathFindingAgent brain)
-    {
-        //자원 업데이트
-        PopulateResources();
-        WorldResource.EType targetResource = WorldResource.EType.Resource;
-        var resourceTypes = System.Enum.GetValues(typeof(WorldResource.EType));
-
-        //자원이 있는지 확인
-        if (_trackedResources[targetResource].Count < 1)
-        {
-            Debug.Log($"{targetResource} :  자원이 이제 없어요");
-            return false;
-        }
-
-        var sortedResources = _trackedResources[targetResource]
-            //갈 수 있는 곳에 있는 자원만 추리기
-            .Where(resource => Vector3.Distance(resource.transform.position, brain.
-                                                FindCloestAroundEndPosition(resource.transform.position)) <= 1.5f)
-            //가까운 순으로 정렬
-            .OrderBy(resource => Vector3.Distance(brain.transform.position, resource.transform.position))
-            //가장 가까운 자원 반환
-            .ToList();
-
-        if(sortedResources[0].GetComponent<AI_StackItem>().IItemType==
-            sortedResources[1].GetComponent<AI_StackItem>().IItemType)
-        {
-
-            Debug.Log("같아요");
-            return true;
-        }
-
-        return false;
-    }
 
 
 
