@@ -7,6 +7,8 @@ public class Helper : MonoBehaviour
 {
     [HideInInspector]
     public PathFindingAgent Agent;
+
+    public Transform UItransform;
     [HideInInspector]
     public Dictionary<KeyCode, System.Action> Order;
     [HideInInspector]

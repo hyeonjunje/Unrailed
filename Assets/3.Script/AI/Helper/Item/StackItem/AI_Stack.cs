@@ -8,7 +8,6 @@ public class AI_Stack : MonoBehaviour
     public Stack<AI_StackItem> _detectedItem = new Stack<AI_StackItem>();
     [SerializeField] private LayerMask BlockLayer;
 
-    private AI_StackItem _stackItem;
     private Transform _currentblock;
 
     public Transform AroundEmptyBlockTranform => BFS();
@@ -24,9 +23,10 @@ public class AI_Stack : MonoBehaviour
         _detectedItem = new Stack<AI_StackItem>();
     }
 
+    //Heleper
     public void InteractiveItemSpace()
     {
-        if (_handItem.Count == 0 && _detectedItem.Count != 0)  // 줍기
+        if (_handItem.Count == 0 && _detectedItem.Count != 0)  // 처음 줍기
         {
 
             Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = _detectedItem.Peek().PickUp(_handItem, _detectedItem);
@@ -34,6 +34,18 @@ public class AI_Stack : MonoBehaviour
             _detectedItem = p.second;
         }
     }
+
+    public void InteractiveItem()
+    {
+        if (_detectedItem.Count != 0 && _handItem.Count != 0) //두 번째부터는 자동 줍기
+        {
+            Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = _handItem.Peek().AutoGain(_handItem, _detectedItem);
+            _handItem = p.first;
+            _detectedItem = p.second;
+        }
+    }
+
+
 
     public void PutDown()
     {
@@ -48,7 +60,7 @@ public class AI_Stack : MonoBehaviour
 
     }
 
-
+    //도적
     public void ThrowResource()
     {
         if (_handItem.Count != 0 && _detectedItem.Count == 0) // 버리기
@@ -63,20 +75,37 @@ public class AI_Stack : MonoBehaviour
 
     }
 
-    public void InteractiveItem()
+    public void EnemyInteractiveItem()
     {
-        //두 번째부터는 자동 줍기
-        if (_detectedItem.Count != 0&&_handItem.Count!=0)
+        if (_handItem.Count == 0 && _detectedItem.Count != 0)  // 처음 줍기
         {
-            Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = _handItem.Peek().AutoGain(_handItem, _detectedItem);
+
+            Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = _detectedItem.Peek().EnemyPickUp(_handItem, _detectedItem);
             _handItem = p.first;
             _detectedItem = p.second;
         }
-
-
-
-
     }
+
+    public void EnemyInteractiveAuto()
+    {
+        if (_detectedItem.Count != 0 && _handItem.Count != 0) //두 번째부터는 자동 줍기
+        {
+            Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = _handItem.Peek().EnemyAutoGain(_handItem, _detectedItem);
+            _handItem = p.first;
+            _detectedItem = p.second;
+        }
+    }
+
+
+
+    public void EnemyDetectGroundBlock(WorldResource resource)
+    {
+        _detectedItem.Push(resource.GetComponent<AI_StackItem>());
+        ResourceTracker.Instance.DeRegisterResource(resource);
+        Destroy(resource);
+    }
+
+
     public void DetectGroundBlock(WorldResource resource)
     {
         _detectedItem.Push(resource.GetComponent<AI_StackItem>());

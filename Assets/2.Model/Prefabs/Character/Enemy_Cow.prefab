@@ -1061,6 +1061,10 @@ GameObject:
   m_Component:
   - component: {fileID: 78867466240623696}
   - component: {fileID: 78867466240623711}
+  - component: {fileID: 8366053163540630594}
+  - component: {fileID: -5779477891097967609}
+  - component: {fileID: -6319092247329929424}
+  - component: {fileID: 8473234011556052085}
   m_Layer: 0
   m_Name: Enemy_Cow
   m_TagString: Untagged
@@ -1102,6 +1106,70 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8366053163540630594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 78867466240623710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33825b57a00593e4b924544ddce81c47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 1
+  rotateSpeed: 3
+  randomRange: 5
+  throwLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  finalNodeList: []
+--- !u!114 &-5779477891097967609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 78867466240623710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98811b0dbaa54b4ab62f81f5a326fcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-6319092247329929424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 78867466240623710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a9858072def390409fb3366dfe0ed95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _wanderRange: 3
+--- !u!114 &8473234011556052085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 78867466240623710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f99fb67643946d4d87c8223ecb504ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Position: {x: 0, y: 0, z: 0}
+  Forward: {x: 0, y: 0, z: 0}
+  CenterOfFlockmates: {x: 0, y: 0, z: 0}
+  NumPerceivedFlockmates: 0
+  AvgFlockHeading: {x: 0, y: 0, z: 0}
+  Center: {x: 0, y: 0, z: 0}
+  TargetPosition: {x: 0, y: 0, z: 0}
+  AlignmentPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &78867466278226058
 GameObject:
   m_ObjectHideFlags: 0

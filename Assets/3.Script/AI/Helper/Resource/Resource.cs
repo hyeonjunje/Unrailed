@@ -10,13 +10,6 @@ public class Resource : MonoBehaviour
     private WorldResource.EType _defaultResource = WorldResource.EType.Wood;
     private Dictionary<WorldResource.EType, List<WorldResource>> _trackedResources = null;
     private float _range = 30f;
-    private AI_Stack _stack;
-
-    public void SetHome(BaseAI robot)
-    {
-        robot.SetHome(this);
-    }
-
 
     private void Start()
     {
@@ -27,7 +20,6 @@ public class Resource : MonoBehaviour
     {
         if(_trackedResources==null)
         {
-            _stack = FindObjectOfType<AI_Stack>();
             PopulateResources();
         }
     }

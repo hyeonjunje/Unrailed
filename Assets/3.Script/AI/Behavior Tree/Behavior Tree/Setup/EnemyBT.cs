@@ -80,16 +80,16 @@ public class EnemyBT : BaseAI
             _animator.SetBool(isMove, false);
             if(_target!=null)
             {
-                _stack.DetectGroundBlock(_target);
+                _stack.EnemyDetectGroundBlock(_target);
                 //처음 드는 거 
                 if (_stack._handItem.Count == 0)
                 {
-                    _stack.InteractiveItemSpace();
+                    _stack.EnemyInteractiveItem();
                 }
                 //그 후 쌓기
                 else
                 {
-                    _stack.InteractiveItem();
+                    _stack.EnemyInteractiveAuto();
                 }
                 return BehaviorTree.ENodeStatus.InProgress;
 
@@ -115,7 +115,7 @@ public class EnemyBT : BaseAI
             {
                 Home.TargettoSteal(_agent);
                 //자원이 더 이상 없다면 
-                if (Home.NonethisResourceType)
+                if (Home.NonethisResourceType || _stack._handItem.Peek().EnemyCheckItemType)
                 {
                     return BehaviorTree.ENodeStatus.Succeeded;
                 }
