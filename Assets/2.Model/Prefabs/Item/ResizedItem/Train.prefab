@@ -10655,7 +10655,6 @@ Transform:
   - {fileID: 8956508841561829434}
   - {fileID: 2260269113932606984}
   - {fileID: 6249911131989948548}
-  - {fileID: 1031169167264069806}
   m_Father: {fileID: 5014851085200424533}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10979,36 +10978,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &878296888920178657
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4510582318417667410}
-  m_Layer: 24
-  m_Name: steel pos
-  m_TagString: Untagged
-  m_Icon: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4510582318417667410
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 878296888920178657}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.698, z: -0.046}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 7678026454119949749}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &883500974716940214
 GameObject:
   m_ObjectHideFlags: 0
@@ -11427,36 +11396,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &1191898439169566573
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6358570337837264673}
-  m_Layer: 24
-  m_Name: wood pos
-  m_TagString: Untagged
-  m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6358570337837264673
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1191898439169566573}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.698, z: -0.554}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 7678026454119949749}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1204321470681844755
 GameObject:
   m_ObjectHideFlags: 0
@@ -13724,12 +13663,11 @@ MonoBehaviour:
   isBurn: 0
   isReady: 0
   isOver: 0
-  trainSpeed: 0
+  trainSpeed: 0.5
   _trainRotateSpeed: 0
   goalSpeed: 3
   _trainMoveSpeed: 0
   warningIcon: {fileID: 0}
-  overText: {fileID: 0}
   fireTime: 0
   overFireTime: 120
   fireLimit: 60
@@ -24910,36 +24848,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &2451261784305201573
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1031169167264069806}
-  m_Layer: 0
-  m_Name: SpawnPos
-  m_TagString: Untagged
-  m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1031169167264069806
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2451261784305201573}
-  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: -0.9517243}
-  m_LocalScale: {x: 3.448276, y: 3.5714288, z: 3.7037039}
-  m_Children: []
-  m_Father: {fileID: 5713190276766910077}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &2466835858193122962
 GameObject:
   m_ObjectHideFlags: 0
@@ -38082,7 +37990,7 @@ GameObject:
   - component: {fileID: 1380273303560225024}
   - component: {fileID: 1380273303560225030}
   - component: {fileID: 7930280392481337767}
-  m_Layer: 25
+  m_Layer: 0
   m_Name: Train_Creaft_Desk (1)
   m_TagString: Train
   m_Icon: {fileID: 0}
@@ -38131,19 +38039,14 @@ MonoBehaviour:
   isBurn: 0
   isReady: 0
   isOver: 0
-  trainSpeed: 0
+  trainSpeed: 0.5
   _trainRotateSpeed: 0
   goalSpeed: 3
   _trainMoveSpeed: 0
   warningIcon: {fileID: 0}
-  overText: {fileID: 0}
-  anim: {fileID: 0}
   prefabsRail: {fileID: 0}
-  railSpawnPos: {fileID: 1031169167264069806}
-  railPool: {fileID: 0}
-  madeTime: 0
+  railSpawnPos: []
   spawnIndex: 0
-  spawnMaxIndex: 0
   spawnSpeed: 0
 --- !u!95 &1380273303560225030
 Animator:
@@ -38172,7 +38075,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4472484093875932105}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1.5}
@@ -38473,7 +38376,7 @@ GameObject:
   - component: {fileID: 7678026454119949749}
   - component: {fileID: 6641051746461728961}
   - component: {fileID: 6219378032837602346}
-  m_Layer: 24
+  m_Layer: 0
   m_Name: Train_Chest_Box (1)
   m_TagString: Train
   m_Icon: {fileID: 0}
@@ -38494,8 +38397,6 @@ Transform:
   - {fileID: 321860701450360266}
   - {fileID: 1362392345428749238}
   - {fileID: 6641051745998418535}
-  - {fileID: 4510582318417667410}
-  - {fileID: 6358570337837264673}
   m_Father: {fileID: 700505226856525962}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -38524,20 +38425,16 @@ MonoBehaviour:
   isBurn: 0
   isReady: 0
   isOver: 0
-  trainSpeed: 0
+  trainSpeed: 0.5
   _trainRotateSpeed: 0
   goalSpeed: 3
   _trainMoveSpeed: 0
   warningIcon: {fileID: 0}
-  overText: {fileID: 0}
-  woodPos: {fileID: 6358570337837264673}
-  steelPos: {fileID: 4510582318417667410}
   woods: []
   steels: []
   workBench: {fileID: 0}
   player: {fileID: 0}
   maxItem: 0
-  madeReady: 0
 --- !u!65 &6219378032837602346
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -38546,7 +38443,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4654451409573904519}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1.26}
@@ -67761,12 +67658,11 @@ MonoBehaviour:
   isBurn: 0
   isReady: 0
   isOver: 0
-  trainSpeed: 0
+  trainSpeed: 0.5
   _trainRotateSpeed: 0
   goalSpeed: 3
   _trainMoveSpeed: 0
   warningIcon: {fileID: 0}
-  overText: {fileID: 0}
   smokeMesh:
   - {fileID: 7080707835686956379}
   - {fileID: 8720946742804558968}
@@ -68612,12 +68508,11 @@ MonoBehaviour:
   isBurn: 0
   isReady: 0
   isOver: 0
-  trainSpeed: 0
+  trainSpeed: 0.5
   _trainRotateSpeed: 0
   goalSpeed: 3
   _trainMoveSpeed: 0
   warningIcon: {fileID: 0}
-  overText: {fileID: 0}
   trainSpare:
   - {fileID: 1639675127031358324, guid: fe847720010c3c64282b9a43209af7b4, type: 3}
   - {fileID: 7649597831721704386, guid: 1585c0c4fca12564d86e68989f30ac49, type: 3}

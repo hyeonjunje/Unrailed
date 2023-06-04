@@ -47,8 +47,8 @@ TagManager:
   - Resource
   - 
   - Rail
-  - Box
-  - WorkBench
+  - Postprocessing
+  - 
   - RenderObstacle
   - RenderAbove
   - 

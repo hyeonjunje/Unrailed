@@ -33,7 +33,7 @@ public class RailSpawn : MonoBehaviour
         }
         SoundManager.Instance.StopSoundEffect("Rail_Down");
         SoundManager.Instance.PlaySoundEffect("Rail_Down");
-        poolRail.TransformRail(obj[countUp].transform, false);
+        poolRail.TransformRail(obj[countUp].transform.position);
         //obj[countUp].transform.position = poolRail.
         countUp++;
 
