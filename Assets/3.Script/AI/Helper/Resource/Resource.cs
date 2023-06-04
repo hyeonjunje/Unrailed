@@ -33,7 +33,6 @@ public class Resource : MonoBehaviour
         {
             var type = (WorldResource.EType)value;
             _trackedResources[type] = ResourceTracker.Instance.GetResourcesInRange(type, transform.position, _range);
-            //รั ภฺฟ๘ผ๖
         }
     }
 

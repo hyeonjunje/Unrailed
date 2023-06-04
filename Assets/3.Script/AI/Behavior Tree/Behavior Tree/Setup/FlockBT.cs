@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(BehaviorTree))]
+
 public class FlockBT : MonoBehaviour
 {
     public class BlackBoardKey : BlackboardKeyBase

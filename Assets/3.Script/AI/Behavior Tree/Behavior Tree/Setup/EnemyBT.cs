@@ -68,7 +68,7 @@ public class EnemyBT : BaseAI
             });
 
         var stealRoot = MainSeq.Add<BTNode_Sequence>("2");
-        var stealDeco = stealRoot.AddDecorator<BTDecoratorBase>("훔칠 타겟이 존재하는지 확인하는 Decorator", () =>
+        var stealDeco = stealRoot.AddDecorator<BTDecoratorBase>("훔칠 타겟이 아직 존재하는지 확인하는 Decorator", () =>
         {
             return _target != null;
 
@@ -146,7 +146,7 @@ public class EnemyBT : BaseAI
         DiscardRoot.Add<BTNode_Action>("버리기",
             () =>
             {
-                _stack.ThrowResource();
+                _stack.EnemyThrowResource();
                 _target = null;
                 _animator.SetBool(isMove, true);
 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(BehaviorTree))]
 public class BaseAI : MonoBehaviour
 {
     [Header("Transform")]
@@ -23,7 +24,7 @@ public class BaseAI : MonoBehaviour
     protected WorldResource _target;
 
     protected Animator _animator;
-    protected int isMove = Animator.StringToHash("isMove");
+    protected readonly int isMove = Animator.StringToHash("isMove");
 
     [HideInInspector]
     public Resource Home;
