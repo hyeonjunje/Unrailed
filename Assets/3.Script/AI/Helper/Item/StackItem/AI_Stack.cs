@@ -10,12 +10,9 @@ public class AI_Stack : MonoBehaviour
 
     private Transform _currentblock;
 
-    private BaseAI _ai;
-
 
     private void Awake()
     {
-        _ai = GetComponent<BaseAI>();
 
         _handItem = new Stack<AI_StackItem>();
         _detectedItem = new Stack<AI_StackItem>();

@@ -135,15 +135,14 @@ public class EnemyBT : BaseAI
         RunRoot.Add<BTNode_Action>("도망",
         () =>
         {
-        Debug.Log("공격 없음");
-        Vector3 position = _agent.MoveToClosestEndPosition();
-        return BehaviorTree.ENodeStatus.InProgress;
+            Vector3 position = _agent.MoveToClosestEndPosition();
+            return BehaviorTree.ENodeStatus.InProgress;
 
         },
         () =>
         {
-        return _agent.AtDestination ?
-        BehaviorTree.ENodeStatus.Failed : BehaviorTree.ENodeStatus.InProgress;
+            return _agent.AtDestination ?
+            BehaviorTree.ENodeStatus.Failed : BehaviorTree.ENodeStatus.InProgress;
         });
 
 

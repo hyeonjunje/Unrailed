@@ -514,7 +514,6 @@ public class PlayerController : MonoBehaviour
                     AnimalHealth animal = _currentFrontObject.GetComponent<AnimalHealth>();
                     if (animal != null)
                     {
-                        Debug.Log("때리는중");
                         animal.Hit();
                         _isInteractive = false;
                     }
