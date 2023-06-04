@@ -425,7 +425,7 @@ public class HelperBT : BaseAI
 
         var PutDownResource = WaterOrResource.Add<BTNode_Action>("자원 내려놓기", () =>
          {
-             _currentblock = _stack.AroundEmptyBlockTranform;
+             _currentblock = _stack.BFS(this);
              _stack.PutDown();
 
              _target = null;
@@ -506,7 +506,7 @@ public class HelperBT : BaseAI
             }
 
             _item.transform.rotation = Quaternion.identity;
-            _item.transform.parent = _stack.AroundEmptyBlockTranform;
+            _item.transform.parent = _stack.BFS(this);
             _item.transform.localPosition = (Vector3.up * 0.5f) + (Vector3.up * 0.15f);
 
             _animator.SetBool(isDig, false);

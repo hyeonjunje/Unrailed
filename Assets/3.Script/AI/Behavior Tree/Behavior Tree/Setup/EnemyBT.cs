@@ -7,12 +7,13 @@ public class EnemyBT : BaseAI
     public class BlackBoardKey : BlackboardKeyBase
     {
         public static readonly BlackBoardKey CurrentTarget = new BlackBoardKey() { Name = "CurrentTarget" };
-        public static readonly BlackBoardKey NewDestination = new BlackBoardKey() { Name = "NewDestination" };
+        public static readonly BlackBoardKey HP = new BlackBoardKey() { Name = "HP" };
 
         public string Name;
     }
 
     private Blackboard<BlackBoardKey> _localMemory;
+    private AnimalHealth _health;
 
     private void Awake()
     {
@@ -20,12 +21,14 @@ public class EnemyBT : BaseAI
         _tree = GetComponent<BehaviorTree>();
         _agent = GetComponent<PathFindingAgent>();
         _stack = GetComponent<AI_Stack>();
+        _health = GetComponent<AnimalHealth>();
     }
 
     private void Start()
     {
         _localMemory = BlackboardManager.Instance.GetIndividualBlackboard<BlackBoardKey>(this);
         _localMemory.SetGeneric<WorldResource>(BlackBoardKey.CurrentTarget, null);
+        _localMemory.SetGeneric(BlackBoardKey.HP, _health.CurrentHp);
 
         var BTRoot = _tree.RootNode.Add<BTNode_Selector>("BT 시작");
 
@@ -47,7 +50,8 @@ public class EnemyBT : BaseAI
         var CheckTarget = HaveTarget.AddDecorator<BTDecoratorBase>("훔칠 거 있는지 거르는 DECO", () =>
         {
             //타겟이 있으면 true 없으면 false
-            return _target != null;
+            var hp = _localMemory.GetGeneric<int>(BlackBoardKey.HP);
+            return _target != null && hp == _health.CurrentHp;
         });
 
         var StartRoot = HaveTarget.Add<BTNode_Sequence>("1. 있는 경우");
@@ -56,6 +60,7 @@ public class EnemyBT : BaseAI
         MainSeq.Add<BTNode_Action>("이동하기",
         () =>
         {
+            _animator.SetBool(isMove, true);
             Vector3 position = _agent.FindCloestAroundEndPosition(_target.transform.position);
             _agent.MoveTo(_target.transform.position);
 
@@ -128,17 +133,19 @@ public class EnemyBT : BaseAI
 
         var RunRoot = MainSeq.Add<BTNode_Sequence>("4");
         RunRoot.Add<BTNode_Action>("도망",
-            () =>
-            {
-                Vector3 position = _agent.MoveToClosestEndPosition();
-                return BehaviorTree.ENodeStatus.InProgress;
+        () =>
+        {
+        Debug.Log("공격 없음");
+        Vector3 position = _agent.MoveToClosestEndPosition();
+        return BehaviorTree.ENodeStatus.InProgress;
 
-            },
-            () =>
-            {
-                return _agent.AtDestination ?
-                BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
-            });
+        },
+        () =>
+        {
+        return _agent.AtDestination ?
+        BehaviorTree.ENodeStatus.Failed : BehaviorTree.ENodeStatus.InProgress;
+        });
+
 
         //내려놓기
 
@@ -158,6 +165,26 @@ public class EnemyBT : BaseAI
                 return BehaviorTree.ENodeStatus.Succeeded;
             }
             );
+
+
+        var Attacked = BTRoot.Add<BTNode_Sequence>("맞음");
+        Attacked.Add<BTNode_Action>("공격 당함", () =>
+         {
+             if(_stack._handItem.Count!=0)
+             {
+                _currentblock = _stack.BFS(this);
+                _stack.EnemyPutDown();
+                _localMemory.SetGeneric(BlackBoardKey.HP, _health.CurrentHp);
+                _target = null;
+             }
+             return BehaviorTree.ENodeStatus.InProgress;
+
+         }, () =>
+         {
+
+             return _target==null ? BehaviorTree.ENodeStatus.Failed : BehaviorTree.ENodeStatus.InProgress;
+
+         });
 
 
 

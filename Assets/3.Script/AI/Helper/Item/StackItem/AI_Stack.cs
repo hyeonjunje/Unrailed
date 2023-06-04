@@ -10,8 +10,6 @@ public class AI_Stack : MonoBehaviour
 
     private Transform _currentblock;
 
-    public Transform AroundEmptyBlockTranform => BFS();
-
     private BaseAI _ai;
 
 
@@ -64,6 +62,20 @@ public class AI_Stack : MonoBehaviour
         if (_handItem.Count != 0 && _detectedItem.Count == 0) // 버리기
         {
 
+            Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = _handItem.Peek().EnemyThrowResource(_handItem, _detectedItem);
+            _handItem = p.first;
+            _detectedItem = p.second;
+
+            _detectedItem.Clear();
+        }
+
+    }
+
+
+    public void EnemyPutDown()
+    {
+        if (_handItem.Count != 0 && _detectedItem.Count == 0) // 내려놓기
+        {
             Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = _handItem.Peek().EnemyPutDown(_handItem, _detectedItem);
             _handItem = p.first;
             _detectedItem = p.second;
@@ -72,6 +84,8 @@ public class AI_Stack : MonoBehaviour
         }
 
     }
+
+
 
     public void EnemyInteractiveItem()
     {
@@ -111,7 +125,7 @@ public class AI_Stack : MonoBehaviour
     }
 
 
-    public Transform BFS()
+    public Transform BFS(BaseAI _ai)
     {
         if (Physics.Raycast(_ai.RayStartTransfrom.position, Vector3.down, out RaycastHit hit, 1, BlockLayer))
         {

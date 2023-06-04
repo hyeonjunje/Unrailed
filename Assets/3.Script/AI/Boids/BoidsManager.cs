@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SheepManager : MonoBehaviour
+public class BoidsManager : MonoBehaviour
 {
     public FlockSettings Settings;
     public ComputeShader Compute;
@@ -11,17 +11,18 @@ public class SheepManager : MonoBehaviour
 
 
     private Flock[] _flock;
-    void Start()
+    public void Init()
     {
         _flock = FindObjectsOfType<Flock>();
         foreach (Flock sheep in _flock)
         {
             sheep.Init(Settings);
         }
-
     }
+
     void Update()
     {
+
         if(_flock != null)
         {
             int numFlock = _flock.Length;

@@ -7,7 +7,7 @@ public class AnimalHealth : MonoBehaviour
     [SerializeField] private int _animalHp = 8;
 
     private int _currentHp;
-    private int CurrentHp
+    public int CurrentHp
     {
         get { return _currentHp; }
         set

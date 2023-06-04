@@ -16,11 +16,13 @@ public class InGameScene : MonoBehaviour
     [SerializeField] private WorldManager _worldManager;
 
     [SerializeField] private ShopManager _shopManager;
+    [SerializeField] private BoidsManager _sheepManager;
 
     [SerializeField] private int worldCount = 0;
 
     [SerializeField] private BaseAI _robot;
     [SerializeField] private BaseAI _enemy;
+    [SerializeField] private Flock _flock;
 
     // 석환이 형 isStart가 true일 때만 player가 작동할 수 있게 해줘~~
     public bool isStart { get; private set; } = false;
@@ -46,6 +48,16 @@ public class InGameScene : MonoBehaviour
                     {
                         Instantiate(_robot, Vector3.up * 0.5f, Quaternion.identity).SetHome(FindObjectOfType<Resource>());
                         Instantiate(_enemy, Vector3.up * 0.5f + Vector3.right, Quaternion.identity).SetHome(FindObjectOfType<Resource>());
+
+                        for (int i = 0; i < 5; i++)
+                        {
+                            Vector3 pos = Vector3.up * 0.5f + Random.insideUnitSphere * 7;
+                            Flock flock = Instantiate(_flock);
+                            flock.transform.position = new Vector3(pos.x, 0.5f, pos.z);
+                        }
+                        _sheepManager.Init();
+
+
                     }).Forget();
 
                 _shopManager.StartTrainMove();
