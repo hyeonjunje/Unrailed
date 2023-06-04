@@ -62,6 +62,8 @@ public class TrainMovement : MonoBehaviour
         cameraTarget = GameObject.FindGameObjectWithTag("Cinemachine").GetComponentsInChildren<Cinemachine.CinemachineVirtualCamera>();
         overText = GameObject.FindGameObjectWithTag("Cinemachine").GetComponent<Animator>();
         manager = FindObjectOfType<InGameScene>();
+        trainSpeed = 0.1f;
+
         if (trainType == TrainType.Engine)
         {
             cameraTarget[0].Follow = transform;
