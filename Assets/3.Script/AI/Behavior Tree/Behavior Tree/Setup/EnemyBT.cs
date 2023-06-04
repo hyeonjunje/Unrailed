@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBT2 : BaseAI
+public class EnemyBT : BaseAI
 {
     public class BlackBoardKey : BlackboardKeyBase
     {

@@ -11,7 +11,7 @@ public class WorldResource : MonoBehaviour
         Stone,
         Resource
     }
-    private EType _Type;
+    [SerializeField] private EType _Type;
     public EType Type => _Type;
 
     [SerializeField] private Transform _item;

@@ -75,6 +75,9 @@ public class HelperBT : BaseAI
 
 
         #region 나무 캐기, 돌 캐기, 물 떠오기 명령
+
+
+        #region 명령 내리기
         var FindTools = MainSequence.Add<BTNode_Sequence>("1. 도구 찾기");
 
         var MoveToItem = FindTools.Add<BTNode_Action>("도구 정하기, 이동하기", () =>
@@ -199,7 +202,7 @@ public class HelperBT : BaseAI
          {
              if(_target!=null)
              {
-                Vector3 pos = _agent.FindCloestAroundEndPosition(_target.transform.position);
+                 Vector3 pos = _agent.FindCloestAroundEndPosition(_target.transform.position);
                  return _agent.MoveTo(pos) ? BehaviorTree.ENodeStatus.InProgress : BehaviorTree.ENodeStatus.Failed;
              }
              return BehaviorTree.ENodeStatus.InProgress;
@@ -239,7 +242,9 @@ public class HelperBT : BaseAI
           });
 
 
+        #endregion
 
+        #region 나무, 돌
         var sel = workRoot.Add<BTNode_Selector>("자원 종류에 따라 다른 행동하기");
 
         var wood = sel.Add<BTNode_Sequence>("[나무, 돌]", () =>
@@ -278,7 +283,7 @@ public class HelperBT : BaseAI
              return BehaviorTree.ENodeStatus.InProgress;
          }
         );
-
+        #endregion
         // 물 ==========================================================================
         var water = sel.Add<BTNode_Sequence>("[물, 자원]", () =>
          {
@@ -288,36 +293,35 @@ public class HelperBT : BaseAI
 
         var Filling = water.Add<BTNode_Action>("물 채우기 / 자원 들기", () =>
          {
-           switch (_target.Type)
-           {
+             switch (_target.Type)
+             {
 
-               case WorldResource.EType.Water:
-                   break;
+                 case WorldResource.EType.Water:
+                     break;
 
-               case WorldResource.EType.Resource:
-                   _stack.DetectGroundBlock(_target);
-
-
-                         if (_stack._handItem.Count == 0)
+                 case WorldResource.EType.Resource:
+                     _stack.DetectGroundBlock(_target);
+                     if (_stack._handItem.Count == 0)
+                     {
+                         _stack.InteractiveItemSpace();
+                     }
+                     //그 후 쌓기
+                     else
+                     {
+                         if(!_stack._handItem.Peek().CheckType)
                          {
-                             _stack.InteractiveItemSpace();
-                         }
-                         //그 후 쌓기
-                         else
-                         {
-                            if (Home.dd(_agent))
-                            {
-                              _stack.InteractiveItem();
-                            }
+                            _stack.InteractiveItem();
 
                          }
-                   //처음 드는 거 
 
-                   break;
-           }
+                     }
+                     //처음 드는 거 
+
+                     break;
+             }
 
 
-           return BehaviorTree.ENodeStatus.InProgress;
+             return BehaviorTree.ENodeStatus.InProgress;
 
        }
         , () =>
@@ -398,7 +402,7 @@ public class HelperBT : BaseAI
 
                      Home.GetGatherTarget(_helper);
                      //자원이 더 이상 없다면 
-                     if (!Home.dd(_agent))
+                     if (Home.NonethisResourceType||_stack._handItem.Peek().CheckType)
                      {
                          return BehaviorTree.ENodeStatus.Succeeded;
                      }

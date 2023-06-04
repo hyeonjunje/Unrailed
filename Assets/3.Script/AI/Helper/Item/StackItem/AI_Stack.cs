@@ -5,9 +5,10 @@ using UnityEngine;
 public class AI_Stack : MonoBehaviour
 {
     public Stack<AI_StackItem> _handItem = new Stack<AI_StackItem>();
-    private Stack<AI_StackItem> _detectedItem = new Stack<AI_StackItem>();
+    public Stack<AI_StackItem> _detectedItem = new Stack<AI_StackItem>();
     [SerializeField] private LayerMask BlockLayer;
 
+    private AI_StackItem _stackItem;
     private Transform _currentblock;
 
     public Transform AroundEmptyBlockTranform => BFS();
@@ -32,33 +33,12 @@ public class AI_Stack : MonoBehaviour
             _handItem = p.first;
             _detectedItem = p.second;
         }
-
-        else if (_handItem.Count != 0 && _detectedItem.Count == 0) // 버리기
-        {
-            Debug.Log("버리기");
-
-            Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = _handItem.Peek().PutDown(_handItem, _detectedItem);
-            _handItem = p.first;
-            _detectedItem = p.second;
-        }
-        else if (_handItem.Count != 0 && _detectedItem.Count != 0) // 교체
-        {
-            Debug.Log("교체");
-
-            Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = _handItem.Peek().Change(_handItem, _detectedItem);
-            _handItem = p.first;
-            _detectedItem = p.second;
-        }
-
-
-
     }
 
     public void PutDown()
     {
         if (_handItem.Count != 0 && _detectedItem.Count == 0) // 내려놓기
         {
-
             Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = _handItem.Peek().PutDown(_handItem, _detectedItem);
             _handItem = p.first;
             _detectedItem = p.second;
@@ -85,7 +65,7 @@ public class AI_Stack : MonoBehaviour
 
     public void InteractiveItem()
     {
-
+        //두 번째부터는 자동 줍기
         if (_detectedItem.Count != 0&&_handItem.Count!=0)
         {
             Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = _handItem.Peek().AutoGain(_handItem, _detectedItem);
