@@ -10,8 +10,6 @@ public class AI_Stack : MonoBehaviour
 
     private Transform _currentblock;
 
-    public Transform AroundEmptyBlockTranform => BFS();
-
     private BaseAI _ai;
 
 
@@ -23,8 +21,8 @@ public class AI_Stack : MonoBehaviour
         _detectedItem = new Stack<AI_StackItem>();
     }
 
-    //Heleper
-    public void InteractiveItemSpace()
+    //Helper
+    public void InteractiveItem()
     {
         if (_handItem.Count == 0 && _detectedItem.Count != 0)  // 처음 줍기
         {
@@ -35,7 +33,7 @@ public class AI_Stack : MonoBehaviour
         }
     }
 
-    public void InteractiveItem()
+    public void InteractiveItemAuto()
     {
         if (_detectedItem.Count != 0 && _handItem.Count != 0) //두 번째부터는 자동 줍기
         {
@@ -44,8 +42,6 @@ public class AI_Stack : MonoBehaviour
             _detectedItem = p.second;
         }
     }
-
-
 
     public void PutDown()
     {
@@ -60,12 +56,26 @@ public class AI_Stack : MonoBehaviour
 
     }
 
-    //도적
-    public void ThrowResource()
+    //Enemy
+    public void EnemyThrowResource()
     {
         if (_handItem.Count != 0 && _detectedItem.Count == 0) // 버리기
         {
 
+            Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = _handItem.Peek().EnemyThrowResource(_handItem, _detectedItem);
+            _handItem = p.first;
+            _detectedItem = p.second;
+
+            _detectedItem.Clear();
+        }
+
+    }
+
+
+    public void EnemyPutDown()
+    {
+        if (_handItem.Count != 0 && _detectedItem.Count == 0) // 내려놓기
+        {
             Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = _handItem.Peek().EnemyPutDown(_handItem, _detectedItem);
             _handItem = p.first;
             _detectedItem = p.second;
@@ -75,11 +85,12 @@ public class AI_Stack : MonoBehaviour
 
     }
 
+
+
     public void EnemyInteractiveItem()
     {
         if (_handItem.Count == 0 && _detectedItem.Count != 0)  // 처음 줍기
         {
-
             Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = _detectedItem.Peek().EnemyPickUp(_handItem, _detectedItem);
             _handItem = p.first;
             _detectedItem = p.second;
@@ -100,7 +111,7 @@ public class AI_Stack : MonoBehaviour
 
     public void EnemyDetectGroundBlock(WorldResource resource)
     {
-        _detectedItem.Push(resource.GetComponent<AI_StackItem>());
+        _detectedItem.Push(resource.Stack);
         ResourceTracker.Instance.DeRegisterResource(resource);
         Destroy(resource);
     }
@@ -108,13 +119,13 @@ public class AI_Stack : MonoBehaviour
 
     public void DetectGroundBlock(WorldResource resource)
     {
-        _detectedItem.Push(resource.GetComponent<AI_StackItem>());
+        _detectedItem.Push(resource.Stack);
         ResourceTracker.Instance.DeRegisterResource(resource);
         Destroy(resource);
     }
 
 
-    public Transform BFS()
+    public Transform BFS(BaseAI _ai)
     {
         if (Physics.Raycast(_ai.RayStartTransfrom.position, Vector3.down, out RaycastHit hit, 1, BlockLayer))
         {

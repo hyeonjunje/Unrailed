@@ -81,11 +81,6 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if(_handItem.Count != 0)
-        {
-            Debug.Log($"{_handItem.Count},{CurrentHandItem.ItemType}");
-
-        }
         // 현재 땅, 전방 물체 감지
         DetectGroundBlock();
         DetectFrontObject();
@@ -519,6 +514,7 @@ public class PlayerController : MonoBehaviour
                     AnimalHealth animal = _currentFrontObject.GetComponent<AnimalHealth>();
                     if (animal != null)
                     {
+                        Debug.Log("때리는중");
                         animal.Hit();
                         _isInteractive = false;
                     }

@@ -111,7 +111,7 @@ public class AI_StackableItem : AI_StackItem
         return new Pair<Stack<AI_StackItem>, Stack<AI_StackItem>>(handItem, detectedItem);
     }
 
-    public override Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> EnemyPutDown(Stack<AI_StackItem> handItem, Stack<AI_StackItem> detectedItem)
+    public override Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> EnemyThrowResource(Stack<AI_StackItem> handItem, Stack<AI_StackItem> detectedItem)
     {
         Init();
 
@@ -165,5 +165,19 @@ public class AI_StackableItem : AI_StackItem
 
         return new Pair<Stack<AI_StackItem>, Stack<AI_StackItem>>(handItem, detectedItem);
 
+    }
+
+    public override Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> EnemyPutDown(Stack<AI_StackItem> handItem, Stack<AI_StackItem> detectedItem)
+    {
+        Init();
+
+        while (handItem.Count != 0)
+        {
+            detectedItem.Push(handItem.Pop());
+            detectedItem.Peek().PutDownResource(_aiEnemy.CurrentBlockTransform, Vector3.up * 0.5f + Vector3.up * stackInterval * handItem.Count);
+        }
+
+
+        return new Pair<Stack<AI_StackItem>, Stack<AI_StackItem>>(handItem, detectedItem);
     }
 }

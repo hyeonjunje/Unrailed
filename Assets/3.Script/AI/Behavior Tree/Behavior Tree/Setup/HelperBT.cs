@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-[RequireComponent(typeof(BehaviorTree))]
 public class HelperBT : BaseAI
 {
     public class BlackBoardKey : BlackboardKeyBase
@@ -35,7 +34,7 @@ public class HelperBT : BaseAI
     [SerializeField] private Image _emoteImage;
 
 
-    private int isDig = Animator.StringToHash("isDig");
+    private readonly int isDig = Animator.StringToHash("isDig");
 
     private void Awake()
     {
@@ -113,19 +112,12 @@ public class HelperBT : BaseAI
                              }
                              break;
                          }
-
                      }
                  }
-
-
              }
 
 
             //도구로 이동하기
-
-
-
-
              return BehaviorTree.ENodeStatus.InProgress;
 
          }, () =>
@@ -137,7 +129,6 @@ public class HelperBT : BaseAI
          {
              if (_item != null)
              {
-
                  switch (_item.Type)
                  {
                      //양동이면 양손
@@ -155,7 +146,6 @@ public class HelperBT : BaseAI
 
                  return BehaviorTree.ENodeStatus.InProgress;
              }
-
              else
                  return BehaviorTree.ENodeStatus.Succeeded;
          },
@@ -165,7 +155,7 @@ public class HelperBT : BaseAI
         });
 
 
-        var workRoot = MainSequence.Add<BTNode_Sequence>("2. 일하기", () =>
+        var WorkRoot = MainSequence.Add<BTNode_Sequence>("2. 일하기", () =>
          {
             //타겟 자원 설정
             return BehaviorTree.ENodeStatus.InProgress;
@@ -176,7 +166,7 @@ public class HelperBT : BaseAI
              return order == _order ? BehaviorTree.ENodeStatus.InProgress : BehaviorTree.ENodeStatus.Failed;
          });
 
-        var target = workRoot.Add<BTNode_Action>("타겟 정하기", () =>
+        var Target = WorkRoot.Add<BTNode_Action>("타겟 정하기", () =>
          {
              if (_target == null)
              {
@@ -197,7 +187,7 @@ public class HelperBT : BaseAI
 
          });
 
-        var PossibleToWork = workRoot.Add<BTNode_Selector>("일하기 셀렉터");
+        var PossibleToWork = WorkRoot.Add<BTNode_Selector>("일하기 셀렉터");
         var PossibleSequence = PossibleToWork.Add<BTNode_Sequence>("가능", () =>
          {
              if(_target!=null)
@@ -247,9 +237,9 @@ public class HelperBT : BaseAI
         #endregion
 
         #region 나무, 돌
-        var sel = workRoot.Add<BTNode_Selector>("자원 종류에 따라 다른 행동하기");
+        var CheckTargetType = WorkRoot.Add<BTNode_Selector>("자원 종류에 따라 다른 행동하기");
 
-        var wood = sel.Add<BTNode_Sequence>("[나무, 돌]", () =>
+        var WoodOrStone = CheckTargetType.Add<BTNode_Sequence>("[나무, 돌]", () =>
          {
 
              if (_target != null)
@@ -262,7 +252,7 @@ public class HelperBT : BaseAI
 
          });
 
-        var CollectResource = wood.Add<BTNode_Action>("계속 채집하기", () =>
+        var CollectResource = WoodOrStone.Add<BTNode_Action>("계속 채집하기", () =>
          {
              _animator.SetBool(isDig, true);
              StartCoroutine(_target.isDigCo());
@@ -287,17 +277,16 @@ public class HelperBT : BaseAI
         );
         #endregion
         // 물 ==========================================================================
-        var water = sel.Add<BTNode_Sequence>("[물, 자원]", () =>
+        var WaterOrResource = CheckTargetType.Add<BTNode_Sequence>("[물, 자원]", () =>
          {
              return _target.Type == WorldResource.EType.Water || _target.Type == WorldResource.EType.Resource
              ? BehaviorTree.ENodeStatus.InProgress : BehaviorTree.ENodeStatus.Failed;
          });
 
-        var Filling = water.Add<BTNode_Action>("물 채우기 / 자원 들기", () =>
+        var Interaction = WaterOrResource.Add<BTNode_Action>("물 채우기 / 자원 들기", () =>
          {
              switch (_target.Type)
              {
-
                  case WorldResource.EType.Water:
                      break;
 
@@ -305,15 +294,14 @@ public class HelperBT : BaseAI
                      _stack.DetectGroundBlock(_target);
                      if (_stack._handItem.Count == 0)
                      {
-                         _stack.InteractiveItemSpace();
+                         _stack.InteractiveItem();
                      }
                      //그 후 쌓기
                      else
                      {
                          if(!_stack._handItem.Peek().HelperCheckItemType)
                          {
-                            _stack.InteractiveItem();
-
+                            _stack.InteractiveItemAuto();
                          }
 
                      }
@@ -343,7 +331,6 @@ public class HelperBT : BaseAI
                                  return BehaviorTree.ENodeStatus.InProgress;
                              }
                              else
-                                 
                                  return BehaviorTree.ENodeStatus.Succeeded;
                          }
                      }
@@ -360,7 +347,7 @@ public class HelperBT : BaseAI
          }
         );
 
-        var MoveToHome = water.Add<BTNode_Action>("물 갖다놓기 / 다음 자원으로 이동하기", () =>
+        var MoveToHome = WaterOrResource.Add<BTNode_Action>("물 갖다놓기 / 다음 자원으로 이동하기", () =>
          {
              switch (_target.Type)
              {
@@ -381,7 +368,7 @@ public class HelperBT : BaseAI
           }
          );
 
-        var Sleep = water.Add<BTNode_Action>("자기", () =>
+        var SleepRoot = WaterOrResource.Add<BTNode_Action>("자기", () =>
          {
              switch (_target.Type)
              {
@@ -424,7 +411,7 @@ public class HelperBT : BaseAI
 
          });
 
-        var Carrying = water.Add<BTNode_Action>("자원 운반하기", () =>
+        var CarryingResource = WaterOrResource.Add<BTNode_Action>("자원 운반하기", () =>
         {
             //나중에 기차 좌표로 바꾸기
             _agent.MoveTo(_home);
@@ -436,9 +423,9 @@ public class HelperBT : BaseAI
         }
         );
 
-        var PutDownResource = water.Add<BTNode_Action>("자원 내려놓기", () =>
+        var PutDownResource = WaterOrResource.Add<BTNode_Action>("자원 내려놓기", () =>
          {
-             _currentblock = _stack.AroundEmptyBlockTranform;
+             _currentblock = _stack.BFS(this);
              _stack.PutDown();
 
              _target = null;
@@ -466,8 +453,6 @@ public class HelperBT : BaseAI
                 else
                     _localMemory.SetGeneric<WorldResource.EType>(BlackBoardKey.Order, _order);
                     return BehaviorTree.ENodeStatus.Succeeded;
-
-            
             }
         }
         );
@@ -521,7 +506,7 @@ public class HelperBT : BaseAI
             }
 
             _item.transform.rotation = Quaternion.identity;
-            _item.transform.parent = _stack.AroundEmptyBlockTranform;
+            _item.transform.parent = _stack.BFS(this);
             _item.transform.localPosition = (Vector3.up * 0.5f) + (Vector3.up * 0.15f);
 
             _animator.SetBool(isDig, false);

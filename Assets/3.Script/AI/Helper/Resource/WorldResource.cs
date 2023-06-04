@@ -14,12 +14,15 @@ public class WorldResource : MonoBehaviour
     [SerializeField] private EType _Type;
     public EType Type => _Type;
 
+    public AI_StackItem Stack;
+
     [SerializeField] private Transform _item;
     [SerializeField] private float _resourceHp = 2.7f;
     private float _resourceScale = Mathf.Clamp01(1);
 
     void Start()
     {
+        Stack = GetComponent<AI_StackItem>();
         ResourceTracker.Instance.RegisterResource(this);
     }
 

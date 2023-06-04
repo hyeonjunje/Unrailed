@@ -42,6 +42,7 @@ public abstract class AI_StackItem : MonoBehaviour
     public abstract Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> Change(Stack<AI_StackItem> handItem, Stack<AI_StackItem> detectedItem);   // 교체하는 메소드
     public abstract Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> AutoGain(Stack<AI_StackItem> handItem, Stack<AI_StackItem> detectedItem);  // 자동으로 먹는 메소드
 
+    public abstract Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> EnemyThrowResource(Stack<AI_StackItem> handItem, Stack<AI_StackItem> detectedItem);  // 버리는 메소드
     public abstract Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> EnemyPutDown(Stack<AI_StackItem> handItem, Stack<AI_StackItem> detectedItem);  // 버리는 메소드
     public abstract Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> EnemyPickUp(Stack<AI_StackItem> handItem, Stack<AI_StackItem> detectedItem);  // 줍는 메소드
     public abstract Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> EnemyAutoGain(Stack<AI_StackItem> handItem, Stack<AI_StackItem> detectedItem);  // 자동으로 먹는 메소드
