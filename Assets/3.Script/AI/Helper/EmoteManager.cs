@@ -35,7 +35,7 @@ public class EmoteManager : MonoBehaviour
     private void Awake()
     {
         _portraitData = new Dictionary<int, Sprite>();
-        // Init();
+        Init();
     }
 
     private void Init()
@@ -54,7 +54,6 @@ public class EmoteManager : MonoBehaviour
 
     public Sprite GetEmote(int id)
     {
-        return null;
-        // return _portraitData[id];
+        return _portraitData[id];
     }
 }
