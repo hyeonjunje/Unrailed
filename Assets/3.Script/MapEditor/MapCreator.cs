@@ -9,6 +9,7 @@ public class MapCreator : MonoBehaviour
     [SerializeField] private BlockMK2 _blockPrefab;
     [SerializeField] private Transform _waterFallUp;
     [SerializeField] private Transform _waterFallDown;
+    [SerializeField] private Transform _barricade;
     [SerializeField] private ItemPrefabData _itemPrefabData;
     [SerializeField] private BlockTransformerData[] _blockTransformerData;
     [SerializeField] private Material[] _blocksMaterial;
@@ -144,5 +145,55 @@ public class MapCreator : MonoBehaviour
             else if (block.transform.localPosition.z == _groundList.Count - 10)
                 Instantiate(_waterFallUp.gameObject, block.transform);
         }
+    }
+
+    // 가장자리 바리케이드 설정
+    public List<Transform> SetBarricade(Transform startTransform, Transform endTransform)
+    {
+        List<Transform> betweenVerticalBarricadeList = new List<Transform>();
+        Transform parent = new GameObject("BarricadeParent").transform;
+
+        int minX = Mathf.RoundToInt(startTransform.position.x);
+        int maxX = Mathf.RoundToInt(endTransform.position.x);
+
+        int minY = Mathf.RoundToInt(startTransform.position.z);
+        int maxY = Mathf.RoundToInt(endTransform.position.z);
+
+        // 사이 수직선
+        for(int i = minY; i <= maxY; i++)
+        {
+            Vector3 pos = new Vector3((minX + maxX) / 2 + 1, 0.5f, i);
+            betweenVerticalBarricadeList.Add(Instantiate(_barricade, pos, Quaternion.identity, parent));
+        }
+
+        // 작은 수평선
+        for (int i = minX; i <= maxX; i++)
+        {
+            Vector3 pos = new Vector3(i, 0.5f, minY - 1);
+            Instantiate(_barricade, pos, Quaternion.identity, parent);
+        }
+
+        // 큰 수평선
+        for (int i = minX; i <= maxX; i++)
+        {
+            Vector3 pos = new Vector3(i, 0.5f, maxY + 1);
+            Instantiate(_barricade, pos, Quaternion.identity, parent);
+        }
+
+        // 작은 수직선
+        for (int i = minY; i <= maxY; i++)
+        {
+            Vector3 pos = new Vector3(minX - 1, 0.5f, i);
+            Instantiate(_barricade, pos, Quaternion.identity, parent);
+        }
+
+        // 큰 수평선
+        for (int i = minY; i <= maxY; i++)
+        {
+            Vector3 pos = new Vector3(maxX + 1, 0.5f, i);
+            Instantiate(_barricade, pos, Quaternion.identity, parent);
+        }
+
+        return betweenVerticalBarricadeList;
     }
 }

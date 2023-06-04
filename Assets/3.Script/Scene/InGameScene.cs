@@ -77,6 +77,13 @@ public class InGameScene : MonoBehaviour
         }
         else
         {
+            // 바리케이드 없애주자
+            for(int i = 0; i < _worldManager.betweenBarricadeTransform.Count; i++)
+            {
+                Destroy(_worldManager.betweenBarricadeTransform[i].gameObject);
+            }
+            _worldManager.betweenBarricadeTransform.Clear();
+
             // 볼트 하나 추가 해주고
 
             // 조금있다가 상점보여주기

@@ -283,17 +283,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 32373866}
   m_CullTransparentMesh: 1
---- !u!114 &52632617 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4768628231389393329, guid: 828b3260d15f399419509140ce21e11d, type: 3}
-  m_PrefabInstance: {fileID: 2049701275}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80e761079678ff44d9ca08356fa46732, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &74990264
 GameObject:
   m_ObjectHideFlags: 0
@@ -611,6 +600,7 @@ MonoBehaviour:
   _blockPrefab: {fileID: 45604219096226087, guid: a7aa4fa63e5a4b14b8d8e6c2d3fc8e93, type: 3}
   _waterFallUp: {fileID: 3522402998835842009, guid: 7184e1b88124c514cac87aa0d65e1119, type: 3}
   _waterFallDown: {fileID: 3162597236616404962, guid: c0e6df7e42ffa0240a33a24b9ce70beb, type: 3}
+  _barricade: {fileID: 2723795344066423890, guid: 22a7cda5959ef1d4eb6bfd45c260852b, type: 3}
   _itemPrefabData: {fileID: 11400000, guid: 4b3c71a0f9d9ebc4f9f36dbbff85ea11, type: 2}
   _blockTransformerData:
   - {fileID: 11400000, guid: 2aae399e2818c7642a7fb88defd8e208, type: 2}
@@ -2978,7 +2968,6 @@ MonoBehaviour:
   _shopManager: {fileID: 128752633}
   _sheepManager: {fileID: 1067327105}
   worldCount: 0
-  _player: {fileID: 52632617}
   _robot: {fileID: 455940595194180522, guid: 4d471d9b24fc9134396a3d3e302341a5, type: 3}
   _enemy: {fileID: 3052571946307180053, guid: 5f36a79735feb524dbc14ae4421ae365, type: 3}
   _flock: {fileID: 8473234011556052085, guid: d92fb6b9dcd74e04098f9a6db0f74eec, type: 3}
@@ -8083,10 +8072,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 906168648, guid: 828b3260d15f399419509140ce21e11d, type: 3}
-      propertyPath: playOnAwake
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1037296278098704638, guid: 828b3260d15f399419509140ce21e11d, type: 3}
       propertyPath: m_RootOrder
       value: 18
