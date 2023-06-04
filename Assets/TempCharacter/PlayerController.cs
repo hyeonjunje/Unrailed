@@ -294,12 +294,6 @@ public class PlayerController : MonoBehaviour
                 if (item != null)
                     _detectedItem.Push(item);
             }
-
-            if (_balloonObject.activeSelf)
-            {
-                _balloonObject.SetActive(false);
-                _isRespawn = false;
-            }
         }
         else
         {
@@ -529,6 +523,8 @@ public class PlayerController : MonoBehaviour
 
     public void Respawn()
     {
+        _rigidbody.useGravity = true;
+
         _isRespawn = true;
 
         InitPlayer();
@@ -538,6 +534,20 @@ public class PlayerController : MonoBehaviour
 
         transform.position += Vector3.up * 10f;
         _balloonObject.SetActive(true);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.layer == LayerMask.NameToLayer("Block"))
+        {
+            if (_isRespawn)
+            {
+                _rigidbody.useGravity = false;
+                _balloonObject.SetActive(false);
+                _isRespawn = false;
+                transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);
+            }
+        }
     }
     #endregion
 }
