@@ -379,7 +379,10 @@ public class PlayerController : MonoBehaviour
             for (int i = 0; i < 8; i++)
                 if (Physics.Raycast(currentBlock.position, dir[i], out RaycastHit hit, 1f, _playerStat.blockLayer))
                     if (hashSet.Add(hit.transform))
-                        queue.Enqueue(hit.transform);
+                        if(hit.transform.childCount == 0|| hit.transform.childCount != 0 && 
+                            hit.transform.GetChild(0).gameObject.layer != LayerMask.NameToLayer("Water") &&
+                            hit.transform.GetChild(0).gameObject.layer != LayerMask.NameToLayer("Empty"))
+                            queue.Enqueue(hit.transform);
         }
 
         return null;
