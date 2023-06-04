@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 112193113625666807}
   - component: {fileID: -4109105081984426854}
   - component: {fileID: 7443697875946109955}
+  - component: {fileID: -1811027301683297951}
   m_Layer: 0
   m_Name: AIManager
   m_TagString: Untagged
@@ -81,7 +82,7 @@ MonoBehaviour:
   WaterEmote: 11
   StoneEmote: 12
   ResourceEmote: 13
-  Portrait:
+  _portrait:
   - {fileID: 21300000, guid: 36891b259566c634f96db423e0bf874f, type: 3}
   - {fileID: 21300000, guid: c4ccc3624d3905941958fd48c55afd65, type: 3}
   - {fileID: 21300000, guid: 43e66791eef5c5e41a4ab1e6d7273950, type: 3}
@@ -115,5 +116,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e2203f29f431414fbec1a271241dae4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DefaultResource: 0
-  PerfectKnowledgeRange: 100
+--- !u!114 &-1811027301683297951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 112193113625666802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d82feb2c84a6b2141807e2115e02a5b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Settings: {fileID: 11400000, guid: ec86e41367b36c242870cf141b018707, type: 2}
+  Compute: {fileID: 7200000, guid: 7d9769e721825e0448f03b27879be0e9, type: 3}
