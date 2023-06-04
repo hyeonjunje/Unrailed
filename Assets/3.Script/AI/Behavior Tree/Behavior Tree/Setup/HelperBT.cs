@@ -224,10 +224,12 @@ public class HelperBT : BaseAI
         var ImpossibleToWork = PossibleToWork.Add<BTNode_Sequence>("불가능", () =>
         {
             //자원이 물 건너에 있을 때
-
-            Vector3 pos = _agent.FindCloestAroundEndPosition(_target.transform.position);
-            return _agent.MoveTo(pos) ? BehaviorTree.ENodeStatus.Failed : BehaviorTree.ENodeStatus.InProgress;
-
+            if (_target != null)
+            {
+                Vector3 pos = _agent.FindCloestAroundEndPosition(_target.transform.position);
+                return _agent.MoveTo(pos) ? BehaviorTree.ENodeStatus.Failed : BehaviorTree.ENodeStatus.InProgress;
+            }
+            else return BehaviorTree.ENodeStatus.InProgress;
         });
 
         ImpossibleToWork.Add<BTNode_Action>("타겟이 갈 수 없는 곳에 있어요", () =>
@@ -308,7 +310,7 @@ public class HelperBT : BaseAI
                      //그 후 쌓기
                      else
                      {
-                         if(!_stack._handItem.Peek().CheckType)
+                         if(!_stack._handItem.Peek().HelperCheckItemType)
                          {
                             _stack.InteractiveItem();
 
@@ -402,7 +404,7 @@ public class HelperBT : BaseAI
 
                      Home.GetGatherTarget(_helper);
                      //자원이 더 이상 없다면 
-                     if (Home.NonethisResourceType||_stack._handItem.Peek().CheckType)
+                     if (Home.NonethisResourceType||_stack._handItem.Peek().HelperCheckItemType)
                      {
                          return BehaviorTree.ENodeStatus.Succeeded;
                      }

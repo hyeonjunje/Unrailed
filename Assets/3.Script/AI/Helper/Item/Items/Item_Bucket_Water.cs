@@ -19,7 +19,6 @@ public class Item_Bucket_Water : SimpleInteraction
 
     public override bool Perform()
     {
-        Debug.Log("물 떠용");
         FillGauge();
         return !Stop();
     }
@@ -56,7 +55,6 @@ public class Item_Bucket_Water : SimpleInteraction
         if(Watergauge.value>=1)
         {
             _bucket.BucketisFull();
-            Debug.Log("물 다떴어용");
             return true;
         }
         return false;

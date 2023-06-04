@@ -25,7 +25,7 @@ public class BaseAI : MonoBehaviour
     protected Animator _animator;
     protected int isMove = Animator.StringToHash("isMove");
 
-    [SerializeField]
+    [HideInInspector]
     public Resource Home;
 
     public void SetHome(Resource _Home)
