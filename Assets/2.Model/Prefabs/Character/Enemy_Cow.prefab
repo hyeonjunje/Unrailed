@@ -30344,7 +30344,7 @@ GameObject:
   - component: {fileID: -6694571262228487728}
   m_Layer: 17
   m_Name: Enemy_Cow
-  m_TagString: Untagged
+  m_TagString: Invisible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30501,7 +30501,6 @@ MonoBehaviour:
   impassableType: 1
   impassableDir: 0
   length: 1
-  originPos: {x: 0, y: 0, z: 0}
 --- !u!1 &78867466278226058
 GameObject:
   m_ObjectHideFlags: 0

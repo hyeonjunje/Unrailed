@@ -166,6 +166,12 @@ public class ShopManager : MonoBehaviour
             {
                 other.GetComponent<InvisibleBlock>().UnShow();
             }
+            else if(other.gameObject.layer == LayerMask.NameToLayer("Rail"))
+            {
+                if (!other.GetComponent<RailController>().isInstance)
+                    for (int i = 0; i < other.transform.childCount; i++)
+                        other.transform.GetChild(i).gameObject.SetActive(false);
+            }
             // 블럭에 부착된 아이템, 지형지물
             else
             {
@@ -195,10 +201,14 @@ public class ShopManager : MonoBehaviour
             {
                 other.GetComponent<InvisibleBlock>().Show();
             }
+            else if (other.gameObject.layer == LayerMask.NameToLayer("Rail"))
+            {
+                if (!other.GetComponent<RailController>().isInstance)
+                    other.transform.GetChild(0).gameObject.SetActive(true);
+            }
             else
             {
                 other.transform.GetChild(0).gameObject.SetActive(true);
-                // other.gameObject.SetActive(true);
             }
         }
 

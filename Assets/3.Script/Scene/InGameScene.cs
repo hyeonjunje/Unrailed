@@ -77,8 +77,10 @@ public class InGameScene : MonoBehaviour
             Debug.Log("엔딩입니다~~~~");
         }
         else
-            // 바리케이드 없애주자
         {
+            // 플레이어 손에 든거 내려놓기
+            FindObjectOfType<PlayerController>().PutDownItem();
+
             Helper helper = FindObjectOfType<Helper>();
             helper.arr();
 

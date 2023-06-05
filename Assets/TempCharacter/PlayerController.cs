@@ -436,7 +436,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // 손에 있는 물건을 떨구는 메소드
-    private void PutDownItem()
+    public void PutDownItem()
     {
         Debug.Log(_handItem.Count);
         if (_handItem.Count != 0)
