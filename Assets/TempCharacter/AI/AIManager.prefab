@@ -82,7 +82,7 @@ MonoBehaviour:
   WaterEmote: 11
   StoneEmote: 12
   ResourceEmote: 13
-  _portrait:
+  _sprite:
   - {fileID: 21300000, guid: 36891b259566c634f96db423e0bf874f, type: 3}
   - {fileID: 21300000, guid: c4ccc3624d3905941958fd48c55afd65, type: 3}
   - {fileID: 21300000, guid: 43e66791eef5c5e41a4ab1e6d7273950, type: 3}

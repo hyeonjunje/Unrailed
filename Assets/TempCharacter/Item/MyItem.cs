@@ -12,6 +12,8 @@ public abstract class MyItem : MonoBehaviour
     [SerializeField] protected EItemType itemType;
     [SerializeField] protected LayerMask blockLayer;
 
+    protected AI_Item _item;
+
     [HideInInspector] public Transform equipment;
 
     protected PlayerController player;
@@ -19,6 +21,7 @@ public abstract class MyItem : MonoBehaviour
     protected virtual void Awake()
     {
         player = FindObjectOfType<PlayerController>();
+        _item = GetComponent<AI_Item>();
 
         if (player == null)
             return;
@@ -44,6 +47,10 @@ public abstract class MyItem : MonoBehaviour
 
     public virtual void RePosition(Transform parent, Vector3 pos)
     {
+        if(_item!=null)
+        {
+            _item.PickUp();
+        }
         transform.SetParent(parent);
         transform.localPosition = pos;
         transform.localRotation = Quaternion.identity;

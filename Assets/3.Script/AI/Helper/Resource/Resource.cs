@@ -9,7 +9,7 @@ public class Resource : MonoBehaviour
 
     private WorldResource.EType _defaultResource = WorldResource.EType.Wood;
     private Dictionary<WorldResource.EType, List<WorldResource>> _trackedResources = null;
-    private float _range = 30f;
+    private float _range = 1000f;
 
     private void Start()
     {

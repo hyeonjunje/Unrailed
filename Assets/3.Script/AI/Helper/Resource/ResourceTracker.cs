@@ -34,8 +34,7 @@ public class ResourceTracker : MonoBehaviour
 
     public void DeRegisterResource(WorldResource resource)
     {
-
-          _trackedResources[resource.Type].Remove(resource);
+        _trackedResources[resource.Type].Remove(resource);
     }
 
 
