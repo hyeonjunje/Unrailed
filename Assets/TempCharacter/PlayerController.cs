@@ -56,6 +56,10 @@ public class PlayerController : MonoBehaviour
     public Transform AroundEmptyBlockTranform => BFS();
     public MyItem CurrentHandItem => _handItem.Count == 0 ? null : _handItem.Peek();  // 현재 들고 있는 아이템
 
+    public int BoltCount => _boltCount;
+    private int _boltCount = 0;
+       
+
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
@@ -598,6 +602,7 @@ public class PlayerController : MonoBehaviour
 
     private void AddBolt(GameObject bolt) // 코일 먹기
     {
+        _boltCount++;
         Destroy(bolt);
     }
 
@@ -640,6 +645,14 @@ public class PlayerController : MonoBehaviour
                 if (!startUI.Exit) startUI.GameStart();
                 if (startUI.Exit) startUI.GameExit();
             }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.name == "ItemBolt(Clone)")
+        {
+            AddBolt(other.gameObject);
         }
     }
     #endregion

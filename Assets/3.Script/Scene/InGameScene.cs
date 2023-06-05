@@ -83,6 +83,7 @@ public class InGameScene : MonoBehaviour
             Helper helper = FindObjectOfType<Helper>();
             helper.arr();
 
+
             // 볼트 하나 추가 해주고
 
             // 조금있다가 상점보여주기
@@ -99,6 +100,7 @@ public class InGameScene : MonoBehaviour
         Helper dd = FindObjectOfType<Helper>();
         dd.arr();
         
+        RespawnTool();
 
         // 나가기 게이지 100되면 실행될 메소드
 
@@ -116,6 +118,9 @@ public class InGameScene : MonoBehaviour
         _worldManager.betweenBarricadeTransform.Clear();
 
 
+
+
+
         // 맵 재위치 시켜주기
         UnitaskInvoke(1.5f, () => { RePositionAsync().Forget(); }).Forget();
 
@@ -124,6 +129,42 @@ public class InGameScene : MonoBehaviour
 
         // 맵은 2개 밖에 없으니까 한번 역을 떠나면 엔딩준비 완료
         _isEnding = true;
+    }
+
+    private void RespawnTool()
+    {
+        // 현재 역 근처에 도구들 세팅
+        Transform blockParent = _shopManager.currentStation.parent;
+        List<MyItem> tools = new List<MyItem>();
+        tools.Add(FindObjectOfType<MyBucketItem>());
+        MyNonStackableItem[] items = FindObjectsOfType<MyNonStackableItem>();
+
+        for (int i = 0; i < items.Length; i++)
+        {
+            tools.Add(items[i]);
+        }
+
+        for (int i = 0; i < tools.Count; i++)
+        {
+            tools[i].transform.SetParent(BFS(blockParent));
+            tools[i].transform.localPosition = Vector3.up * 0.5f;
+            tools[i].transform.localRotation = Quaternion.identity;
+        }
+    }
+
+    private Transform BFS(Transform startTransform)
+    {
+        Transform currentTransform = startTransform;
+        while (currentTransform.childCount != 0)
+        {
+            InfiniteLoopDetector.Run();
+
+            if (Physics.Raycast(currentTransform.position, Vector3.back, out RaycastHit hit, 1f, 1 << LayerMask.NameToLayer("Block")))
+            {
+                currentTransform = hit.transform;
+            }
+        }
+        return currentTransform;
     }
 
 
