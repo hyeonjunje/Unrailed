@@ -11,7 +11,7 @@ public class TrainMovement : MonoBehaviour
 
     public int trainNum;
    
-    public Queue<RailController> rails = new Queue<RailController>();
+    public LinkedList<RailController> rails = new LinkedList<RailController>();
     public List<RailController> listToQue = new List<RailController>();
     public Transform trainMesh;
     public int trainUpgradeLevel;
@@ -100,12 +100,12 @@ public class TrainMovement : MonoBehaviour
         if (rails.Count != 0)
         {
             RotateTrain();
-            transform.position = Vector3.MoveTowards(transform.position, rails.Peek().transform.position, _trainMoveSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, rails.First().transform.position, _trainMoveSpeed * Time.deltaTime);
 
 
-            if (transform.position == rails.Peek().transform.position)
+            if (transform.position == rails.First().transform.position)
             {
-                rails.Dequeue();
+                rails.RemoveFirst();
             }
 
             // 큐에 들어온 레일 위치로 이동
@@ -195,7 +195,7 @@ public class TrainMovement : MonoBehaviour
     {
         if(rails != null)
         {
-            Vector3 dir = rails.Peek().transform.position - transform.position;
+            Vector3 dir = rails.First().transform.position - transform.position;
             if(trainMesh != null)
             trainMesh.transform.rotation = Quaternion.Lerp(trainMesh.transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * _trainRotateSpeed);
         }
@@ -204,7 +204,13 @@ public class TrainMovement : MonoBehaviour
     {
         if (trainType != TrainType.Dynamite || trainType != TrainType.StationDir)
             //큐에 추가
-            rails.Enqueue(gameObject);
+            rails.AddLast(gameObject);
+    }
+    public void DequeueRailPos(RailController gameObject)
+    {
+        if (trainType != TrainType.Dynamite || trainType != TrainType.StationDir)
+            //큐에 추가
+            rails.RemoveLast();
     }
 
     public IEnumerator Warning()

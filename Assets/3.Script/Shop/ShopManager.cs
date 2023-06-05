@@ -36,7 +36,7 @@ public class ShopManager : MonoBehaviour
     public Image[] goToLoading;
 
     public Transform currentStation = null;
-
+    public Transform nextGame;
     private void Awake()
     {
         //ΩÃ±€≈Ê ∆–≈œ

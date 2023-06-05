@@ -242,11 +242,13 @@ public class RailController : MonoBehaviour
             }
         }
     }
-
-    /*    private void OnDisable()
+    public void PickUpRail()
+    {
+        if (this.Equals(trainManager.lastRail))
         {
-            trainManager.railCon.Remove(gameObject.GetComponent<RailController>());
+            Debug.Log("마지막 레일을 집어들었습니다.");
 
+            trainManager.railCon.Remove(this);
 
             if (neighborRail != null)
             {
@@ -257,6 +259,21 @@ public class RailController : MonoBehaviour
                     neighborRail.railLine.Line.SetActive(false);
                 }
             }
+
+            for (int i = 0; i < trainComponents.Length; i++)
+            {
+                trainComponents[i].DequeueRailPos(this);
+            }
+        }
+        
+    }
+
+    /*    private void OnDisable()
+        {
+            
+
+
+         
 
             //혹시 몰라 이전 레일의 레이어를 되돌리는 로직도 구현해둠 필요하면 작성
             //foreach (Transform child in neighborRail.railChild)
