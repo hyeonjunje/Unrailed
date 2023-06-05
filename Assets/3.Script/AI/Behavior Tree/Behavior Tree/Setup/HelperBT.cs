@@ -36,6 +36,8 @@ public class HelperBT : BaseAI
     private EmoteManager _emoteManager;
     [SerializeField] private Image _emoteImage;
 
+    private float _defaultSpeed;
+
 
     private readonly int isDig = Animator.StringToHash("isDig");
 
@@ -49,6 +51,7 @@ public class HelperBT : BaseAI
         _animator = GetComponent<Animator>();
         _tree = GetComponent<BehaviorTree>();
         _agent = GetComponent<PathFindingAgent>();
+        _defaultSpeed = _agent.moveSpeed;
     }
 
     private void Start()
@@ -478,9 +481,11 @@ public class HelperBT : BaseAI
             if (_helper.arrive)
             {
                 PutDown();
-                _animator.SetBool(isMove, true);
+                //이모트 추가
                 Vector3 position = ShopManager.Instance.nextGame.position;
                 _agent.MoveTo(position);
+                _agent.moveSpeed = 10;
+                _animator.SetBool(isMove, true);
                 return BehaviorTree.ENodeStatus.InProgress;
             }
             return BehaviorTree.ENodeStatus.Failed;
@@ -492,6 +497,7 @@ public class HelperBT : BaseAI
         GotoStation.Add<BTNode_Action>("가만히 있기", () =>
          {
              _animator.SetBool(isMove, false);
+             _agent.moveSpeed = _defaultSpeed;
              Reset();
              return BehaviorTree.ENodeStatus.InProgress;
          },()=>
