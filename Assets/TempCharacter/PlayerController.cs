@@ -135,6 +135,21 @@ public class PlayerController : MonoBehaviour
     // spacebar 누를 때
     private void InteractiveItemSpace()
     {
+        if (_currentFrontObject != null && _currentFrontObject.gameObject.layer == LayerMask.NameToLayer("ShopItem"))
+        {
+            ShopItem shop = _currentFrontObject.GetComponent<ShopItem>();
+            Debug.Log("상점 아이템 들기");
+
+            if (ShopManager.Instance.trainCoin >= shop.itemCost)
+            {
+                shop.transform.SetParent(_twoHandTransform);
+                shop.transform.localPosition = Vector3.zero;
+                shop.transform.localRotation = Quaternion.identity;
+                ShopManager.Instance.trainCoin--;
+            }
+
+            return;
+        }
         if (_currentFrontObject != null && _currentFrontObject.gameObject.layer == LayerMask.NameToLayer("WorkBench"))
         {
             TrainWorkBench bench = _currentFrontObject.GetComponent<TrainWorkBench>();

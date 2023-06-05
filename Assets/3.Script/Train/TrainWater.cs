@@ -231,17 +231,17 @@ public class TrainWater : TrainMovement
             }
         }
 
-        // if (spareOver < fireTime)
-        // {
-        //     for (int i = 0; i < trains.Length; i++)
-        //     {
-        //         if (trains[i].trainNum == 3)
-        //         {
-        //             trains[i].isBurn = true;
-        //             trains[i].fireEffect.gameObject.SetActive(true);
-        //         }
-        //     }
-        // }
+         if (spareOver < fireTime)
+         {
+             for (int i = 0; i < trains.Length; i++)
+             {
+                 if (trains[i].trainType == TrainType.Spare)
+                 {
+                     trains[i].isBurn = true;
+                     trains[i].fireEffect.gameObject.SetActive(true);
+                 }
+             }
+         }
     }
 
 }

@@ -17,7 +17,6 @@ public class TrainDynamite : TrainMovement
     void Awake()
     {
         GetMesh();
-        fireEffect.gameObject.SetActive(false);
         spawnTime = spawnSelect;
 
     }

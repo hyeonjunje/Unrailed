@@ -37,7 +37,7 @@ public class TrainMovement : MonoBehaviour
     public float overSpeed = 0.1f;
     public float _trainMoveSpeed;
 
-    [SerializeField] private GameObject warningIcon;
+    [SerializeField] protected GameObject warningIcon;
     public Animator overText;
     private InGameScene manager;
 
@@ -48,18 +48,24 @@ public class TrainMovement : MonoBehaviour
         if (trainType != TrainType.Spare)
         {
             trainMesh = transform.GetChild(0).GetComponent<Transform>();
-            fireEffect = GetComponentInChildren<ParticleSystem>();
             destroyParticle.SetActive(false);
             trainMesh.gameObject.SetActive(true);
             isReady = true;
             trainUpgradeLevel = 1;
+            fireEffect = GetComponentInChildren<ParticleSystem>();
 
-            if (trainType != TrainType.WorkBench || trainType != TrainType.StationDir || trainType != TrainType.Dynamite)
+            if (trainType != TrainType.StationDir || trainType != TrainType.Dynamite)
             {
                 warningIcon = transform.GetChild(2).gameObject;
                 warningIcon.SetActive(false);
             }
         }
+        if (trainType != TrainType.StationDir || trainType != TrainType.Dynamite)
+        {
+            fireEffect = GetComponentInChildren<ParticleSystem>();
+        }
+
+
 
         cameraTarget = GameObject.FindGameObjectWithTag("Cinemachine").GetComponentsInChildren<Cinemachine.CinemachineVirtualCamera>();
         overText = GameObject.FindGameObjectWithTag("Cinemachine").GetComponent<Animator>();

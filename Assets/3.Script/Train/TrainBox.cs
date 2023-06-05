@@ -25,6 +25,7 @@ public class TrainBox : TrainMovement
 
     public int maxItem;
     public bool madeReady;
+    private bool tutorialDone;
     // Start is called before the first frame update
     void Awake()
     {
@@ -41,10 +42,7 @@ public class TrainBox : TrainMovement
     {
         TrainMovePos();
         TrainUpgrade();
-        if (!isBurn)
-        {
-
-        }
+ 
     }
     public override void TrainUpgrade()
     {
@@ -86,6 +84,12 @@ public class TrainBox : TrainMovement
 
     public Stack<MyItem> GiveMeItem(Stack<MyItem> handItem)
     {
+
+        if (!tutorialDone)
+        {
+            warningIcon.SetActive(false);
+            tutorialDone = true;
+        }
         MyItem item;
 
         switch (handItem.Peek().ItemType)
@@ -108,7 +112,7 @@ public class TrainBox : TrainMovement
                 steelStack.Push(item);
                 break;
         }
-
+        
         return handItem;
     }
 }
