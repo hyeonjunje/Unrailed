@@ -83,9 +83,8 @@ public class HelperBT : BaseAI
          {
              var order = _localMemory.GetGeneric<WorldResource.EType>(BlackBoardKey.Order);
 
-             if(_item==null)
+             if(_item == null)
              {
-
                  foreach (var item in ItemManager.Instance.RegisteredObjects)
                  {
                      //아이템이 명령이랑 호환이 된다면
@@ -96,8 +95,8 @@ public class HelperBT : BaseAI
                              //플레이어가 들고 있는지 확인하기
                              if (interaction.CanPerform())
                              {
-                                 interaction.Perform();
                                  _item = item;
+                                 _item.PickUp();
                                  _emoteImage.sprite = _emoteManager.GetEmote(_item.Id());
                                  _agent.MoveTo(_item.InteractionPoint);
                                  _animator.SetBool(isMove, true);
@@ -276,11 +275,18 @@ public class HelperBT : BaseAI
          }
         );
         #endregion
+
+        #region 물, 자원
         // 물 ==========================================================================
         var WaterOrResource = CheckTargetType.Add<BTNode_Sequence>("[물, 자원]", () =>
          {
-             return _target.Type == WorldResource.EType.Water || _target.Type == WorldResource.EType.Resource
-             ? BehaviorTree.ENodeStatus.InProgress : BehaviorTree.ENodeStatus.Failed;
+             if (_target != null)
+             {
+                 return _target.Type == WorldResource.EType.Water || _target.Type == WorldResource.EType.Resource
+                 ? BehaviorTree.ENodeStatus.InProgress : BehaviorTree.ENodeStatus.Failed;
+             }
+
+             else return BehaviorTree.ENodeStatus.Failed;
          });
 
         var Interaction = WaterOrResource.Add<BTNode_Action>("물 채우기 / 자원 들기", () =>
@@ -458,6 +464,7 @@ public class HelperBT : BaseAI
         );
 
         #endregion
+        #endregion
 
 
         var OrderChange = BTRoot.Add<BTNode_Sequence>("명령이 바뀐 경우");
@@ -489,13 +496,12 @@ public class HelperBT : BaseAI
 
     }
 
-  
-
     private void PutDown()
     {
         if (_item != null)
         {
-            foreach (var interaction in _item.Interactions)
+            _item.PickUp();
+/*            foreach (var interaction in _item.Interactions)
             {
                 //내려놓기
                 if (!interaction.CanPerform())
@@ -503,7 +509,7 @@ public class HelperBT : BaseAI
                     interaction.Perform();
                 }
                 break;
-            }
+            }*/
 
             _item.transform.rotation = Quaternion.identity;
             _item.transform.parent = _stack.BFS(this);

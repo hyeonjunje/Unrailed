@@ -109,7 +109,6 @@ public class AI_Stack : MonoBehaviour
     public void EnemyDetectGroundBlock(WorldResource resource)
     {
         _detectedItem.Push(resource.Stack);
-        ResourceTracker.Instance.DeRegisterResource(resource);
         Destroy(resource);
     }
 
@@ -117,7 +116,6 @@ public class AI_Stack : MonoBehaviour
     public void DetectGroundBlock(WorldResource resource)
     {
         _detectedItem.Push(resource.Stack);
-        ResourceTracker.Instance.DeRegisterResource(resource);
         Destroy(resource);
     }
 

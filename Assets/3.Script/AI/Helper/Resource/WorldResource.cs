@@ -26,7 +26,12 @@ public class WorldResource : MonoBehaviour
         ResourceTracker.Instance.RegisterResource(this);
     }
 
+    private void OnDestroy()
+    {
+        ResourceTracker.Instance.DeRegisterResource(this);
+    }
     //자원 캐기
+
 
     public bool isDig()
     {
@@ -35,7 +40,6 @@ public class WorldResource : MonoBehaviour
         else
         {
             SpawnItem();
-            ResourceTracker.Instance.DeRegisterResource(this);
             return false;
         }
           

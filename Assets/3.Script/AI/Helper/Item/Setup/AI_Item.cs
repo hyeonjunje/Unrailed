@@ -30,6 +30,13 @@ public class AI_Item : MonoBehaviour
         ItemManager.Instance.DeregisterItem(this);
     }
 
+
+    public virtual void PickUp()
+    {
+
+    }
+
+
     public virtual int Id()
     {
         return 0;

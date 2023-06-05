@@ -29,31 +29,31 @@ public class EmoteManager : MonoBehaviour
     public int ResourceEmote = 13;
 
 
-    private Dictionary<int, Sprite> _portraitData;
-    [SerializeField] private Sprite[] _portrait;
+    private Dictionary<int, Sprite> _spriteData;
+    [SerializeField] private Sprite[] _sprite;
 
     private void Awake()
     {
-        _portraitData = new Dictionary<int, Sprite>();
+        _spriteData = new Dictionary<int, Sprite>();
         Init();
     }
 
     private void Init()
     {
-        _portraitData.Add(AxeEmote, _portrait[0]);
-        _portraitData.Add(PickEmote, _portrait[1]);
-        _portraitData.Add(BucketEmote, _portrait[2]);
-        _portraitData.Add(WarningEmote, _portrait[3]);
-        _portraitData.Add(SleepEmote, _portrait[4]);
+        _spriteData.Add(AxeEmote, _sprite[0]);
+        _spriteData.Add(PickEmote, _sprite[1]);
+        _spriteData.Add(BucketEmote, _sprite[2]);
+        _spriteData.Add(WarningEmote, _sprite[3]);
+        _spriteData.Add(SleepEmote, _sprite[4]);
 
-        _portraitData.Add(WoodEmote, _portrait[5]);
-        _portraitData.Add(WaterEmote, _portrait[6]);
-        _portraitData.Add(StoneEmote, _portrait[7]);
-        _portraitData.Add(ResourceEmote, _portrait[8]);
+        _spriteData.Add(WoodEmote, _sprite[5]);
+        _spriteData.Add(WaterEmote, _sprite[6]);
+        _spriteData.Add(StoneEmote, _sprite[7]);
+        _spriteData.Add(ResourceEmote, _sprite[8]);
     }
 
     public Sprite GetEmote(int id)
     {
-        return _portraitData[id];
+        return _spriteData[id];
     }
 }

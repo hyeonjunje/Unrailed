@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17320406, g: 0.21648876, b: 0.29851997, a: 1}
+  m_IndirectSpecularColor: {r: 0.17320374, g: 0.21648853, b: 0.29851925, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -600,6 +600,7 @@ MonoBehaviour:
   _blockPrefab: {fileID: 45604219096226087, guid: a7aa4fa63e5a4b14b8d8e6c2d3fc8e93, type: 3}
   _waterFallUp: {fileID: 3522402998835842009, guid: 7184e1b88124c514cac87aa0d65e1119, type: 3}
   _waterFallDown: {fileID: 3162597236616404962, guid: c0e6df7e42ffa0240a33a24b9ce70beb, type: 3}
+  _barricade: {fileID: 0}
   _itemPrefabData: {fileID: 11400000, guid: 4b3c71a0f9d9ebc4f9f36dbbff85ea11, type: 2}
   _blockTransformerData:
   - {fileID: 11400000, guid: 2aae399e2818c7642a7fb88defd8e208, type: 2}
@@ -2471,7 +2472,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 639408320}
   m_LocalRotation: {x: 0.31135848, y: 0.077490516, z: -0.047119666, w: 0.94595504}
-  m_LocalPosition: {x: -6.5640893, y: 3.3167777, z: -4.6448584}
+  m_LocalPosition: {x: -25.21, y: 13, z: -15.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -4516,9 +4517,49 @@ PrefabInstance:
       value: AIManager
       objectReference: {fileID: 0}
     - target: {fileID: 112193113625666807, guid: eaad4c1378e59d44d9f78c0b2418912a, type: 3}
+      propertyPath: _sprite.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 112193113625666807, guid: eaad4c1378e59d44d9f78c0b2418912a, type: 3}
       propertyPath: _portrait.Array.size
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 112193113625666807, guid: eaad4c1378e59d44d9f78c0b2418912a, type: 3}
+      propertyPath: _sprite.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 36891b259566c634f96db423e0bf874f, type: 3}
+    - target: {fileID: 112193113625666807, guid: eaad4c1378e59d44d9f78c0b2418912a, type: 3}
+      propertyPath: _sprite.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: c4ccc3624d3905941958fd48c55afd65, type: 3}
+    - target: {fileID: 112193113625666807, guid: eaad4c1378e59d44d9f78c0b2418912a, type: 3}
+      propertyPath: _sprite.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: 43e66791eef5c5e41a4ab1e6d7273950, type: 3}
+    - target: {fileID: 112193113625666807, guid: eaad4c1378e59d44d9f78c0b2418912a, type: 3}
+      propertyPath: _sprite.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: 836f40e12959ceb4897b327e7cf78b2e, type: 3}
+    - target: {fileID: 112193113625666807, guid: eaad4c1378e59d44d9f78c0b2418912a, type: 3}
+      propertyPath: _sprite.Array.data[4]
+      value: 
+      objectReference: {fileID: 21300000, guid: 45b7eb12b1a7c7d4b866e27fcb0b0f46, type: 3}
+    - target: {fileID: 112193113625666807, guid: eaad4c1378e59d44d9f78c0b2418912a, type: 3}
+      propertyPath: _sprite.Array.data[5]
+      value: 
+      objectReference: {fileID: 21300000, guid: ca0fdbe8962755947a5b51b7a768ef23, type: 3}
+    - target: {fileID: 112193113625666807, guid: eaad4c1378e59d44d9f78c0b2418912a, type: 3}
+      propertyPath: _sprite.Array.data[6]
+      value: 
+      objectReference: {fileID: 21300000, guid: 21c7d01cd61ebef4bb91300a00710981, type: 3}
+    - target: {fileID: 112193113625666807, guid: eaad4c1378e59d44d9f78c0b2418912a, type: 3}
+      propertyPath: _sprite.Array.data[7]
+      value: 
+      objectReference: {fileID: 21300000, guid: c955fef1902769f45be1e826e5c06166, type: 3}
+    - target: {fileID: 112193113625666807, guid: eaad4c1378e59d44d9f78c0b2418912a, type: 3}
+      propertyPath: _sprite.Array.data[8]
+      value: 
+      objectReference: {fileID: 21300000, guid: 01b953601717acd40bfc33e381319bfc, type: 3}
     - target: {fileID: 112193113625666807, guid: eaad4c1378e59d44d9f78c0b2418912a, type: 3}
       propertyPath: _portrait.Array.data[0]
       value: 
