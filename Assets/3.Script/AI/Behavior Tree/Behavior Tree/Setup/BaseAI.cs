@@ -28,7 +28,6 @@ public class BaseAI : MonoBehaviour
 
     [HideInInspector]
     public Resource Home;
-
     public void SetHome(Resource _Home)
     {
         Home = _Home;

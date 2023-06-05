@@ -67,6 +67,9 @@ public class WorldManager : MonoBehaviour
         betweenBarricadeTransform = _mapCreator.SetBarricade(parentTransform[0].GetChild(0), 
             parentTransform[parentTransform.Length - 1].GetChild(parentTransform[parentTransform.Length - 1].childCount - 1));
 
+        foreach (Transform barricade in betweenBarricadeTransform)
+            barricade.gameObject.AddComponent<ImpassableObject>();
+
         // 맵을 제외한 오브젝트 초기화 (플레이어, 역, 기차, AI)
         await InitWorldObject();
 

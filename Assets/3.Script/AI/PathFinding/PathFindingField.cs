@@ -58,10 +58,10 @@ public class PathFindingField : MonoBehaviour
         MinX = Mathf.RoundToInt(map.GetChild(0).localPosition.x);
         MinY = Mathf.RoundToInt(map.GetChild(0).localPosition.z);
 
-        Width = (MinX * -1 + 1) * 2;
+        Width = (MinX * -1 + 1) * 2*2;
         Height = (MinY * -1 + 1) * 2;
 
-        _mapData = new bool[Height, Width * 2];
+        _mapData = new bool[Height, Width];
         for (int i = 0; i < Height; i++)
             for (int j = 0; j < Width; j++)
                 _mapData[i,j] = true;

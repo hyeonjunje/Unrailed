@@ -80,11 +80,8 @@ public class InGameScene : MonoBehaviour
             // 바리케이드 없애주자
         {
 
-            for (int i = 0; i < _worldManager.betweenBarricadeTransform.Count; i++)
-            {
-                Destroy(_worldManager.betweenBarricadeTransform[i].gameObject);
-            }
-            _worldManager.betweenBarricadeTransform.Clear();
+            Helper helper = FindObjectOfType<Helper>();
+            helper.arr();
 
             // 볼트 하나 추가 해주고
 
@@ -99,6 +96,10 @@ public class InGameScene : MonoBehaviour
     /// </summary>
     public void LeaveStation()
     {
+        Helper dd = FindObjectOfType<Helper>();
+        dd.arr();
+        
+
         // 나가기 게이지 100되면 실행될 메소드
 
         // 새로운 역 세팅
@@ -107,11 +108,19 @@ public class InGameScene : MonoBehaviour
         // 상점 종료되고
         _shopManager.ShopOff();
 
+
+        for (int i = 0; i < _worldManager.betweenBarricadeTransform.Count; i++)
+        {
+            Destroy(_worldManager.betweenBarricadeTransform[i].gameObject);
+        }
+        _worldManager.betweenBarricadeTransform.Clear();
+
+
         // 맵 재위치 시켜주기
         UnitaskInvoke(1.5f, () => { RePositionAsync().Forget(); }).Forget();
 
-        _resource = FindObjectOfType<Resource>();
-        _resource.PopulateResources();
+        //_resource = FindObjectOfType<Resource>();
+        //_resource.PopulateResources();
 
         // 맵은 2개 밖에 없으니까 한번 역을 떠나면 엔딩준비 완료
         _isEnding = true;
