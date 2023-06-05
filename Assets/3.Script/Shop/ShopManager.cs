@@ -12,7 +12,7 @@ public class ShopManager : MonoBehaviour
     public TrainMovement[] trains;
 
     [SerializeField] private Animator anim;
-    [SerializeField] private Transform[] shopUpgradeTrainPos;
+    [SerializeField] public Transform[] shopUpgradeTrainPos;
     [SerializeField] private Transform[] shopEnginePos;
     public Transform[] shopNewTrainPos;
 

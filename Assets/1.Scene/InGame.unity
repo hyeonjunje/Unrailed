@@ -4697,6 +4697,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: AIManager
       objectReference: {fileID: 0}
+    - target: {fileID: 112193113625666807, guid: eaad4c1378e59d44d9f78c0b2418912a, type: 3}
+      propertyPath: _sprite.Array.size
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 112193113625666807, guid: eaad4c1378e59d44d9f78c0b2418912a, type: 3}
+      propertyPath: _sprite.Array.data[9]
+      value: 
+      objectReference: {fileID: 21300000, guid: 3330965cb756b47479cac020f8eb2bb9, type: 3}
+    - target: {fileID: 112193113625666807, guid: eaad4c1378e59d44d9f78c0b2418912a, type: 3}
+      propertyPath: _sprite.Array.data[10]
+      value: 
+      objectReference: {fileID: 21300000, guid: 46f9b599231960a48875220b13395954, type: 3}
+    - target: {fileID: 112193113625666807, guid: eaad4c1378e59d44d9f78c0b2418912a, type: 3}
+      propertyPath: _sprite.Array.data[11]
+      value: 
+      objectReference: {fileID: 21300000, guid: 75e7e480f83584f4789a378707d38894, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eaad4c1378e59d44d9f78c0b2418912a, type: 3}
 --- !u!114 &1067327105 stripped
@@ -5189,7 +5205,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3629763408069323896, guid: 9b40e214a666047448503f01c6b60b59, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3629763408069323908, guid: 9b40e214a666047448503f01c6b60b59, type: 3}
       propertyPath: m_Pivot.x

@@ -13,10 +13,18 @@ public class EmoteManager : MonoBehaviour
     public int PickEmote = 2;
     [HideInInspector]
     public int BucketEmote = 3;
+
+
     [HideInInspector]
     public int WarningEmote = 4;
     [HideInInspector]
     public int SleepEmote = 5;
+    [HideInInspector]
+    public int HeartEmote = 6;
+    [HideInInspector]
+    public int HmmEmote = 7;
+    [HideInInspector]
+    public int SadEmote = 8;
 
 
     [HideInInspector]
@@ -50,6 +58,10 @@ public class EmoteManager : MonoBehaviour
         _spriteData.Add(WaterEmote, _sprite[6]);
         _spriteData.Add(StoneEmote, _sprite[7]);
         _spriteData.Add(ResourceEmote, _sprite[8]);
+
+        _spriteData.Add(HeartEmote, _sprite[9]);
+        _spriteData.Add(HmmEmote, _sprite[10]);
+        _spriteData.Add(SadEmote, _sprite[11]);
     }
 
     public Sprite GetEmote(int id)
