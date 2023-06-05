@@ -5230,7 +5230,7 @@ MonoBehaviour:
   _railPreview: {fileID: 2036987653179311385}
   _balloonObject: {fileID: 5791230561844413303}
   _runParticle: {fileID: 906168646}
-  _bridgePrefab: {fileID: 4200122292908817017, guid: 2ccfc14ef7c25cf4fbdd0a00834bdaca, type: 3}
+  _bridgePrefab: {fileID: 4815679896077189206, guid: 5c7f4634837ecdd44abbe88cbbd04d86, type: 3}
   _waterGauge: {fileID: 6582449345927543478}
 --- !u!114 &4768628231389393330
 MonoBehaviour:
@@ -5282,7 +5282,7 @@ MonoBehaviour:
     m_Bits: 262144
   detectableLayer:
     serializedVersion: 2
-    m_Bits: 50724912
+    m_Bits: 2202402864
 --- !u!1 &1037296278114724839
 GameObject:
   m_ObjectHideFlags: 0
@@ -5799,7 +5799,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4768628230282131365}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.27, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1037296278098704638}

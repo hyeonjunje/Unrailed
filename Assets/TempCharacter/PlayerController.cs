@@ -543,12 +543,13 @@ public class PlayerController : MonoBehaviour
         {
             if (CurrentHandItem != null && CurrentHandItem.ItemType == EItemType.wood)
             {
-                Transform parent = _currentFrontObject.parent;
-                Transform bridge = Instantiate(_bridgePrefab, parent).transform;
-                bridge.localPosition = Vector3.up * -0.375f;
+                // 다리 놓기
+                Transform bridge = Instantiate(_bridgePrefab, _currentFrontObject.parent.parent).transform;
+                bridge.localPosition = _currentFrontObject.parent.localPosition + Vector3.up * -0.5f;
                 bridge.localRotation = Quaternion.identity;
 
-                Destroy(_currentFrontObject.gameObject);
+                // 기존 블럭도 없애고 (없애면 그 자식들도 없어지지요)
+                Destroy(_currentFrontObject.parent.gameObject);
                 Destroy(_handItem.Pop().gameObject);
 
                 return true;

@@ -183,7 +183,6 @@ public class RailController : MonoBehaviour
             {
                 while(endRail != null)
                 {
-                    Debug.Log(endRail.transform.position);
                     endRail.PutRail();
 
                     if (Physics.Raycast(endRail.transform.position, Vector3.right, out raycastHit, range, LayerMask.GetMask("Rail")))
