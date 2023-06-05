@@ -26,7 +26,7 @@ public class BombTest : MonoBehaviour
     {
         ExplosionEffect.Play();
         yield return new WaitForSeconds(3f);
-
+        SoundManager.Instance.PlaySoundEffect("Train_Broken");
         // 터질 수 있는거 감지해서 터짐
         Collider[] hitCollider = Physics.OverlapSphere(transform.position, radius, banglayer);
         for(int i = 0; i< hitCollider.Length; i++)
@@ -47,6 +47,7 @@ public class BombTest : MonoBehaviour
         PlayerController player = FindObjectOfType<PlayerController>();
         if(player != null && Vector3.Distance(transform.position, player.transform.position) < radius)
         {
+            SoundManager.Instance.PlaySoundEffect("Enemy_Hit");
             player.Respawn();
         }
 

@@ -105,6 +105,8 @@ public class TrainWorkBench : TrainMovement
                 Destroy(steel.Pop().gameObject);
                 _isAnim = false;
                 madeTime = 0;
+                SoundManager.Instance.StopSoundEffect("Rail_Create");
+                SoundManager.Instance.PlaySoundEffect("Rail_Create");
             }
         }
     }

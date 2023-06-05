@@ -9,6 +9,8 @@ public class InteractionUI : MonoBehaviour
     public Image image;
     public Text text;
     public Sprite[] triggerImage;
+
+    public bool Exit;
     private void Awake()
     {
         image.sprite = triggerImage[0];
@@ -16,16 +18,23 @@ public class InteractionUI : MonoBehaviour
     }
     public void GameStart()
     {
-        //goto ÈÄ¿¡ ¹Ù²Ü °Í
-        SoundManager.Instance.PlaySoundEffect("Btn_Click");
-        SceneManager.LoadScene("TrainScene");
+        if (!Exit)
+        {
+            //goto ÈÄ¿¡ ¹Ù²Ü °Í
+            SoundManager.Instance.PlaySoundEffect("Btn_Click");
+            SceneManager.LoadScene("InGame");
+        }
+       
   
     }
     public void GameExit()
     {
-        //goto ÈÄ¿¡ ¹Ù²Ü °Í
-        SoundManager.Instance.PlaySoundEffect("Btn_Click");
-        Application.Quit();
+        if (Exit)
+        {
+            //goto ÈÄ¿¡ ¹Ù²Ü °Í
+            SoundManager.Instance.PlaySoundEffect("Btn_Click");
+            Application.Quit();
+        }
     }
 
     private void OnTriggerEnter(Collider other)

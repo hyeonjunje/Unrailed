@@ -53,6 +53,7 @@ public class MapCreator : MonoBehaviour
     /// <returns></returns>
     public async UniTask RePositionAsync(List<BlockBundle> blockBundleList)
     {
+            SoundManager.Instance.PlaySoundEffect("Btn_MapCreate");
         foreach (BlockBundle blockBundle in blockBundleList)
         {
             blockBundle.RePositionAsync().Forget();
