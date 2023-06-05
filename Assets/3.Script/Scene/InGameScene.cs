@@ -16,7 +16,8 @@ public class InGameScene : MonoBehaviour
     [SerializeField] private WorldManager _worldManager;
 
     [SerializeField] private ShopManager _shopManager;
-    [SerializeField] private BoidsManager _sheepManager;
+    [SerializeField] private BoidsManager _boidsManager;
+    [SerializeField] private Resource _resource;
 
     [SerializeField] private int worldCount = 0;
 
@@ -55,7 +56,7 @@ public class InGameScene : MonoBehaviour
                             Flock flock = Instantiate(_flock);
                             flock.transform.position = new Vector3(pos.x, 0.5f, pos.z);
                         }
-                        _sheepManager.Init();
+                        _boidsManager.Init();
 
 
                     }).Forget();
@@ -76,9 +77,10 @@ public class InGameScene : MonoBehaviour
             Debug.Log("엔딩입니다~~~~");
         }
         else
-        {
             // 바리케이드 없애주자
-            for(int i = 0; i < _worldManager.betweenBarricadeTransform.Count; i++)
+        {
+
+            for (int i = 0; i < _worldManager.betweenBarricadeTransform.Count; i++)
             {
                 Destroy(_worldManager.betweenBarricadeTransform[i].gameObject);
             }
@@ -107,6 +109,9 @@ public class InGameScene : MonoBehaviour
 
         // 맵 재위치 시켜주기
         UnitaskInvoke(1.5f, () => { RePositionAsync().Forget(); }).Forget();
+
+        _resource = FindObjectOfType<Resource>();
+        _resource.PopulateResources();
 
         // 맵은 2개 밖에 없으니까 한번 역을 떠나면 엔딩준비 완료
         _isEnding = true;

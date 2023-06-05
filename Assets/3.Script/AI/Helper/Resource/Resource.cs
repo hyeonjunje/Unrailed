@@ -24,7 +24,7 @@ public class Resource : MonoBehaviour
         }
     }
 
-    private void PopulateResources()
+    public void PopulateResources()
     {
         //자원 세팅
         var resourceTypes = System.Enum.GetValues(typeof(WorldResource.EType));

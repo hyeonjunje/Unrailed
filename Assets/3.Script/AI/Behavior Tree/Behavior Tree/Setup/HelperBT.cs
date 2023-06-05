@@ -216,6 +216,7 @@ public class HelperBT : BaseAI
             if (_target != null)
             {
                 Vector3 pos = _agent.FindCloestAroundEndPosition(_target.transform.position);
+                Debug.Log(pos);
                 return _agent.MoveTo(pos) ? BehaviorTree.ENodeStatus.Failed : BehaviorTree.ENodeStatus.InProgress;
             }
             else return BehaviorTree.ENodeStatus.InProgress;

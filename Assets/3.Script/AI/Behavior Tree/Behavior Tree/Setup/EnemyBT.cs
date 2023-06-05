@@ -29,6 +29,7 @@ public class EnemyBT : BaseAI
         _localMemory = BlackboardManager.Instance.GetIndividualBlackboard<BlackBoardKey>(this);
         _localMemory.SetGeneric<WorldResource>(BlackBoardKey.CurrentTarget, null);
         _localMemory.SetGeneric(BlackBoardKey.HP, _health.CurrentHp);
+        _animator.SetBool(isMove, true);
 
         var BTRoot = _tree.RootNode.Add<BTNode_Selector>("BT 시작");
 
@@ -60,7 +61,6 @@ public class EnemyBT : BaseAI
         MainSeq.Add<BTNode_Action>("이동하기",
         () =>
         {
-            _animator.SetBool(isMove, true);
             Vector3 position = _agent.FindCloestAroundEndPosition(_target.transform.position);
             _agent.MoveTo(_target.transform.position);
 
@@ -82,9 +82,9 @@ public class EnemyBT : BaseAI
         stealRoot.Add<BTNode_Action>("타겟 존재 : 훔치기 실행",
         () =>
         {
-            _animator.SetBool(isMove, false);
             if(_target!=null)
             {
+                _animator.SetBool(isMove, false);
                 _stack.EnemyDetectGroundBlock(_target);
                 //처음 드는 거 
                 if (_stack._handItem.Count == 0)
@@ -174,7 +174,8 @@ public class EnemyBT : BaseAI
                 _currentblock = _stack.BFS(this);
                 _stack.EnemyPutDown();
                 _localMemory.SetGeneric(BlackBoardKey.HP, _health.CurrentHp);
-                _target = null;
+                 _animator.SetBool(isMove, true);
+                 _target = null;
              }
              return BehaviorTree.ENodeStatus.InProgress;
 
