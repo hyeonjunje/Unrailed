@@ -82,7 +82,11 @@ public class InGameScene : MonoBehaviour
             Helper helper = FindObjectOfType<Helper>();
             helper.arr();
 
+            // 바리케이드 올려주기
+            Transform barricadeparent = GameObject.Find("BarricadeParent").transform;
+            barricadeparent.position += Vector3.up * 20f;
 
+            // 바리케이드 중간 없애주기
             for (int i = 0; i < _worldManager.betweenBarricadeTransform.Count; i++)
             {
                 Destroy(_worldManager.betweenBarricadeTransform[i].gameObject);
@@ -104,8 +108,10 @@ public class InGameScene : MonoBehaviour
     public void LeaveStation()
     {
 
+        // 올린 바리케이드 내려주기
+        Transform barricadeparent = GameObject.Find("BarricadeParent").transform;
+        barricadeparent.position -= Vector3.up * 20f;
 
-        
         Helper helper = FindObjectOfType<Helper>();
         RespawnTool();
 

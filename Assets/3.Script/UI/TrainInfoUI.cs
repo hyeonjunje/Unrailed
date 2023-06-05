@@ -40,7 +40,8 @@ public class TrainInfoUI : MonoBehaviour
                 num = Random.Range(1, 6);
                 time = 0;
             }
-            boltText.text = $"{_player.BoltCount}";
+            // boltText.text = $"{_player.BoltCount}";
+            boltText.text = $"{ShopManager.Instance.trainCoin}";
             railText.text = $"{railCount.railCon.Count - trainEngine.rails.Count}m";
 
             if (trainEngine._trainMoveSpeed <= 0) speedText.text = $".{trainEngine._trainMoveSpeed}m/s";

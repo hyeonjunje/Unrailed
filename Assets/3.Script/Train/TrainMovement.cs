@@ -54,7 +54,9 @@ public class TrainMovement : MonoBehaviour
             trainUpgradeLevel = 1;
             fireEffect = GetComponentInChildren<ParticleSystem>();
 
-            if (trainType != TrainType.StationDir || trainType != TrainType.Dynamite)
+            // 조건이 잘못된듯 나침반, 다이너마이트, spare에는 2번째 자식이 없음
+            // if (trainType != TrainType.StationDir && trainType != TrainType.Dynamite) 
+            if (trainType != TrainType.StationDir && trainType != TrainType.Dynamite && trainType != TrainType.Spare)
             {
                 warningIcon = transform.GetChild(2).gameObject;
                 warningIcon.SetActive(false);

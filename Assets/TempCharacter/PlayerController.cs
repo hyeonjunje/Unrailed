@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform _rayStartTransform;
     [SerializeField] private Transform _rightHandTransform;
     [SerializeField] private Transform _twoHandTransform;
+    [SerializeField] private Transform _twoHandFarTransform;
 
     [Header("Object")]
     [SerializeField] private Transform _railPreview;
@@ -36,6 +37,9 @@ public class PlayerController : MonoBehaviour
     private Stack<MyItem> _handItem = new Stack<MyItem>();
     private Stack<MyItem> _detectedItem = new Stack<MyItem>();
 
+    // 플레이어가 현재 들고 있는 차량
+    private ShopItem _currentHoldTrain;
+
     // 플레이어 수치
     private float _currentSpeed;
     // 현재 상호작용 쿨타임
@@ -55,10 +59,11 @@ public class PlayerController : MonoBehaviour
     public Transform CurrentBlockTransform => _currentblock;
     public Transform AroundEmptyBlockTranform => BFS();
     public MyItem CurrentHandItem => _handItem.Count == 0 ? null : _handItem.Peek();  // 현재 들고 있는 아이템
+    public ShopItem CurrentHoldTrain => _currentHoldTrain;
 
     public int BoltCount => _boltCount;
     private int _boltCount = 0;
-       
+
 
     private void Awake()
     {
@@ -77,33 +82,12 @@ public class PlayerController : MonoBehaviour
         _currentSpeed = _playerStat.moveSpeed;
     }
 
+    #region Move
+
     private void FixedUpdate()
     {
         // 플레이어 움직임
         Move();
-    }
-
-    private void Update()
-    {
-        // 현재 땅, 전방 물체 감지
-        DetectGroundBlock();
-        DetectFrontObject();
-
-        // 레일 미리보기 확인
-        CheckPutDownRail();
-
-        // 아이템 상호작용
-        if (_playerInput.IsSpace)
-            InteractiveItemSpace();
-        InteractivItem();
-
-        // 환경 상호작용
-        DetectWater();  // 물 뜨기
-        DigUp();        // 캐기
-        Attack();       // 공격
-
-        // 기차 상호작용
-        InteractiveTrain();
     }
 
     private void Move()
@@ -131,31 +115,148 @@ public class PlayerController : MonoBehaviour
         _runParticle.SetActive(false);
         _isDash = false;
     }
+    #endregion
+
+    private void Update()
+    {
+        // 현재 땅, 전방 물체 감지
+        DetectGroundBlock();
+        DetectFrontObject();
+
+        // 레일 미리보기 확인
+        CheckPutDownRail();
+
+        // 아이템 상호작용
+        if (_playerInput.IsSpace)
+            InteractiveItemSpace();
+        InteractivItem();
+
+        // 환경 상호작용
+        DetectWater();  // 물 뜨기
+        DigUp();        // 캐기
+        Attack();       // 공격
+    }
 
     // spacebar 누를 때
     private void InteractiveItemSpace()
     {
-        if (_currentFrontObject != null && _currentFrontObject.gameObject.layer == LayerMask.NameToLayer("ShopItem"))
-        {
-            ShopItem shop = _currentFrontObject.GetComponent<ShopItem>();
-            Debug.Log("상점 아이템 들기");
+        // 상점 기차와 상호작용 가능하면 return하여 밑에 코드 실행하지 않는다.
+        if (InteractShopTrain())
+            return;
 
-            if (ShopManager.Instance.trainCoin >= shop.itemCost)
+        // 그냥 기차와 상호작용 가능하면 return하여 밑에 코드 실행하지 않는다. (workBench와 box)
+        if (InteractTrain())
+            return;
+
+        if (_handItem.Count == 0 && _detectedItem.Count != 0)  // 줍기
+        {
+            Debug.Log("줍기");
+            Pair<Stack<MyItem>, Stack<MyItem>> p = _detectedItem.Peek().PickUp(_handItem, _detectedItem);
+            _handItem = p.first;
+            _detectedItem = p.second;
+            ItemIOSound(0);
+        }
+
+        else if (_handItem.Count != 0 && _detectedItem.Count == 0) // 버리기
+        {
+            Debug.Log("버리기");
+            ItemIOSound(1);
+            Pair<Stack<MyItem>, Stack<MyItem>> p = _handItem.Peek().PutDown(_handItem, _detectedItem);
+            _handItem = p.first;
+            _detectedItem = p.second;
+        }
+        else if (_handItem.Count != 0 && _detectedItem.Count != 0) // 교체
+        {
+            Debug.Log("교체");
+            ItemIOSound(2);
+            Pair<Stack<MyItem>, Stack<MyItem>> p = _handItem.Peek().Change(_handItem, _detectedItem);
+            _handItem = p.first;
+            _detectedItem = p.second;
+        }
+    }
+
+    // 안 누를 때
+    private void InteractivItem()
+    {
+        if (_handItem.Count != 0 && _detectedItem.Count != 0 && _handItem.Count <= 2)
+        {
+            Debug.Log("와다닥 줍기");
+
+            ItemIOSound(3);
+            Pair<Stack<MyItem>, Stack<MyItem>> p = _handItem.Peek().AutoGain(_handItem, _detectedItem);
+            _handItem = p.first;
+            _detectedItem = p.second;
+
+        }
+    }
+
+    // 상점 기차아이템과 상호작용하는 메소드
+    private bool InteractShopTrain()
+    {
+        ShopItem shop = null;
+        if (_currentFrontObject != null && _currentFrontObject.gameObject.layer == LayerMask.NameToLayer("ShopItem"))
+            shop = _currentFrontObject.GetComponent<ShopItem>();
+        bool isDetected = shop != null;  // shop이 null이 아니라면 상점의 차량이 감지가 됨
+
+        if (ShopManager.Instance.trainCoin == 0)
+        {
+            Debug.Log("코일 100개를 충전해줄게");
+            ShopManager.Instance.trainCoin = 100;
+        }
+
+        // 감지된게 있고 가지고 있는 차량이 없을 때  => 주워
+        if (isDetected && _currentHoldTrain == null)
+        {
+            // 금액을 지불할 수 있으면
+            if (shop.TryBuyItem())
             {
-                shop.transform.SetParent(_twoHandTransform);
-                shop.transform.localPosition = Vector3.zero;
-                shop.transform.localRotation = Quaternion.identity;
-                ShopManager.Instance.trainCoin--;
+                // 일단 집어
+                _currentHoldTrain = shop;
+                _currentHoldTrain.SetPosition(_twoHandFarTransform);
+            }
+            return true;
+        }
+
+        // 감지된게 없고 가지고 있는 차량이 있을 때  => 버려
+        else if (!isDetected && _currentHoldTrain != null)
+        {
+            _currentHoldTrain.SetInitPosition();
+            _currentHoldTrain = null;
+
+            return true;
+        }
+
+        // 감지된게 있고 가지고 있는 차량이 있을 때  => 교환
+        else if (isDetected && _currentHoldTrain != null)
+        {
+            // 일단 버리고
+            _currentHoldTrain.SetInitPosition();
+            _currentHoldTrain = null;
+
+            // 금액을 지불할 수 있으면
+            if (shop.TryBuyItem())
+            {
+                // 일단 집어
+                _currentHoldTrain = shop;
+                _currentHoldTrain.SetPosition(_twoHandFarTransform);
             }
 
-            return;
+            return true;
         }
-        if (_currentFrontObject != null && _currentFrontObject.gameObject.layer == LayerMask.NameToLayer("WorkBench"))
-        {
-            TrainWorkBench bench = _currentFrontObject.GetComponent<TrainWorkBench>();
 
-            if (bench.GetComponentInChildren<RailController>() != null)
+        return false;
+    }
+
+    // 기차와 상호작용하는 메소드
+    private bool InteractTrain()
+    {
+        if (_currentFrontObject != null)
+        {
+            // workBench와 상호작용
+            if (_currentFrontObject.gameObject.layer == LayerMask.NameToLayer("WorkBench"))
             {
+                TrainWorkBench bench = _currentFrontObject.GetComponent<TrainWorkBench>();
+
                 MyItem[] rail = bench.GetComponentsInChildren<MyItem>();
 
                 Transform aroundTransform = BFS();
@@ -177,70 +278,42 @@ public class PlayerController : MonoBehaviour
                         _detectedItem.Peek().transform.localRotation = Quaternion.identity;
                     }
                 }
-
-                SoundManager.Instance.PlaySoundEffect("Rail_Up");
                 for (int i = 0; i < rail.Length; i++)
                 {
+                    SoundManager.Instance.PlaySoundEffect("Rail_Up");
                     //레일의 부모를 다시 정적상태인 풀링으로 이동
                     Debug.Log("빼내기");
                     _handItem.Push(rail[i]);
                     _handItem.Peek().transform.SetParent(_twoHandTransform);
                     _handItem.Peek().transform.localPosition = Vector3.up * (_handItem.Count - 1) * 0.15f;
                     _handItem.Peek().transform.localRotation = Quaternion.identity;
-                    // rail[i].transform.parent = _twoHandTransform;
                     bench.spawnIndex--;
                     bench.anim.SetInteger("GetRails", 0);
                 }
+
+                return true;
             }
-
-            return;
-        }
-        // 나무 들고 있고 앞에 물이 있을 때는 하지마
-
-        if (_handItem.Count == 0 && _detectedItem.Count != 0)  // 줍기
-        {
-            Debug.Log("줍기");
-
-            Pair<Stack<MyItem>, Stack<MyItem>> p = _detectedItem.Peek().PickUp(_handItem, _detectedItem);
-            _handItem = p.first;
-            _detectedItem = p.second;
-            ItemIOSound(0);
-        }
-
-        else if (_handItem.Count != 0 && _detectedItem.Count == 0) // 버리기
-        {
-            if (_currentFrontObject != null && _currentFrontObject.gameObject.layer == LayerMask.NameToLayer("Box"))
+            // box와 상호작용
+            else if (_currentFrontObject.gameObject.layer == LayerMask.NameToLayer("Box"))
             {
                 TrainBox box = _currentFrontObject.GetComponent<TrainBox>();
 
                 if (CurrentHandItem.ItemType == EItemType.wood)
                 {
-                    while(box.woodStack.Count < box.maxItem)
+                    while (box.woodStack.Count < box.maxItem)
                     {
                         if (_handItem.Count == 0)
                             break;
 
                         Debug.Log("납품");
-                
+
                         _handItem = box.GiveMeItem(_handItem);
                     }
                     SoundManager.Instance.PlaySoundEffect("Wood_InBox");
-/*
-                    if (box.woods.Count < box.maxItem)
-                    {
-                        for (int i = 0; i < _handItem.Count; i++)
-                        {
-                            Debug.Log("납품");
-                            box.GiveMeItem(CurrentHandItem.ItemType, _handItem);
-                        }
-                        _handItem.Clear();
-
-                    }
-                    else return;*/
                 }
                 else if (CurrentHandItem.ItemType == EItemType.steel)
                 {
-                    while(box.steelStack.Count < box.maxItem)
+                    while (box.steelStack.Count < box.maxItem)
                     {
                         if (_handItem.Count == 0)
                             break;
@@ -249,55 +322,14 @@ public class PlayerController : MonoBehaviour
                         _handItem = box.GiveMeItem(_handItem);
                     }
                     SoundManager.Instance.PlaySoundEffect("Steel_InBox");
-
-                    /*if (box.steels.Count < box.maxItem)
-                    {
-                        for (int i = 0; i < _handItem.Count; i++)
-                        {
-                            Debug.Log("납품");
-                            box.GiveMeItem(CurrentHandItem.ItemType, _handItem);
-                        }
-                        _handItem.Clear();
-                    }
-                    else return;*/
                 }
-            }
-            else
-            {
-                Debug.Log("버리기");
-                ItemIOSound(1);
-                Pair<Stack<MyItem>, Stack<MyItem>> p = _handItem.Peek().PutDown(_handItem, _detectedItem);
-                _handItem = p.first;
-                _detectedItem = p.second;
-
-
+                return true;
             }
         }
-        else if (_handItem.Count != 0 && _detectedItem.Count != 0) // 교체
-        {
-            Debug.Log("교체");
-
-            ItemIOSound(2);
-            Pair<Stack<MyItem>, Stack<MyItem>> p = _handItem.Peek().Change(_handItem, _detectedItem);
-            _handItem = p.first;
-            _detectedItem = p.second;
-        }
+        return false;
     }
-    // 안 누를 때
-    private void InteractivItem()
-    {
-        if (_handItem.Count != 0 && _detectedItem.Count != 0 && _handItem.Count <= 2)
-        {
-            Debug.Log("와다닥 줍기");
 
-            ItemIOSound(3);
-            Pair<Stack<MyItem>, Stack<MyItem>> p = _handItem.Peek().AutoGain(_handItem, _detectedItem);
-            _handItem = p.first;
-            _detectedItem = p.second;
-
-        }
-    }
-    void ItemIOSound(int i)
+    private void ItemIOSound(int i)
     {
         switch (i)
         {
@@ -364,14 +396,20 @@ public class PlayerController : MonoBehaviour
                 break;
         }
     }
-    private void InteractiveEnvironment()
-    {
 
-    }
-    private void InteractiveTrain()
+    // 손에 있는 물건을 떨구는 메소드
+    private void PutDownItem()
     {
-
+        Debug.Log(_handItem.Count);
+        if (_handItem.Count != 0)
+        {
+            Pair<Stack<MyItem>, Stack<MyItem>> p = _handItem.Peek().PutDown(_handItem, _detectedItem);
+            _handItem = p.first;
+            _detectedItem = p.second;
+        }
     }
+
+    #region 감지 메소드
 
     private void DetectGroundBlock()
     {
@@ -474,7 +512,7 @@ public class PlayerController : MonoBehaviour
             for (int i = 0; i < 8; i++)
                 if (Physics.Raycast(currentBlock.position, dir[i], out RaycastHit hit, 1f, _playerStat.blockLayer))
                     if (hashSet.Add(hit.transform))
-                        if(hit.transform.childCount == 0|| hit.transform.childCount != 0 && 
+                        if (hit.transform.childCount == 0 || hit.transform.childCount != 0 &&
                             hit.transform.GetChild(0).gameObject.layer != LayerMask.NameToLayer("Water") &&
                             hit.transform.GetChild(0).gameObject.layer != LayerMask.NameToLayer("Empty"))
                             queue.Enqueue(hit.transform);
@@ -482,18 +520,7 @@ public class PlayerController : MonoBehaviour
 
         return null;
     }
-
-    // 손에 있는 물건을 떨구는 메소드
-    private void PutDownItem()
-    {
-        Debug.Log(_handItem.Count);
-        if (_handItem.Count != 0)
-        {
-            Pair<Stack<MyItem>, Stack<MyItem>> p = _handItem.Peek().PutDown(_handItem, _detectedItem);
-            _handItem = p.first;
-            _detectedItem = p.second;
-        }
-    }
+    #endregion
 
     #region 민경이 형
     private void DetectWater()  // 물 감지
@@ -618,7 +645,8 @@ public class PlayerController : MonoBehaviour
 
     private void AddBolt(GameObject bolt) // 코일 먹기
     {
-        _boltCount++;
+        ShopManager.Instance.trainCoin++;
+        // _boltCount++;
         Destroy(bolt);
     }
 
@@ -639,7 +667,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.layer == LayerMask.NameToLayer("Block"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Block"))
         {
             if (_isRespawn)
             {

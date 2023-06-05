@@ -509,14 +509,14 @@ MonoBehaviour:
   - {fileID: 74990267}
   - {fileID: 1057475156}
   trainPrefabs:
-  - {fileID: -7938907505213231895, guid: 2a7e0d9d13631fe4bbbbc87446158448, type: 3}
-  - {fileID: -4420265926955975397, guid: b40c71fa5eba67c459b86b5c5a52751d, type: 3}
-  - {fileID: 6138128580228161194, guid: e375003c016f97a42a511592d3079d8b, type: 3}
+  - {fileID: -7938907505213231895, guid: 6649c226fbdf9fd4cb10f57827b00f91, type: 3}
+  - {fileID: -4420265926955975397, guid: a1fe91261e89ecd4d8516ef3c97135db, type: 3}
+  - {fileID: 6138128580228161194, guid: c6bd3a21930faf741ab65abdde053b8d, type: 3}
   trainNewPrefabs:
-  - {fileID: -8888900682477050768, guid: 8ac6405e242a4e54583d5bfaa842a187, type: 3}
-  - {fileID: -5638305214022113819, guid: 814b3dd962c86964c9ed8645f7e1de35, type: 3}
+  - {fileID: -8888900682477050768, guid: 00abc5ee14f3b6849a613ea15b48d2b5, type: 3}
+  - {fileID: -5638305214022113819, guid: 3d66d52c2eaf3c24b9f683f52fc0d141, type: 3}
   enginePrefabs:
-  - {fileID: 5560794953054767258, guid: 8474e0d29f996334ab739b2801b9e214, type: 3}
+  - {fileID: 5560794953054767258, guid: 0a27c4b1525d4f841b61c3b7d1e666f7, type: 3}
   readyCount: 5
   trainCoin: 0
   itemIdx: 0
@@ -2635,7 +2635,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 639408320}
   m_LocalRotation: {x: 0.31135848, y: 0.077490516, z: -0.047119666, w: 0.94595504}
-  m_LocalPosition: {x: -25.21, y: 13, z: -15.02}
+  m_LocalPosition: {x: -6.5640893, y: 3.3167777, z: -4.6448584}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
