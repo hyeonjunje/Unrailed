@@ -22,6 +22,7 @@ TagManager:
   - Invisible
   - InvisibleObject
   - Cinemachine
+  - IntroUI
   layers:
   - Default
   - TransparentFX

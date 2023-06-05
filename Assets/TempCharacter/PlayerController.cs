@@ -110,6 +110,7 @@ public class PlayerController : MonoBehaviour
         // 움직임, 회전, 대시까지
         if (_playerInput.IsShift && !_isDash)
         {
+            SoundManager.Instance.PlaySoundEffect("Player_Dash");
             _isDash = true;
             _runParticle.SetActive(true);
             _currentSpeed = _playerStat.dashSpeed;
@@ -130,7 +131,6 @@ public class PlayerController : MonoBehaviour
     // spacebar 누를 때
     private void InteractiveItemSpace()
     {
-
         if (_currentFrontObject != null && _currentFrontObject.gameObject.layer == LayerMask.NameToLayer("WorkBench"))
         {
             TrainWorkBench bench = _currentFrontObject.GetComponent<TrainWorkBench>();
@@ -159,6 +159,7 @@ public class PlayerController : MonoBehaviour
                     }
                 }
 
+                SoundManager.Instance.PlaySoundEffect("Rail_Up");
                 for (int i = 0; i < rail.Length; i++)
                 {
                     //레일의 부모를 다시 정적상태인 풀링으로 이동
@@ -184,7 +185,7 @@ public class PlayerController : MonoBehaviour
             Pair<Stack<MyItem>, Stack<MyItem>> p = _detectedItem.Peek().PickUp(_handItem, _detectedItem);
             _handItem = p.first;
             _detectedItem = p.second;
-
+            ItemIOSound(0);
         }
 
         else if (_handItem.Count != 0 && _detectedItem.Count == 0) // 버리기
@@ -201,8 +202,10 @@ public class PlayerController : MonoBehaviour
                             break;
 
                         Debug.Log("납품");
+                
                         _handItem = box.GiveMeItem(_handItem);
                     }
+                    SoundManager.Instance.PlaySoundEffect("Wood_InBox");
 /*
                     if (box.woods.Count < box.maxItem)
                     {
@@ -226,6 +229,8 @@ public class PlayerController : MonoBehaviour
                         Debug.Log("납품");
                         _handItem = box.GiveMeItem(_handItem);
                     }
+                    SoundManager.Instance.PlaySoundEffect("Steel_InBox");
+
                     /*if (box.steels.Count < box.maxItem)
                     {
                         for (int i = 0; i < _handItem.Count; i++)
@@ -241,34 +246,105 @@ public class PlayerController : MonoBehaviour
             else
             {
                 Debug.Log("버리기");
+                ItemIOSound(1);
                 Pair<Stack<MyItem>, Stack<MyItem>> p = _handItem.Peek().PutDown(_handItem, _detectedItem);
                 _handItem = p.first;
                 _detectedItem = p.second;
+
+
             }
         }
         else if (_handItem.Count != 0 && _detectedItem.Count != 0) // 교체
         {
             Debug.Log("교체");
 
+            ItemIOSound(2);
             Pair<Stack<MyItem>, Stack<MyItem>> p = _handItem.Peek().Change(_handItem, _detectedItem);
             _handItem = p.first;
             _detectedItem = p.second;
         }
     }
-
     // 안 누를 때
     private void InteractivItem()
     {
-        if (_handItem.Count != 0 && _detectedItem.Count != 0)
+        if (_handItem.Count != 0 && _detectedItem.Count != 0 && _handItem.Count <= 2)
         {
             Debug.Log("와다닥 줍기");
 
+            ItemIOSound(3);
             Pair<Stack<MyItem>, Stack<MyItem>> p = _handItem.Peek().AutoGain(_handItem, _detectedItem);
             _handItem = p.first;
             _detectedItem = p.second;
+
         }
     }
+    void ItemIOSound(int i)
+    {
+        switch (i)
+        {
+            //줍기
+            case 0:
 
+                if (_handItem.Peek().ItemType == EItemType.rail)
+                    SoundManager.Instance.PlaySoundEffect("Rail_Up");
+
+                else if (_handItem.Peek().ItemType == EItemType.axe || _handItem.Peek().ItemType == EItemType.pick)
+                    SoundManager.Instance.PlaySoundEffect("Player_ToolsUp");
+
+                else
+                    SoundManager.Instance.PlaySoundEffect("Item_Up");
+                break;
+
+            //버리기
+            case 1:
+                if (_handItem.Peek().ItemType == EItemType.rail)
+                {
+                    SoundManager.Instance.StopSoundEffect("Rail_Down");
+                    SoundManager.Instance.PlaySoundEffect("Rail_Down");
+                }
+                else if (_handItem.Peek().ItemType == EItemType.steel)
+                {
+                    SoundManager.Instance.StopSoundEffect("Steel_Down");
+                    SoundManager.Instance.PlaySoundEffect("Steel_Down");
+                }
+                else if (_handItem.Peek().ItemType == EItemType.wood)
+                {
+                    SoundManager.Instance.StopSoundEffect("Wood_Down");
+                    SoundManager.Instance.PlaySoundEffect("Wood_Down");
+                }
+                else if (_handItem.Peek().ItemType == EItemType.axe || _handItem.Peek().ItemType == EItemType.pick)
+                {
+                    SoundManager.Instance.StopSoundEffect("Player_ToolsDown");
+                    SoundManager.Instance.PlaySoundEffect("Player_ToolsDown");
+                }
+                break;
+
+            //교체
+            case 2:
+                if (_handItem.Peek().ItemType == EItemType.rail)
+                    SoundManager.Instance.PlaySoundEffect("Rail_Up");
+
+                else if (_handItem.Peek().ItemType == EItemType.axe || _handItem.Peek().ItemType == EItemType.pick)
+                    SoundManager.Instance.PlaySoundEffect("PlayerToolsUp");
+
+                else
+                    SoundManager.Instance.PlaySoundEffect("Item_Up");
+                break;
+            //와다닥 줍기
+            case 3:
+                if (_handItem.Peek().ItemType == EItemType.rail)
+                {
+                    SoundManager.Instance.StopSoundEffect("Rail_Up");
+                    SoundManager.Instance.PlaySoundEffect("Rail_Up");
+                }
+                else
+                {
+                    SoundManager.Instance.StopSoundEffect("Item_Up");
+                    SoundManager.Instance.PlaySoundEffect("Item_Up");
+                }
+                break;
+        }
+    }
     private void InteractiveEnvironment()
     {
 
@@ -511,6 +587,7 @@ public class PlayerController : MonoBehaviour
                     AnimalHealth animal = _currentFrontObject.GetComponent<AnimalHealth>();
                     if (animal != null)
                     {
+                        SoundManager.Instance.PlaySoundEffect("Player_Hit");
                         animal.Hit();
                         _isInteractive = false;
                     }
@@ -549,6 +626,19 @@ public class PlayerController : MonoBehaviour
                 _balloonObject.SetActive(false);
                 _isRespawn = false;
                 transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);
+            }
+        }
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("IntroUI"))
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                InteractionUI startUI = other.GetComponent<InteractionUI>();
+
+                if (!startUI.Exit) startUI.GameStart();
+                if (startUI.Exit) startUI.GameExit();
             }
         }
     }

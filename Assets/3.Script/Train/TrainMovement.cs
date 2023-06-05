@@ -24,6 +24,7 @@ public class TrainMovement : MonoBehaviour
     public bool isGoal;
     public bool isBurn;
     public bool isReady;
+    public bool isTrainOver;
     protected bool _isPlay;
 
     //게임오버
@@ -33,6 +34,7 @@ public class TrainMovement : MonoBehaviour
     public float _trainRotateSpeed;
 
     public float goalSpeed = 6f;
+    public float overSpeed = 0.1f;
     public float _trainMoveSpeed;
 
     [SerializeField] private GameObject warningIcon;
@@ -62,7 +64,8 @@ public class TrainMovement : MonoBehaviour
         cameraTarget = GameObject.FindGameObjectWithTag("Cinemachine").GetComponentsInChildren<Cinemachine.CinemachineVirtualCamera>();
         overText = GameObject.FindGameObjectWithTag("Cinemachine").GetComponent<Animator>();
         manager = FindObjectOfType<InGameScene>();
-        trainSpeed = 0.1f;
+        trainSpeed = 0.2f;
+        overSpeed = 1f;
 
         if (trainType == TrainType.Engine)
         {
@@ -84,6 +87,11 @@ public class TrainMovement : MonoBehaviour
             {
                 _trainMoveSpeed = goalSpeed;
                 _trainRotateSpeed = goalSpeed;
+            }
+            else if (isTrainOver)
+            {
+                _trainMoveSpeed = overSpeed;
+                _trainRotateSpeed = overSpeed;
             }
             else
             {
@@ -168,12 +176,12 @@ public class TrainMovement : MonoBehaviour
     {
         if (trainType != TrainType.Spare && !isOver)
         {
+            isOver = true;
             StopCoroutine(Warning());
             SoundManager.Instance.PlaySoundEffect("Train_Broken");
             trainMesh.gameObject.SetActive(false);
             destroyParticle.SetActive(false);
             destroyParticle.SetActive(true);
-            isOver = true;
         }
         if(trainType == TrainType.Spare)
         {
@@ -217,9 +225,9 @@ public class TrainMovement : MonoBehaviour
     {
         _isPlay = true;
         warningIcon.SetActive(true);
+    
         yield return new WaitForSeconds(1.5f);
         warningIcon.SetActive(false);
-        yield return new WaitForSeconds(1.5f);
         _isPlay = false;
     }
 }

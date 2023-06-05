@@ -2359,6 +2359,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 595853797}
   m_CullTransparentMesh: 1
+--- !u!4 &608035568 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2030873677363317820, guid: a967c81037c3d4a40a12a2d6d3573cbb, type: 3}
+  m_PrefabInstance: {fileID: 784320514}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &624226691
 GameObject:
   m_ObjectHideFlags: 0
@@ -3196,6 +3201,18 @@ PrefabInstance:
     - target: {fileID: 2777706223984096359, guid: ce663060779a3794d864c2015715d1b5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2777706224875455039, guid: ce663060779a3794d864c2015715d1b5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1345869251}
+    - target: {fileID: 2777706224875455039, guid: ce663060779a3794d864c2015715d1b5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Respawn
+      objectReference: {fileID: 0}
+    - target: {fileID: 2777706224875455039, guid: ce663060779a3794d864c2015715d1b5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PauseUI, Assembly-CSharp
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce663060779a3794d864c2015715d1b5, type: 3}
@@ -5058,11 +5075,15 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 608035568}
     m_Modifications:
     - target: {fileID: 3629763408069323896, guid: 9b40e214a666047448503f01c6b60b59, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 3629763408069323896, guid: 9b40e214a666047448503f01c6b60b59, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3629763408069323908, guid: 9b40e214a666047448503f01c6b60b59, type: 3}
       propertyPath: m_Pivot.x
@@ -5074,7 +5095,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3629763408069323908, guid: 9b40e214a666047448503f01c6b60b59, type: 3}
       propertyPath: m_RootOrder
-      value: 20
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3629763408069323908, guid: 9b40e214a666047448503f01c6b60b59, type: 3}
       propertyPath: m_AnchorMax.x
@@ -5722,6 +5743,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1335440874}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1345869251 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2777706223984096356, guid: ce663060779a3794d864c2015715d1b5, type: 3}
+  m_PrefabInstance: {fileID: 753868078}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e20e71b1be0ea97428c55402e4648271, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1357918035
 GameObject:
   m_ObjectHideFlags: 0

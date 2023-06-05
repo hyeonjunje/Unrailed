@@ -13,7 +13,7 @@ public class FollowPlayerUI : MonoBehaviour
         SoundManager.Instance.StopAllSound();
         SoundManager.Instance.PlaySoundBgm("Lobby_Bgm");
 
-        followTarget = FindObjectOfType<Player>().transform;
+        followTarget = FindObjectOfType<PlayerController>().transform;
 
         if (EmotUI)
         followCam = GameObject.FindGameObjectWithTag("MainCamera").transform;

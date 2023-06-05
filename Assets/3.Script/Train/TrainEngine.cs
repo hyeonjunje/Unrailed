@@ -67,8 +67,16 @@ public class TrainEngine : TrainMovement
             }
         }
 
-        if (!_isPlay && !isReady && !isGoal && !isBurn && rails.Count < 5 && !isOver)
+        if(isOver)
         {
+            for (int i = 0; i < trains.Count; i++)
+            {
+                trains[i].isTrainOver = true;
+            }
+        }
+        if (!_isPlay && !isReady && !isGoal && !isBurn && rails.Count < 3 && !isOver)
+        {
+            SoundManager.Instance.PlaySoundEffect("Train_Warning");
             StartCoroutine(Warning());
         }
 
