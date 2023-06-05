@@ -31,10 +31,6 @@ public class WorldResource : MonoBehaviour
         ResourceTracker.Instance.DeRegisterResource(this);
     }
 
-    private void OnDisable()
-    {
-        ResourceTracker.Instance.DeRegisterResource(this);
-    }
 
 
     //자원 캐기

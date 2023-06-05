@@ -10,6 +10,7 @@ public class HelperBT : BaseAI
     {
         public static readonly BlackBoardKey Order = new BlackBoardKey() { Name = "Order" };
         public static readonly BlackBoardKey Destination = new BlackBoardKey() { Name = "Destination" };
+        public static readonly BlackBoardKey Shopping = new BlackBoardKey() { Name = "Shopping" };
         public static readonly BlackBoardKey ResourceType = new BlackBoardKey() { Name = "ResourceType" };
         public static readonly BlackBoardKey Arrive = new BlackBoardKey() { Name = "Arrive" };
 
@@ -31,6 +32,7 @@ public class HelperBT : BaseAI
 
     public bool _arrive = false;
 
+    public float currentTime = 0;
 
     //이모티콘
     private EmoteManager _emoteManager;
@@ -481,6 +483,7 @@ public class HelperBT : BaseAI
             if (_helper.arrive)
             {
                 PutDown();
+                _emoteImage.sprite = _emoteManager.GetEmote(_emoteManager.HeartEmote);
                 //이모트 추가
                 Vector3 position = ShopManager.Instance.nextGame.position;
                 _agent.MoveTo(position);
@@ -496,16 +499,77 @@ public class HelperBT : BaseAI
 
         GotoStation.Add<BTNode_Action>("가만히 있기", () =>
          {
+             Reset();
              _animator.SetBool(isMove, false);
              _agent.moveSpeed = _defaultSpeed;
-             Reset();
              return BehaviorTree.ENodeStatus.InProgress;
          },()=>
          {
-             return BehaviorTree.ENodeStatus.InProgress;
-
-
+           return _agent.moveSpeed == _defaultSpeed ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
          });
+
+        var dd = GotoStation.Add<BTNode_Action>("쇼핑 하기", () =>
+        {
+            _emoteImage.sprite = _emoteManager.GetEmote(_emoteManager.HmmEmote);
+            Transform shopping = ShopManager.Instance.shopUpgradeTrainPos[0];
+            _localMemory.SetGeneric<Transform>(BlackBoardKey.Shopping, shopping);
+            Vector3 dd = _agent.FindCloestAroundEndPosition(shopping.position);
+            _agent.MoveTo(dd);
+            _animator.SetBool(isMove, true);
+            return BehaviorTree.ENodeStatus.InProgress;
+        }, () =>
+        {
+            return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
+        });
+
+        var ddd = GotoStation.Add<BTNode_Action>("고민하기", () =>
+        {
+            _animator.SetBool(isMove, false);
+            return BehaviorTree.ENodeStatus.InProgress;
+        }, () =>
+        {
+            Transform shopping = _localMemory.GetGeneric<Transform>(BlackBoardKey.Shopping);
+            Vector3 dir = shopping.position - transform.position;
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * _rotateSpeed);
+
+            currentTime += Time.deltaTime;
+            if(currentTime>3)
+            {
+                currentTime = 0;
+                
+                return BehaviorTree.ENodeStatus.Succeeded;
+            }
+            return BehaviorTree.ENodeStatus.InProgress;
+        });
+
+        var dddd = GotoStation.Add<BTNode_Action>("쇼핑 하기", () =>
+        {
+            Transform shopping = ShopManager.Instance.shopNewTrainPos[1];
+            _localMemory.SetGeneric<Transform>(BlackBoardKey.Shopping, shopping);
+            Vector3 dd = _agent.FindCloestAroundEndPosition(shopping.position);
+            _agent.MoveTo(dd);
+            _animator.SetBool(isMove, true);
+            return BehaviorTree.ENodeStatus.InProgress;
+        }, () =>
+        {
+            return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
+        });
+
+        var ddddd = GotoStation.Add<BTNode_Action>("고민하기", () =>
+        {
+            _animator.SetBool(isMove, false);
+            return BehaviorTree.ENodeStatus.InProgress;
+        }, () =>
+        {
+            Transform shopping = _localMemory.GetGeneric<Transform>(BlackBoardKey.Shopping);
+            Vector3 dir = shopping.position - transform.position;
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * _rotateSpeed);
+            return BehaviorTree.ENodeStatus.InProgress;
+        });
+
+
+
+
 
 
 
@@ -523,7 +587,6 @@ public class HelperBT : BaseAI
         CantDoAnything.Add<BTNode_Action>("경고", () =>
         {
             _emoteImage.sprite = _emoteManager.GetEmote(_emoteManager.WarningEmote);
-
             return BehaviorTree.ENodeStatus.InProgress;
         }, () =>
          {
@@ -537,8 +600,6 @@ public class HelperBT : BaseAI
 
 
              //역에 도착했다면
-
-
              //아니라면 자기
              return BehaviorTree.ENodeStatus.InProgress;
          });
@@ -552,16 +613,6 @@ public class HelperBT : BaseAI
         if (_item != null)
         {
             _item.PickUp();
-/*            foreach (var interaction in _item.Interactions)
-            {
-                //내려놓기
-                if (!interaction.CanPerform())
-                {
-                    interaction.Perform();
-                }
-                break;
-            }*/
-
             _item.transform.rotation = Quaternion.identity;
             _item.transform.parent = _stack.BFS(this);
             _item.transform.localPosition = (Vector3.up * 0.5f) + (Vector3.up * 0.15f);
@@ -577,13 +628,14 @@ public class HelperBT : BaseAI
         if(_target!=null)
         {
             _item = null;
-            _target = null;
             _localMemory.SetGeneric<WorldResource.EType>(BlackBoardKey.Order, _order);
+            _target = null;
             return true;
         }
 
         return false;
     }
+
 
 
 }
