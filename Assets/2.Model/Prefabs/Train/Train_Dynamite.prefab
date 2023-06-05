@@ -3135,7 +3135,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1746674779404156736
 Transform:
   m_ObjectHideFlags: 0
@@ -20253,10 +20253,12 @@ MonoBehaviour:
   isGoal: 0
   isBurn: 0
   isReady: 0
+  isTrainOver: 0
   isOver: 0
   trainSpeed: 0.5
   _trainRotateSpeed: 0
   goalSpeed: 6
+  overSpeed: 0.1
   _trainMoveSpeed: 0
   warningIcon: {fileID: 0}
   overText: {fileID: 0}
