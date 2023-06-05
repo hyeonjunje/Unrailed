@@ -72,7 +72,7 @@ public class ShopManager : MonoBehaviour
             _isShop = true;
         }
 
-        Debug.Log("상점으로 위치 이동");
+        //Debug.Log("상점으로 위치 이동");
         anim.transform.position = currentStation.position;
 
         anim.SetBool("isReady", true);
@@ -169,7 +169,8 @@ public class ShopManager : MonoBehaviour
             // 블럭에 부착된 아이템, 지형지물
             else
             {
-                other.gameObject.SetActive(false);
+                other.transform.GetChild(0).gameObject.SetActive(false);
+                // other.gameObject.SetActive(false);
             }
         }
 
@@ -196,7 +197,8 @@ public class ShopManager : MonoBehaviour
             }
             else
             {
-                other.gameObject.SetActive(true);
+                other.transform.GetChild(0).gameObject.SetActive(true);
+                // other.gameObject.SetActive(true);
             }
         }
 

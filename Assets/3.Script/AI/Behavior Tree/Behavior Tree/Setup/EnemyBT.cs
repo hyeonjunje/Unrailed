@@ -152,11 +152,10 @@ public class EnemyBT : BaseAI
         DiscardRoot.Add<BTNode_Action>("¹ö¸®±â",
             () =>
             {
+                SoundManager.Instance.PlaySoundEffect("Enemy_Laugh");
                 _stack.EnemyThrowResource();
                 _target = null;
                 _animator.SetBool(isMove, true);
-
-
                 return BehaviorTree.ENodeStatus.InProgress;
             },
             () =>

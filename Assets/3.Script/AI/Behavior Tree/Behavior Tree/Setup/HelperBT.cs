@@ -11,6 +11,7 @@ public class HelperBT : BaseAI
         public static readonly BlackBoardKey Order = new BlackBoardKey() { Name = "Order" };
         public static readonly BlackBoardKey Destination = new BlackBoardKey() { Name = "Destination" };
         public static readonly BlackBoardKey ResourceType = new BlackBoardKey() { Name = "ResourceType" };
+        public static readonly BlackBoardKey Arrive = new BlackBoardKey() { Name = "Arrive" };
 
         public string Name;
 
@@ -25,9 +26,11 @@ public class HelperBT : BaseAI
     private Helper _helper;
     //도구
     private AI_Item _item;
-
     //명령
     private WorldResource.EType _order;
+
+    public bool _arrive = false;
+
 
     //이모티콘
     private EmoteManager _emoteManager;
@@ -52,13 +55,13 @@ public class HelperBT : BaseAI
     {
         _localMemory = BlackboardManager.Instance.GetIndividualBlackboard<BlackBoardKey>(this);
         _localMemory.SetGeneric<WorldResource.EType>(BlackBoardKey.Order, WorldResource.EType.Wood);
+        _localMemory.SetGeneric<bool>(BlackBoardKey.Arrive, _arrive);
 
         var BTRoot = _tree.RootNode.Add<BTNode_Selector>("BT 시작");
         BTRoot.AddService<BTServiceBase>("명령을 기다리는 Service", (float deltaTime) =>
         {
-            // 전 명령 
+            // 전
             var order = _localMemory.GetGeneric<WorldResource.EType>(BlackBoardKey.Order);
-            // 현재 명령
             _order = _helper.TargetResource;
 
         });
@@ -67,12 +70,12 @@ public class HelperBT : BaseAI
         var CheckOrder = OrderRoot.AddDecorator<BTDecoratorBase>("명령이 바뀌었는지 확인", () =>
          {
              var order = _localMemory.GetGeneric<WorldResource.EType>(BlackBoardKey.Order);
-             return order == _order;
+             var arrive = _localMemory.GetGeneric<bool>(BlackBoardKey.Arrive);
+             //명령이 바뀌었거나 도착했다면
+             return order == _order && arrive == _helper.arrive;
          });
 
         var MainSequence = OrderRoot.Add<BTNode_Sequence>("명령이 있는 경우");
-
-
         #region 나무 캐기, 돌 캐기, 물 떠오기 명령
 
 
@@ -216,7 +219,6 @@ public class HelperBT : BaseAI
             if (_target != null)
             {
                 Vector3 pos = _agent.FindCloestAroundEndPosition(_target.transform.position);
-                Debug.Log(pos);
                 return _agent.MoveTo(pos) ? BehaviorTree.ENodeStatus.Failed : BehaviorTree.ENodeStatus.InProgress;
             }
             else return BehaviorTree.ENodeStatus.InProgress;
@@ -230,7 +232,8 @@ public class HelperBT : BaseAI
          },
          () =>
           {
-              return BehaviorTree.ENodeStatus.InProgress;
+
+             return BehaviorTree.ENodeStatus.InProgress;
           });
 
 
@@ -267,6 +270,8 @@ public class HelperBT : BaseAI
 
              if (!_target.isDig())
              {
+                 if (_target.Type == WorldResource.EType.Wood) SoundManager.Instance.PlaySoundEffect("Wood_Broken");
+                 if (_target.Type == WorldResource.EType.Stone) SoundManager.Instance.PlaySoundEffect("Steel_Broken");
                  Destroy(_target.gameObject);
                  _animator.SetBool(isDig, false);
                  return BehaviorTree.ENodeStatus.Succeeded;
@@ -467,6 +472,36 @@ public class HelperBT : BaseAI
         #endregion
         #endregion
 
+        var GotoStation = BTRoot.Add<BTNode_Sequence>("도착한경우");
+        GotoStation.Add<BTNode_Action>("역으로 이동하기", () =>
+        {
+            if (_helper.arrive)
+            {
+                PutDown();
+                _animator.SetBool(isMove, true);
+                Vector3 position = ShopManager.Instance.nextGame.position;
+                _agent.MoveTo(position);
+                return BehaviorTree.ENodeStatus.InProgress;
+            }
+            return BehaviorTree.ENodeStatus.Failed;
+        },()=>
+        {
+           return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
+        });
+
+        GotoStation.Add<BTNode_Action>("가만히 있기", () =>
+         {
+             _animator.SetBool(isMove, false);
+             Reset();
+             return BehaviorTree.ENodeStatus.InProgress;
+         },()=>
+         {
+             return BehaviorTree.ENodeStatus.InProgress;
+
+
+         });
+
+
 
         var OrderChange = BTRoot.Add<BTNode_Sequence>("명령이 바뀐 경우");
         OrderChange.Add<BTNode_Action>("도구 내려놓고 초기화", () =>
@@ -479,23 +514,32 @@ public class HelperBT : BaseAI
          });
 
         var CantDoAnything = BTRoot.Add<BTNode_Sequence>("명령을 수행할 수 없는 경우");
-        CantDoAnything.Add<BTNode_Action>("자기", () =>
+        CantDoAnything.Add<BTNode_Action>("경고", () =>
         {
             _emoteImage.sprite = _emoteManager.GetEmote(_emoteManager.WarningEmote);
+
             return BehaviorTree.ENodeStatus.InProgress;
         }, () =>
          {
+             //명령이 바뀌었다면 명령 수행
              var order = _localMemory.GetGeneric<WorldResource.EType>(BlackBoardKey.Order);
              if(order!=_order)
              {
                 _localMemory.SetGeneric<WorldResource.EType>(BlackBoardKey.Order, _order);
                  return BehaviorTree.ENodeStatus.Succeeded;
              }
+
+
+             //역에 도착했다면
+
+
+             //아니라면 자기
              return BehaviorTree.ENodeStatus.InProgress;
          });
 
 
     }
+
 
     private void PutDown()
     {

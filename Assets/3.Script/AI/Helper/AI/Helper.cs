@@ -8,6 +8,8 @@ public class Helper : MonoBehaviour
     [HideInInspector]
     public PathFindingAgent Agent;
 
+    public bool arrive = false;
+
     public Transform UItransform;
     [HideInInspector]
     public Dictionary<KeyCode, System.Action> Order;
@@ -15,6 +17,13 @@ public class Helper : MonoBehaviour
     public WorldResource.EType TargetResource;
     [HideInInspector]
     public WorldResource.EType DefaultResource = WorldResource.EType.Wood;
+
+    public void arr()
+    {
+        arrive = !arrive;
+    }
+
+
 
     private void Awake()
     {
