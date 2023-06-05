@@ -13549,6 +13549,7 @@ GameObject:
   - component: {fileID: 3940792471354270273}
   - component: {fileID: 8482775331012287860}
   - component: {fileID: 689593805594004183}
+  - component: {fileID: 6277010031032534361}
   m_Layer: 0
   m_Name: Train_Water_Tank (1)
   m_TagString: Train
@@ -13632,6 +13633,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1.57}
   m_Center: {x: 0, y: 0.5, z: -0.22}
+--- !u!114 &6277010031032534361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1903643235476169147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  impassableType: 2
+  impassableDir: 2
+  length: 2
 --- !u!1 &1938445473616661766
 GameObject:
   m_ObjectHideFlags: 0
@@ -42608,6 +42624,7 @@ GameObject:
   - component: {fileID: 1380273303560225024}
   - component: {fileID: 1380273303560225030}
   - component: {fileID: 7930280392481337767}
+  - component: {fileID: 2646680449708261524}
   m_Layer: 25
   m_Name: Train_Creaft_Desk (1)
   m_TagString: Train
@@ -42705,6 +42722,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1.5}
   m_Center: {x: 0, y: 0.5, z: -0.21}
+--- !u!114 &2646680449708261524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4472484093875932105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  impassableType: 2
+  impassableDir: 2
+  length: 2
 --- !u!1 &4489305734398599427
 GameObject:
   m_ObjectHideFlags: 0
@@ -42987,6 +43019,7 @@ GameObject:
   - component: {fileID: 7678026454119949749}
   - component: {fileID: 6641051746461728961}
   - component: {fileID: 6219378032837602346}
+  - component: {fileID: 8541101423080750392}
   m_Layer: 24
   m_Name: Train_Chest_Box (1)
   m_TagString: Train
@@ -43067,6 +43100,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1.26}
   m_Center: {x: 0, y: 0.5, z: -0.29}
+--- !u!114 &8541101423080750392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4654451409573904519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  impassableType: 2
+  impassableDir: 2
+  length: 2
 --- !u!1 &4807325078442342660
 GameObject:
   m_ObjectHideFlags: 0
@@ -72059,6 +72107,7 @@ GameObject:
   - component: {fileID: 458169307584914356}
   - component: {fileID: 7236481637975153609}
   - component: {fileID: 3041581485862356137}
+  - component: {fileID: 5486971268957395964}
   m_Layer: 0
   m_Name: Train_Head (1)
   m_TagString: Train
@@ -72160,6 +72209,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1.91}
   m_Center: {x: 0, y: 0.5, z: -0.18}
+--- !u!114 &5486971268957395964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7364069412514627232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  impassableType: 2
+  impassableDir: 2
+  length: 2
 --- !u!1 &7375705258868589390
 GameObject:
   m_ObjectHideFlags: 0
@@ -72902,6 +72966,7 @@ GameObject:
   - component: {fileID: 1223867121900910702}
   - component: {fileID: 7743143796530728433}
   - component: {fileID: 5764149003908905859}
+  - component: {fileID: 4040109976128082779}
   m_Layer: 0
   m_Name: Train_Spare (1)
   m_TagString: Train
@@ -72975,6 +73040,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &4040109976128082779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7743143796530728434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  impassableType: 3
+  impassableDir: 0
+  length: 1
 --- !u!1 &7758817686782172489
 GameObject:
   m_ObjectHideFlags: 0
