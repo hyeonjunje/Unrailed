@@ -30,7 +30,7 @@ public class TrainSpare : TrainMovement
         trainIndex = _trainIdx;
         for (int i = 0; i < rails.Count; i++)
         {
-            train.rails.Enqueue(listToQue[i]);
+            train.rails.AddLast(listToQue[i]);
         }
         spawnTrainList.Add(train);
         engine.trains.Add(train);

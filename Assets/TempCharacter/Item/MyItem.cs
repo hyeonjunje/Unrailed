@@ -97,6 +97,14 @@ public abstract class MyItem : MonoBehaviour
         return rail != FindObjectOfType<GoalManager>().lastRail && rail.isInstance != true;
     }
 
+    // 검사할 레일이 설치되어 있으면 true, 아니면 false 반환
+    public virtual bool IsRailInstance(RailController rail)
+    {
+        if (rail == null)
+            return false;
+
+        return rail.isInstance == true;
+    }
 
     public virtual void ActiveWater(bool falg)
     {
