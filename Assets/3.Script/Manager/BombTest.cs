@@ -8,13 +8,13 @@ public class BombTest : MonoBehaviour
     [SerializeField] private float radius = 2f;
     [SerializeField] private ParticleSystem ExplosionEffect;
 
-    private void Update()
+/*    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Setup();
         }
-    }
+    }*/
 
     public void Setup()
     {

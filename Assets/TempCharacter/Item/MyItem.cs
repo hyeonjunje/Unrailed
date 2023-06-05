@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EItemType { wood, steel, rail, pick, axe, bucket, train, animal };
+public enum EItemType { wood, steel, rail, pick, axe, bucket, train, animal, dynamite };
 public enum EEquipPart { rightHand, twoHand }
 
 public abstract class MyItem : MonoBehaviour

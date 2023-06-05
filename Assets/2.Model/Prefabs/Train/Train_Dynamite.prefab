@@ -2826,13 +2826,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1639675128042110046}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0, y: 2.39, z: -0.92}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 2.39, z: 0.27}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children: []
   m_Father: {fileID: 128385797872796089}
   m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1639675128123235111
 GameObject:
   m_ObjectHideFlags: 0
@@ -20206,7 +20206,8 @@ GameObject:
   m_Component:
   - component: {fileID: 531635374216482084}
   - component: {fileID: 1639675127031358324}
-  m_Layer: 0
+  - component: {fileID: 1560815515138363766}
+  m_Layer: 28
   m_Name: Train_Dynamite
   m_TagString: Train
   m_Icon: {fileID: 0}
@@ -20263,11 +20264,24 @@ MonoBehaviour:
   warningIcon: {fileID: 0}
   overText: {fileID: 0}
   spawnPos: {fileID: 1639675128042110041}
-  prefabs: {fileID: 1050950319764237014, guid: 342028c76e1a5d642957ba0cde66c41b, type: 3}
-  isMake: 1
+  _dynamiteItemPrefab: {fileID: -7889649820041956306, guid: 342028c76e1a5d642957ba0cde66c41b, type: 3}
   spawnSelect: 35
   spawnTime: 0
   text: {fileID: 1639675126212937521}
+  isMake: 1
+--- !u!65 &1560815515138363766
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9000900590441707704}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1.3718566}
+  m_Center: {x: 5.510646e-16, y: 0.56999993, z: -0.21122222}
 --- !u!1 &9128618090630611155
 GameObject:
   m_ObjectHideFlags: 0

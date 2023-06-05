@@ -325,6 +325,44 @@ public class PlayerController : MonoBehaviour
                 }
                 return true;
             }
+            else if(_currentFrontObject.gameObject.layer == LayerMask.NameToLayer("DynamiteTrain"))
+            {
+                TrainDynamite trainDynamite = _currentFrontObject.GetComponent<TrainDynamite>();
+
+                MyItem item = trainDynamite.GetItem();
+
+                if (item == null)
+                    return false;
+
+                Transform aroundTransform = BFS();
+
+                while (_handItem.Count != 0)
+                {
+                    if (_currentblock.childCount == 0)
+                    {
+                        _detectedItem.Push(_handItem.Pop());
+                        _detectedItem.Peek().transform.SetParent(_currentblock);
+                        _detectedItem.Peek().transform.localPosition = Vector3.up * 0.5f + Vector3.up * (_detectedItem.Count - 1) * 0.15f;
+                        _detectedItem.Peek().transform.localRotation = Quaternion.identity;
+
+                    }
+                    else
+                    {
+                        _detectedItem.Push(_handItem.Pop());
+                        _detectedItem.Peek().transform.SetParent(aroundTransform);
+                        _detectedItem.Peek().transform.localPosition = Vector3.up * 0.5f + Vector3.up * (_detectedItem.Count - 1) * 0.15f;
+                        _detectedItem.Peek().transform.localRotation = Quaternion.identity;
+                    }
+                }
+
+                _handItem.Push(item);
+                _handItem.Peek().transform.SetParent(_twoHandTransform);
+                _handItem.Peek().transform.localPosition = Vector3.zero;
+                _handItem.Peek().transform.localRotation = Quaternion.identity;
+                _handItem.Peek().transform.localScale = Vector3.one;
+
+                return true;
+            }
         }
         return false;
     }

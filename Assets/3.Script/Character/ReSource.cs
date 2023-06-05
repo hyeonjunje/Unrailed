@@ -46,8 +46,7 @@ public class ReSource : MonoBehaviour
 
     public void Explosion()
     {
-        while (CurrentHp != 0)
-            Dig();
+        CurrentHp = 0;
     }
 
     private void DestroyResource()

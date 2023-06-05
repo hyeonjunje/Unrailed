@@ -52,7 +52,7 @@ TagManager:
   - WorkBench
   - RenderObstacle
   - RenderAbove
-  - 
+  - DynamiteTrain
   - Empty
   - Block
   - BaseBlock

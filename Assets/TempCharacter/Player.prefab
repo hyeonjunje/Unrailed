@@ -5284,7 +5284,7 @@ MonoBehaviour:
     m_Bits: 262144
   detectableLayer:
     serializedVersion: 2
-    m_Bits: 2202402864
+    m_Bits: 2470838320
 --- !u!1 &1037296278114724839
 GameObject:
   m_ObjectHideFlags: 0
