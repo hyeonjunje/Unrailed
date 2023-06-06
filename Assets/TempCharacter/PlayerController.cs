@@ -137,6 +137,7 @@ public class PlayerController : MonoBehaviour
         DetectWater();  // 물 뜨기
         DigUp();        // 캐기
         Attack();       // 공격
+        OffFire();      // 불끄기
     }
 
     // spacebar 누를 때
@@ -326,7 +327,7 @@ public class PlayerController : MonoBehaviour
                 }
                 return true;
             }
-            else if(_currentFrontObject.gameObject.layer == LayerMask.NameToLayer("DynamiteTrain"))
+            else if (_currentFrontObject.gameObject.layer == LayerMask.NameToLayer("DynamiteTrain"))
             {
                 TrainDynamite trainDynamite = _currentFrontObject.GetComponent<TrainDynamite>();
 
@@ -379,7 +380,7 @@ public class PlayerController : MonoBehaviour
 
                 else if (_handItem.Peek().ItemType == EItemType.axe || _handItem.Peek().ItemType == EItemType.pick)
                     SoundManager.Instance.PlaySoundEffect("Player_ToolsUp");
-        
+
 
                 else
                     SoundManager.Instance.PlaySoundEffect("Item_Up");
@@ -703,6 +704,26 @@ public class PlayerController : MonoBehaviour
 
         transform.position += Vector3.up * 10f;
         _balloonObject.SetActive(true);
+    }
+
+    private void OffFire()
+    {
+        if(_currentFrontObject != null && CurrentHandItem != null)
+        {
+            if (CurrentHandItem.ItemType == EItemType.bucket && _currentFrontObject.gameObject.layer == LayerMask.NameToLayer("WaterBox"))
+            {
+                if (_waterGauge.IsFillWater())
+                {
+                    TrainWater water = _currentFrontObject.GetComponent<TrainWater>();
+
+                    // 불꺼주기 넣어야 해
+                    water.FireOff();
+                    CurrentHandItem.ActiveWater(false);
+                    _waterGauge.ResetWater();
+
+                }
+            }
+        }
     }
 
     private void OnCollisionEnter(Collision collision)

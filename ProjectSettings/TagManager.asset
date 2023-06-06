@@ -44,7 +44,7 @@ TagManager:
   - attackable
   - diggable
   - 
-  - 
+  - WaterBox
   - Resource
   - ShopItem
   - Rail

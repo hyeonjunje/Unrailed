@@ -39,7 +39,7 @@ public class HelperBT : BaseAI
     [SerializeField] private Image _emoteImage;
 
 
-    private TrainEngine _engine;
+    private TrainMovement _engine;
     private float _defaultSpeed;
 
 
@@ -59,7 +59,7 @@ public class HelperBT : BaseAI
 
     private void Start()
     {
-        _engine = FindObjectOfType<TrainEngine>();
+        _engine = FindObjectOfType<TrainMovement>();
         _localMemory = BlackboardManager.Instance.GetIndividualBlackboard<BlackBoardKey>(this);
         _localMemory.SetGeneric<WorldResource.EType>(BlackBoardKey.Order, WorldResource.EType.Wood);
         _localMemory.SetGeneric<bool>(BlackBoardKey.Arrive, _arrive);

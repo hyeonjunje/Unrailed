@@ -13550,7 +13550,7 @@ GameObject:
   - component: {fileID: 8482775331012287860}
   - component: {fileID: 689593805594004183}
   - component: {fileID: 6277010031032534361}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Train_Water_Tank (1)
   m_TagString: Train
   m_Icon: {fileID: 0}
