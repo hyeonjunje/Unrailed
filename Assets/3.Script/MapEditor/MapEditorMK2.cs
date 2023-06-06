@@ -6,7 +6,7 @@ using UnityEngine;
 public enum EBlock { empty, grass, water, tree1, tree2, iron,
     blackRock, station, fence,
     rail, treeItem, ironItem, axe,
-    pick, bucket, bolt, size}
+    pick, bucket, bolt, duck, flamingo, size}
 
 public class MapEditorMK2 : MonoBehaviour
 {
@@ -35,12 +35,15 @@ public class MapEditorMK2 : MonoBehaviour
     [SerializeField] private Transform _target;
 
     [HideInInspector] public int materialIndex;
-
+    [HideInInspector] public int creatureIndex;
+    [HideInInspector] public bool isCreatureMode = false;
     // true면 상호작용할 수 있음
     [HideInInspector] public bool isInteract = true;
 
     // 계속 증가하니까 리스트로?
     private List<List<BlockMK2>> groundList = new List<List<BlockMK2>>();
+
+    private Vector2Int[] creaturePos = new Vector2Int[4];
 
     private int _minX;
     private int _minY;
@@ -165,9 +168,18 @@ public class MapEditorMK2 : MonoBehaviour
 
                 if (Input.GetMouseButton(0))
                 {
-                    // 다를 때만 다른 색으로 칠해준다.
-                    if (groundList[z + _minY][x + _minX].Index != materialIndex)
-                        InitBlock(groundList[z + _minY][x + _minX], materialIndex);
+                    if (isCreatureMode)
+                    {
+                        Vector2Int pos = new Vector2Int(x, z);
+                        if (creaturePos[creatureIndex] != pos)
+                            creaturePos[creatureIndex] = pos;
+                    }
+                    else
+                    {
+                        // 다를 때만 다른 색으로 칠해준다.
+                        if (groundList[z + _minY][x + _minX].Index != materialIndex)
+                            InitBlock(groundList[z + _minY][x + _minX], materialIndex);
+                    }
                 }
             }
         }
@@ -259,8 +271,10 @@ public class MapEditorMK2 : MonoBehaviour
 
         Material blockMaterial = null;
 
-        if (index > (int)EBlock.blackRock)
+        if (index > (int)EBlock.blackRock && index < (int)EBlock.duck)
             blockMaterial = _blocksMaterial[(int)EBlock.grass];
+        else if (index >= (int)EBlock.duck)
+            blockMaterial = _blocksMaterial[(int)EBlock.water];
         else
             blockMaterial = _blocksMaterial[index];
 
