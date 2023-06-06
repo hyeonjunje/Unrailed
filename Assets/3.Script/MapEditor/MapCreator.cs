@@ -131,8 +131,10 @@ public class MapCreator : MonoBehaviour
 
         Material blockMaterial = null;
 
-        if (index > (int)EBlock.blackRock)
+        if (index > (int)EBlock.blackRock && index < (int)EBlock.duck)
             blockMaterial = _blocksMaterial[(int)EBlock.grass];
+        else if (index >= (int)EBlock.duck)
+            blockMaterial = _blocksMaterial[(int)EBlock.water];
         else
             blockMaterial = _blocksMaterial[index];
 

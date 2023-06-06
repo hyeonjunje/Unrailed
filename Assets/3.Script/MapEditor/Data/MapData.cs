@@ -9,6 +9,11 @@ public class MapData
     public int mapId;
     public MyArr<int>[] mapData;
 
+    public Vector2Int playerPos;
+    public Vector2Int helperPos;
+    public Vector2Int cowPos;
+    public Vector2Int enemyPos;
+
     public MapData(string mapDataName, int mapId, MyArr<int>[] mapData)
     {
         this.mapDataName = mapDataName;

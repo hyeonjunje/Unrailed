@@ -81,13 +81,17 @@ public class BlockMK2 : MonoBehaviour
         {
             _invisibleBlock.isEmpty = true;
             _renderer.enabled = false;
-            // transform.tag = "Empty";
         }
         else if(index == (int)EBlock.water)
         {
             transform.localScale -= Vector3.up * 0.2f;
             transform.position -= Vector3.up * 0.1f;
-            // transform.tag = "Water";
+        }
+        else if(index == (int)EBlock.duck || index == (int)EBlock.flamingo)
+        {
+            transform.localScale -= Vector3.up * 0.2f;
+            transform.position -= Vector3.up * 0.1f;
+            go.transform.GetChild(0).localRotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
         }
         else if(index == (int)EBlock.tree1 || index == (int)EBlock.tree2)
         {
