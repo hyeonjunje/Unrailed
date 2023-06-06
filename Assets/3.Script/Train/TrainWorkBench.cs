@@ -27,12 +27,13 @@ public class TrainWorkBench : TrainMovement
         anim = GetComponent<Animator>();
         GetMesh();
         fireEffect.gameObject.SetActive(false);
+        TrainUpgrade();
+
     }
     // Update is called once per frame
     void Update()
     {
         TrainMovePos();
-        TrainUpgrade();
         anim.SetBool("isBurn", isBurn);
 
         MakingRail();

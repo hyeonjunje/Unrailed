@@ -48,7 +48,6 @@ public class HelperBT : BaseAI
     private void Awake()
     {
         _emoteManager = FindObjectOfType<EmoteManager>();
-        _engine = FindObjectOfType<TrainEngine>();
 
         _stack = GetComponent<AI_Stack>();
         _helper = GetComponent<Helper>();
@@ -60,6 +59,7 @@ public class HelperBT : BaseAI
 
     private void Start()
     {
+        _engine = FindObjectOfType<TrainEngine>();
         _localMemory = BlackboardManager.Instance.GetIndividualBlackboard<BlackBoardKey>(this);
         _localMemory.SetGeneric<WorldResource.EType>(BlackBoardKey.Order, WorldResource.EType.Wood);
         _localMemory.SetGeneric<bool>(BlackBoardKey.Arrive, _arrive);

@@ -33,6 +33,7 @@ public class TrainBox : TrainMovement
         trainUpgradeLevel = 1;
         workBench = FindObjectOfType<TrainWorkBench>();
         fireEffect.gameObject.SetActive(false);
+        TrainUpgrade();
 
         StartCoroutine(Warning()); //첫 목재 석재 넣어라
     }
@@ -41,7 +42,6 @@ public class TrainBox : TrainMovement
     void Update()
     {
         TrainMovePos();
-        TrainUpgrade();
  
     }
     public override void TrainUpgrade()

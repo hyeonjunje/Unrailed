@@ -16,6 +16,7 @@ public abstract class MyItem : MonoBehaviour
 
     [HideInInspector] public Transform equipment;
 
+    public EEquipPart EquipPart => _equipPart;
     protected PlayerController player;
 
     protected virtual void Awake()

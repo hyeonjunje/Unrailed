@@ -1206,7 +1206,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &5482923041946156131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1236,8 +1236,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 221713a0530b5184f8201a92e817bd96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  followTarget: {fileID: 0}
-  followCam: {fileID: 0}
   EmotUI: 0
 --- !u!1 &5482923042065832932
 GameObject:

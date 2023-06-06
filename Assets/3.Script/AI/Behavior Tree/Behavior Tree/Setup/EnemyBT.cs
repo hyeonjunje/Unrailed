@@ -85,6 +85,7 @@ public class EnemyBT : BaseAI
             if(_target!=null)
             {
                 _animator.SetBool(isMove, false);
+                _animator.SetBool("isRoot", true);
                 _stack.EnemyDetectGroundBlock(_target);
                 //처음 드는 거 
                 if (_stack._handItem.Count == 0)
@@ -125,8 +126,10 @@ public class EnemyBT : BaseAI
                     return BehaviorTree.ENodeStatus.Succeeded;
                 }
                 else
-                    //세 개 들었으면 옮기기
+                //세 개 들었으면 옮기기
+                {
                     return _stack._handItem.Count == 3 ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.Failed;
+                }
 
             });
 
@@ -136,6 +139,7 @@ public class EnemyBT : BaseAI
         () =>
         {
             Vector3 position = _agent.MoveToClosestEndPosition();
+            _animator.SetBool(isMove, true);
             return BehaviorTree.ENodeStatus.InProgress;
 
         },
@@ -153,6 +157,7 @@ public class EnemyBT : BaseAI
             () =>
             {
                 SoundManager.Instance.PlaySoundEffect("Enemy_Laugh");
+                _animator.SetBool("isRoot", false);
                 _stack.EnemyThrowResource();
                 _target = null;
                 _animator.SetBool(isMove, true);
@@ -174,6 +179,7 @@ public class EnemyBT : BaseAI
                 _stack.EnemyPutDown();
                 _localMemory.SetGeneric(BlackBoardKey.HP, _health.CurrentHp);
                  _animator.SetBool(isMove, true);
+                 _animator.SetBool("isRoot", false);
                  _target = null;
              }
              return BehaviorTree.ENodeStatus.InProgress;
@@ -191,6 +197,7 @@ public class EnemyBT : BaseAI
         WanderRoot.Add<BTNode_Action>("무작위 이동중",
         () =>
         {
+            _animator.SetBool("isRoot", false);
             _animator.SetBool(isMove, true);
             _agent.MoveToRandomPosition();
             return BehaviorTree.ENodeStatus.InProgress;

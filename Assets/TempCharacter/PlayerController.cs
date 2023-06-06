@@ -27,10 +27,12 @@ public class PlayerController : MonoBehaviour
     private bool _isRespawn = false;
     private bool _isCharge = false;
 
+
     // 컴포넌트
     private Rigidbody _rigidbody;
     private PlayerInput _playerInput;
     private PlayerStat _playerStat;
+    private PlayerAnimator _playerAnim;
 
     // 물건
     // 종류가 다르면 안됨
@@ -69,7 +71,7 @@ public class PlayerController : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody>();
         _playerInput = GetComponent<PlayerInput>();
-
+        _playerAnim = GetComponent<PlayerAnimator>();
         _playerStat = GetComponent<PlayerStat>();
         _runParticle.SetActive(false);
         InitPlayer();
@@ -197,7 +199,6 @@ public class PlayerController : MonoBehaviour
         if (_currentFrontObject != null && _currentFrontObject.gameObject.layer == LayerMask.NameToLayer("ShopItem"))
             shop = _currentFrontObject.GetComponent<ShopItem>();
         bool isDetected = shop != null;  // shop이 null이 아니라면 상점의 차량이 감지가 됨
-
         if (ShopManager.Instance.trainCoin == 0)
         {
             Debug.Log("코일 100개를 충전해줄게");
@@ -213,6 +214,7 @@ public class PlayerController : MonoBehaviour
                 // 일단 집어
                 _currentHoldTrain = shop;
                 _currentHoldTrain.SetPosition(_twoHandFarTransform);
+                _playerAnim.anim.SetBool("isTwoHandsPickUp", true);
             }
             return true;
         }
@@ -222,7 +224,7 @@ public class PlayerController : MonoBehaviour
         {
             _currentHoldTrain.SetInitPosition();
             _currentHoldTrain = null;
-
+            _playerAnim.anim.SetBool("isTwoHandsPickUp", false);
             return true;
         }
 
@@ -232,18 +234,17 @@ public class PlayerController : MonoBehaviour
             // 일단 버리고
             _currentHoldTrain.SetInitPosition();
             _currentHoldTrain = null;
-
+            _playerAnim.anim.SetBool("isTwoHandsPickUp", false);
             // 금액을 지불할 수 있으면
             if (shop.TryBuyItem())
             {
                 // 일단 집어
                 _currentHoldTrain = shop;
                 _currentHoldTrain.SetPosition(_twoHandFarTransform);
+                _playerAnim.anim.SetBool("isTwoHandsPickUp", true);
             }
-
             return true;
         }
-
         return false;
     }
 
@@ -373,15 +374,16 @@ public class PlayerController : MonoBehaviour
         {
             //줍기
             case 0:
-
                 if (_handItem.Peek().ItemType == EItemType.rail)
                     SoundManager.Instance.PlaySoundEffect("Rail_Up");
 
                 else if (_handItem.Peek().ItemType == EItemType.axe || _handItem.Peek().ItemType == EItemType.pick)
                     SoundManager.Instance.PlaySoundEffect("Player_ToolsUp");
+        
 
                 else
                     SoundManager.Instance.PlaySoundEffect("Item_Up");
+
                 break;
 
             //버리기

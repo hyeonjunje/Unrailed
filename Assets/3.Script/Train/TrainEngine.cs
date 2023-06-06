@@ -15,6 +15,7 @@ public class TrainEngine : TrainMovement
     void Awake()
     {
         GetMesh();
+        TrainUpgrade();
 
         smokeMesh[0].SetActive(false);
         smokeMesh[1].SetActive(false);
@@ -27,7 +28,6 @@ public class TrainEngine : TrainMovement
     void Update()
     {
         TrainMovePos();
-        TrainUpgrade();
         if (!isBurn)
         {
             EngineCool();

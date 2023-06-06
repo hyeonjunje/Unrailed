@@ -24,6 +24,7 @@ public class InGameScene : MonoBehaviour
     [SerializeField] private BaseAI _robot;
     [SerializeField] private BaseAI _enemy;
     [SerializeField] private Flock _flock;
+    public TrainEngine engine;
 
     // 석환이 형 isStart가 true일 때만 player가 작동할 수 있게 해줘~~
     public bool isStart { get; private set; } = false;
@@ -75,6 +76,8 @@ public class InGameScene : MonoBehaviour
         if(_isEnding)
         {
             Debug.Log("엔딩입니다~~~~");
+            StartCoroutine(engine.ClearAnim());
+
         }
         else
         {
@@ -128,7 +131,7 @@ public class InGameScene : MonoBehaviour
 
 
         // 맵 재위치 시켜주기
-        UnitaskInvoke(1.5f, () => { RePositionAsync().Forget(); helper.arr(); helper.CheckPlayer(); }).Forget();
+        UnitaskInvoke(1.5f, () => { RePositionAsync().Forget(); helper.arr(); }).Forget();
 
         // 맵은 2개 밖에 없으니까 한번 역을 떠나면 엔딩준비 완료
         _isEnding = true;
