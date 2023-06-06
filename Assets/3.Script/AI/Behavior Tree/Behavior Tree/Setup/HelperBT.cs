@@ -13,6 +13,7 @@ public class HelperBT : BaseAI
         public static readonly BlackBoardKey Shopping = new BlackBoardKey() { Name = "Shopping" };
         public static readonly BlackBoardKey ResourceType = new BlackBoardKey() { Name = "ResourceType" };
         public static readonly BlackBoardKey Arrive = new BlackBoardKey() { Name = "Arrive" };
+        public static readonly BlackBoardKey Home = new BlackBoardKey() { Name = "Home" };
 
         public string Name;
 
@@ -21,7 +22,6 @@ public class HelperBT : BaseAI
     private Blackboard<BlackBoardKey> _localMemory;
 
     //기차 위치로 나중에 바꾸기
-    private Vector3 _home;
     private float _rotateSpeed = 10;
 
     private Helper _helper;
@@ -38,6 +38,8 @@ public class HelperBT : BaseAI
     private EmoteManager _emoteManager;
     [SerializeField] private Image _emoteImage;
 
+
+    private TrainEngine _engine;
     private float _defaultSpeed;
 
 
@@ -45,8 +47,8 @@ public class HelperBT : BaseAI
 
     private void Awake()
     {
-        _home = transform.position;
         _emoteManager = FindObjectOfType<EmoteManager>();
+        _engine = FindObjectOfType<TrainEngine>();
 
         _stack = GetComponent<AI_Stack>();
         _helper = GetComponent<Helper>();
@@ -61,12 +63,14 @@ public class HelperBT : BaseAI
         _localMemory = BlackboardManager.Instance.GetIndividualBlackboard<BlackBoardKey>(this);
         _localMemory.SetGeneric<WorldResource.EType>(BlackBoardKey.Order, WorldResource.EType.Wood);
         _localMemory.SetGeneric<bool>(BlackBoardKey.Arrive, _arrive);
+        _localMemory.SetGeneric<Vector3>(BlackBoardKey.Home, _engine.rails.First.Value.transform.position);
 
         var BTRoot = _tree.RootNode.Add<BTNode_Selector>("BT 시작");
         BTRoot.AddService<BTServiceBase>("명령을 기다리는 Service", (float deltaTime) =>
         {
             // 전
             var order = _localMemory.GetGeneric<WorldResource.EType>(BlackBoardKey.Order);
+            _localMemory.SetGeneric<Vector3>(BlackBoardKey.Home, _engine.rails.First.Value.transform.position);
             _order = _helper.TargetResource;
 
         });
@@ -105,7 +109,7 @@ public class HelperBT : BaseAI
                              {
                                  _item = item;
                                  _item.PickUp();
-                                 _emoteImage.sprite = _emoteManager.GetEmote(_item.Id());
+                                 _emoteImage.sprite = _emoteManager.GetEmote(_item.ID);
                                  _agent.MoveTo(_item.InteractionPoint);
                                  _animator.SetBool(isMove, true);
                              }
@@ -270,8 +274,15 @@ public class HelperBT : BaseAI
          }, () =>
 
          {
-             Vector3 dir = _target.transform.position - transform.position;
-             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * _rotateSpeed);
+             if(_target==null)
+             {
+                 return BehaviorTree.ENodeStatus.Failed;
+             }
+             else
+             {
+                 Vector3 dir = _target.transform.position - transform.position;
+                 transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * _rotateSpeed);
+             }
 
              if (!_target.isDig())
              {
@@ -370,7 +381,8 @@ public class HelperBT : BaseAI
              {
                  case WorldResource.EType.Water:
                      _animator.SetBool(isMove, true);
-                     _agent.MoveTo(_home);
+                     Vector3 home = _localMemory.GetGeneric<Vector3>(BlackBoardKey.Home);
+                     _agent.MoveTo(home);
                      break;
 
                  case WorldResource.EType.Resource:
@@ -430,8 +442,9 @@ public class HelperBT : BaseAI
 
         var CarryingResource = WaterOrResource.Add<BTNode_Action>("자원 운반하기", () =>
         {
+            Vector3 home = _localMemory.GetGeneric<Vector3>(BlackBoardKey.Home);
             //나중에 기차 좌표로 바꾸기
-            _agent.MoveTo(_home);
+            _agent.MoveTo(home);
             return BehaviorTree.ENodeStatus.InProgress;
         },
         () =>
@@ -477,6 +490,9 @@ public class HelperBT : BaseAI
         #endregion
         #endregion
 
+
+        #region 역으로 이동하기
+
         var GotoStation = BTRoot.Add<BTNode_Sequence>("도착한경우");
         GotoStation.Add<BTNode_Action>("역으로 이동하기", () =>
         {
@@ -484,22 +500,42 @@ public class HelperBT : BaseAI
             {
                 PutDown();
                 _emoteImage.sprite = _emoteManager.GetEmote(_emoteManager.HeartEmote);
-                //이모트 추가
                 Vector3 position = ShopManager.Instance.nextGame.position;
                 _agent.MoveTo(position);
                 _agent.moveSpeed = 10;
                 _animator.SetBool(isMove, true);
                 return BehaviorTree.ENodeStatus.InProgress;
             }
+
             return BehaviorTree.ENodeStatus.Failed;
-        },()=>
+        }, () =>
         {
-           return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
+            return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
         });
 
-        GotoStation.Add<BTNode_Action>("가만히 있기", () =>
+        GotoStation.Add<BTNode_Action>("밟고 있다면 가만히 있기", () =>
          {
              Reset();
+             _animator.SetBool(isMove, false);
+             _agent.moveSpeed = _defaultSpeed;
+                 return BehaviorTree.ENodeStatus.InProgress;
+         },() =>
+         {
+
+             return !_helper.GotoPlayer ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
+         });
+
+
+        var NeedToMove = GotoStation.Add<BTNode_Sequence>("플레이어가 밟았는지 확인하기");
+        NeedToMove.AddDecorator<BTDecoratorBase>("플레이어가 밟은걸 확인하는 데코레이터", () =>
+        {
+            return !_helper.GotoPlayer;
+
+        });
+
+        var Shopping = NeedToMove.Add<BTNode_Sequence>("안 밟았다면");
+        Shopping.Add<BTNode_Action>("가만히 있기", () =>
+         {
              _animator.SetBool(isMove, false);
              _agent.moveSpeed = _defaultSpeed;
              return BehaviorTree.ENodeStatus.InProgress;
@@ -508,21 +544,23 @@ public class HelperBT : BaseAI
            return _agent.moveSpeed == _defaultSpeed ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
          });
 
-        var dd = GotoStation.Add<BTNode_Action>("쇼핑 하기", () =>
+        Shopping.Add<BTNode_Action>("쇼핑 하기", () =>
         {
             _emoteImage.sprite = _emoteManager.GetEmote(_emoteManager.HmmEmote);
-            Transform shopping = ShopManager.Instance.shopUpgradeTrainPos[0];
+            Transform shopping = ShopManager.Instance.shopUpgradeTrainPos
+                                 [UnityEngine.Random.Range(0, ShopManager.Instance.shopUpgradeTrainPos.Length)];
             _localMemory.SetGeneric<Transform>(BlackBoardKey.Shopping, shopping);
-            Vector3 dd = _agent.FindCloestAroundEndPosition(shopping.position);
-            _agent.MoveTo(dd);
+
+            Vector3 position = _agent.FindCloestAroundEndPosition(shopping.position);
             _animator.SetBool(isMove, true);
+            _agent.MoveTo(position);
             return BehaviorTree.ENodeStatus.InProgress;
         }, () =>
         {
             return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
         });
 
-        var ddd = GotoStation.Add<BTNode_Action>("고민하기", () =>
+        Shopping.Add<BTNode_Action>("고민하기", () =>
         {
             _animator.SetBool(isMove, false);
             return BehaviorTree.ENodeStatus.InProgress;
@@ -542,12 +580,12 @@ public class HelperBT : BaseAI
             return BehaviorTree.ENodeStatus.InProgress;
         });
 
-        var dddd = GotoStation.Add<BTNode_Action>("쇼핑 하기", () =>
+        Shopping.Add<BTNode_Action>("쇼핑 하기", () =>
         {
-            Transform shopping = ShopManager.Instance.shopNewTrainPos[1];
+            Transform shopping = ShopManager.Instance.shopNewTrainPos[UnityEngine.Random.Range(0, ShopManager.Instance.shopNewTrainPos.Length)];
             _localMemory.SetGeneric<Transform>(BlackBoardKey.Shopping, shopping);
-            Vector3 dd = _agent.FindCloestAroundEndPosition(shopping.position);
-            _agent.MoveTo(dd);
+            Vector3 position = _agent.FindCloestAroundEndPosition(shopping.position);
+            _agent.MoveTo(position);
             _animator.SetBool(isMove, true);
             return BehaviorTree.ENodeStatus.InProgress;
         }, () =>
@@ -555,7 +593,7 @@ public class HelperBT : BaseAI
             return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
         });
 
-        var ddddd = GotoStation.Add<BTNode_Action>("고민하기", () =>
+        Shopping.Add<BTNode_Action>("고민하기", () =>
         {
             _animator.SetBool(isMove, false);
             return BehaviorTree.ENodeStatus.InProgress;
@@ -567,12 +605,10 @@ public class HelperBT : BaseAI
             return BehaviorTree.ENodeStatus.InProgress;
         });
 
+        #endregion
 
 
-
-
-
-
+        #region 명령이 바뀐경우
         var OrderChange = BTRoot.Add<BTNode_Sequence>("명령이 바뀐 경우");
         OrderChange.Add<BTNode_Action>("도구 내려놓고 초기화", () =>
          {
@@ -597,7 +633,10 @@ public class HelperBT : BaseAI
                 _localMemory.SetGeneric<WorldResource.EType>(BlackBoardKey.Order, _order);
                  return BehaviorTree.ENodeStatus.Succeeded;
              }
-
+             if(_helper.GotoPlayer)
+             {
+                 return BehaviorTree.ENodeStatus.Failed;
+             }
 
              //역에 도착했다면
              //아니라면 자기
@@ -616,6 +655,7 @@ public class HelperBT : BaseAI
             _item.transform.rotation = Quaternion.identity;
             _item.transform.parent = _stack.BFS(this);
             _item.transform.localPosition = (Vector3.up * 0.5f) + (Vector3.up * 0.15f);
+            _item = null;
 
             _animator.SetBool(isDig, false);
             _animator.SetBool(isMove, false);
@@ -636,6 +676,6 @@ public class HelperBT : BaseAI
         return false;
     }
 
-
+    #endregion
 
 }

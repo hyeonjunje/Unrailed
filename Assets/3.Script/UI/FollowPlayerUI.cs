@@ -4,27 +4,33 @@ using UnityEngine;
 
 public class FollowPlayerUI : MonoBehaviour
 {
-    public Transform followTarget;
-    public Transform followCam;
+    private Transform followTarget;
+    private Transform followCam;
 
     [SerializeField] bool EmotUI;
     private void Awake()
     {
-        SoundManager.Instance.StopAllSound();
-        SoundManager.Instance.PlaySoundBgm("Lobby_Bgm");
+        if(EmotUI)
+        {
+            SoundManager.Instance.StopAllSound();
+            SoundManager.Instance.PlaySoundBgm("Lobby_Bgm");
+            followCam = GameObject.FindGameObjectWithTag("MainCamera").transform;
 
-        followTarget = FindObjectOfType<PlayerController>().transform;
+        }
 
-        if (EmotUI)
-        followCam = GameObject.FindGameObjectWithTag("MainCamera").transform;
-
- 
     }
-    // Update is called once per frame
     void Update()
     {
+
+        if(followTarget==null)
+        {
+            followTarget = FindObjectOfType<PlayerController>().transform;
+        }
         if(followTarget != null)
-        transform.position = followTarget.position;
+        {
+            Vector3 screenPosition = Camera.main.WorldToScreenPoint(followTarget.position+Vector3.up*0.5f);
+            transform.position = screenPosition;
+        }
 
         if (EmotUI)
         {
