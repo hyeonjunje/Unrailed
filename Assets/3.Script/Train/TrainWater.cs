@@ -63,6 +63,8 @@ public class TrainWater : TrainMovement
     {
         GetMesh();
         trains = FindObjectsOfType<TrainMovement>();
+        TrainUpgrade();
+
     }
 
     private void OnEnable()
@@ -78,7 +80,6 @@ public class TrainWater : TrainMovement
     void Update()
     {
         TrainMovePos();
-        TrainUpgrade();
         if (!isReady)
         {
             fireTime += Time.deltaTime;

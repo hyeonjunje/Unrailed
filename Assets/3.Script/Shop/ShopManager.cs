@@ -37,6 +37,8 @@ public class ShopManager : MonoBehaviour
 
     public Transform currentStation = null;
     public Transform nextGame;
+
+    public bool isPlayerShop;
     private void Awake()
     {
         //싱글톤 패턴
@@ -69,6 +71,8 @@ public class ShopManager : MonoBehaviour
         if (!_isShop)
         {
             RandItemSpawn();
+
+            isPlayerShop = true;
             _isShop = true;
         }
 
@@ -227,8 +231,8 @@ public class ShopManager : MonoBehaviour
 
     private IEnumerator TrainStartMove() // 열차 시작 카운트다운
     {
+        isPlayerShop = false;
         trainEngine.isReady = true;
-
         yield return new WaitForSeconds(10f);
         trainEngine.anim.SetBool("CountDown", true);
 

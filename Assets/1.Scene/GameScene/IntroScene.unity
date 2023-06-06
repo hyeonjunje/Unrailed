@@ -7288,7 +7288,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -1, y: 0, z: 2}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &639631233
 GameObject:
   m_ObjectHideFlags: 0
@@ -7760,7 +7762,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -1, y: 0, z: 2}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &679061184
 GameObject:
   m_ObjectHideFlags: 0
@@ -8232,7 +8236,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -1, y: 0, z: 2}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &692741866
 GameObject:
   m_ObjectHideFlags: 0
@@ -10148,7 +10154,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -1, y: 0, z: 2}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &864104230
 GameObject:
   m_ObjectHideFlags: 0
@@ -10332,7 +10340,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -1, y: 0, z: 2}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &869519913
 GameObject:
   m_ObjectHideFlags: 0
@@ -10713,6 +10723,23 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3522402998835842009, guid: 7184e1b88124c514cac87aa0d65e1119, type: 3}
   m_PrefabInstance: {fileID: 7897189}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &937303961 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1037296278098704639, guid: 828b3260d15f399419509140ce21e11d, type: 3}
+  m_PrefabInstance: {fileID: 1255513482}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &937303969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 937303961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74cd770ea5334984b917bc6465bb9d04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &939982352
 GameObject:
   m_ObjectHideFlags: 0
@@ -11373,7 +11400,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -2, y: 0, z: 2}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &997305262
 GameObject:
   m_ObjectHideFlags: 0
@@ -12667,7 +12696,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -1, y: 0, z: 2}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &1134626658
 GameObject:
   m_ObjectHideFlags: 0
@@ -12726,7 +12757,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -1, y: 0, z: 2}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &1137143576
 GameObject:
   m_ObjectHideFlags: 0
@@ -12911,7 +12944,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -1, y: 0, z: 2}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &1149241578
 GameObject:
   m_ObjectHideFlags: 0
@@ -13007,7 +13042,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -1, y: 0, z: 2}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &1153445742
 GameObject:
   m_ObjectHideFlags: 0
@@ -13147,7 +13184,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -1, y: 0, z: 2}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &1164069392
 GameObject:
   m_ObjectHideFlags: 0
@@ -13787,7 +13826,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -1, y: 0, z: 2}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &1208442635
 GameObject:
   m_ObjectHideFlags: 0
@@ -14128,7 +14169,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -1, y: 0, z: 2}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &1248913940
 GameObject:
   m_ObjectHideFlags: 0
@@ -16966,7 +17009,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -1, y: 0, z: 2}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!4 &1451633433 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3522402998835842009, guid: 7184e1b88124c514cac87aa0d65e1119, type: 3}
@@ -18922,7 +18967,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -1, y: 0, z: 2}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &1636263556
 GameObject:
   m_ObjectHideFlags: 0
@@ -19511,7 +19558,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -2, y: 0, z: 2}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &1696810833
 GameObject:
   m_ObjectHideFlags: 0
@@ -20294,7 +20343,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -1, y: 0, z: 2}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &1757542677
 GameObject:
   m_ObjectHideFlags: 0
@@ -21774,7 +21825,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -1, y: 0, z: 2}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &1920249577
 GameObject:
   m_ObjectHideFlags: 0
@@ -22695,7 +22748,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -1, y: 0, z: 2}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &2033382627
 GameObject:
   m_ObjectHideFlags: 0
@@ -22754,7 +22809,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -1, y: 0, z: 2}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &2033602243
 GameObject:
   m_ObjectHideFlags: 0
@@ -23439,7 +23496,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -1, y: 0, z: 2}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &2138123573
 GameObject:
   m_ObjectHideFlags: 0
@@ -23548,7 +23607,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -3, y: 0, z: 6}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!4 &5347533953844995
 Transform:
   m_ObjectHideFlags: 0
@@ -23723,7 +23784,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -15, y: 0, z: -7}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!4 &33130426420253560
 Transform:
   m_ObjectHideFlags: 0
@@ -24131,7 +24194,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -14, y: 0, z: -8}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!33 &105232305273673496
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -24223,7 +24288,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -3, y: 0, z: 5}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!33 &129668638071277152
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -24561,7 +24628,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -18, y: 0, z: -4}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &208404629740862859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24824,7 +24893,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -17, y: 0, z: 10}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &255124955832407578
 GameObject:
   m_ObjectHideFlags: 0
@@ -24918,7 +24989,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -2, y: 0, z: 5}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &268280338338095208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25139,7 +25212,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -16, y: 0, z: 8}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &308014250529759838
 GameObject:
   m_ObjectHideFlags: 0
@@ -25365,7 +25440,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -19, y: 0, z: -8}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &335769588919826593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25707,7 +25784,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &380932012933503055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25733,7 +25812,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -18, y: 0, z: 10}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!65 &392085381691268114
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -34130,7 +34211,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -14, y: 0, z: -6}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &436866776803358769
 GameObject:
   m_ObjectHideFlags: 0
@@ -34519,7 +34602,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -10, y: 0, z: 5}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!65 &514920930596085548
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -37754,7 +37839,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -4, y: 0, z: 3}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &694704507826797494
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39912,7 +39999,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -5, y: 0, z: 5}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!23 &886846416688874188
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -41006,7 +41095,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -4, y: 0, z: 4}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &1054929822267706964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41019,7 +41110,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &1054929822342855646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41032,7 +41125,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &1054929822347955370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41045,7 +41140,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &1054929822349535457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41058,7 +41155,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &1054929822350143851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41071,7 +41170,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &1054929822364799797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41084,7 +41185,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &1054929822415179371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41097,7 +41200,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &1054929822490795557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41110,7 +41215,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &1054929822514926060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41123,7 +41230,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &1054929822545199730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41136,7 +41245,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &1054929822839347239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41149,7 +41260,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &1054929822927697218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41162,7 +41275,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &1054929823466326134
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41175,7 +41290,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &1054929823634358859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41188,7 +41305,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &1054929823721530793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41201,7 +41320,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &1054929823759363486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41214,7 +41335,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &1054929823929990483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41227,7 +41350,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &1054929824065569114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41240,7 +41365,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &1054929824114159497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41253,7 +41380,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!4 &1057384598290382171
 Transform:
   m_ObjectHideFlags: 0
@@ -41570,7 +41699,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -18, y: 0, z: -5}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!4 &1117634487384153657
 Transform:
   m_ObjectHideFlags: 0
@@ -41713,7 +41844,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -13, y: 0, z: 4}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!23 &1143069910625960099
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -42046,7 +42179,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 1, y: 0, z: 2}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &1190466969919051336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42342,7 +42477,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -19, y: 0, z: 10}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &1199087667837712397
 GameObject:
   m_ObjectHideFlags: 0
@@ -43493,7 +43630,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &1443672198770043767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43506,7 +43645,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &1443672199416384991
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43519,7 +43660,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &1443672199505667004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43532,7 +43675,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &1443672199593173599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43545,7 +43690,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &1445304222652901593
 GameObject:
   m_ObjectHideFlags: 0
@@ -43731,7 +43878,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -9, y: 0, z: 6}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &1470461002073855698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43757,7 +43906,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -19, y: 0, z: -9}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!23 &1476405718797550119
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -43827,7 +43978,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -6, y: 0, z: 4}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!33 &1491983672257736769
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -43848,7 +44001,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -15, y: 0, z: -6}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!23 &1499264204564651951
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -44610,7 +44765,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -6, y: 0, z: 2}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!23 &1630518001072781744
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -45013,7 +45170,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -17, y: 0, z: -5}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!4 &1703374534733163506
 Transform:
   m_ObjectHideFlags: 0
@@ -45292,7 +45451,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -2, y: 0, z: -9}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!23 &1749248272043241421
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -45752,7 +45913,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -19, y: 0, z: 9}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!4 &1846564609096168265
 Transform:
   m_ObjectHideFlags: 0
@@ -45969,7 +46132,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -3, y: 0, z: -8}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!65 &1866878601740460604
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -46008,7 +46173,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -2, y: 0, z: 6}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!4 &1875404451018116353
 Transform:
   m_ObjectHideFlags: 0
@@ -46879,7 +47046,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -19, y: 0, z: -5}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!4 &2003204868829512669
 Transform:
   m_ObjectHideFlags: 0
@@ -47741,7 +47910,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &2131763643380977705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47754,7 +47925,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &2131763643740443608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47767,7 +47940,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &2131763643843195364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47780,7 +47955,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &2131763644049083216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47793,7 +47970,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &2131763644517114268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47806,7 +47985,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &2131763644564814976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47819,7 +48000,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!23 &2133032845591461475
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -48313,7 +48496,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -7, y: 0, z: 4}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!23 &2192128776271479596
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -49035,7 +49220,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -9, y: 0, z: 5}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &2293062494456746197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49287,7 +49474,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -19, y: 0, z: 7}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &2366691124397677003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49542,7 +49731,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 1, y: 0, z: 3}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &2439334916771792256
 GameObject:
   m_ObjectHideFlags: 0
@@ -50171,7 +50362,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -18, y: 0, z: 6}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &2584462176865315935
 GameObject:
   m_ObjectHideFlags: 0
@@ -51316,7 +51509,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -19, y: 0, z: 6}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!65 &2732524449693358933
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -51639,7 +51834,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -3, y: 0, z: 4}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!23 &2781992152616668622
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -52001,7 +52198,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -3, y: 0, z: -7}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &2837332038329844813
 GameObject:
   m_ObjectHideFlags: 0
@@ -52078,7 +52277,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &2844985499618886297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52091,7 +52292,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &2844985499849194207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52104,7 +52307,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &2844985500503299557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52117,7 +52322,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &2844985500740004460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52130,7 +52337,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &2844985500846938955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52143,7 +52352,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &2844985501236489803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52156,7 +52367,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!4 &2846963877540694591
 Transform:
   m_ObjectHideFlags: 0
@@ -52557,7 +52770,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -5, y: 0, z: 4}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &2904991026668513692
 GameObject:
   m_ObjectHideFlags: 0
@@ -53237,7 +53452,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -4, y: 0, z: 2}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!33 &2985097896177047642
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -53771,7 +53988,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -10, y: 0, z: 6}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!23 &3077132527040464068
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -53850,7 +54069,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -5, y: 0, z: 2}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &3095901902247162092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54649,7 +54870,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -4, y: 0, z: 5}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!65 &3241027281953346564
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -54771,7 +54994,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -4, y: 0, z: -8}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!4 &3255882192244946552
 Transform:
   m_ObjectHideFlags: 0
@@ -55586,7 +55811,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -18, y: 0, z: -6}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!65 &3381131721984680942
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -56123,7 +56350,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -10, y: 0, z: 4}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &3468967066709238955
 GameObject:
   m_ObjectHideFlags: 0
@@ -56285,7 +56514,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -11, y: 0, z: 4}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &3496166741105164736
 GameObject:
   m_ObjectHideFlags: 0
@@ -56713,7 +56944,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -12, y: 0, z: 5}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!4 &3585760015498296834
 Transform:
   m_ObjectHideFlags: 0
@@ -57046,7 +57279,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 4}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!65 &3651470761955945711
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -57159,7 +57394,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &3662557845243959571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57172,7 +57409,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &3662557845342023900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57185,7 +57424,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &3662557845850110498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57198,7 +57439,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &3662557845878007532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57211,7 +57454,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &3662557846133450666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57224,7 +57469,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &3662557846381557345
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57237,7 +57484,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &3662557846478123967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57250,7 +57499,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &3662557846628226794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57263,7 +57514,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &3662557846934400974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57276,7 +57529,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &3662557847248320465
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57289,7 +57544,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &3666649638216556641
 GameObject:
   m_ObjectHideFlags: 0
@@ -57542,7 +57799,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -1, y: 0, z: 2}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &3693693171385772520
 GameObject:
   m_ObjectHideFlags: 0
@@ -57828,7 +58087,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -17, y: 0, z: -6}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &3765992104078129989
 GameObject:
   m_ObjectHideFlags: 0
@@ -58292,7 +58553,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -17, y: 0, z: -7}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &3855336734926944155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58328,7 +58591,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -19, y: 0, z: -4}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &3867734228567376343
 GameObject:
   m_ObjectHideFlags: 0
@@ -58731,7 +58996,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -17, y: 0, z: -9}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &3967553192834806930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59371,7 +59638,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -2, y: 0, z: -7}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &4031617977692592564
 GameObject:
   m_ObjectHideFlags: 0
@@ -59466,7 +59735,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -12, y: 0, z: 6}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &4051294191117816439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59866,7 +60137,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -16, y: 0, z: -5}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &4110408410385445521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60079,7 +60352,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -4, y: 0, z: -9}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &4172069376487336997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60107,7 +60382,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -4, y: 0, z: 6}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!33 &4182794688002774880
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -60444,7 +60721,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &4242338100067374137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60457,7 +60736,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &4242338100201890017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60470,7 +60751,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &4246514049902245530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60794,7 +61077,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -15, y: 0, z: -8}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!33 &4305013066924392501
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -60899,7 +61184,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -13, y: 0, z: -8}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!23 &4328993244034624427
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -61008,7 +61295,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -2, y: 0, z: -8}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!4 &4343280948172206917
 Transform:
   m_ObjectHideFlags: 0
@@ -61062,7 +61351,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -6, y: 0, z: 3}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!65 &4349173544711328699
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -61565,7 +61856,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -16, y: 0, z: 10}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &4453717310933347818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61682,7 +61975,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -17, y: 0, z: 9}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &4480128784173949812
 GameObject:
   m_ObjectHideFlags: 0
@@ -61757,7 +62052,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -6, y: 0, z: 5}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &4486624602569140624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61892,7 +62189,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -3, y: 0, z: -9}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!65 &4504658074741020550
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -62403,7 +62702,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -5, y: 0, z: -9}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!4 &4572273037793527517
 Transform:
   m_ObjectHideFlags: 0
@@ -62612,7 +62913,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -13, y: 0, z: -9}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!4 &4603875924368972532
 Transform:
   m_ObjectHideFlags: 0
@@ -62742,7 +63045,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -19, y: 0, z: -7}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &4622485727635767340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62944,7 +63249,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 3}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!23 &4648988102554606712
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -63201,7 +63508,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -19, y: 0, z: -6}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &4682328076407649577
 GameObject:
   m_ObjectHideFlags: 0
@@ -63827,7 +64136,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -18, y: 0, z: 3}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &4738030394483200196
 GameObject:
   m_ObjectHideFlags: 0
@@ -64582,7 +64893,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &4860112927197675845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64595,7 +64908,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &4860112927562313654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64608,7 +64923,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &4860112928056244359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64621,7 +64938,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &4860112928061214641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64634,7 +64953,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &4860112928149681492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64647,7 +64968,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &4860112928209709012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64660,7 +64983,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &4860112928282119498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64673,7 +64998,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &4860112928808506754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64686,7 +65013,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &4860481438569602505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71168,7 +71497,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -8, y: 0, z: 5}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &5037784264554703211
 GameObject:
   m_ObjectHideFlags: 0
@@ -71485,7 +71816,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -18, y: 0, z: -8}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!4 &5071813303745265721
 Transform:
   m_ObjectHideFlags: 0
@@ -71711,7 +72044,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &5100209220009091189
 GameObject:
   m_ObjectHideFlags: 0
@@ -71934,7 +72269,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -2, y: 0, z: 3}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &5128575655728284986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72217,7 +72554,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -18, y: 0, z: 9}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &5176070383588397312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75489,7 +75828,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -8, y: 0, z: 4}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &5272209841853844913
 GameObject:
   m_ObjectHideFlags: 0
@@ -78174,7 +78515,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -16, y: 0, z: -7}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!65 &5409933046923240987
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -78955,7 +79298,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -1, y: 0, z: -8}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!65 &5501263324188671417
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -78981,7 +79326,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -3, y: 0, z: 3}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!4 &5503720876878127669
 Transform:
   m_ObjectHideFlags: 0
@@ -79119,7 +79466,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -6, y: 0, z: -9}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!23 &5520691339410285533
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -79214,7 +79563,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -17, y: 0, z: 7}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!33 &5526094931358366719
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -79810,7 +80161,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -1, y: 0, z: 4}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &5657215049856346125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82300,7 +82653,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -2, y: 0, z: 2}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!23 &5976242499119149697
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -82433,7 +82788,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -5, y: 0, z: 3}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!65 &6005598780530119430
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -82690,7 +83047,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 5}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &6024923074482777622
 GameObject:
   m_ObjectHideFlags: 0
@@ -83802,7 +84161,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -2, y: 0, z: 4}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!23 &6211026244788542447
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -83916,7 +84277,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -14, y: 0, z: -9}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!23 &6226224127230646946
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -84254,7 +84617,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -6, y: 0, z: 1}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!33 &6311963727172530398
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -84581,7 +84946,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -16, y: 0, z: 6}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!4 &6340925071509472758
 Transform:
   m_ObjectHideFlags: 0
@@ -84675,7 +85042,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 1, y: 0, z: 4}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!4 &6348396881106305558
 Transform:
   m_ObjectHideFlags: 0
@@ -85092,7 +85461,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -1, y: 0, z: 3}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &6382586236964336779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88271,7 +88642,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -18, y: 0, z: 7}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!65 &6744202478163863565
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -88796,7 +89169,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -11, y: 0, z: 6}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &6873662506268826323
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88920,7 +89295,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -18, y: 0, z: 8}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &6891270588292345438
 GameObject:
   m_ObjectHideFlags: 0
@@ -89043,7 +89420,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -11, y: 0, z: 5}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &6906649145880069581
 GameObject:
   m_ObjectHideFlags: 0
@@ -90297,7 +90676,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -9, y: 0, z: 4}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!4 &7093969352602827459
 Transform:
   m_ObjectHideFlags: 0
@@ -93320,7 +93701,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -18, y: 0, z: -7}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &7553130228151710218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94242,7 +94625,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!4 &7706922489301676830
 Transform:
   m_ObjectHideFlags: 0
@@ -94594,7 +94979,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 2}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!4 &7782360529780472324
 Transform:
   m_ObjectHideFlags: 0
@@ -95133,7 +95520,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -15, y: 0, z: -9}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!23 &7857122644961228009
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -95793,7 +96182,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -17, y: 0, z: 8}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &7995018912470620456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96001,7 +96392,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -13, y: 0, z: 5}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &8032043027285008890
 GameObject:
   m_ObjectHideFlags: 0
@@ -97187,7 +97580,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -1, y: 0, z: 5}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &8175319189875958780
 GameObject:
   m_ObjectHideFlags: 0
@@ -98876,7 +99271,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -12, y: 0, z: 4}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!4 &8444156353823262626
 Transform:
   m_ObjectHideFlags: 0
@@ -99223,7 +99620,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &8484554089532656728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99236,7 +99635,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &8484554089611820514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99249,7 +99650,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &8484554089862947707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99262,7 +99665,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &8484554090241156424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99275,7 +99680,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &8484554090398315366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99288,7 +99695,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &8484554090439186533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99301,7 +99710,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!33 &8486251187142140600
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -99586,7 +99997,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -16, y: 0, z: -9}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &8519723833518168540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99599,7 +100012,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -3, y: 0, z: 2}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!4 &8527905689625332311
 Transform:
   m_ObjectHideFlags: 0
@@ -99680,7 +100095,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -17, y: 0, z: 6}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!65 &8539732232679947908
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -100168,7 +100585,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -13, y: 0, z: -7}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!65 &8627131086704495420
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -100220,7 +100639,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -16, y: 0, z: 7}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!65 &8632327509487394582
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -101414,7 +101835,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -16, y: 0, z: 9}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &8841470015794333476
 GameObject:
   m_ObjectHideFlags: 0
@@ -101861,7 +102284,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -5, y: 0, z: -8}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!65 &8920045692354967761
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -101987,7 +102412,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -16, y: 0, z: -6}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &8961907805354884024
 GameObject:
   m_ObjectHideFlags: 0
@@ -102172,7 +102599,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -17, y: 0, z: -8}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!4 &8995205326047473475
 Transform:
   m_ObjectHideFlags: 0
@@ -102200,7 +102629,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -18, y: 0, z: -9}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &9000550033650445961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102867,7 +103298,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -19, y: 0, z: 8}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!4 &9148304644962727013
 Transform:
   m_ObjectHideFlags: 0
@@ -102917,7 +103350,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -14, y: 0, z: -7}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &9159938681826599895
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -103145,7 +103580,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: -16, y: 0, z: -8}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!65 &9195886218024977213
 BoxCollider:
   m_ObjectHideFlags: 0

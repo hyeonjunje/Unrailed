@@ -144,6 +144,8 @@ public class TrainMovement : MonoBehaviour
                     {
                         isReady = true;
                         // 역 도착하기
+                        FindObjectOfType<InGameScene>().engine = gameObject.GetComponent<TrainEngine>();
+
                         FindObjectOfType<InGameScene>().ArriveStation();
 
                         // ShopManager.Instance.ShopOn();
@@ -176,8 +178,8 @@ public class TrainMovement : MonoBehaviour
     }
     public virtual void TrainUpgrade()
     {
+        destroyParticle.SetActive(false);
         destroyParticle.SetActive(true);
-        //destroyParticle.SetActive(false);
         //상속해서 올리기
     }
     public void TrainOver()
@@ -202,6 +204,17 @@ public class TrainMovement : MonoBehaviour
         yield return new WaitForSeconds(2.5f);
         overText.SetBool("GameOver", true);
         yield return new WaitForSeconds(1.5f);
+        manager._loadingSceneUI.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene("IntroScene");
+    }
+
+    public IEnumerator ClearAnim()
+    {
+        CameraSwitch(4);
+        yield return new WaitForSeconds(2f);
+        overText.SetBool("GameClear", true);
+        yield return new WaitForSeconds(5f);
         manager._loadingSceneUI.SetActive(true);
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene("IntroScene");

@@ -13603,7 +13603,7 @@ MonoBehaviour:
   trainSpeed: 0
   _trainRotateSpeed: 0
   goalSpeed: 3
-  overSpeed: 0.1
+  overSpeed: 0
   _trainMoveSpeed: 0
   warningIcon: {fileID: 0}
   overText: {fileID: 0}
@@ -42678,7 +42678,7 @@ MonoBehaviour:
   trainSpeed: 0
   _trainRotateSpeed: 0
   goalSpeed: 3
-  overSpeed: 0.1
+  overSpeed: 0
   _trainMoveSpeed: 0
   warningIcon: {fileID: 0}
   overText: {fileID: 0}
@@ -42717,7 +42717,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4472484093875932105}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1.5}
@@ -43075,7 +43075,7 @@ MonoBehaviour:
   trainSpeed: 0
   _trainRotateSpeed: 0
   goalSpeed: 3
-  overSpeed: 0.1
+  overSpeed: 0
   _trainMoveSpeed: 0
   warningIcon: {fileID: 0}
   overText: {fileID: 0}
@@ -43095,7 +43095,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4654451409573904519}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1.26}
@@ -72162,7 +72162,7 @@ MonoBehaviour:
   trainSpeed: 0
   _trainRotateSpeed: 0
   goalSpeed: 3
-  overSpeed: 0.1
+  overSpeed: 0
   _trainMoveSpeed: 0
   warningIcon: {fileID: 0}
   overText: {fileID: 0}
@@ -73018,7 +73018,7 @@ MonoBehaviour:
   trainSpeed: 0
   _trainRotateSpeed: 0
   goalSpeed: 3
-  overSpeed: 0.1
+  overSpeed: 0
   _trainMoveSpeed: 0
   warningIcon: {fileID: 0}
   overText: {fileID: 0}

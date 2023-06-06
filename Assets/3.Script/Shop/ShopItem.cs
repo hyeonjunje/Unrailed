@@ -32,28 +32,30 @@ public class ShopItem : MonoBehaviour
 
     public void TradeItem(Collider col)
     {
-        ShopManager.Instance.trainCoin--;
-
+        Debug.Log("거래성사");
         TrainMovement train = col.GetComponent<TrainMovement>();
 
         if (train.trainType != TrainType.Spare)
         {
-            train.trainUpgradeLevel++;
+            if (train.trainType != itemType) return;
 
-            if (train.trainType == itemType)
-            {
-                train.TrainUpgrade();
-                box.enabled = false;
-            }
+            train.trainUpgradeLevel++;
+            train.TrainUpgrade();
+            box.enabled = false;
         }
 
         else
         {
-            TrainSpare spare = col.GetComponent<TrainSpare>();
-            spare.ChangeTrain(itemIdx);
-            box.enabled = false;
+            if (itemType == TrainType.Dynamite || itemType == TrainType.StationDir)
+                {
+                    TrainSpare spare = col.GetComponent<TrainSpare>();
+                    spare.ChangeTrain(itemIdx);
+                    box.enabled = false;
+                }
+                else return;
         }
 
+        ShopManager.Instance.trainCoin--;
         ShopManager.Instance.TrainCost();
         _isSpawn = false;
         transform.GetChild(0).gameObject.SetActive(false);

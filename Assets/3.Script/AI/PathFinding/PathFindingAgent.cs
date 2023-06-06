@@ -19,18 +19,23 @@ public class PathFindingAgent : MonoBehaviour
     private Node[,] _nodeArray;
     private Node _startNode, _targetNode, _currentNode;
     private List<Node> _openList, _cloesdList;
-
+    private Animator _anim;
     private Vector3[] dirs = new Vector3[4] {new Vector3(0, 0, 1), new Vector3(1, 0, 0),
                  new Vector3(0, 0, -1), new Vector3(-1, 0, 0)};
 
     private Coroutine _moveCo = null;
 
+    private void Awake()
+    {
+        TryGetComponent(out _anim);
+    }
 
     // 해당 위치로 이동하는 메소드
     public bool MoveTo(Vector3 targetPos, bool isLastRotate = false)
     {
         if(PathFinding(targetPos))
         {
+            _anim.SetBool("isMove", !isLastRotate);
             if (_moveCo != null)
                 StopCoroutine(_moveCo);
             _moveCo = StartCoroutine(MoveCo(isLastRotate));
