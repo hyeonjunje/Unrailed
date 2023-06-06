@@ -532,11 +532,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73ca2dcde514f144c88866bac8ad366a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _equipPart: 0
   stackInterval: 0.15
   itemType: 3
   blockLayer:
     serializedVersion: 2
     m_Bits: 1073741824
+  equipment: {fileID: 0}
 --- !u!114 &-3485905577784638331
 MonoBehaviour:
   m_ObjectHideFlags: 0

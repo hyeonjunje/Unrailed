@@ -9,6 +9,8 @@ public class Helper : MonoBehaviour
     public PathFindingAgent Agent;
 
     public bool arrive = false;
+    public bool GotoPlayer = false;
+    Aim _orderUI;
 
     public Transform UItransform;
     [HideInInspector]
@@ -30,6 +32,7 @@ public class Helper : MonoBehaviour
         Agent = GetComponent<PathFindingAgent>();
         TargetResource = DefaultResource;
         Order = new Dictionary<KeyCode, Action>();
+        _orderUI = FindObjectOfType<Aim>();
         Init();
     }
 
@@ -67,10 +70,23 @@ public class Helper : MonoBehaviour
                 if (Input.GetKeyDown(dic.Key))
                 {
                     dic.Value();
+                    _orderUI.MoveAim(TargetResource);
+
                 }
 
             }
         }
+
+        if(Input.GetKeyUp(KeyCode.E))
+        {
+            _orderUI.AimOff();
+        }
+    }
+
+    public void CheckPlayer()
+    {
+        GotoPlayer = !GotoPlayer;
+
     }
 
 }

@@ -128,7 +128,7 @@ public class InGameScene : MonoBehaviour
 
 
         // 맵 재위치 시켜주기
-        UnitaskInvoke(1.5f, () => { RePositionAsync().Forget(); helper.arr(); }).Forget();
+        UnitaskInvoke(1.5f, () => { RePositionAsync().Forget(); helper.arr(); helper.CheckPlayer(); }).Forget();
 
         // 맵은 2개 밖에 없으니까 한번 역을 떠나면 엔딩준비 완료
         _isEnding = true;

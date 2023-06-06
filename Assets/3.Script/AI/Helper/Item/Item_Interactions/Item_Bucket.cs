@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Item_Bucket : AI_Item
 {
-    private int id = 3;
-    public bool IsOn { get; protected set; } = false;
+    public override int ID { get; protected set; } = 3;
+    public override bool IsOn { get; protected set; } = false;
     public bool Full { get; protected set; } = false;
 
     public override void PickUp()
@@ -18,10 +18,5 @@ public class Item_Bucket : AI_Item
     {
         Full = !Full;
         Debug.Log($"양동이는 지금 {(Full ? "다 찼어요" : "비어있어요")}");
-    }
-
-    public override int Id()
-    {
-        return id;
     }
 }
