@@ -10,6 +10,6 @@ public class Item_Pick : AI_Item
     public override void PickUp()
     {
         IsOn = !IsOn;
-        Debug.Log($"곡괭이는 지금 {(IsOn ? "들려있어용" : "바닥이에용")}");
+        //Debug.Log($"곡괭이는 지금 {(IsOn ? "들려있어용" : "바닥이에용")}");
     }
 }

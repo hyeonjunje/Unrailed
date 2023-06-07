@@ -70,7 +70,12 @@ public class Helper : MonoBehaviour
                 if (Input.GetKeyDown(dic.Key))
                 {
                     dic.Value();
-                    _orderUI.MoveAim(TargetResource);
+
+                    if(Input.GetKey(KeyCode.E))
+                    {
+                        _orderUI.MoveAim(TargetResource);
+
+                    }
 
                 }
 
@@ -86,7 +91,6 @@ public class Helper : MonoBehaviour
     public void CheckPlayer()
     {
         GotoPlayer = !GotoPlayer;
-
     }
 
 }
