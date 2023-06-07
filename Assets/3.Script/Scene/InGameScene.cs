@@ -59,9 +59,9 @@ public class InGameScene : MonoBehaviour
                         Instantiate(_robot, Vector3.up * 0.5f, Quaternion.identity).SetHome(FindObjectOfType<Resource>());
                         Instantiate(_enemy, Vector3.up * 0.5f + Vector3.right, Quaternion.identity).SetHome(FindObjectOfType<Resource>());
 
-                        for (int i = 0; i < 5; i++)
+                        for (int i = 0; i < 4; i++)
                         {
-                            Vector3 pos = Vector3.up * 0.5f + Random.insideUnitSphere * 7;
+                            Vector3 pos = Vector3.up * 0.5f + Random.insideUnitSphere * 4;
                             Flock flock = Instantiate(_flock);
                             flock.transform.position = new Vector3(pos.x, 0.5f, pos.z);
                         }
