@@ -106,7 +106,7 @@ public class Resource : MonoBehaviour
     public WorldResource dd(Helper brain)
     {
         //자원 업데이트
-        PopulateResources();
+        //PopulateResources();
         WorldResource.EType targetResource = _defaultResource;
         var resourceTypes = System.Enum.GetValues(typeof(WorldResource.EType));
 
@@ -121,22 +121,13 @@ public class Resource : MonoBehaviour
             }
         }
         //자원이 있는지 확인
-        if (_trackedResources[targetResource].Count < 1)
-        {
-            NonethisResourceTypeHelper = true;
-            Debug.Log($"{targetResource} :  자원이 이제 없어요");
-        }
-        else
-            NonethisResourceTypeHelper = false;
         
         var sortedResources = _trackedResources[targetResource]
-            //갈 수 있는 곳에 있는 자원만 추리기
-            //.Where(resource => Vector3.Distance(resource.transform.position, brain.Agent.
-                                                //FindCloestAroundEndPosition(resource.transform.position)) <= 1f)
+            .OrderBy(resource => Vector3.Distance(brain.transform.position, resource.transform.position))
+            .Take(20)
             .Where(resource => Vector3.Distance
             (brain.Agent.FindCloestAroundEndPosition(resource.transform.position), resource.transform.position)<1.5f)
             .Where(resource=> brain.Agent.MoveTo(brain.Agent.FindCloestAroundEndPosition(resource.transform.position)))
-            .OrderBy(resource => Vector3.Distance(brain.transform.position, resource.transform.position))
             //가장 가까운 자원 반환
             .First();
 

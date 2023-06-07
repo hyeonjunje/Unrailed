@@ -248,19 +248,30 @@ public class HelperBT : BaseAI
 
         ImpossibleToWork.Add<BTNode_Action>("타겟이 갈 수 없는 곳에 있어요", () =>
          {
-             _emoteImage.sprite = _emoteManager.GetEmote(_emoteManager.WarningEmote);
-             _animator.SetBool(isMove, false);
-             _target = null;
-              _target = Home.dd(_helper);
-             Vector3 aa = _agent.FindCloestAroundEndPosition(_target.transform.position);
-             _agent.MoveTo(aa);
-                 
-             return BehaviorTree.ENodeStatus.InProgress;
-         },
-         () =>
+             //_emoteImage.sprite = _emoteManager.GetEmote(_emoteManager.WarningEmote);
+             //_animator.SetBool(isMove, false);
+             //_target = null;
+             _target = Home.dd(_helper);
+
+             return BehaviorTree.ENodeStatus.Succeeded;
+         });
+/*         () =>
           {
               return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
-          });
+          });*/
+
+        ImpossibleToWork.Add<BTNode_Action>("타겟이 갈 수 없는 곳에 있어요", () =>
+        {
+            Vector3 aa = _agent.FindCloestAroundEndPosition(_target.transform.position);
+            _agent.MoveTo(aa);
+
+            return BehaviorTree.ENodeStatus.InProgress;
+        },
+         () =>
+         {
+             return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
+         });
+
 
 
         #endregion

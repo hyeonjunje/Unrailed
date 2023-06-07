@@ -29840,7 +29840,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2
-  rotateSpeed: 2
+  rotateSpeed: 4
   randomRange: 5
   throwLayer:
     serializedVersion: 2
