@@ -2522,7 +2522,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4577576761906458970, guid: 1439c1fde8ee239469f46a3ec542faa0, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1439c1fde8ee239469f46a3ec542faa0, type: 3}
@@ -3131,7 +3131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTest: 0
-  isAITest: 1
+  isAITest: 0
   _loadingSceneUI: {fileID: 2059012224}
   _distanceUI: {fileID: 1014105166}
   _aiDebugUI: {fileID: 1197873636}
@@ -3279,11 +3279,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1823390203, guid: ce663060779a3794d864c2015715d1b5, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1911068261, guid: ce663060779a3794d864c2015715d1b5, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2777706223984096355, guid: ce663060779a3794d864c2015715d1b5, type: 3}
       propertyPath: m_Name
@@ -3291,7 +3291,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2777706223984096355, guid: ce663060779a3794d864c2015715d1b5, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2777706223984096359, guid: ce663060779a3794d864c2015715d1b5, type: 3}
       propertyPath: m_Pivot.x
@@ -3375,6 +3375,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2777706223984096359, guid: ce663060779a3794d864c2015715d1b5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2777706224129331584, guid: ce663060779a3794d864c2015715d1b5, type: 3}
+      propertyPath: isGlobal
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2777706224129331586, guid: ce663060779a3794d864c2015715d1b5, type: 3}
