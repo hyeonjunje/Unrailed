@@ -10,7 +10,7 @@ public abstract class AI_Item : MonoBehaviour
     public Vector3 InteractionPoint => _InteractionMarker != null ? _InteractionMarker.position : transform.position;
     protected List<BaseInteraction> _cachedInteractions = null;
 
-    public virtual bool IsOn { get; protected set; } = false;
+    public abstract bool IsOn { get; protected set; }
     public abstract int ID { get; protected set; }
 
     public List<BaseInteraction> Interactions

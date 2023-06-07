@@ -40,6 +40,7 @@ public class ItemUI2 : MonoBehaviour
                     Vector3 screenPosition = Camera.main.WorldToScreenPoint(item.transform.position + Vector3.up * 1.5f);
                     transform.position = screenPosition;
                     _item = item;
+                    break;
                 }
             }
 

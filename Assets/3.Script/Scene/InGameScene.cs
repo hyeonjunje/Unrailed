@@ -89,7 +89,7 @@ public class InGameScene : MonoBehaviour
             FindObjectOfType<PlayerController>().PutDownItem();
 
             Helper helper = FindObjectOfType<Helper>();
-            helper.arr();
+            helper.ArriveStation();
 
             // 바리케이드 올려주기
             Transform barricadeparent = GameObject.Find("BarricadeParent").transform;
@@ -137,7 +137,7 @@ public class InGameScene : MonoBehaviour
 
 
         // 맵 재위치 시켜주기
-        UnitaskInvoke(1.5f, () => { RePositionAsync().Forget(); helper.arr(); }).Forget();
+        UnitaskInvoke(1.5f, () => { RePositionAsync().Forget(); helper.ArriveStation(); }).Forget();
 
         // 맵은 2개 밖에 없으니까 한번 역을 떠나면 엔딩준비 완료
         _isEnding = true;
@@ -162,6 +162,7 @@ public class InGameScene : MonoBehaviour
             tools[i].transform.localPosition = Vector3.up * 0.5f;
             tools[i].transform.localRotation = Quaternion.identity;
         }
+
     }
 
     private Transform BFS(Transform startTransform)
