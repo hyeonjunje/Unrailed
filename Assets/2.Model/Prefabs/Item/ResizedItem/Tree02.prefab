@@ -305,7 +305,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isEmpty: 0
-  invisibleType: 0
+  invisibleType: 1
 --- !u!1 &430936053508983177
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,7 +8,7 @@ public class InVisibleObject : MonoBehaviour
 
     public bool isEmpty = false;
 
-    private enum EInvisibleType { block, staticObject, rail, dynamicObject };
+    private enum EInvisibleType { block, staticObject, rail, dynamicObject, tool };
     [SerializeField] private EInvisibleType invisibleType;
 
     private Collider _collider;
@@ -39,8 +39,11 @@ public class InVisibleObject : MonoBehaviour
                 _collider.isTrigger = false;
                 break;
             case EInvisibleType.rail:
-                if(!_railController.isInstance)
+                if (!_railController.isInstance)
                     transform.GetChild(0).gameObject.SetActive(true);
+                break;
+            case EInvisibleType.tool:
+                transform.GetChild(0).gameObject.SetActive(true);
                 break;
         }
     }
@@ -65,6 +68,9 @@ public class InVisibleObject : MonoBehaviour
                 if (!_railController.isInstance)
                     for (int i = 0; i < transform.childCount; i++)
                         transform.GetChild(i).gameObject.SetActive(false);
+                break;
+            case EInvisibleType.tool:
+                transform.GetChild(0).gameObject.SetActive(false);
                 break;
         }
     }

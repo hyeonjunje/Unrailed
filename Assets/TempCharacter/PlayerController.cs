@@ -789,6 +789,7 @@ public class PlayerController : MonoBehaviour
 
     public void Respawn()
     {
+        _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
         _rigidbody.useGravity = true;
 
         _isRespawn = true;
@@ -828,6 +829,7 @@ public class PlayerController : MonoBehaviour
         {
             if (_isRespawn)
             {
+                _rigidbody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
                 _rigidbody.useGravity = false;
                 _balloonObject.SetActive(false);
                 _isRespawn = false;
