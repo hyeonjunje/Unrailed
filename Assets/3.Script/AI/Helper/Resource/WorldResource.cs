@@ -11,20 +11,29 @@ public class WorldResource : MonoBehaviour
         Stone,
         Resource
     }
-    [SerializeField] EType _Type;
+    [SerializeField] private EType _Type;
     public EType Type => _Type;
 
-    [SerializeField] Transform _item;
+    public AI_StackItem Stack;
+
+    [SerializeField] private Transform _item;
+    [SerializeField] private float _resourceHp = 2.7f;
     private float _resourceScale = Mathf.Clamp01(1);
-    [SerializeField] float _resourceHp = 2.7f;
 
     void Start()
     {
+        Stack = GetComponent<AI_StackItem>();
         ResourceTracker.Instance.RegisterResource(this);
     }
 
-    //자원 캐기
+    private void OnDestroy()
+    {
+        ResourceTracker.Instance.DeRegisterResource(this);
+    }
 
+
+
+    //자원 캐기
     public bool isDig()
     {
         if (_resourceHp > 0)
@@ -32,7 +41,6 @@ public class WorldResource : MonoBehaviour
         else
         {
             SpawnItem();
-            ResourceTracker.Instance.DeRegisterResource(this);
             return false;
         }
           

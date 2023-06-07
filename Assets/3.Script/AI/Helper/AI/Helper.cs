@@ -5,25 +5,33 @@ using System;
 
 public class Helper : MonoBehaviour
 {
-    public Resource Map;
-
     [HideInInspector]
     public PathFindingAgent Agent;
 
+    public bool arrive = false;
+    public bool GotoPlayer = false;
+    Aim _orderUI;
+
+    public Transform UItransform;
+    [HideInInspector]
     public Dictionary<KeyCode, System.Action> Order;
     [HideInInspector]
     public WorldResource.EType TargetResource;
     [HideInInspector]
     public WorldResource.EType DefaultResource = WorldResource.EType.Wood;
+
+    public void ArriveStation()
+    {
+        arrive = !arrive;
+    }
+
     private void Awake()
     {
         Agent = GetComponent<PathFindingAgent>();
         TargetResource = DefaultResource;
         Order = new Dictionary<KeyCode, Action>();
+        _orderUI = FindObjectOfType<Aim>();
         Init();
-
-        //나중에 완성되면 빼기
-        //Home = Map;
     }
 
 
@@ -60,10 +68,23 @@ public class Helper : MonoBehaviour
                 if (Input.GetKeyDown(dic.Key))
                 {
                     dic.Value();
+                    _orderUI.MoveAim(TargetResource);
+
                 }
 
             }
         }
+
+        if(Input.GetKeyUp(KeyCode.E))
+        {
+            _orderUI.AimOff();
+        }
+    }
+
+    public void CheckPlayer()
+    {
+        GotoPlayer = !GotoPlayer;
+
     }
 
 }

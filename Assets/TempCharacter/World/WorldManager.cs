@@ -19,6 +19,9 @@ public class WorldManager : MonoBehaviour
 
     // 총 월드의 개수
     private int _worldCount = 0;
+    private Transform[] parentTransform;
+
+
 
     // 전체 맵 저장
     public List<List<BlockMK2>>[] entireMap { get; private set; } = new List<List<BlockMK2>>[2];
@@ -28,12 +31,15 @@ public class WorldManager : MonoBehaviour
     public List<List<Transform>> worldObject { get; private set; } = new List<List<Transform>>();
     // 역들을 보관할 리스트
     public List<Station> stations { get; private set; } = new List<Station>();
+    // 맵 사이 바리케이드
+    public List<Transform> betweenBarricadeTransform { get; private set; } = new List<Transform>();
 
     public async UniTask GenerateWorld(bool isTest)
     {
         // 맵 싸그리 생성
         MapData[] mapData = new MapData[2];
         _worldCount = mapData.Length;
+        parentTransform = new Transform[_worldCount];
 
         if (isTest)
         {
@@ -51,11 +57,18 @@ public class WorldManager : MonoBehaviour
             // 부모의 위치 설정
             float width = mapData[i].mapData[0].arr.Length;
             Vector3 parentPosition = Vector3.right * width * i;
-            Transform currentParent = new GameObject("World " + i).transform;
-            currentParent.position = parentPosition;
+            parentTransform[i] = new GameObject("World " + i).transform;
+            parentTransform[i].position = parentPosition;
 
-            entireMap[i] = await _mapCreator.CreateMapAsync(mapData[i], currentParent, i == 0);
+            entireMap[i] = await _mapCreator.CreateMapAsync(mapData[i], parentTransform[i], i == 0);
         }
+
+        // 바리케이드 설정
+        betweenBarricadeTransform = _mapCreator.SetBarricade(parentTransform[0].GetChild(0), 
+            parentTransform[parentTransform.Length - 1].GetChild(parentTransform[parentTransform.Length - 1].childCount - 1));
+
+        foreach (Transform barricade in betweenBarricadeTransform)
+            barricade.gameObject.AddComponent<ImpassableObject>();
 
         // 맵을 제외한 오브젝트 초기화 (플레이어, 역, 기차, AI)
         await InitWorldObject();
