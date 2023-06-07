@@ -133,8 +133,9 @@ public class Resource : MonoBehaviour
             //갈 수 있는 곳에 있는 자원만 추리기
             //.Where(resource => Vector3.Distance(resource.transform.position, brain.Agent.
                                                 //FindCloestAroundEndPosition(resource.transform.position)) <= 1f)
-            .Where(resource => brain.Agent.MoveTo(brain.Agent.FindCloestAroundEndPosition(resource.transform.position)))
-            //가까운 순으로 정렬
+            .Where(resource => Vector3.Distance
+            (brain.Agent.FindCloestAroundEndPosition(resource.transform.position), resource.transform.position)<1.5f)
+            .Where(resource=> brain.Agent.MoveTo(brain.Agent.FindCloestAroundEndPosition(resource.transform.position)))
             .OrderBy(resource => Vector3.Distance(brain.transform.position, resource.transform.position))
             //가장 가까운 자원 반환
             .First();
