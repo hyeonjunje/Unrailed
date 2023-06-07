@@ -162,6 +162,9 @@ public class PlayerController : MonoBehaviour
 
             InteractionHighlight();
 
+            if (_handItem.Count == 0)
+                return;
+
             if (_handItem.Peek().ItemType == EItemType.wood || _handItem.Peek().ItemType == EItemType.steel)
             {
                 ResourceTracker.Instance.DeRegisterResource(_handItem.Peek().GetComponent<WorldResource>());

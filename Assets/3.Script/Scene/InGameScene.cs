@@ -56,12 +56,12 @@ public class InGameScene : MonoBehaviour
                 RePositionAsync(
                     () =>
                     {
-                        Instantiate(_robot, Vector3.up * 0.5f, Quaternion.identity).SetHome(FindObjectOfType<Resource>());
+                        Instantiate(_robot, Vector3.up * 0.5f - Vector3.left * 5f, Quaternion.identity).SetHome(FindObjectOfType<Resource>());
                         Instantiate(_enemy, Vector3.up * 0.5f + Vector3.right, Quaternion.identity).SetHome(FindObjectOfType<Resource>());
 
-                        for (int i = 0; i < 4; i++)
+                        for (int i = 0; i < 3; i++)
                         {
-                            Vector3 pos = Vector3.up * 0.5f + Random.insideUnitSphere * 4;
+                            Vector3 pos = Vector3.up * 0.5f + Vector3.back * 2f + Random.insideUnitSphere * 4;
                             Flock flock = Instantiate(_flock);
                             flock.transform.position = new Vector3(pos.x, 0.5f, pos.z);
                         }

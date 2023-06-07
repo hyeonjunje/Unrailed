@@ -3101,6 +3101,7 @@ GameObject:
   - component: {fileID: 5560794953054767258}
   - component: {fileID: 4952656996718425142}
   - component: {fileID: 2989008345552011356}
+  - component: {fileID: 6721183794435187821}
   m_Layer: 22
   m_Name: Shop_Engine 1
   m_TagString: ShopItem
@@ -3182,6 +3183,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEmpty: 0
   invisibleType: 1
+--- !u!114 &6721183794435187821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6947313233791652070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!1 &6952161721232779402
 GameObject:
   m_ObjectHideFlags: 0
