@@ -252,8 +252,8 @@ public class HelperBT : BaseAI
              _animator.SetBool(isMove, false);
              _target = null;
               _target = Home.dd(_helper);
-             Debug.Log(_target.transform.position);
-             _agent.MoveTo(_target.transform.position);
+             Vector3 aa = _agent.FindCloestAroundEndPosition(_target.transform.position);
+             _agent.MoveTo(aa);
                  
              return BehaviorTree.ENodeStatus.InProgress;
          },
