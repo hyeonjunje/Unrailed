@@ -10,7 +10,8 @@ public class ReSource : MonoBehaviour
     [SerializeField] private int resourceHp = 3;
     [SerializeField] private float _scaleAmountOfChange = 0.2f;
     [SerializeField] private GameObject itemPrefab;
-
+    [SerializeField] private ParticleSystem hitEffect;
+    [SerializeField] private ParticleSystem destroyEffect;
     private int _currentHp;
     private int CurrentHp
     {
@@ -35,6 +36,8 @@ public class ReSource : MonoBehaviour
         CurrentHp = 3;
     }
 
+  
+
     public void Dig()
     {
         if (CurrentHp <= 0) return;
@@ -42,6 +45,8 @@ public class ReSource : MonoBehaviour
         if (resourceType == EResource.steel) SoundManager.Instance.PlaySoundEffect("Steel_Hit");
         CurrentHp--;
         transform.localScale -= Vector3.one * _scaleAmountOfChange;
+        hitEffect.Stop();
+        hitEffect.Play();
     }
 
     public void Explosion()
@@ -57,6 +62,8 @@ public class ReSource : MonoBehaviour
         GameObject itemObject = Instantiate(itemPrefab, parent);
         itemObject.transform.localPosition = Vector3.up * 0.5f;
         itemObject.transform.localRotation = Quaternion.identity;
+        destroyEffect.transform.parent = null;
+        destroyEffect.Play();
         Destroy(gameObject);
     }
 }
