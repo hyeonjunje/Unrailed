@@ -1055,7 +1055,7 @@ MonoBehaviour:
   randomRange: 5
   throwLayer:
     serializedVersion: 2
-    m_Bits: 537165841
+    m_Bits: 537133073
   impassableLayer:
     serializedVersion: 2
     m_Bits: 537165840

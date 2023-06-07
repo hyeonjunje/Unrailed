@@ -687,14 +687,15 @@ public class PlayerController : MonoBehaviour
                 {
                     CurrentHandItem.ActiveWater(true);
                     _isCharge = false;
+                    _waterGauge.ResetWater();
                 }
             }
         }
-        else
+/*        else
         {
             if (!_waterGauge.IsFillWater())
                 _waterGauge.ResetWater();
-        }
+        }*/
     }
 
     public bool SetBridge() // 다리 놓기
@@ -815,7 +816,7 @@ public class PlayerController : MonoBehaviour
                     water.FireOff();
                     CurrentHandItem.ActiveWater(false);
                     _waterGauge.ResetWater();
-
+                    CurrentHandItem.GetComponent<Item_Bucket>().BucketisFull();
                 }
             }
         }
