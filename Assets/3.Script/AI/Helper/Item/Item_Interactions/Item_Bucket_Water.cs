@@ -34,6 +34,7 @@ public class Item_Bucket_Water : SimpleInteraction
     {
         if(Watergauge.value<0.9f)
         {
+            WaterMesh.SetActive(false);
             Watergauge.gameObject.SetActive(true);
             Watergauge.value = Mathf.MoveTowards(Watergauge.value, 0.9f, Time.deltaTime*0.5f);
         }
@@ -45,16 +46,13 @@ public class Item_Bucket_Water : SimpleInteraction
         }
 
     }
-    private void OnDisable()
-    {
-        Watergauge.value = 0;
-    }
 
     public bool Stop()
     {
         if(Watergauge.value>=1)
         {
             _bucket.BucketisFull();
+            Watergauge.value = 0;
             return true;
         }
         return false;

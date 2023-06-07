@@ -250,12 +250,16 @@ public class HelperBT : BaseAI
          {
              _emoteImage.sprite = _emoteManager.GetEmote(_emoteManager.WarningEmote);
              _animator.SetBool(isMove, false);
+             _target = null;
+              _target = Home.dd(_helper);
+             Debug.Log(_target.transform.position);
+             _agent.MoveTo(_target.transform.position);
+                 
              return BehaviorTree.ENodeStatus.InProgress;
          },
          () =>
           {
-
-             return BehaviorTree.ENodeStatus.InProgress;
+              return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
           });
 
 

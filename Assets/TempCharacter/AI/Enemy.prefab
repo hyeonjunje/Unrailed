@@ -29847,7 +29847,7 @@ MonoBehaviour:
     m_Bits: 536870928
   impassableLayer:
     serializedVersion: 2
-    m_Bits: 537165840
+    m_Bits: 2684649488
   finalNodeList: []
 --- !u!114 &6537026758373258617
 MonoBehaviour:
