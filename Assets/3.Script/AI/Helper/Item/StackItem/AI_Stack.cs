@@ -16,6 +16,7 @@ public class AI_Stack : MonoBehaviour
 
         _handItem = new Stack<AI_StackItem>();
         _detectedItem = new Stack<AI_StackItem>();
+
     }
 
     //Helper
@@ -27,6 +28,7 @@ public class AI_Stack : MonoBehaviour
             Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = _detectedItem.Peek().PickUp(_handItem, _detectedItem);
             _handItem = p.first;
             _detectedItem = p.second;
+            Destroy(_handItem.Peek().GetComponent<WorldResource>());
         }
     }
 
@@ -37,6 +39,7 @@ public class AI_Stack : MonoBehaviour
             Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = _handItem.Peek().AutoGain(_handItem, _detectedItem);
             _handItem = p.first;
             _detectedItem = p.second;
+            Destroy(_handItem.Peek().GetComponent<WorldResource>());
         }
     }
 
@@ -92,6 +95,8 @@ public class AI_Stack : MonoBehaviour
             Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = _detectedItem.Peek().EnemyPickUp(_handItem, _detectedItem);
             _handItem = p.first;
             _detectedItem = p.second;
+            Destroy(_handItem.Peek().GetComponent<WorldResource>());
+
         }
     }
 
@@ -102,6 +107,7 @@ public class AI_Stack : MonoBehaviour
             Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = _handItem.Peek().EnemyAutoGain(_handItem, _detectedItem);
             _handItem = p.first;
             _detectedItem = p.second;
+            Destroy(_handItem.Peek().GetComponent<WorldResource>());
         }
     }
 
@@ -110,14 +116,13 @@ public class AI_Stack : MonoBehaviour
     public void EnemyDetectGroundBlock(WorldResource resource)
     {
         _detectedItem.Push(resource.Stack);
-        Destroy(resource);
     }
 
 
     public void DetectGroundBlock(WorldResource resource)
     {
         _detectedItem.Push(resource.Stack);
-        Destroy(resource);
+        //Destroy(resource);
     }
 
 

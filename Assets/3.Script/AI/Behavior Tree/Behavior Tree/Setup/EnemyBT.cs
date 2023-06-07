@@ -78,9 +78,9 @@ public class EnemyBT : BaseAI
         {
             if(_target!=null)
             {
-                _stack.EnemyDetectGroundBlock(_target);
                 _animator.SetBool(isMove, false);
                 _animator.SetBool(isRoot, true);
+                _stack.EnemyDetectGroundBlock(_target);
                 //처음 드는 거 
                 if (_stack._handItem.Count == 0)
                 {

@@ -128,7 +128,7 @@ public class Resource : MonoBehaviour
             (brain.Agent.FindCloestAroundEndPosition(resource.transform.position), resource.transform.position)<1.5f)
             .Where(resource=> brain.Agent.MoveTo(brain.Agent.FindCloestAroundEndPosition(resource.transform.position)))
             //가장 가까운 자원 반환
-            .First();
+            .FirstOrDefault();
 
         return sortedResources;
     }
