@@ -10,7 +10,8 @@ public class InGameScene : MonoBehaviour
     [SerializeField] private bool isTest = false;
 
     [Header("UI")]
-     public GameObject _loadingSceneUI;
+    public GameObject _loadingSceneUI;
+    public GameObject _distanceUI;
 
     [Header("Manager")]
     [SerializeField] private WorldManager _worldManager;
@@ -81,6 +82,9 @@ public class InGameScene : MonoBehaviour
         }
         else
         {
+            // 거리 UI 비활성화
+            _distanceUI.SetActive(false);
+
             // 플레이어 손에 든거 내려놓기
             FindObjectOfType<PlayerController>().PutDownItem();
 
@@ -112,6 +116,8 @@ public class InGameScene : MonoBehaviour
     /// </summary>
     public void LeaveStation()
     {
+        // 거리 UI 활성화
+        _distanceUI.SetActive(true);
 
         // 올린 바리케이드 내려주기
         Transform barricadeparent = GameObject.Find("BarricadeParent").transform;

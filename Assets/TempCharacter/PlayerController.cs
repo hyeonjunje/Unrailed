@@ -568,25 +568,33 @@ public class PlayerController : MonoBehaviour
             if (_currentFrontObject == hit.transform)
                 return;
 
+            ItemInteractionTest interactionObject = null;
+
             // 이전 오브젝트 하이라이트 꺼주기
-            if(_currentFrontObject != null)
+            if (_currentFrontObject != null)
             {
                 Debug.Log("꺼줍니다.");
-                _currentFrontObject.GetComponent<ItemInteractionTest>().Interaction(false);
+                interactionObject = _currentFrontObject.GetComponent<ItemInteractionTest>();
+                if (interactionObject != null)
+                    interactionObject.Interaction(false);
             }
 
             _currentFrontObject = hit.transform;
 
             // 새로운 오브젝트 하이라이트 켜주기
             Debug.Log("켜줍니다.");
-            _currentFrontObject.GetComponent<ItemInteractionTest>().Interaction(true);
+            interactionObject = _currentFrontObject.GetComponent<ItemInteractionTest>();
+            if (interactionObject != null)
+                interactionObject.Interaction(true);
         }
         else
         {
             if (_currentFrontObject != null)
             {
                 Debug.Log("꺼줍니다.");
-                _currentFrontObject.GetComponent<ItemInteractionTest>().Interaction(false);
+                ItemInteractionTest interactionObject = _currentFrontObject.GetComponent<ItemInteractionTest>();
+                if (interactionObject != null)
+                    interactionObject.Interaction(false);
             }
 
             _currentInteractCoolTime = 0;
