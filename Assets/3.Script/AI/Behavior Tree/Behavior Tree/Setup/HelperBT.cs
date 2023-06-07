@@ -255,10 +255,15 @@ public class HelperBT : BaseAI
 
         ImpossibleToWork.Add<BTNode_Action>("타겟이 갈 수 없는 곳에 있어요", () =>
         {
-            Vector3 position = _agent.FindCloestAroundEndPosition(_target.transform.position);
-            _agent.MoveTo(position);
+            if (_target != null)
+            {
+                  Vector3 position = _agent.FindCloestAroundEndPosition(_target.transform.position);
+                 _agent.MoveTo(position);
 
             return BehaviorTree.ENodeStatus.InProgress;
+            }
+
+            return BehaviorTree.ENodeStatus.Failed;
         },
          () =>
          {
@@ -516,9 +521,9 @@ public class HelperBT : BaseAI
         var GotoStation = BTRoot.Add<BTNode_Sequence>("도착한경우");
         GotoStation.Add<BTNode_Action>("역으로 이동하기", () =>
         {
+            PutDown();
             if (_helper.arrive)
             {
-                PutDown();
                 _emoteImage.sprite = _emoteManager.GetEmote(_emoteManager.HeartEmote);
                 Vector3 position = ShopManager.Instance.nextGame.position;
                 _agent.MoveTo(position);
@@ -530,7 +535,11 @@ public class HelperBT : BaseAI
             return BehaviorTree.ENodeStatus.Failed;
         }, () =>
         {
+            if(_helper.arrive)
+            {
             return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
+            }
+            return BehaviorTree.ENodeStatus.Failed;
         });
 
         GotoStation.Add<BTNode_Action>("밟고 있다면 가만히 있기", () =>
@@ -671,14 +680,15 @@ public class HelperBT : BaseAI
     {
         if (_item != null)
         {
+            Debug.Log("내려놓기");
             _item.PickUp();
-            _item.transform.rotation = Quaternion.identity;
             _item.transform.parent = _stack.BFS(this);
+            _item.transform.rotation = Quaternion.identity;
             _item.transform.localPosition = (Vector3.up * 0.5f) + (Vector3.up * 0.15f);
-            _item = null;
-
+            _localMemory.SetGeneric<AI_Item>(BlackBoardKey.Item, null);
             _animator.SetBool(isDig, false);
             _animator.SetBool(isMove, false);
+            _item = null;
 
         }
     }
