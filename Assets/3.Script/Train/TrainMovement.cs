@@ -184,6 +184,8 @@ public class TrainMovement : MonoBehaviour
     }
     public void TrainOver()
     {
+        SoundManager.Instance.StopAllSound();
+
         if (trainType != TrainType.Spare && !isOver)
         {
             isOver = true;

@@ -82,6 +82,7 @@ public class ShopManager : MonoBehaviour
         anim.SetBool("isReady", true);
         SoundManager.Instance.audioSourdEngine.Stop();
         SoundManager.Instance.StopAllSound();
+        SoundManager.Instance.PlaySoundBgm("Shop_Bgm");
     }  // 상점 오픈 애니메이션
 
     public void ShopOff()
@@ -231,6 +232,7 @@ public class ShopManager : MonoBehaviour
 
     private IEnumerator TrainStartMove() // 열차 시작 카운트다운
     {
+        SoundManager.Instance.StopSoundBgm("Shop_Bgm");
         isPlayerShop = false;
         trainEngine.isReady = true;
         yield return new WaitForSeconds(10f);
