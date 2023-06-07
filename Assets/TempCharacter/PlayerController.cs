@@ -480,9 +480,17 @@ public class PlayerController : MonoBehaviour
         MyItem[] detectedItem = _detectedItem.ToArray();
 
         for (int i = 0; i < handItem.Length; i++)
-            handItem[i].GetComponent<ItemInteractionTest>().Interaction(false);
+        {
+            ItemInteractionTest item = handItem[i].GetComponent<ItemInteractionTest>();
+            if(item != null)
+                item.Interaction(false);
+        }
         for (int i = 0; i < detectedItem.Length; i++)
-            detectedItem[i].GetComponent<ItemInteractionTest>().Interaction(true);
+        {
+            ItemInteractionTest item = detectedItem[i].GetComponent<ItemInteractionTest>();
+            if (item != null)
+                item.Interaction(true);
+        }
     }
 
     private void DetectGroundBlock()
@@ -502,7 +510,9 @@ public class PlayerController : MonoBehaviour
                     if(item != null)
                     {
                         Debug.Log("이거 해?");
-                        _currentblock.GetChild(i).GetComponent<ItemInteractionTest>().Interaction(false);
+                        ItemInteractionTest interactionItem = _currentblock.GetChild(i).GetComponent<ItemInteractionTest>();
+                        if (interactionItem != null)
+                            interactionItem.Interaction(false);
                     }
                 }
             }
@@ -520,7 +530,9 @@ public class PlayerController : MonoBehaviour
                     if (_currentFrontObject == null)
                     {
                         // 새로운 하이라이트 넣어주기
-                        item.GetComponent<ItemInteractionTest>().Interaction(true);
+                        ItemInteractionTest interactionItem = item.GetComponent<ItemInteractionTest>();
+                        if (interactionItem != null)
+                            interactionItem.Interaction(true);
                     }
 
                     _detectedItem.Push(item);
@@ -795,7 +807,7 @@ public class PlayerController : MonoBehaviour
         {
             if (CurrentHandItem.ItemType == EItemType.bucket && _currentFrontObject.gameObject.layer == LayerMask.NameToLayer("WaterBox"))
             {
-                if (_waterGauge.IsFillWater()&&_waterGauge.GetComponent<Item_Bucket>().Full)
+                if (_waterGauge.IsFillWater() || CurrentHandItem.GetComponent<Item_Bucket>().Full)
                 {
                     TrainWater water = _currentFrontObject.GetComponent<TrainWater>();
 

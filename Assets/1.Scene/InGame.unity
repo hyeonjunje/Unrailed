@@ -3126,9 +3126,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 872ef0356be89f244b399c1172f08e3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTest: 1
+  isTest: 0
   _loadingSceneUI: {fileID: 2059012224}
   _distanceUI: {fileID: 1014105166}
+  _aiDebugUI: {fileID: 1197873636}
   _worldManager: {fileID: 742170147}
   _shopManager: {fileID: 128752633}
   _boidsManager: {fileID: 1067327105}
@@ -5610,6 +5611,11 @@ PrefabInstance:
       objectReference: {fileID: 455940595194180523, guid: 4d471d9b24fc9134396a3d3e302341a5, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b40e214a666047448503f01c6b60b59, type: 3}
+--- !u!1 &1197873636 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3629763408069323896, guid: 9b40e214a666047448503f01c6b60b59, type: 3}
+  m_PrefabInstance: {fileID: 1197873635}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1202274870
 GameObject:
   m_ObjectHideFlags: 0

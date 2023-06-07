@@ -8,10 +8,12 @@ public class InGameScene : MonoBehaviour
 {
     [Header("테스트")]
     [SerializeField] private bool isTest = false;
+    [SerializeField] private bool isAITest = false;
 
     [Header("UI")]
     public GameObject _loadingSceneUI;
     public GameObject _distanceUI;
+    public GameObject _aiDebugUI;
 
     [Header("Manager")]
     [SerializeField] private WorldManager _worldManager;
@@ -40,6 +42,11 @@ public class InGameScene : MonoBehaviour
         // 로딩
         _loadingSceneUI.SetActive(true);
         isStart = false;
+
+        if (isAITest)
+            _aiDebugUI.SetActive(true);
+        else
+            _aiDebugUI.SetActive(false);
 
         // 로딩 시작
         LoadingFirstGame(isTest, 
