@@ -25,8 +25,6 @@ public class Helper : MonoBehaviour
         arrive = !arrive;
     }
 
-
-
     private void Awake()
     {
         Agent = GetComponent<PathFindingAgent>();

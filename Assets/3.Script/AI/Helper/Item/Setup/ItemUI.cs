@@ -11,10 +11,12 @@ public class ItemUI : MonoBehaviour
     private ItemUI2 _ui;
     [HideInInspector]
     public AI_Item _item;
+    TrainMovement _train;
     private void Awake()
     {
         _emoteManager = FindObjectOfType<EmoteManager>();
         _ui = FindObjectOfType<ItemUI2>();
+        _train = FindObjectOfType<TrainMovement>();
     }
 
     void Update()
@@ -23,7 +25,7 @@ public class ItemUI : MonoBehaviour
     }
 
 
-    private void CheckItemIsOn()
+    public void CheckItemIsOn()
     {
         if(_item==null)
         {
@@ -35,12 +37,13 @@ public class ItemUI : MonoBehaviour
                     {
                         background.enabled = true;
                     }
-
                     _image.enabled = true;
                     _image.sprite = _emoteManager.GetEmote(item.ID);
                     Vector3 screenPosition = Camera.main.WorldToScreenPoint(item.transform.position + Vector3.up * 1.5f);
                     transform.position = screenPosition;
+                    Debug.Log(item);
                     _item = item;
+                    break;
                 }
             }
         }
