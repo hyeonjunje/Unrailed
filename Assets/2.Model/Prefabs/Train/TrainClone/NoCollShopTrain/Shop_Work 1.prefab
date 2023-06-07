@@ -581,7 +581,6 @@ GameObject:
   - component: {fileID: -4420265926955975397}
   - component: {fileID: -7612223347651848664}
   - component: {fileID: -8024142192366268843}
-  - component: {fileID: -636372510955817332}
   m_Layer: 22
   m_Name: Shop_Work 1
   m_TagString: ShopItem
@@ -663,21 +662,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEmpty: 0
   invisibleType: 1
---- !u!114 &-636372510955817332
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3258006711623640053}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  impassableType: 0
-  impassableDir: 0
-  length: 1
 --- !u!1 &3418233748925569950
 GameObject:
   m_ObjectHideFlags: 0

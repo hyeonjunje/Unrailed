@@ -31,18 +31,6 @@ public class ImpassableObject : MonoBehaviour
         UpdateMapData(true);
     }
 
-    private void OnEnable()
-    {
-        prevPos = transform.position;
-
-        UpdateMapData(false);
-    }
-
-    private void OnDisable()
-    {
-        UpdateMapData(true);
-    }
-
     private void Update()
     {
         if (impassableType == EImpassableObjectType.dynamicObject)
