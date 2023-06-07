@@ -37,25 +37,27 @@ public class ItemUI2 : MonoBehaviour
 
                     _image.enabled = true;
                     _image.sprite = _emoteManager.GetEmote(item.ID);
-                    Vector3 screenPosition = Camera.main.WorldToScreenPoint(item.transform.position + Vector3.up * 1.5f);
-                    transform.position = screenPosition;
                     _item = item;
                     break;
                 }
             }
 
         }
-        else
+        else if (_item != null && _item != _ui._item)
         {
-            if (_item.IsOn)
+            Vector3 screenPosition = Camera.main.WorldToScreenPoint(_item.transform.position + Vector3.up * 1.5f);
+            transform.position = screenPosition;
+
+        }
+
+        else if(_item!=null&&_item.IsOn)
+        {
+            foreach (var background in _backGround)
             {
-                foreach (var background in _backGround)
-                {
-                    background.enabled = false;
-                }
-                _image.enabled = false;
-                _item = null;
+                background.enabled = false;
             }
+            _image.enabled = false;
+            _item = null;
         }
 
 

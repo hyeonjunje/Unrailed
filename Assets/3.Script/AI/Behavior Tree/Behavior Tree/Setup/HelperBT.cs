@@ -14,6 +14,7 @@ public class HelperBT : BaseAI
         public static readonly BlackBoardKey ResourceType = new BlackBoardKey() { Name = "ResourceType" };
         public static readonly BlackBoardKey Arrive = new BlackBoardKey() { Name = "Arrive" };
         public static readonly BlackBoardKey Home = new BlackBoardKey() { Name = "Home" };
+        public static readonly BlackBoardKey Item = new BlackBoardKey() { Name = "Item" };
 
         public string Name;
 
@@ -107,10 +108,10 @@ public class HelperBT : BaseAI
                              //플레이어가 들고 있는지 확인하기
                              if (interaction.CanPerform())
                              {
-                                 _item = item;
-                                 _item.PickUp();
-                                 _emoteImage.sprite = _emoteManager.GetEmote(_item.ID);
-                                 _agent.MoveTo(_item.InteractionPoint);
+                                 _localMemory.SetGeneric<AI_Item>(BlackBoardKey.Item, item);
+
+                                 _emoteImage.sprite = _emoteManager.GetEmote(item.ID);
+                                 _agent.MoveTo(item.InteractionPoint);
                                  _animator.SetBool(isMove, true);
                              }
                              else
@@ -138,6 +139,10 @@ public class HelperBT : BaseAI
 
         var PickUpTool = FindTools.Add<BTNode_Action>("도구 들기", () =>
          {
+             var item = _localMemory.GetGeneric<AI_Item>(BlackBoardKey.Item);
+             _item = item;
+             _item.PickUp();
+
              if (_item != null)
              {
                  switch (_item.Type)
