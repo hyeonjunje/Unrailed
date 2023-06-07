@@ -119,7 +119,6 @@ public class EnemyBT : BaseAI
 
             },()=>
             {
-                Home.TargettoSteal(_agent);
                 //자원이 더 이상 없다면 
                 if (Home.NonethisResourceTypeEnemy || _stack._handItem.Peek().EnemyCheckItemType)
                 {

@@ -103,10 +103,9 @@ public class Resource : MonoBehaviour
 
 
 
-    public WorldResource dd(Helper brain)
+    public WorldResource ResearchTarget(Helper brain)
     {
-        //자원 업데이트
-        //PopulateResources();
+        //갈 수 있는 곳이 없다면 실행
         WorldResource.EType targetResource = _defaultResource;
         var resourceTypes = System.Enum.GetValues(typeof(WorldResource.EType));
 

@@ -11,12 +11,12 @@ public class Item_Bucket : AI_Item
     public override void PickUp()
     {
         IsOn = !IsOn;
-        Debug.Log($"양동이는 지금 {(IsOn ? "들려있어용" : "바닥이에용")}");
+        //Debug.Log($"양동이는 지금 {(IsOn ? "들려있어용" : "바닥이에용")}");
     }
 
     public void BucketisFull()
     {
         Full = !Full;
-        Debug.Log($"양동이는 지금 {(Full ? "다 찼어요" : "비어있어요")}");
+        //Debug.Log($"양동이는 지금 {(Full ? "다 찼어요" : "비어있어요")}");
     }
 }
