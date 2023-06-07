@@ -54,7 +54,7 @@ public class ShopItem : MonoBehaviour
                 }
                 else return;
         }
-
+        SoundManager.Instance.PlaySoundEffect("Train_Buy");
         ShopManager.Instance.trainCoin--;
         ShopManager.Instance.TrainCost();
         _isSpawn = false;

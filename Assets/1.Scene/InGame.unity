@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17320372, g: 0.21648806, b: 0.29851913, a: 1}
+  m_IndirectSpecularColor: {r: 0.17320406, g: 0.21648876, b: 0.29851997, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1155,6 +1155,30 @@ PrefabInstance:
     - target: {fileID: 2722014226327600863, guid: 6010932c569af7f458f259e2cfa4f3f8, type: 3}
       propertyPath: m_Name
       value: SoundManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 2722014226327600871, guid: 6010932c569af7f458f259e2cfa4f3f8, type: 3}
+      propertyPath: soundsBgm.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2722014226327600871, guid: 6010932c569af7f458f259e2cfa4f3f8, type: 3}
+      propertyPath: soundsEffect.Array.size
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 2722014226327600871, guid: 6010932c569af7f458f259e2cfa4f3f8, type: 3}
+      propertyPath: soundsBgm.Array.data[4].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 5f70bf2e379bc8a4ab9ac2864db39b53, type: 3}
+    - target: {fileID: 2722014226327600871, guid: 6010932c569af7f458f259e2cfa4f3f8, type: 3}
+      propertyPath: soundsBgm.Array.data[4].name
+      value: Shop_Bgm
+      objectReference: {fileID: 0}
+    - target: {fileID: 2722014226327600871, guid: 6010932c569af7f458f259e2cfa4f3f8, type: 3}
+      propertyPath: soundsEffect.Array.data[29].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 7880a47ccf437eb49bdbbc1d92f498eb, type: 3}
+    - target: {fileID: 2722014226327600871, guid: 6010932c569af7f458f259e2cfa4f3f8, type: 3}
+      propertyPath: soundsEffect.Array.data[29].name
+      value: Train_Buy
       objectReference: {fileID: 0}
     - target: {fileID: 2722014226327600872, guid: 6010932c569af7f458f259e2cfa4f3f8, type: 3}
       propertyPath: m_RootOrder
