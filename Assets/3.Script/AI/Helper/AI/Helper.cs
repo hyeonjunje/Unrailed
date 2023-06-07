@@ -20,7 +20,7 @@ public class Helper : MonoBehaviour
     [HideInInspector]
     public WorldResource.EType DefaultResource = WorldResource.EType.Wood;
 
-    public void arr()
+    public void ArriveStation()
     {
         arrive = !arrive;
     }
