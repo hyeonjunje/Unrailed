@@ -48,7 +48,6 @@ public class HelperBT : BaseAI
     private void Awake()
     {
         _emoteManager = FindObjectOfType<EmoteManager>();
-
         _stack = GetComponent<AI_Stack>();
         _helper = GetComponent<Helper>();
         _animator = GetComponent<Animator>();
@@ -63,14 +62,15 @@ public class HelperBT : BaseAI
         _localMemory = BlackboardManager.Instance.GetIndividualBlackboard<BlackBoardKey>(this);
         _localMemory.SetGeneric<WorldResource.EType>(BlackBoardKey.Order, WorldResource.EType.Wood);
         _localMemory.SetGeneric<bool>(BlackBoardKey.Arrive, _arrive);
-        _localMemory.SetGeneric<Vector3>(BlackBoardKey.Home, _engine.rails.First.Value.transform.position);
+
+        Vector3 home = _agent.FindCloestAroundEndPosition(GoalManager.Instance.lastRail.transform.position);
+        _localMemory.SetGeneric<Vector3>(BlackBoardKey.Home, home);
 
         var BTRoot = _tree.RootNode.Add<BTNode_Selector>("BT 시작");
         BTRoot.AddService<BTServiceBase>("명령을 기다리는 Service", (float deltaTime) =>
         {
             // 전
             var order = _localMemory.GetGeneric<WorldResource.EType>(BlackBoardKey.Order);
-            _localMemory.SetGeneric<Vector3>(BlackBoardKey.Home, _engine.rails.First.Value.transform.position);
             _order = _helper.TargetResource;
 
         });
@@ -442,8 +442,7 @@ public class HelperBT : BaseAI
 
         var CarryingResource = WaterOrResource.Add<BTNode_Action>("자원 운반하기", () =>
         {
-            Vector3 home = _localMemory.GetGeneric<Vector3>(BlackBoardKey.Home);
-            //나중에 기차 좌표로 바꾸기
+            Vector3 home = _agent.FindCloestAroundEndPosition(GoalManager.Instance.lastRail.transform.position);
             _agent.MoveTo(home);
             return BehaviorTree.ENodeStatus.InProgress;
         },
@@ -622,7 +621,7 @@ public class HelperBT : BaseAI
         var CantDoAnything = BTRoot.Add<BTNode_Sequence>("명령을 수행할 수 없는 경우");
         CantDoAnything.Add<BTNode_Action>("경고", () =>
         {
-            _emoteImage.sprite = _emoteManager.GetEmote(_emoteManager.WarningEmote);
+            _emoteImage.sprite = _emoteManager.GetEmote(_emoteManager.SadEmote);
             return BehaviorTree.ENodeStatus.InProgress;
         }, () =>
          {

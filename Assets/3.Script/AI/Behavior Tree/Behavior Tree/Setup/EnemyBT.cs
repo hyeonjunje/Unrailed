@@ -14,6 +14,7 @@ public class EnemyBT : BaseAI
 
     private Blackboard<BlackBoardKey> _localMemory;
     private AnimalHealth _health;
+    protected readonly int isRoot = Animator.StringToHash("isRoot");
 
     private void Awake()
     {
@@ -85,7 +86,7 @@ public class EnemyBT : BaseAI
             if(_target!=null)
             {
                 _animator.SetBool(isMove, false);
-                _animator.SetBool("isRoot", true);
+                _animator.SetBool(isRoot, true);
                 _stack.EnemyDetectGroundBlock(_target);
                 //처음 드는 거 
                 if (_stack._handItem.Count == 0)
@@ -157,7 +158,7 @@ public class EnemyBT : BaseAI
             () =>
             {
                 SoundManager.Instance.PlaySoundEffect("Enemy_Laugh");
-                _animator.SetBool("isRoot", false);
+                _animator.SetBool(isRoot, false);
                 _stack.EnemyThrowResource();
                 _target = null;
                 _animator.SetBool(isMove, true);
@@ -178,17 +179,16 @@ public class EnemyBT : BaseAI
                 _currentblock = _stack.BFS(this);
                 _stack.EnemyPutDown();
                 _localMemory.SetGeneric(BlackBoardKey.HP, _health.CurrentHp);
-                 _animator.SetBool(isMove, true);
-                 _animator.SetBool("isRoot", false);
-                 _target = null;
+
+                _animator.SetBool(isMove, true);
+                _animator.SetBool(isRoot, false);
+                _target = null;
              }
              return BehaviorTree.ENodeStatus.InProgress;
 
          }, () =>
          {
-
-             return _target==null ? BehaviorTree.ENodeStatus.Failed : BehaviorTree.ENodeStatus.InProgress;
-
+             return _target == null ? BehaviorTree.ENodeStatus.Failed : BehaviorTree.ENodeStatus.InProgress;
          });
 
 
@@ -197,7 +197,7 @@ public class EnemyBT : BaseAI
         WanderRoot.Add<BTNode_Action>("무작위 이동중",
         () =>
         {
-            _animator.SetBool("isRoot", false);
+            _animator.SetBool(isRoot, false);
             _animator.SetBool(isMove, true);
             _agent.MoveToRandomPosition();
             return BehaviorTree.ENodeStatus.InProgress;

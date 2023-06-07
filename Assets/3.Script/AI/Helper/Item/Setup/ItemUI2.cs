@@ -3,20 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemUI : MonoBehaviour
+public class ItemUI2 : MonoBehaviour
 {
     [SerializeField] private Image[] _backGround;
     [SerializeField] private Image _image;
     private EmoteManager _emoteManager;
-    private ItemUI2 _ui;
+    private ItemUI _ui;
     [HideInInspector]
     public AI_Item _item;
     private void Awake()
     {
         _emoteManager = FindObjectOfType<EmoteManager>();
-        _ui = FindObjectOfType<ItemUI2>();
+        _ui = FindObjectOfType<ItemUI>();
     }
-
     void Update()
     {
         CheckItemIsOn();
@@ -25,7 +24,7 @@ public class ItemUI : MonoBehaviour
 
     private void CheckItemIsOn()
     {
-        if(_item==null)
+        if (_item == null)
         {
             foreach (var item in ItemManager.Instance.RegisteredObjects)
             {
@@ -43,6 +42,7 @@ public class ItemUI : MonoBehaviour
                     _item = item;
                 }
             }
+
         }
         else
         {
@@ -55,7 +55,6 @@ public class ItemUI : MonoBehaviour
                 _image.enabled = false;
                 _item = null;
             }
-
         }
 
 
