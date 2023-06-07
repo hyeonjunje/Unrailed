@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5307977739444512397}
   - component: {fileID: 5098463565149685744}
   - component: {fileID: -1804841536153243724}
+  - component: {fileID: 7636158973077844722}
   m_Layer: 18
   m_Name: ItemIron02
   m_TagString: Invisible
@@ -76,7 +77,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &-1804841536153243724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,8 +93,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _Type: 2
+  Stack: {fileID: 0}
   _item: {fileID: 6337666441607593902, guid: e9ea948b5baee254a94c64ecba50279d, type: 3}
   _resourceHp: 2.7
+--- !u!114 &7636158973077844722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 927781646846498863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f831ac8066088a348af1d3371650a6d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isHighlight: 0
+  _brightAmount: 50
 --- !u!1 &927781646860496192
 GameObject:
   m_ObjectHideFlags: 0

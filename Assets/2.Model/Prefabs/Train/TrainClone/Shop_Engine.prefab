@@ -3422,6 +3422,7 @@ GameObject:
   - component: {fileID: 7000361787510523416}
   - component: {fileID: 5560794953054767258}
   - component: {fileID: 4952656996718425142}
+  - component: {fileID: 1228401892317434650}
   m_Layer: 22
   m_Name: Shop_Engine
   m_TagString: ShopItem
@@ -3489,6 +3490,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1228401892317434650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6947313233791652070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f831ac8066088a348af1d3371650a6d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isHighlight: 0
+  _brightAmount: 50
 --- !u!1 &6952161721232779402
 GameObject:
   m_ObjectHideFlags: 0

@@ -13550,6 +13550,7 @@ GameObject:
   - component: {fileID: 8482775331012287860}
   - component: {fileID: 689593805594004183}
   - component: {fileID: 6277010031032534361}
+  - component: {fileID: 3030456515734604358}
   m_Layer: 20
   m_Name: Train_Water_Tank (1)
   m_TagString: Train
@@ -13648,6 +13649,20 @@ MonoBehaviour:
   impassableType: 2
   impassableDir: 2
   length: 2
+--- !u!114 &3030456515734604358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1903643235476169147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f831ac8066088a348af1d3371650a6d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isHighlight: 0
+  _brightAmount: 50
 --- !u!1 &1938445473616661766
 GameObject:
   m_ObjectHideFlags: 0
@@ -42625,6 +42640,7 @@ GameObject:
   - component: {fileID: 1380273303560225030}
   - component: {fileID: 7930280392481337767}
   - component: {fileID: 2646680449708261524}
+  - component: {fileID: 4995286211713815718}
   m_Layer: 25
   m_Name: Train_Creaft_Desk (1)
   m_TagString: Train
@@ -42737,6 +42753,20 @@ MonoBehaviour:
   impassableType: 2
   impassableDir: 2
   length: 2
+--- !u!114 &4995286211713815718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4472484093875932105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f831ac8066088a348af1d3371650a6d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isHighlight: 0
+  _brightAmount: 50
 --- !u!1 &4489305734398599427
 GameObject:
   m_ObjectHideFlags: 0
@@ -43020,6 +43050,7 @@ GameObject:
   - component: {fileID: 6641051746461728961}
   - component: {fileID: 6219378032837602346}
   - component: {fileID: 8541101423080750392}
+  - component: {fileID: 2462836062776008032}
   m_Layer: 24
   m_Name: Train_Chest_Box (1)
   m_TagString: Train
@@ -43115,6 +43146,20 @@ MonoBehaviour:
   impassableType: 2
   impassableDir: 2
   length: 2
+--- !u!114 &2462836062776008032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4654451409573904519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f831ac8066088a348af1d3371650a6d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isHighlight: 0
+  _brightAmount: 50
 --- !u!1 &4807325078442342660
 GameObject:
   m_ObjectHideFlags: 0
@@ -72108,6 +72153,7 @@ GameObject:
   - component: {fileID: 7236481637975153609}
   - component: {fileID: 3041581485862356137}
   - component: {fileID: 5486971268957395964}
+  - component: {fileID: 5526659531519189083}
   m_Layer: 0
   m_Name: Train_Head (1)
   m_TagString: Train
@@ -72224,6 +72270,20 @@ MonoBehaviour:
   impassableType: 2
   impassableDir: 2
   length: 2
+--- !u!114 &5526659531519189083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7364069412514627232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f831ac8066088a348af1d3371650a6d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isHighlight: 0
+  _brightAmount: 50
 --- !u!1 &7375705258868589390
 GameObject:
   m_ObjectHideFlags: 0
@@ -72967,6 +73027,7 @@ GameObject:
   - component: {fileID: 7743143796530728433}
   - component: {fileID: 5764149003908905859}
   - component: {fileID: 4040109976128082779}
+  - component: {fileID: 7799810752024372201}
   m_Layer: 0
   m_Name: Train_Spare (1)
   m_TagString: Train
@@ -73055,6 +73116,20 @@ MonoBehaviour:
   impassableType: 3
   impassableDir: 0
   length: 1
+--- !u!114 &7799810752024372201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7743143796530728434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f831ac8066088a348af1d3371650a6d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isHighlight: 0
+  _brightAmount: 50
 --- !u!1 &7758817686782172489
 GameObject:
   m_ObjectHideFlags: 0

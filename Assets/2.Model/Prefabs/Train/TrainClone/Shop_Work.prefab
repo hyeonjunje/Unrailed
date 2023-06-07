@@ -1927,6 +1927,7 @@ GameObject:
   - component: {fileID: -4899928974256491322}
   - component: {fileID: -4420265926955975397}
   - component: {fileID: -7612223347651848664}
+  - component: {fileID: -407595719518785797}
   m_Layer: 22
   m_Name: Shop_Work
   m_TagString: ShopItem
@@ -1994,6 +1995,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-407595719518785797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3258006711623640053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f831ac8066088a348af1d3371650a6d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isHighlight: 0
+  _brightAmount: 50
 --- !u!1 &3418233748925569950
 GameObject:
   m_ObjectHideFlags: 0

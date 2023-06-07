@@ -319,6 +319,7 @@ GameObject:
   - component: {fileID: -8707084220548812272}
   - component: {fileID: -5560814190645310811}
   - component: {fileID: -8486133773397834221}
+  - component: {fileID: -5490764485498673911}
   m_Layer: 18
   m_Name: Tree01
   m_TagString: Invisible
@@ -382,7 +383,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0, z: 0}
+  impassableType: 0
+  impassableDir: 0
+  length: 1
 --- !u!114 &-8486133773397834221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -396,8 +399,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _Type: 0
+  Stack: {fileID: 0}
   _item: {fileID: 1554482166082667595, guid: b6e1b227b7cc406449be17199cf61543, type: 3}
   _resourceHp: 2.7
+--- !u!114 &-5490764485498673911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5019990921700754394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f831ac8066088a348af1d3371650a6d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isHighlight: 0
+  _brightAmount: 50
 --- !u!1 &5019990921733027023
 GameObject:
   m_ObjectHideFlags: 0

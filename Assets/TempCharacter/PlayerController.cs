@@ -62,6 +62,7 @@ public class PlayerController : MonoBehaviour
     public Transform AroundEmptyBlockTranform => BFS();
     public MyItem CurrentHandItem => _handItem.Count == 0 ? null : _handItem.Peek();  // 현재 들고 있는 아이템
     public ShopItem CurrentHoldTrain => _currentHoldTrain;
+    public Transform CurrentFrontObject => _currentFrontObject;
 
     public int BoltCount => _boltCount;
     private int _boltCount = 0;
@@ -158,6 +159,8 @@ public class PlayerController : MonoBehaviour
             _handItem = p.first;
             _detectedItem = p.second;
             ItemIOSound(0);
+
+            InteractionHighlight();
         }
 
         else if (_handItem.Count != 0 && _detectedItem.Count == 0) // 버리기
@@ -167,6 +170,8 @@ public class PlayerController : MonoBehaviour
             Pair<Stack<MyItem>, Stack<MyItem>> p = _handItem.Peek().PutDown(_handItem, _detectedItem);
             _handItem = p.first;
             _detectedItem = p.second;
+
+            InteractionHighlight();
         }
         else if (_handItem.Count != 0 && _detectedItem.Count != 0) // 교체
         {
@@ -175,6 +180,8 @@ public class PlayerController : MonoBehaviour
             Pair<Stack<MyItem>, Stack<MyItem>> p = _handItem.Peek().Change(_handItem, _detectedItem);
             _handItem = p.first;
             _detectedItem = p.second;
+
+            InteractionHighlight();
         }
     }
 
@@ -371,6 +378,9 @@ public class PlayerController : MonoBehaviour
 
     private void ItemIOSound(int i)
     {
+        if (_handItem.Count == 0)
+            return;
+
         switch (i)
         {
             //줍기
@@ -452,6 +462,17 @@ public class PlayerController : MonoBehaviour
 
     #region 감지 메소드
 
+    private void InteractionHighlight()
+    {
+        MyItem[] handItem = _handItem.ToArray();
+        MyItem[] detectedItem = _detectedItem.ToArray();
+
+        for (int i = 0; i < handItem.Length; i++)
+            handItem[i].GetComponent<ItemInteractionTest>().Interaction(false);
+        for (int i = 0; i < detectedItem.Length; i++)
+            detectedItem[i].GetComponent<ItemInteractionTest>().Interaction(true);
+    }
+
     private void DetectGroundBlock()
     {
         if (Physics.Raycast(_rayStartTransform.position, Vector3.down, out RaycastHit hit, _playerStat.detectRange, _playerStat.blockLayer))
@@ -460,13 +481,38 @@ public class PlayerController : MonoBehaviour
             if (_currentblock == hit.transform)
                 return;
 
+            if(_currentblock != null)
+            {
+                // 기존 하이라이트 꺼주기
+                for (int i = 0; i < _currentblock.childCount; i++)
+                {
+                    MyItem item = _currentblock.GetChild(i).GetComponent<MyItem>();
+                    if(item != null)
+                    {
+                        Debug.Log("이거 해?");
+                        _currentblock.GetChild(i).GetComponent<ItemInteractionTest>().Interaction(false);
+                    }
+                }
+            }
+
             _currentblock = hit.transform;
             _detectedItem = new Stack<MyItem>();
+
             for (int i = 0; i < _currentblock.childCount; i++)
             {
                 MyItem item = _currentblock.GetChild(i).GetComponent<MyItem>();
+
                 if (item != null)
+                {
+                    // 전방에 있는 오브젝트가 우선순위 위
+                    if (_currentFrontObject == null)
+                    {
+                        // 새로운 하이라이트 넣어주기
+                        item.GetComponent<ItemInteractionTest>().Interaction(true);
+                    }
+
                     _detectedItem.Push(item);
+                }
             }
         }
         else
@@ -521,11 +567,28 @@ public class PlayerController : MonoBehaviour
             // 캐싱
             if (_currentFrontObject == hit.transform)
                 return;
+
+            // 이전 오브젝트 하이라이트 꺼주기
+            if(_currentFrontObject != null)
+            {
+                Debug.Log("꺼줍니다.");
+                _currentFrontObject.GetComponent<ItemInteractionTest>().Interaction(false);
+            }
+
             _currentFrontObject = hit.transform;
 
+            // 새로운 오브젝트 하이라이트 켜주기
+            Debug.Log("켜줍니다.");
+            _currentFrontObject.GetComponent<ItemInteractionTest>().Interaction(true);
         }
         else
         {
+            if (_currentFrontObject != null)
+            {
+                Debug.Log("꺼줍니다.");
+                _currentFrontObject.GetComponent<ItemInteractionTest>().Interaction(false);
+            }
+
             _currentInteractCoolTime = 0;
             _isInteractive = false;
             _currentFrontObject = null;
