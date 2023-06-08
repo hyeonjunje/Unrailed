@@ -72,7 +72,6 @@ public class TrainMovement : MonoBehaviour
         cameraTarget = GameObject.FindGameObjectWithTag("Cinemachine").GetComponentsInChildren<Cinemachine.CinemachineVirtualCamera>();
         overText = GameObject.FindGameObjectWithTag("Cinemachine").GetComponent<Animator>();
         manager = FindObjectOfType<InGameScene>();
-        trainSpeed = 0.2f;
         overSpeed = 1f;
 
         if (trainType == TrainType.Engine)
@@ -207,7 +206,7 @@ public class TrainMovement : MonoBehaviour
         yield return new WaitForSeconds(2.5f);
         overText.SetBool("GameOver", true);
         yield return new WaitForSeconds(1.5f);
-        manager._loadingSceneUI.SetActive(true);
+        manager.backToLobbyUI.SetActive(true);
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene("IntroScene");
     }
@@ -218,7 +217,7 @@ public class TrainMovement : MonoBehaviour
         yield return new WaitForSeconds(2f);
         overText.SetBool("GameClear", true);
         yield return new WaitForSeconds(5f);
-        manager._loadingSceneUI.SetActive(true);
+        manager.backToLobbyUI.SetActive(true);
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene("IntroScene");
     }

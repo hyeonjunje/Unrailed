@@ -25,15 +25,16 @@ public class Item_Bucket_Water : SimpleInteraction
 
     public override bool CanPerform()
     {
-        Debug.Log(_bucket.IsOn);
         //양동이를 든 상태라면 가능
         return base.CanPerform() && _bucket.IsOn && !_bucket.Full;
     }
 
     public void FillGauge()
     {
-        if(Watergauge.value<0.9f)
+
+        if (Watergauge.value<0.9f)
         {
+            WaterMesh.SetActive(false);
             Watergauge.gameObject.SetActive(true);
             Watergauge.value = Mathf.MoveTowards(Watergauge.value, 0.9f, Time.deltaTime*0.5f);
         }
@@ -45,16 +46,13 @@ public class Item_Bucket_Water : SimpleInteraction
         }
 
     }
-    private void OnDisable()
-    {
-        Watergauge.value = 0;
-    }
 
     public bool Stop()
     {
         if(Watergauge.value>=1)
         {
             _bucket.BucketisFull();
+            Watergauge.value = 0;
             return true;
         }
         return false;

@@ -14,6 +14,7 @@ public class HelperBT : BaseAI
         public static readonly BlackBoardKey ResourceType = new BlackBoardKey() { Name = "ResourceType" };
         public static readonly BlackBoardKey Arrive = new BlackBoardKey() { Name = "Arrive" };
         public static readonly BlackBoardKey Home = new BlackBoardKey() { Name = "Home" };
+        public static readonly BlackBoardKey Item = new BlackBoardKey() { Name = "Item" };
 
         public string Name;
 
@@ -21,8 +22,6 @@ public class HelperBT : BaseAI
 
     private Blackboard<BlackBoardKey> _localMemory;
 
-    //기차 위치로 나중에 바꾸기
-    private float _rotateSpeed = 10;
 
     private Helper _helper;
     //도구
@@ -107,10 +106,9 @@ public class HelperBT : BaseAI
                              //플레이어가 들고 있는지 확인하기
                              if (interaction.CanPerform())
                              {
-                                 _item = item;
-                                 _item.PickUp();
-                                 _emoteImage.sprite = _emoteManager.GetEmote(_item.ID);
-                                 _agent.MoveTo(_item.InteractionPoint);
+                                 _localMemory.SetGeneric<AI_Item>(BlackBoardKey.Item, item);
+                                 _emoteImage.sprite = _emoteManager.GetEmote(item.ID);
+                                 _agent.MoveTo(item.InteractionPoint);
                                  _animator.SetBool(isMove, true);
                              }
                              else
@@ -138,8 +136,24 @@ public class HelperBT : BaseAI
 
         var PickUpTool = FindTools.Add<BTNode_Action>("도구 들기", () =>
          {
+             //도착
+             var item = _localMemory.GetGeneric<AI_Item>(BlackBoardKey.Item);
+             _item = item;
+
              if (_item != null)
              {
+                 foreach (var interaction in item.Interactions)
+                 {
+                     //플레이어가 들고 있는지 확인하기
+                     if (interaction.CanPerform())
+                     {
+                         item.PickUp();
+                         SoundManager.Instance.PlaySoundEffect("Player_ToolsUp");
+                         _emoteImage.sprite = _emoteManager.GetEmote(item.ID);
+                         break;
+                     }
+                 }
+
                  switch (_item.Type)
                  {
                      //양동이면 양손
@@ -235,15 +249,28 @@ public class HelperBT : BaseAI
 
         ImpossibleToWork.Add<BTNode_Action>("타겟이 갈 수 없는 곳에 있어요", () =>
          {
-             _emoteImage.sprite = _emoteManager.GetEmote(_emoteManager.WarningEmote);
-             _animator.SetBool(isMove, false);
-             return BehaviorTree.ENodeStatus.InProgress;
-         },
-         () =>
-          {
+             _target = Home.ResearchTarget(_helper);
+             return BehaviorTree.ENodeStatus.Succeeded;
+         });
 
-             return BehaviorTree.ENodeStatus.InProgress;
-          });
+
+        ImpossibleToWork.Add<BTNode_Action>("타겟이 갈 수 없는 곳에 있어요", () =>
+        {
+            if (_target != null)
+            {
+                  Vector3 position = _agent.FindCloestAroundEndPosition(_target.transform.position);
+                 _agent.MoveTo(position);
+
+            return BehaviorTree.ENodeStatus.InProgress;
+            }
+
+            return BehaviorTree.ENodeStatus.Failed;
+        },
+         () =>
+         {
+             return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
+         });
+
 
 
         #endregion
@@ -316,20 +343,23 @@ public class HelperBT : BaseAI
              switch (_target.Type)
              {
                  case WorldResource.EType.Water:
+                     SoundManager.Instance.PlaySoundEffect("Player_WaterImport");
                      break;
 
                  case WorldResource.EType.Resource:
                      _stack.DetectGroundBlock(_target);
-                     if (_stack._handItem.Count == 0)
+                     if (_stack.HandItem.Count == 0)
                      {
+                         SoundManager.Instance.PlaySoundEffect("Item_Up");
                          _stack.InteractiveItem();
                      }
                      //그 후 쌓기
                      else
                      {
-                         if(!_stack._handItem.Peek().HelperCheckItemType)
+                         if(!_stack.HandItem.Peek().HelperCheckItemType)
                          {
-                            _stack.InteractiveItemAuto();
+                             SoundManager.Instance.PlaySoundEffect("Item_Up");
+                             _stack.InteractiveItemAuto();
                          }
 
                      }
@@ -397,7 +427,7 @@ public class HelperBT : BaseAI
           }
          );
 
-        var SleepRoot = WaterOrResource.Add<BTNode_Action>("자기", () =>
+        var SleepRoot = WaterOrResource.Add<BTNode_Action>("양동이 내려놓기, 세 개 모으기", () =>
          {
              switch (_target.Type)
              {
@@ -420,13 +450,13 @@ public class HelperBT : BaseAI
 
                      Home.GetGatherTarget(_helper);
                      //자원이 더 이상 없다면 
-                     if (Home.NonethisResourceType||_stack._handItem.Peek().HelperCheckItemType)
+                     if (Home.NonethisResourceTypeHelper||_stack.HandItem.Peek().HelperCheckItemType)
                      {
                          return BehaviorTree.ENodeStatus.Succeeded;
                      }
                      else
                      {
-                         return _stack._handItem.Count == 3 ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.Failed;
+                         return _stack.HandItem.Count == 3 ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.Failed;
 
                      }
                          //세 개 들었으면 옮기기
@@ -465,7 +495,7 @@ public class HelperBT : BaseAI
         {
             Home.GetGatherTarget(_helper);
             //더 이상 채집할 자원이 없는경우
-            if (Home.NonethisResourceType)
+            if (Home.NonethisResourceTypeHelper)
             {
                 _emoteImage.sprite = _emoteManager.GetEmote(_emoteManager.WarningEmote);
                 _animator.SetBool(isMove, false);
@@ -477,7 +507,7 @@ public class HelperBT : BaseAI
                 var order = _localMemory.GetGeneric<WorldResource.EType>(BlackBoardKey.Order);
                 if (order == _order)
                 {
-                    return _stack._handItem.Count == 0 ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
+                    return _stack.HandItem.Count == 0 ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
                 }
                 else
                     _localMemory.SetGeneric<WorldResource.EType>(BlackBoardKey.Order, _order);
@@ -495,10 +525,11 @@ public class HelperBT : BaseAI
         var GotoStation = BTRoot.Add<BTNode_Sequence>("도착한경우");
         GotoStation.Add<BTNode_Action>("역으로 이동하기", () =>
         {
+            PutDown();
             if (_helper.arrive)
             {
-                PutDown();
                 _emoteImage.sprite = _emoteManager.GetEmote(_emoteManager.HeartEmote);
+                SoundManager.Instance.PlaySoundEffect("Player_Dash");
                 Vector3 position = ShopManager.Instance.nextGame.position;
                 _agent.MoveTo(position);
                 _agent.moveSpeed = 10;
@@ -509,7 +540,11 @@ public class HelperBT : BaseAI
             return BehaviorTree.ENodeStatus.Failed;
         }, () =>
         {
+            if(_helper.arrive)
+            {
             return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
+            }
+            return BehaviorTree.ENodeStatus.Failed;
         });
 
         GotoStation.Add<BTNode_Action>("밟고 있다면 가만히 있기", () =>
@@ -650,14 +685,18 @@ public class HelperBT : BaseAI
     {
         if (_item != null)
         {
+            Debug.Log("내려놓기");
             _item.PickUp();
-            _item.transform.rotation = Quaternion.identity;
-            _item.transform.parent = _stack.BFS(this);
-            _item.transform.localPosition = (Vector3.up * 0.5f) + (Vector3.up * 0.15f);
-            _item = null;
+            SoundManager.Instance.StopSoundEffect("Player_ToolsDown");
+            SoundManager.Instance.PlaySoundEffect("Player_ToolsDown");
 
+            _item.transform.parent = _stack.BFS(this);
+            _item.transform.rotation = Quaternion.identity;
+            _item.transform.localPosition = (Vector3.up * 0.5f) + (Vector3.up * 0.15f);
+            _localMemory.SetGeneric<AI_Item>(BlackBoardKey.Item, null);
             _animator.SetBool(isDig, false);
             _animator.SetBool(isMove, false);
+            _item = null;
 
         }
     }

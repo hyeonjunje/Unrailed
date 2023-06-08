@@ -29766,8 +29766,8 @@ GameObject:
   - component: {fileID: 3052571946307180053}
   - component: {fileID: 85257652681190881}
   - component: {fileID: 8326471479738782115}
-  - component: {fileID: -961326969799764599}
   - component: {fileID: 1168680531467440955}
+  - component: {fileID: 1153504133818400579}
   m_Layer: 17
   m_Name: Enemy
   m_TagString: Invisible
@@ -29839,11 +29839,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2
-  rotateSpeed: 2
+  rotateSpeed: 4
   randomRange: 5
   throwLayer:
     serializedVersion: 2
     m_Bits: 536870928
+  impassableLayer:
+    serializedVersion: 2
+    m_Bits: 2684649488
   finalNodeList: []
 --- !u!114 &6537026758373258617
 MonoBehaviour:
@@ -29912,21 +29915,6 @@ CapsuleCollider:
   m_Height: 1.44
   m_Direction: 1
   m_Center: {x: 0, y: 0.65, z: 0}
---- !u!114 &-961326969799764599
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6537026758373258598}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0df4e5c5d0110e34082ec4414a568f22, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  impassableType: 1
-  impassableDir: 0
-  length: 1
 --- !u!114 &1168680531467440955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29941,6 +29929,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isHighlight: 0
   _brightAmount: 50
+--- !u!114 &1153504133818400579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6537026758373258598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b0c6ed2abea96c4a8d6ae15051610e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEmpty: 0
+  invisibleType: 3
 --- !u!1 &6537026758598722348
 GameObject:
   m_ObjectHideFlags: 0

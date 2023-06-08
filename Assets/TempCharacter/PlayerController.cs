@@ -161,6 +161,13 @@ public class PlayerController : MonoBehaviour
             ItemIOSound(0);
 
             InteractionHighlight();
+
+            if (_handItem.Peek().ItemType == EItemType.wood || _handItem.Peek().ItemType == EItemType.steel)
+            {
+                WorldResource resource = _handItem.Peek().GetComponent<WorldResource>();
+                if (resource != null)
+                    ResourceTracker.Instance.DeRegisterResource(resource);
+            }
         }
 
         else if (_handItem.Count != 0 && _detectedItem.Count == 0) // 버리기
@@ -182,6 +189,8 @@ public class PlayerController : MonoBehaviour
             _detectedItem = p.second;
 
             InteractionHighlight();
+
+
         }
     }
 
@@ -196,8 +205,15 @@ public class PlayerController : MonoBehaviour
             Pair<Stack<MyItem>, Stack<MyItem>> p = _handItem.Peek().AutoGain(_handItem, _detectedItem);
             _handItem = p.first;
             _detectedItem = p.second;
+            if (_handItem.Peek().ItemType == EItemType.wood || _handItem.Peek().ItemType == EItemType.steel)
+            {
+                WorldResource resource = _handItem.Peek().GetComponent<WorldResource>();
+                if(resource!=null)
+                ResourceTracker.Instance.DeRegisterResource(resource);
+            }
 
         }
+
     }
 
     // 상점 기차아이템과 상호작용하는 메소드
@@ -210,7 +226,7 @@ public class PlayerController : MonoBehaviour
         if (ShopManager.Instance.trainCoin == 0)
         {
             Debug.Log("코일 100개를 충전해줄게");
-            ShopManager.Instance.trainCoin = 100;
+            // ShopManager.Instance.trainCoin = 100;
         }
 
         // 감지된게 있고 가지고 있는 차량이 없을 때  => 주워
@@ -458,6 +474,8 @@ public class PlayerController : MonoBehaviour
             _handItem = p.first;
             _detectedItem = p.second;
         }
+
+        _playerAnim.anim.SetBool("isTwoHandsPickUp", false);
     }
 
     #region 감지 메소드
@@ -468,9 +486,17 @@ public class PlayerController : MonoBehaviour
         MyItem[] detectedItem = _detectedItem.ToArray();
 
         for (int i = 0; i < handItem.Length; i++)
-            handItem[i].GetComponent<ItemInteractionTest>().Interaction(false);
+        {
+            ItemInteractionTest item = handItem[i].GetComponent<ItemInteractionTest>();
+            if(item != null)
+                item.Interaction(false);
+        }
         for (int i = 0; i < detectedItem.Length; i++)
-            detectedItem[i].GetComponent<ItemInteractionTest>().Interaction(true);
+        {
+            ItemInteractionTest item = detectedItem[i].GetComponent<ItemInteractionTest>();
+            if (item != null)
+                item.Interaction(true);
+        }
     }
 
     private void DetectGroundBlock()
@@ -490,7 +516,9 @@ public class PlayerController : MonoBehaviour
                     if(item != null)
                     {
                         Debug.Log("이거 해?");
-                        _currentblock.GetChild(i).GetComponent<ItemInteractionTest>().Interaction(false);
+                        ItemInteractionTest interactionItem = _currentblock.GetChild(i).GetComponent<ItemInteractionTest>();
+                        if (interactionItem != null)
+                            interactionItem.Interaction(false);
                     }
                 }
             }
@@ -508,7 +536,9 @@ public class PlayerController : MonoBehaviour
                     if (_currentFrontObject == null)
                     {
                         // 새로운 하이라이트 넣어주기
-                        item.GetComponent<ItemInteractionTest>().Interaction(true);
+                        ItemInteractionTest interactionItem = item.GetComponent<ItemInteractionTest>();
+                        if (interactionItem != null)
+                            interactionItem.Interaction(true);
                     }
 
                     _detectedItem.Push(item);
@@ -656,7 +686,6 @@ public class PlayerController : MonoBehaviour
                     }
                     // 물 채우기
                     _waterGauge.gameObject.SetActive(true);
-
                     _waterGauge.FillGauge();
                 }
                 else
@@ -665,11 +694,6 @@ public class PlayerController : MonoBehaviour
                     _isCharge = false;
                 }
             }
-        }
-        else
-        {
-            if (!_waterGauge.IsFillWater())
-                _waterGauge.ResetWater();
         }
     }
 
@@ -764,6 +788,7 @@ public class PlayerController : MonoBehaviour
 
     public void Respawn()
     {
+        _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
         _rigidbody.useGravity = true;
 
         _isRespawn = true;
@@ -783,7 +808,7 @@ public class PlayerController : MonoBehaviour
         {
             if (CurrentHandItem.ItemType == EItemType.bucket && _currentFrontObject.gameObject.layer == LayerMask.NameToLayer("WaterBox"))
             {
-                if (_waterGauge.IsFillWater())
+                if (_waterGauge.IsFillWater() || CurrentHandItem.GetComponent<Item_Bucket>().Full)
                 {
                     TrainWater water = _currentFrontObject.GetComponent<TrainWater>();
 
@@ -791,7 +816,7 @@ public class PlayerController : MonoBehaviour
                     water.FireOff();
                     CurrentHandItem.ActiveWater(false);
                     _waterGauge.ResetWater();
-
+                    CurrentHandItem.GetComponent<Item_Bucket>().BucketisFull();
                 }
             }
         }
@@ -803,6 +828,7 @@ public class PlayerController : MonoBehaviour
         {
             if (_isRespawn)
             {
+                _rigidbody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
                 _rigidbody.useGravity = false;
                 _balloonObject.SetActive(false);
                 _isRespawn = false;
@@ -818,6 +844,7 @@ public class PlayerController : MonoBehaviour
             {
                 InteractionUI startUI = other.GetComponent<InteractionUI>();
 
+                if (startUI.isMapEditor) startUI.GoMapEdit();
                 if (!startUI.Exit) startUI.GameStart();
                 if (startUI.Exit) startUI.GameExit();
             }

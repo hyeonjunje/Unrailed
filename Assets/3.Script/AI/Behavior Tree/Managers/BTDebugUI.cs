@@ -7,6 +7,7 @@ public class BTDebugUI : MonoBehaviour
 {
     private BehaviorTree _tree;
     private Helper _helper;
+    private EnemyBT _enemy;
     [SerializeField] private Text text;
 
     private void Start()
@@ -20,9 +21,10 @@ public class BTDebugUI : MonoBehaviour
         if(_tree==null)
         {
             _helper = FindObjectOfType<Helper>();
-            if(_helper!=null)
+            _enemy = FindObjectOfType<EnemyBT>();
+            if(_enemy!=null)
             {
-                _tree = _helper.GetComponent<BehaviorTree>();
+                _tree = _enemy.GetComponent<BehaviorTree>();
 
             }
         }

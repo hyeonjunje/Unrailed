@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class FollowPlayerUI : MonoBehaviour
 {
-    private Transform followTarget;
+    [SerializeField] private Transform followTarget;
     private Transform followCam;
 
     [SerializeField] bool EmotUI;
+
     private void Awake()
     {
         if(EmotUI)
@@ -15,17 +16,11 @@ public class FollowPlayerUI : MonoBehaviour
             SoundManager.Instance.StopAllSound();
             SoundManager.Instance.PlaySoundBgm("Lobby_Bgm");
             followCam = GameObject.FindGameObjectWithTag("MainCamera").transform;
-
         }
-
     }
+
     void Update()
     {
-
-        if(followTarget==null)
-        {
-            followTarget = FindObjectOfType<PlayerController>().transform;
-        }
         if(followTarget != null)
         {
             Vector3 screenPosition = Camera.main.WorldToScreenPoint(followTarget.position+Vector3.up*0.5f);
@@ -34,8 +29,6 @@ public class FollowPlayerUI : MonoBehaviour
 
         if (EmotUI)
         {
-
-
             Vector3 orderUIVec = new Vector3(followTarget.position.x - -0.5f, followTarget.position.y + 3.87f, followTarget.position.z - 3.11f);
             transform.position = orderUIVec;
         }
