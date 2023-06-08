@@ -31,7 +31,8 @@ public class Item_Bucket_Water : SimpleInteraction
 
     public void FillGauge()
     {
-        if(Watergauge.value<0.9f)
+
+        if (Watergauge.value<0.9f)
         {
             WaterMesh.SetActive(false);
             Watergauge.gameObject.SetActive(true);

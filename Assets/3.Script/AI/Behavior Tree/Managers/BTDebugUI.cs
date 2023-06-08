@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class BTDebugUI : MonoBehaviour
 {
     private BehaviorTree _tree;
-    private EnemyBT _helper;
+    private Helper _helper;
+    private EnemyBT _enemy;
     [SerializeField] private Text text;
 
     private void Start()
@@ -19,10 +20,11 @@ public class BTDebugUI : MonoBehaviour
     {
         if(_tree==null)
         {
-            _helper = FindObjectOfType<EnemyBT>();
-            if(_helper!=null)
+            _helper = FindObjectOfType<Helper>();
+            _enemy = FindObjectOfType<EnemyBT>();
+            if(_enemy!=null)
             {
-                _tree = _helper.GetComponent<BehaviorTree>();
+                _tree = _enemy.GetComponent<BehaviorTree>();
 
             }
         }

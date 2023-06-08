@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class AI_Stack : MonoBehaviour
 {
-    public Stack<AI_StackItem> _handItem = new Stack<AI_StackItem>();
-    public Stack<AI_StackItem> _detectedItem = new Stack<AI_StackItem>();
+    public Stack<AI_StackItem> HandItem = new Stack<AI_StackItem>();
+    public Stack<AI_StackItem> DetectedItem = new Stack<AI_StackItem>();
     [SerializeField] private LayerMask BlockLayer;
 
     private Transform _currentblock;
@@ -14,44 +14,57 @@ public class AI_Stack : MonoBehaviour
     private void Awake()
     {
 
-        _handItem = new Stack<AI_StackItem>();
-        _detectedItem = new Stack<AI_StackItem>();
+        HandItem = new Stack<AI_StackItem>();
+        DetectedItem = new Stack<AI_StackItem>();
 
     }
 
     //Helper
     public void InteractiveItem()
     {
-        if (_handItem.Count == 0 && _detectedItem.Count != 0)  // 처음 줍기
+        if (HandItem.Count == 0 && DetectedItem.Count != 0)  // 처음 줍기
         {
 
-            Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = _detectedItem.Peek().PickUp(_handItem, _detectedItem);
-            _handItem = p.first;
-            _detectedItem = p.second;
-            Destroy(_handItem.Peek().GetComponent<WorldResource>());
+            Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = DetectedItem.Peek().PickUp(HandItem, DetectedItem);
+            HandItem = p.first;
+            DetectedItem = p.second;
+            Destroy(HandItem.Peek().GetComponent<WorldResource>());
         }
     }
 
     public void InteractiveItemAuto()
     {
-        if (_detectedItem.Count != 0 && _handItem.Count != 0) //두 번째부터는 자동 줍기
+        if (DetectedItem.Count != 0 && HandItem.Count != 0) //두 번째부터는 자동 줍기
         {
-            Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = _handItem.Peek().AutoGain(_handItem, _detectedItem);
-            _handItem = p.first;
-            _detectedItem = p.second;
-            Destroy(_handItem.Peek().GetComponent<WorldResource>());
+            Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = HandItem.Peek().AutoGain(HandItem, DetectedItem);
+            HandItem = p.first;
+            DetectedItem = p.second;
+            Destroy(HandItem.Peek().GetComponent<WorldResource>());
         }
     }
 
     public void PutDown()
     {
-        if (_handItem.Count != 0 && _detectedItem.Count == 0) // 내려놓기
+        if (HandItem.Count != 0 && DetectedItem.Count == 0) // 내려놓기
         {
-            Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = _handItem.Peek().PutDown(_handItem, _detectedItem);
-            _handItem = p.first;
-            _detectedItem = p.second;
+            switch(HandItem.Peek().ItemType)
+            {
+                case EItemType.wood:
+                    SoundManager.Instance.StopSoundEffect("Wood_Down");
+                    SoundManager.Instance.PlaySoundEffect("Wood_Down");
+                    break;
 
-            _detectedItem.Clear();
+                case EItemType.steel:
+                    SoundManager.Instance.StopSoundEffect("Steel_Down");
+                    SoundManager.Instance.PlaySoundEffect("Steel_Down");
+                    break;
+            }
+
+            Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = HandItem.Peek().PutDown(HandItem, DetectedItem);
+            HandItem = p.first;
+            DetectedItem = p.second;
+
+            DetectedItem.Clear();
         }
 
     }
@@ -59,15 +72,15 @@ public class AI_Stack : MonoBehaviour
     //Enemy
     public void EnemyThrowResource()
     {
-        if (_handItem.Count != 0 && _detectedItem.Count == 0) // 버리기
+        if (HandItem.Count != 0 && DetectedItem.Count == 0) // 버리기
         {
 
-            Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = _handItem.Peek().EnemyThrowResource(_handItem, _detectedItem);
-            _handItem = p.first;
-            _detectedItem = p.second;
+            Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = HandItem.Peek().EnemyThrowResource(HandItem, DetectedItem);
+            HandItem = p.first;
+            DetectedItem = p.second;
 
-            _detectedItem.Clear();
-            _handItem.Clear();
+            DetectedItem.Clear();
+            HandItem.Clear();
         }
 
     }
@@ -75,13 +88,13 @@ public class AI_Stack : MonoBehaviour
 
     public void EnemyPutDown()
     {
-        if (_handItem.Count != 0 && _detectedItem.Count == 0) // 내려놓기
+        if (HandItem.Count != 0 && DetectedItem.Count == 0) // 내려놓기
         {
-            Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = _handItem.Peek().EnemyPutDown(_handItem, _detectedItem);
-            _handItem = p.first;
-            _detectedItem = p.second;
+            Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = HandItem.Peek().EnemyPutDown(HandItem, DetectedItem);
+            HandItem = p.first;
+            DetectedItem = p.second;
 
-            _detectedItem.Clear();
+            DetectedItem.Clear();
         }
 
     }
@@ -90,24 +103,24 @@ public class AI_Stack : MonoBehaviour
 
     public void EnemyInteractiveItem()
     {
-        if (_handItem.Count == 0 && _detectedItem.Count != 0)  // 처음 줍기
+        if (HandItem.Count == 0 && DetectedItem.Count != 0)  // 처음 줍기
         {
-            Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = _detectedItem.Peek().EnemyPickUp(_handItem, _detectedItem);
-            _handItem = p.first;
-            _detectedItem = p.second;
-            Destroy(_handItem.Peek().GetComponent<WorldResource>());
+            Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = DetectedItem.Peek().EnemyPickUp(HandItem, DetectedItem);
+            HandItem = p.first;
+            DetectedItem = p.second;
+            Destroy(HandItem.Peek().GetComponent<WorldResource>());
 
         }
     }
 
     public void EnemyInteractiveAuto()
     {
-        if (_detectedItem.Count != 0 && _handItem.Count != 0) //두 번째부터는 자동 줍기
+        if (DetectedItem.Count != 0 && HandItem.Count != 0) //두 번째부터는 자동 줍기
         {
-            Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = _handItem.Peek().EnemyAutoGain(_handItem, _detectedItem);
-            _handItem = p.first;
-            _detectedItem = p.second;
-            Destroy(_handItem.Peek().GetComponent<WorldResource>());
+            Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = HandItem.Peek().EnemyAutoGain(HandItem, DetectedItem);
+            HandItem = p.first;
+            DetectedItem = p.second;
+            Destroy(HandItem.Peek().GetComponent<WorldResource>());
         }
     }
 
@@ -115,13 +128,13 @@ public class AI_Stack : MonoBehaviour
 
     public void EnemyDetectGroundBlock(WorldResource resource)
     {
-        _detectedItem.Push(resource.Stack);
+        DetectedItem.Push(resource.Stack);
     }
 
 
     public void DetectGroundBlock(WorldResource resource)
     {
-        _detectedItem.Push(resource.Stack);
+        DetectedItem.Push(resource.Stack);
         //Destroy(resource);
     }
 

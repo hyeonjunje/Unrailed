@@ -148,6 +148,7 @@ public class HelperBT : BaseAI
                      if (interaction.CanPerform())
                      {
                          item.PickUp();
+                         SoundManager.Instance.PlaySoundEffect("Player_ToolsUp");
                          _emoteImage.sprite = _emoteManager.GetEmote(item.ID);
                          break;
                      }
@@ -342,20 +343,23 @@ public class HelperBT : BaseAI
              switch (_target.Type)
              {
                  case WorldResource.EType.Water:
+                     SoundManager.Instance.PlaySoundEffect("Player_WaterImport");
                      break;
 
                  case WorldResource.EType.Resource:
                      _stack.DetectGroundBlock(_target);
-                     if (_stack._handItem.Count == 0)
+                     if (_stack.HandItem.Count == 0)
                      {
+                         SoundManager.Instance.PlaySoundEffect("Item_Up");
                          _stack.InteractiveItem();
                      }
                      //그 후 쌓기
                      else
                      {
-                         if(!_stack._handItem.Peek().HelperCheckItemType)
+                         if(!_stack.HandItem.Peek().HelperCheckItemType)
                          {
-                            _stack.InteractiveItemAuto();
+                             SoundManager.Instance.PlaySoundEffect("Item_Up");
+                             _stack.InteractiveItemAuto();
                          }
 
                      }
@@ -423,7 +427,7 @@ public class HelperBT : BaseAI
           }
          );
 
-        var SleepRoot = WaterOrResource.Add<BTNode_Action>("자기", () =>
+        var SleepRoot = WaterOrResource.Add<BTNode_Action>("양동이 내려놓기, 세 개 모으기", () =>
          {
              switch (_target.Type)
              {
@@ -446,13 +450,13 @@ public class HelperBT : BaseAI
 
                      Home.GetGatherTarget(_helper);
                      //자원이 더 이상 없다면 
-                     if (Home.NonethisResourceTypeHelper||_stack._handItem.Peek().HelperCheckItemType)
+                     if (Home.NonethisResourceTypeHelper||_stack.HandItem.Peek().HelperCheckItemType)
                      {
                          return BehaviorTree.ENodeStatus.Succeeded;
                      }
                      else
                      {
-                         return _stack._handItem.Count == 3 ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.Failed;
+                         return _stack.HandItem.Count == 3 ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.Failed;
 
                      }
                          //세 개 들었으면 옮기기
@@ -503,7 +507,7 @@ public class HelperBT : BaseAI
                 var order = _localMemory.GetGeneric<WorldResource.EType>(BlackBoardKey.Order);
                 if (order == _order)
                 {
-                    return _stack._handItem.Count == 0 ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
+                    return _stack.HandItem.Count == 0 ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
                 }
                 else
                     _localMemory.SetGeneric<WorldResource.EType>(BlackBoardKey.Order, _order);
@@ -525,6 +529,7 @@ public class HelperBT : BaseAI
             if (_helper.arrive)
             {
                 _emoteImage.sprite = _emoteManager.GetEmote(_emoteManager.HeartEmote);
+                SoundManager.Instance.PlaySoundEffect("Player_Dash");
                 Vector3 position = ShopManager.Instance.nextGame.position;
                 _agent.MoveTo(position);
                 _agent.moveSpeed = 10;
@@ -682,6 +687,9 @@ public class HelperBT : BaseAI
         {
             Debug.Log("내려놓기");
             _item.PickUp();
+            SoundManager.Instance.StopSoundEffect("Player_ToolsDown");
+            SoundManager.Instance.PlaySoundEffect("Player_ToolsDown");
+
             _item.transform.parent = _stack.BFS(this);
             _item.transform.rotation = Quaternion.identity;
             _item.transform.localPosition = (Vector3.up * 0.5f) + (Vector3.up * 0.15f);
