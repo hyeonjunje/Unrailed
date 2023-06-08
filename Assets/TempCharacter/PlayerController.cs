@@ -844,6 +844,7 @@ public class PlayerController : MonoBehaviour
             {
                 InteractionUI startUI = other.GetComponent<InteractionUI>();
 
+                if (startUI.isMapEditor) startUI.GoMapEdit();
                 if (!startUI.Exit) startUI.GameStart();
                 if (startUI.Exit) startUI.GameExit();
             }

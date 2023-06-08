@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // public enum EBlock { empty, grass, water, tree1, tree2, iron, blackRock, size }
 public enum EBlock { empty, grass, water, tree1, tree2, iron,
@@ -398,5 +399,10 @@ public class MapEditorMK2 : MonoBehaviour
             Vector3 pos = new Vector3(maxX + 1, 0.5f, i);
             Instantiate(emptyPrefab, pos, Quaternion.identity, _borderParent);
         }
+    }
+
+    public void LoadSceneLobby()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 }
