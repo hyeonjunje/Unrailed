@@ -206,7 +206,7 @@ public class TrainMovement : MonoBehaviour
         yield return new WaitForSeconds(2.5f);
         overText.SetBool("GameOver", true);
         yield return new WaitForSeconds(1.5f);
-        manager._loadingSceneUI.SetActive(true);
+        manager.backToLobbyUI.SetActive(true);
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene("IntroScene");
     }
@@ -217,7 +217,7 @@ public class TrainMovement : MonoBehaviour
         yield return new WaitForSeconds(2f);
         overText.SetBool("GameClear", true);
         yield return new WaitForSeconds(5f);
-        manager._loadingSceneUI.SetActive(true);
+        manager.backToLobbyUI.SetActive(true);
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene("IntroScene");
     }

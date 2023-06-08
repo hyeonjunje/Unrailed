@@ -12,8 +12,13 @@ public class InGameScene : MonoBehaviour
 
     [Header("UI")]
     public GameObject _loadingSceneUI;
+    public GameObject backToLobbyUI;
     public GameObject _distanceUI;
     public GameObject _aiDebugUI;
+
+    [Header("Color")]
+    [SerializeField] private Color _originColor;
+    [SerializeField] private Color _endingColor;
 
     [Header("Manager")]
     [SerializeField] private WorldManager _worldManager;
@@ -30,10 +35,14 @@ public class InGameScene : MonoBehaviour
 
     private void Awake()
     {
+        // 어두운 색
+        Camera.main.backgroundColor = _originColor;
+
         // 게임 로드
         FileManager.LoadGame();
 
         // 로딩
+        backToLobbyUI.SetActive(false);
         _loadingSceneUI.SetActive(true);
         isStart = false;
 
@@ -62,12 +71,18 @@ public class InGameScene : MonoBehaviour
         // 만약 마지막 역이라면 엔딩
         if(_isEnding)
         {
+            Camera.main.backgroundColor = _endingColor;
             Debug.Log("엔딩입니다~~~~");
-            StartCoroutine(engine.ClearAnim());
 
+            StartCoroutine(engine.ClearAnim());
         }
         else
         {
+            if(_worldManager.enemyObject != null)
+            {
+                Destroy(_worldManager.enemyObject);
+            }
+
             // 거리 UI 비활성화
             _distanceUI.SetActive(false);
 
@@ -120,7 +135,7 @@ public class InGameScene : MonoBehaviour
         // 상점 종료되고
         _shopManager.ShopOff();
 
-        _worldManager.SpawnEnemy();
+        _worldManager.SpawnCow();
 
         // 맵 재위치 시켜주기
         UnitaskInvoke(1.5f, () => { RePositionAsync().Forget(); helper.ArriveStation(); }).Forget();

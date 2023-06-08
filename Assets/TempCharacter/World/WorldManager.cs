@@ -37,18 +37,22 @@ public class WorldManager : MonoBehaviour
 
     private MapData mapDataEnemy = null;
 
-    public void SpawnEnemy()
+    public GameObject enemyObject = null;
+
+    public void SpawnCow()
     {
-        Vector3 pos = new Vector3(mapDataEnemy.creaturePos[(int)ECreature.enemy].x, 0.5f, mapDataEnemy.creaturePos[(int)ECreature.enemy].y);
+        Vector3 pos = new Vector3(mapDataEnemy.creaturePos[(int)ECreature.cow].x, 0.5f, mapDataEnemy.creaturePos[(int)ECreature.cow].y);
 
-        Transform obj = Instantiate(_creatures[(int)ECreature.enemy], parentTransform[1]);
-        obj.localPosition = pos;
-        obj.localRotation = Quaternion.identity;
+        for (int cowCount = 0; cowCount < 4; cowCount++)
+        {
+            Vector3 cowPos = pos + Random.insideUnitSphere * 4;
+            Transform obj = Instantiate(_creatures[(int)ECreature.cow], parentTransform[1]);
+            obj.localPosition = new Vector3(cowPos.x, 0.5f, cowPos.z);
+            obj.localRotation = Quaternion.identity;
+            obj.parent = null;
+        }
 
-        BaseAI ai = obj.GetComponent<BaseAI>();
-        if (ai != null)
-            ai.SetHome(FindObjectOfType<Resource>());
-        obj.parent = null;
+        FindObjectOfType<BoidsManager>().Init();
     }
 
     public async UniTask GenerateWorld(bool isTest)
@@ -101,18 +105,7 @@ public class WorldManager : MonoBehaviour
                 if (mapData[i].creaturePos[j] == Vector2Int.zero)
                     continue;
 
-                if(j == (int)ECreature.cow)
-                {
-                    for (int cowCount = 0; cowCount < 4; cowCount++)
-                    {
-                        Vector3 cowPos = pos + Random.insideUnitSphere * 4;
-                        Transform obj = Instantiate(_creatures[j], parentTransform[i]);
-                        obj.localPosition = new Vector3(cowPos.x, 0.5f, cowPos.z);
-                        obj.localRotation = Quaternion.identity;
-                        obj.parent = null;
-                    }
-                }
-                else if(j != (int)ECreature.enemy)
+                if(j != (int)ECreature.cow)
                 {
                     Transform obj = Instantiate(_creatures[j], parentTransform[i]);
                     obj.localPosition = pos;
@@ -122,10 +115,13 @@ public class WorldManager : MonoBehaviour
                     if (ai != null)
                         ai.SetHome(FindObjectOfType<Resource>());
                     obj.parent = null;
+
+                    if (j == (int)ECreature.enemy)
+                        enemyObject = obj.gameObject;
                 }
             }
         }
-        FindObjectOfType<BoidsManager>().Init();
+        // FindObjectOfType<BoidsManager>().Init();
 
         // 맵 자르고 초기위치 이동
         for (int i = 0; i < mapData.Length; i++)

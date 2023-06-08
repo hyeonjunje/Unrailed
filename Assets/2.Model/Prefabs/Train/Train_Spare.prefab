@@ -58,7 +58,7 @@ MonoBehaviour:
   isReady: 0
   isTrainOver: 0
   isOver: 0
-  trainSpeed: 0.03
+  trainSpeed: 0.06
   _trainRotateSpeed: 0
   goalSpeed: 6
   overSpeed: 0.1

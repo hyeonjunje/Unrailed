@@ -198,7 +198,7 @@ public class ShopManager : MonoBehaviour
 
     private IEnumerator TrainStartMove() // 열차 시작 카운트다운
     {
-        SoundManager.Instance.StopSoundBgm("Shop_Bgm");
+        SoundManager.Instance.StopAllSound();
         isPlayerShop = false;
         trainEngine.isReady = true;
         yield return new WaitForSeconds(10f);

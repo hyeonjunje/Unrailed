@@ -226,7 +226,7 @@ public class PlayerController : MonoBehaviour
         if (ShopManager.Instance.trainCoin == 0)
         {
             Debug.Log("코일 100개를 충전해줄게");
-            ShopManager.Instance.trainCoin = 100;
+            // ShopManager.Instance.trainCoin = 100;
         }
 
         // 감지된게 있고 가지고 있는 차량이 없을 때  => 주워
@@ -474,6 +474,8 @@ public class PlayerController : MonoBehaviour
             _handItem = p.first;
             _detectedItem = p.second;
         }
+
+        _playerAnim.anim.SetBool("isTwoHandsPickUp", false);
     }
 
     #region 감지 메소드
