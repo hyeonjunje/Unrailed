@@ -528,6 +528,7 @@ public class HelperBT : BaseAI
             PutDown();
             if (_helper.arrive)
             {
+                Home.ResetResources();
                 _emoteImage.sprite = _emoteManager.GetEmote(_emoteManager.HeartEmote);
                 SoundManager.Instance.PlaySoundEffect("Player_Dash");
                 Vector3 position = ShopManager.Instance.nextGame.position;

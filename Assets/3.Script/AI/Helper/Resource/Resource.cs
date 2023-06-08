@@ -37,6 +37,22 @@ public class Resource : MonoBehaviour
         }
     }
 
+    public void ResetResources()
+    {
+        var resourceTypes = System.Enum.GetValues(typeof(WorldResource.EType));
+        foreach (var value in resourceTypes)
+        {
+            var type = (WorldResource.EType)value;
+            for(int i=0; i<_trackedResources[type].Count; i++)
+            {
+                ResourceTracker.Instance.DeRegisterResource(_trackedResources[type][i]);
+            }
+        }
+    }
+
+
+
+
     public WorldResource GetGatherTarget(Helper brain)
     {
         //자원 업데이트
