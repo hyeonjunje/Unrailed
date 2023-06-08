@@ -48,6 +48,8 @@ public class EnemyBT : BaseAI
             return hp == _health.CurrentHp && !Home.NonethisResourceTypeEnemy;
         });
 
+        #region 있는 경우
+
         var MainSequence = HaveTarget.Add<BTNode_Sequence>("있는 경우");
 
         MainSequence.Add<BTNode_Action>("타겟 정하기", () =>
@@ -163,21 +165,22 @@ public class EnemyBT : BaseAI
                 return _stack.HandItem.Count ==0 ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
             }
             );
+        #endregion
 
-
+        // 없는경우
         var Attacked = BTRoot.Add<BTNode_Sequence>("맞음");
         Attacked.Add<BTNode_Action>("공격 당함", () =>
          {
              var hp = _localMemory.GetGeneric<int>(BlackBoardKey.HP);
-             if (_stack.HandItem.Count!=0&&hp!=_health.CurrentHp)
+             if (_stack.HandItem.Count!=0 && hp!=_health.CurrentHp)
              {
                 _currentblock = _stack.BFS(this);
 
                 _animator.SetBool(isMove, true);
                 _animator.SetBool(isRoot, false);
                 _target = null;
-                _stack.EnemyPutDown();
                 _localMemory.SetGeneric(BlackBoardKey.HP, _health.CurrentHp);
+                _stack.EnemyPutDown();
                 return BehaviorTree.ENodeStatus.InProgress;
              }
              return BehaviorTree.ENodeStatus.Failed;
@@ -188,6 +191,41 @@ public class EnemyBT : BaseAI
          });
 
 
+        var ThrowResource = BTRoot.Add<BTNode_Sequence>("맞은건 아닌데 더 이상 자원이 없는 경우");
+        ThrowResource.Add<BTNode_Action>("버리러 이동", () =>
+        {
+            var hp = _localMemory.GetGeneric<int>(BlackBoardKey.HP);
+            if (_stack.HandItem.Count != 0 && hp == _health.CurrentHp)
+            {
+                Vector3 pos = _agent.MoveToClosestEndPosition();
+                _animator.SetBool(isMove, true);
+                return BehaviorTree.ENodeStatus.InProgress;
+            }
+            return BehaviorTree.ENodeStatus.Failed;
+
+        }, () =>
+        {
+            return  _agent.AtDestination? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
+        });
+
+        ThrowResource.Add<BTNode_Action>("버리기", () =>
+        {
+            SoundManager.Instance.PlaySoundEffect("Enemy_Laugh");
+            _animator.SetBool(isRoot, false); 
+            _animator.SetBool(isMove, false);
+            _target = null;
+            _stack.EnemyThrowResource();
+            return BehaviorTree.ENodeStatus.InProgress;
+
+        }, () =>
+        {
+            return _stack.HandItem.Count == 0 ? BehaviorTree.ENodeStatus.Failed : BehaviorTree.ENodeStatus.InProgress;
+        });
+
+
+
+
+        //없는경우
 
         var WanderRoot = BTRoot.Add<BTNode_Sequence>("목표 못 찾음");
         WanderRoot.Add<BTNode_Action>("무작위 이동중",

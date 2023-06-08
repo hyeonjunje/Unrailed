@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FollowPlayerUI : MonoBehaviour
 {
-    [SerializeField] private Transform followTarget;
+    [SerializeField] private PlayerController followTarget;
     private Transform followCam;
 
     [SerializeField] bool EmotUI;
@@ -21,15 +21,20 @@ public class FollowPlayerUI : MonoBehaviour
 
     void Update()
     {
-        if(followTarget != null)
+        if (followTarget == null)
         {
-            Vector3 screenPosition = Camera.main.WorldToScreenPoint(followTarget.position+Vector3.up*0.5f);
+            followTarget = FindObjectOfType<PlayerController>();
+        }
+
+        if (followTarget != null)
+        {
+            Vector3 screenPosition = Camera.main.WorldToScreenPoint(followTarget.transform.position+Vector3.up*0.5f);
             transform.position = screenPosition;
         }
 
         if (EmotUI)
         {
-            Vector3 orderUIVec = new Vector3(followTarget.position.x - -0.5f, followTarget.position.y + 3.87f, followTarget.position.z - 3.11f);
+            Vector3 orderUIVec = new Vector3(followTarget.transform.position.x - -0.5f, followTarget.transform.position.y + 3.87f, followTarget.transform.position.z - 3.11f);
             transform.position = orderUIVec;
         }
     }

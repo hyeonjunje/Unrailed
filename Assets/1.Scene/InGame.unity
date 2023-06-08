@@ -2495,11 +2495,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 595853797}
   m_CullTransparentMesh: 1
---- !u!4 &608035568 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2030873677363317820, guid: a967c81037c3d4a40a12a2d6d3573cbb, type: 3}
-  m_PrefabInstance: {fileID: 784320514}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &623091252
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3207,7 +3202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTest: 0
-  isAITest: 0
+  isAITest: 1
   _loadingSceneUI: {fileID: 2059012224}
   backToLobbyUI: {fileID: 1684720359}
   _distanceUI: {fileID: 1014105166}
@@ -5138,6 +5133,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1952456796, guid: eaad4c1378e59d44d9f78c0b2418912a, type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 1979731681, guid: eaad4c1378e59d44d9f78c0b2418912a, type: 3}
       propertyPath: pathFindingTestParent
       value: 
@@ -5742,7 +5741,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 608035568}
+    m_TransformParent: {fileID: 1412265778}
     m_Modifications:
     - target: {fileID: 3629763408069323896, guid: 9b40e214a666047448503f01c6b60b59, type: 3}
       propertyPath: m_Name
@@ -5762,7 +5761,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3629763408069323908, guid: 9b40e214a666047448503f01c6b60b59, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3629763408069323908, guid: 9b40e214a666047448503f01c6b60b59, type: 3}
       propertyPath: m_AnchorMax.x
@@ -6899,6 +6898,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1411110091}
   m_CullTransparentMesh: 1
+--- !u!4 &1412265778 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 112193113625666801, guid: eaad4c1378e59d44d9f78c0b2418912a, type: 3}
+  m_PrefabInstance: {fileID: 1067327104}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1416311011
 GameObject:
   m_ObjectHideFlags: 0

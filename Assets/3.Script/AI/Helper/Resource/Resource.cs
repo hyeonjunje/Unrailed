@@ -10,7 +10,7 @@ public class Resource : MonoBehaviour
 
     private WorldResource.EType _defaultResource = WorldResource.EType.Wood;
     private Dictionary<WorldResource.EType, List<WorldResource>> _trackedResources = null;
-    private float _range = 20;
+    private float _range = 30;
 
     private void Start()
     {
@@ -36,6 +36,22 @@ public class Resource : MonoBehaviour
             _trackedResources[type] = ResourceTracker.Instance.GetResourcesInRange(type, transform.position, _range);
         }
     }
+
+    public void ResetResources()
+    {
+        var resourceTypes = System.Enum.GetValues(typeof(WorldResource.EType));
+        foreach (var value in resourceTypes)
+        {
+            var type = (WorldResource.EType)value;
+            for(int i=0; i<_trackedResources[type].Count; i++)
+            {
+                ResourceTracker.Instance.DeRegisterResource(_trackedResources[type][i]);
+            }
+        }
+    }
+
+
+
 
     public WorldResource GetGatherTarget(Helper brain)
     {

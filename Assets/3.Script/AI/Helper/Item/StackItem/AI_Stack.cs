@@ -72,9 +72,8 @@ public class AI_Stack : MonoBehaviour
     //Enemy
     public void EnemyThrowResource()
     {
-        if (HandItem.Count != 0 && DetectedItem.Count == 0) // 버리기
+        if (HandItem.Count != 0) // 버리기
         {
-
             Pair<Stack<AI_StackItem>, Stack<AI_StackItem>> p = HandItem.Peek().EnemyThrowResource(HandItem, DetectedItem);
             HandItem = p.first;
             DetectedItem = p.second;
