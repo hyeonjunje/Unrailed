@@ -54,6 +54,16 @@ public class WorldResource : MonoBehaviour
             yield return wait;
         while(_resourceHp > 0)
         {
+            switch (Type)
+            {
+                case WorldResource.EType.Wood:
+                    SoundManager.Instance.PlaySoundEffect("Wood_Hit");
+                    break;
+                case WorldResource.EType.Stone:
+                    SoundManager.Instance.PlaySoundEffect("Steel_Hit");
+                    break;
+            }
+
             _resourceScale -= 0.1f;
             _resourceHp--;
             transform.localScale -= Vector3.one * _scaleAmountOfChange;

@@ -164,7 +164,9 @@ public class PlayerController : MonoBehaviour
 
             if (_handItem.Peek().ItemType == EItemType.wood || _handItem.Peek().ItemType == EItemType.steel)
             {
-                ResourceTracker.Instance.DeRegisterResource(_handItem.Peek().GetComponent<WorldResource>());
+                WorldResource resource = _handItem.Peek().GetComponent<WorldResource>();
+                if (resource != null)
+                    ResourceTracker.Instance.DeRegisterResource(resource);
             }
         }
 
@@ -205,7 +207,9 @@ public class PlayerController : MonoBehaviour
             _detectedItem = p.second;
             if (_handItem.Peek().ItemType == EItemType.wood || _handItem.Peek().ItemType == EItemType.steel)
             {
-                ResourceTracker.Instance.DeRegisterResource(_handItem.Peek().GetComponent<WorldResource>());
+                WorldResource resource = _handItem.Peek().GetComponent<WorldResource>();
+                if(resource!=null)
+                ResourceTracker.Instance.DeRegisterResource(resource);
             }
 
         }
@@ -689,11 +693,6 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-/*        else
-        {
-            if (!_waterGauge.IsFillWater())
-                _waterGauge.ResetWater();
-        }*/
     }
 
     public bool SetBridge() // 다리 놓기
