@@ -17,16 +17,10 @@ public class InGameScene : MonoBehaviour
 
     [Header("Manager")]
     [SerializeField] private WorldManager _worldManager;
-
     [SerializeField] private ShopManager _shopManager;
-    [SerializeField] private BoidsManager _boidsManager;
-    [SerializeField] private Resource _resource;
 
     [SerializeField] private int worldCount = 0;
 
-    [SerializeField] private BaseAI _robot;
-    [SerializeField] private BaseAI _enemy;
-    [SerializeField] private Flock _flock;
     public TrainEngine engine;
 
     // 석환이 형 isStart가 true일 때만 player가 작동할 수 있게 해줘~~
@@ -53,22 +47,7 @@ public class InGameScene : MonoBehaviour
             () =>
             {
                 _loadingSceneUI.SetActive(false);
-                RePositionAsync(
-                    () =>
-                    {
-                        Instantiate(_robot, Vector3.up * 0.5f, Quaternion.identity).SetHome(FindObjectOfType<Resource>());
-                        Instantiate(_enemy, Vector3.up * 0.5f + Vector3.right, Quaternion.identity).SetHome(FindObjectOfType<Resource>());
-
-                        for (int i = 0; i < 4; i++)
-                        {
-                            Vector3 pos = Vector3.up * 0.5f + Random.insideUnitSphere * 4;
-                            Flock flock = Instantiate(_flock);
-                            flock.transform.position = new Vector3(pos.x, 0.5f, pos.z);
-                        }
-                        _boidsManager.Init();
-
-
-                    }).Forget();
+                RePositionAsync().Forget();
 
                 _shopManager.StartTrainMove();
             }).Forget();
@@ -141,7 +120,7 @@ public class InGameScene : MonoBehaviour
         // 상점 종료되고
         _shopManager.ShopOff();
 
-
+        _worldManager.SpawnEnemy();
 
         // 맵 재위치 시켜주기
         UnitaskInvoke(1.5f, () => { RePositionAsync().Forget(); helper.ArriveStation(); }).Forget();

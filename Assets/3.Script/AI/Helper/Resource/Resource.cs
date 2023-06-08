@@ -10,7 +10,7 @@ public class Resource : MonoBehaviour
 
     private WorldResource.EType _defaultResource = WorldResource.EType.Wood;
     private Dictionary<WorldResource.EType, List<WorldResource>> _trackedResources = null;
-    private float _range = 30;
+    private float _range = 20;
 
     private void Start()
     {
@@ -92,7 +92,9 @@ public class Resource : MonoBehaviour
 
         var sortedResources = _trackedResources[targetResource]
             //갈 수 있는 곳에 있는 자원만 추리기
-            .Where(resource => Vector3.Distance(resource.transform.position, brain.
+
+            .Where(resource => Vector3.Distance(brain.transform.position, resource.transform.position) < 10f)
+                        .Where(resource => Vector3.Distance(resource.transform.position, brain.
                                                 FindCloestAroundEndPosition(resource.transform.position)) <= 1.5f)
             //가까운 순으로 정렬
             .OrderBy(resource => Vector3.Distance(brain.transform.position, resource.transform.position))

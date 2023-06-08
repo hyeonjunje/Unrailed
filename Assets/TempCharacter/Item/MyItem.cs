@@ -38,6 +38,28 @@ public abstract class MyItem : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if(equipment == null)
+        {
+            player = FindObjectOfType<PlayerController>();
+            _item = GetComponent<AI_Item>();
+
+            if (player == null)
+                return;
+
+            switch (_equipPart)
+            {
+                case EEquipPart.rightHand:
+                    equipment = player.RightHandTransform;
+                    break;
+                case EEquipPart.twoHand:
+                    equipment = player.TwoHandTransform;
+                    break;
+            }
+        }
+    }
+
 
     public EItemType ItemType => itemType;
 

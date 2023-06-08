@@ -24,7 +24,9 @@ public class FollowPlayerUI : MonoBehaviour
 
         if(followTarget==null)
         {
-            followTarget = FindObjectOfType<PlayerController>().transform;
+            PlayerController playerController = FindObjectOfType<PlayerController>();
+            if (playerController != null)
+                followTarget = playerController.transform;
         }
         if(followTarget != null)
         {

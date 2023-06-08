@@ -8,6 +8,8 @@ public enum EBlock { empty, grass, water, tree1, tree2, iron,
     rail, treeItem, ironItem, axe,
     pick, bucket, bolt, duck, flamingo, size}
 
+public enum ECreature { player, helper, enemy, cow}
+
 public class MapEditorMK2 : MonoBehaviour
 {
     [Header("Blocks")]
@@ -33,6 +35,7 @@ public class MapEditorMK2 : MonoBehaviour
 
     [Header("ETC")]
     [SerializeField] private Transform _target;
+    [SerializeField] private Transform[] _creatures;
 
     [HideInInspector] public int materialIndex;
     [HideInInspector] public int creatureIndex;
@@ -43,7 +46,7 @@ public class MapEditorMK2 : MonoBehaviour
     // 계속 증가하니까 리스트로?
     private List<List<BlockMK2>> groundList = new List<List<BlockMK2>>();
 
-    private Vector2Int[] creaturePos = new Vector2Int[4];
+    private Vector2Int[] _creaturePos = new Vector2Int[4];
 
     private int _minX;
     private int _minY;
@@ -69,6 +72,13 @@ public class MapEditorMK2 : MonoBehaviour
         // 원래 오브젝트 삭제
         _blockParent.DestroyAllChild();
         _borderParent.DestroyAllChild();
+
+        // 크리쳐 없애기
+        for(int i = 0; i < _creatures.Length; i++)
+        {
+            _creaturePos[i] = Vector2Int.zero;
+            _creatures[i].gameObject.SetActive(false);
+        }
     }
 
     // 맵 초기화
@@ -171,8 +181,17 @@ public class MapEditorMK2 : MonoBehaviour
                     if (isCreatureMode)
                     {
                         Vector2Int pos = new Vector2Int(x, z);
-                        if (creaturePos[creatureIndex] != pos)
-                            creaturePos[creatureIndex] = pos;
+                        if (_creaturePos[creatureIndex] != pos)
+                        {
+                            _creatures[creatureIndex].gameObject.SetActive(false);
+
+                            if (groundList[z + _minY][x + _minX].Index != (int)EBlock.grass)
+                                InitBlock(groundList[z + _minY][x + _minX], (int)EBlock.grass);
+
+                            _creatures[creatureIndex].gameObject.SetActive(true);
+                            _creatures[creatureIndex].position = new Vector3(pos.x, 0.6f, pos.y);
+                            _creaturePos[creatureIndex] = pos;
+                        }
                     }
                     else
                     {
@@ -216,8 +235,14 @@ public class MapEditorMK2 : MonoBehaviour
             }
         }
 
+        // 블럭 저장
         string mapName = FileManager.MapsData.mapsData[index].mapDataName;
         FileManager.MapsData.mapsData[index] = new MapData(mapName, 0, mapData);
+
+
+        // 크리쳐 저장
+        for(int i = 0; i < _creaturePos.Length; i++)
+            FileManager.MapsData.mapsData[index].creaturePos[i] = _creaturePos[i];
 
         FileManager.SaveGame();
     }
@@ -252,6 +277,20 @@ public class MapEditorMK2 : MonoBehaviour
             {
                 int index = mapData.mapData[i].arr[j];
                 InitBlock(groundList[i][j], index);
+            }
+        }
+
+        // 크리쳐 로드
+        for (int i = 0; i < _creatures.Length; i++)
+        {
+            _creatures[i].gameObject.SetActive(false);
+            if (mapData.creaturePos == null)
+                continue;
+            _creaturePos[i] = mapData.creaturePos[i];
+            if(_creaturePos[i] != Vector2Int.zero)
+            {
+                _creatures[i].gameObject.SetActive(true);
+                _creatures[i].position = new Vector3(_creaturePos[i].x, 0.6f, _creaturePos[i].y);
             }
         }
 

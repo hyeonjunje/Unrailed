@@ -52,11 +52,11 @@ public class EnemyBT : BaseAI
 
         MainSequence.Add<BTNode_Action>("타겟 정하기", () =>
          {
-            _target = Home.TargettoSteal(_agent);
              return BehaviorTree.ENodeStatus.InProgress;
         }
          , () =>
          {
+            _target = Home.TargettoSteal(_agent);
              return _target == null ? BehaviorTree.ENodeStatus.InProgress : BehaviorTree.ENodeStatus.Succeeded;
 
          });
@@ -203,5 +203,11 @@ public class EnemyBT : BaseAI
             return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
         });
 
+        var IdleRoot = MainSequence.Add<BTNode_Sequence>("위에거 다 실패 했을 경우");
+        IdleRoot.Add<BTNode_Action>("가만히 있기", () =>
+        {
+            _animator.SetBool(isMove, false);
+            return BehaviorTree.ENodeStatus.InProgress;
+        });
     }
 }
