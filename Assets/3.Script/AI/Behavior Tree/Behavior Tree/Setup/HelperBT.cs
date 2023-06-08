@@ -497,7 +497,7 @@ public class HelperBT : BaseAI
             //더 이상 채집할 자원이 없는경우
             if (Home.NonethisResourceTypeHelper)
             {
-                _emoteImage.sprite = _emoteManager.GetEmote(_emoteManager.WarningEmote);
+                _emoteImage.sprite = _emoteManager.GetEmote(_emoteManager.SadEmote);
                 _animator.SetBool(isMove, false);
                 return BehaviorTree.ENodeStatus.InProgress;
             }
@@ -653,29 +653,74 @@ public class HelperBT : BaseAI
              return reset ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.Failed;
          });
 
-        var CantDoAnything = BTRoot.Add<BTNode_Sequence>("명령을 수행할 수 없는 경우");
-        CantDoAnything.Add<BTNode_Action>("경고", () =>
+        var ErrorRoot = BTRoot.Add<BTNode_Selector>("명령을 수행할 수 없는 경우");
+        var MoveToPutDown = ErrorRoot.Add<BTNode_Sequence>("손에 뭐가 있을 때");
+        MoveToPutDown.Add<BTNode_Action>("내려놓으러 출발하기", () =>
         {
+            if (_stack.HandItem.Count != 0)
+            {
+                Vector3 home = _agent.FindCloestAroundEndPosition(GoalManager.Instance.lastRail.transform.position);
+                _agent.MoveTo(home);
+                return BehaviorTree.ENodeStatus.InProgress;
+            }
+
+            return BehaviorTree.ENodeStatus.Failed;
+
+        }, () =>
+         {
+
+             if (_stack.HandItem.Count != 0)
+             {
+                 return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
+             }
+             return BehaviorTree.ENodeStatus.Failed;
+         });
+        MoveToPutDown.Add<BTNode_Action>("내려놓고 자기", () =>
+        {
+            if (_stack.HandItem.Count != 0)
+            {
+                _currentblock = _stack.BFS(this);
+                _stack.PutDown();
+                _target = null;
+                _currentblock = null;
+            }
+
             _emoteImage.sprite = _emoteManager.GetEmote(_emoteManager.SadEmote);
             return BehaviorTree.ENodeStatus.InProgress;
         }, () =>
-         {
-             //명령이 바뀌었다면 명령 수행
-             var order = _localMemory.GetGeneric<WorldResource.EType>(BlackBoardKey.Order);
-             if(order!=_order)
-             {
+        {
+            var order = _localMemory.GetGeneric<WorldResource.EType>(BlackBoardKey.Order);
+            if (order == _order)
+            {
+                return _stack.HandItem.Count == 0 ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
+            }
+            else
                 _localMemory.SetGeneric<WorldResource.EType>(BlackBoardKey.Order, _order);
+            return BehaviorTree.ENodeStatus.Succeeded;
+
+        });
+
+        var CantDoAnything = ErrorRoot.Add<BTNode_Sequence>("손에 뭐가 없을 때");
+        CantDoAnything.Add<BTNode_Action>("아무것도 못해요", () =>
+         {
+             _animator.SetBool(isMove, false);
+             _emoteImage.sprite = _emoteManager.GetEmote(_emoteManager.SadEmote);
+             return BehaviorTree.ENodeStatus.InProgress;
+         },()=>
+         {
+             var order = _localMemory.GetGeneric<WorldResource.EType>(BlackBoardKey.Order);
+             if (order != _order)
+             {
+                 _localMemory.SetGeneric<WorldResource.EType>(BlackBoardKey.Order, _order);
                  return BehaviorTree.ENodeStatus.Succeeded;
              }
-             if(_helper.GotoPlayer)
+             if (_helper.GotoPlayer)
              {
                  return BehaviorTree.ENodeStatus.Failed;
              }
-
-             //역에 도착했다면
-             //아니라면 자기
              return BehaviorTree.ENodeStatus.InProgress;
          });
+
 
 
     }
