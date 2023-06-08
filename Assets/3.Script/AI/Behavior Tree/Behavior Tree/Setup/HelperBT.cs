@@ -411,7 +411,7 @@ public class HelperBT : BaseAI
              {
                  case WorldResource.EType.Water:
                      _animator.SetBool(isMove, true);
-                     Vector3 home = _localMemory.GetGeneric<Vector3>(BlackBoardKey.Home);
+                     Vector3 home = _agent.FindCloestAroundEndPosition(GoalManager.Instance.lastRail.transform.position);
                      _agent.MoveTo(home);
                      break;
 

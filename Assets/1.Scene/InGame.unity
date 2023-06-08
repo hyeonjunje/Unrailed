@@ -5133,6 +5133,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1952456796, guid: eaad4c1378e59d44d9f78c0b2418912a, type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 1979731681, guid: eaad4c1378e59d44d9f78c0b2418912a, type: 3}
       propertyPath: pathFindingTestParent
       value: 

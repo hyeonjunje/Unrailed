@@ -12,7 +12,7 @@ public class BucketSlider : MonoBehaviour
 
     void Update()
     {
-        Vector3 screenPosition = Camera.main.WorldToScreenPoint(_bucketTransform.position);
+        Vector3 screenPosition = Camera.main.WorldToScreenPoint(_bucketTransform.position+Vector3.right*0.5f);
         transform.position = screenPosition;
     }
 }
