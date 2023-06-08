@@ -680,14 +680,12 @@ public class PlayerController : MonoBehaviour
                     }
                     // 물 채우기
                     _waterGauge.gameObject.SetActive(true);
-
                     _waterGauge.FillGauge();
                 }
                 else
                 {
                     CurrentHandItem.ActiveWater(true);
                     _isCharge = false;
-                    _waterGauge.ResetWater();
                 }
             }
         }
