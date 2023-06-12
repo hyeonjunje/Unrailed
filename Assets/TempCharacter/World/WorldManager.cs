@@ -45,7 +45,7 @@ public class WorldManager : MonoBehaviour
 
         for (int cowCount = 0; cowCount < 4; cowCount++)
         {
-            Vector3 cowPos = pos + Random.insideUnitSphere * 4;
+            Vector3 cowPos = pos + Random.insideUnitSphere * 2.5f;
             Transform obj = Instantiate(_creatures[(int)ECreature.cow], parentTransform[1]);
             obj.localPosition = new Vector3(cowPos.x, 0.5f, cowPos.z);
             obj.localRotation = Quaternion.identity;

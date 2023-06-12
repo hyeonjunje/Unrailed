@@ -2502,6 +2502,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4577576760444145984, guid: 1439c1fde8ee239469f46a3ec542faa0, type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 2f30de75591f4b2448be2e9b879bf7cd, type: 3}
+    - target: {fileID: 4577576760654454358, guid: 1439c1fde8ee239469f46a3ec542faa0, type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 2f30de75591f4b2448be2e9b879bf7cd, type: 3}
+    - target: {fileID: 4577576761285331024, guid: 1439c1fde8ee239469f46a3ec542faa0, type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 2f30de75591f4b2448be2e9b879bf7cd, type: 3}
+    - target: {fileID: 4577576761360255651, guid: 1439c1fde8ee239469f46a3ec542faa0, type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 2f30de75591f4b2448be2e9b879bf7cd, type: 3}
+    - target: {fileID: 4577576761729207722, guid: 1439c1fde8ee239469f46a3ec542faa0, type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 2f30de75591f4b2448be2e9b879bf7cd, type: 3}
+    - target: {fileID: 4577576761833410006, guid: 1439c1fde8ee239469f46a3ec542faa0, type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 2f30de75591f4b2448be2e9b879bf7cd, type: 3}
     - target: {fileID: 4577576761906458918, guid: 1439c1fde8ee239469f46a3ec542faa0, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -5765,7 +5789,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3629763408069323908, guid: 9b40e214a666047448503f01c6b60b59, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3629763408069323908, guid: 9b40e214a666047448503f01c6b60b59, type: 3}
       propertyPath: m_AnchorMax.x
