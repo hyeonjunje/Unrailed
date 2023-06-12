@@ -37,8 +37,6 @@ public class HelperBT : BaseAI
     private EmoteManager _emoteManager;
     [SerializeField] private Image _emoteImage;
 
-
-    private TrainMovement _engine;
     private float _defaultSpeed;
 
 
@@ -57,7 +55,6 @@ public class HelperBT : BaseAI
 
     private void Start()
     {
-        _engine = FindObjectOfType<TrainMovement>();
         _localMemory = BlackboardManager.Instance.GetIndividualBlackboard<BlackBoardKey>(this);
         _localMemory.SetGeneric<WorldResource.EType>(BlackBoardKey.Order, WorldResource.EType.Wood);
         _localMemory.SetGeneric<bool>(BlackBoardKey.Arrive, _arrive);
@@ -247,14 +244,14 @@ public class HelperBT : BaseAI
             else return BehaviorTree.ENodeStatus.InProgress;
         });
 
-        ImpossibleToWork.Add<BTNode_Action>("타겟이 갈 수 없는 곳에 있어요", () =>
+        ImpossibleToWork.Add<BTNode_Action>("타겟 다시 찾기", () =>
          {
              _target = Home.ResearchTarget(_helper);
              return BehaviorTree.ENodeStatus.Succeeded;
          });
 
 
-        ImpossibleToWork.Add<BTNode_Action>("타겟이 갈 수 없는 곳에 있어요", () =>
+        ImpossibleToWork.Add<BTNode_Action>("타겟이 있다면 이동", () =>
         {
             if (_target != null)
             {
@@ -433,7 +430,7 @@ public class HelperBT : BaseAI
              {
                  case WorldResource.EType.Water:
                      PutDown();
-                     _emoteImage.sprite = _emoteManager.GetEmote(_emoteManager.SleepEmote);
+                     _agent.MoveToRandomPosition();
                      break;
 
                  case WorldResource.EType.Resource:
@@ -464,23 +461,65 @@ public class HelperBT : BaseAI
 
 
                  case WorldResource.EType.Water:
-                     return BehaviorTree.ENodeStatus.InProgress;
+                     return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
              }
              return BehaviorTree.ENodeStatus.InProgress;
 
          });
 
-        var CarryingResource = WaterOrResource.Add<BTNode_Action>("자원 운반하기", () =>
+
+        var dd = WaterOrResource.Add<BTNode_Selector>("기차 근처로 갈 수 있는지 확인");
+
+        var CarryingResource = dd.Add<BTNode_Action>("자원 운반하기", () =>
+        //var CarryingResource = WaterOrResource.Add<BTNode_Action>("자원 운반하기", () =>
         {
-            Vector3 home = _agent.FindCloestAroundEndPosition(GoalManager.Instance.lastRail.transform.position);
-            _agent.MoveTo(home);
+
+
+            switch (_target.Type)
+            {
+                case WorldResource.EType.Resource:
+                    Vector3 home = _agent.FindCloestAroundEndPosition(GoalManager.Instance.lastRail.transform.position);
+                    return _agent.MoveTo(home) ? BehaviorTree.ENodeStatus.InProgress : BehaviorTree.ENodeStatus.Failed;
+                //세 개 들었으면 옮기기
+
+
+
+                case WorldResource.EType.Water:
+                    _emoteImage.sprite = _emoteManager.GetEmote(_emoteManager.SleepEmote);
+                    return BehaviorTree.ENodeStatus.InProgress;
+            }
+
             return BehaviorTree.ENodeStatus.InProgress;
         },
         () =>
         {
-            return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
+            switch (_target.Type)
+            {
+                case WorldResource.EType.Resource:
+                    return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
+                //세 개 들었으면 옮기기
+                case WorldResource.EType.Water:
+                    return BehaviorTree.ENodeStatus.InProgress;
+            }
+
+                    return BehaviorTree.ENodeStatus.InProgress;
+
+
+            //return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
         }
         );
+
+        dd.Add<BTNode_Action>("집 근처에 못 놓는다면", () =>
+         {
+             var dd = _localMemory.GetGeneric<Vector3>(BlackBoardKey.Home);
+             _agent.MoveTo(dd);
+             return BehaviorTree.ENodeStatus.InProgress;
+         },()=>
+         
+         {
+             return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
+         }
+         );
 
         var PutDownResource = WaterOrResource.Add<BTNode_Action>("자원 내려놓기", () =>
          {
@@ -648,14 +687,14 @@ public class HelperBT : BaseAI
         OrderChange.Add<BTNode_Action>("도구 내려놓고 초기화", () =>
          {
              PutDown();
-             var reset = Reset();
-             //타겟이 없다면 자기
-             //있다면 다음 명령 수행하기
-             return reset ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.Failed;
+             //Reset();
+             //return reset ? BehvaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.Failed;
+             return BehaviorTree.ENodeStatus.Failed;
          });
 
         var ErrorRoot = BTRoot.Add<BTNode_Selector>("명령을 수행할 수 없는 경우");
-        var MoveToPutDown = ErrorRoot.Add<BTNode_Sequence>("손에 뭐가 있을 때");
+        #region 자원이 있을 때
+        var MoveToPutDown = ErrorRoot.Add<BTNode_Sequence>("손에 자원이 있을 때");
         MoveToPutDown.Add<BTNode_Action>("내려놓으러 출발하기", () =>
         {
             if (_stack.HandItem.Count != 0)
@@ -664,7 +703,7 @@ public class HelperBT : BaseAI
                 _agent.MoveTo(home);
                 return BehaviorTree.ENodeStatus.InProgress;
             }
-
+            else Reset();
             return BehaviorTree.ENodeStatus.Failed;
 
         }, () =>
@@ -680,6 +719,7 @@ public class HelperBT : BaseAI
         {
             if (_stack.HandItem.Count != 0)
             {
+                Reset();
                 _currentblock = _stack.BFS(this);
                 _stack.PutDown();
                 _target = null;
@@ -700,7 +740,7 @@ public class HelperBT : BaseAI
             return BehaviorTree.ENodeStatus.Succeeded;
 
         });
-
+#endregion
         var CantDoAnything = ErrorRoot.Add<BTNode_Sequence>("손에 뭐가 없을 때");
         CantDoAnything.Add<BTNode_Action>("아무것도 못해요", () =>
          {
@@ -735,7 +775,6 @@ public class HelperBT : BaseAI
             _item.PickUp();
             SoundManager.Instance.StopSoundEffect("Player_ToolsDown");
             SoundManager.Instance.PlaySoundEffect("Player_ToolsDown");
-
             _item.transform.parent = _stack.BFS(this);
             _item.transform.rotation = Quaternion.identity;
             _item.transform.localPosition = (Vector3.up * 0.5f) + (Vector3.up * 0.15f);
