@@ -10,19 +10,11 @@ public class Resource : MonoBehaviour
 
     private WorldResource.EType _defaultResource = WorldResource.EType.Wood;
     private Dictionary<WorldResource.EType, List<WorldResource>> _trackedResources = null;
-    private float _range = 30;
+    private float _range = 50;
 
     private void Start()
     {
         PopulateResources();
-    }
-
-    private void Update()
-    {
-        if(_trackedResources==null)
-        {
-            PopulateResources();
-        }
     }
 
     public void PopulateResources()

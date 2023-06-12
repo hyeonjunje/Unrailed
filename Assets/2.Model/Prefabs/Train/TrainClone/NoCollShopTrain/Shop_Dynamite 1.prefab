@@ -3440,7 +3440,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemType: 5
-  itemCost: 2
+  itemCost: 1
   itemIdx: 0
   _isSpawn: 1
 --- !u!54 &-7330521076636325462
