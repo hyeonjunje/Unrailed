@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2624253160243733736}
   - component: {fileID: 4184954402716565054}
   - component: {fileID: 5965446730655168112}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: MeshObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 2131763644526987167}
   - component: {fileID: 8843296512338108443}
   - component: {fileID: -1811662533997020433}
-  m_Layer: 15
+  m_Layer: 26
   m_Name: BlackStone
   m_TagString: Invisible
   m_Icon: {fileID: 0}

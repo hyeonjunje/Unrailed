@@ -47,7 +47,11 @@ public class MyRailItem : MyItem
                 detectedItem.Peek().RePosition(player.CurrentBlockTransform, Vector3.up * 0.5f + Vector3.up * (detectedItem.Count - 1) * stackInterval);
 
                 if (IsInstallable())
+                {
+                    // 여기서 내려놓음
+                    detectedItem.Peek().GetComponent<RailController>().PutRail();
                     break;
+                }
             }
 
             // 손에 남았으면 빌 때까지 다른데에 놓음
@@ -64,28 +68,45 @@ public class MyRailItem : MyItem
         }
         else if (detectedItemType == EItemType.wood || detectedItemType == EItemType.steel)
         {
-            Stack<MyItem> temp = new Stack<MyItem>(handItem);
-            handItem.Clear();
-
-            // 한계까지 든다
-            while (handItem.Count < 3)
+            // 감지된 아이템이 3개 이하라면...
+            if(detectedItem.Count <= 3)
             {
-                if (detectedItem.Count == 0)
-                    break;
-                handItem.Push(detectedItem.Pop());
-                handItem.Peek().RePosition(handItem.Peek().equipment, Vector3.up * (handItem.Count - 1) * stackInterval);
-            }
+                Transform aroundTransform = player.AroundEmptyBlockTranform;
+                int count = 0;
 
-            if (detectedItem.Count == 0)
-            {
-                while (temp.Count != 0)
+                while (detectedItem.Count != 0)
                 {
-                    detectedItem.Push(temp.Pop());
+                    detectedItem.Pop().RePosition(aroundTransform, Vector3.up * 0.5f + Vector3.up * count++ * stackInterval);
+                }
+
+                while (handItem.Count != 0)
+                {
+                    // 하나를 놓는데 연결할 수 있는 곳이라면 하나만 놓음
+                    detectedItem.Push(handItem.Pop());
                     detectedItem.Peek().RePosition(player.CurrentBlockTransform, Vector3.up * 0.5f + Vector3.up * (detectedItem.Count - 1) * stackInterval);
+
+                    if (IsInstallable())
+                    {
+                        // 여기서 내려놓음
+                        detectedItem.Peek().GetComponent<RailController>().PutRail();
+                        break;
+                    }
                 }
             }
             else
             {
+                Stack<MyItem> temp = new Stack<MyItem>(handItem);
+                handItem.Clear();
+
+                // 한계까지 든다
+                while (handItem.Count < 3)
+                {
+                    if (detectedItem.Count == 0)
+                        break;
+                    handItem.Push(detectedItem.Pop());
+                    handItem.Peek().RePosition(handItem.Peek().equipment, Vector3.up * (handItem.Count - 1) * stackInterval);
+                }
+
                 Transform aroundTransform = player.AroundEmptyBlockTranform;
                 int count = 0;
                 while (temp.Count != 0)

@@ -1573,7 +1573,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 2fe7e4cb4ac1e2b47b39fa3a83b7a7be, type: 2}
   _blockParent: {fileID: 76488198}
   _borderParent: {fileID: 2109651816}
-  _itemPrefabData: {fileID: 11400000, guid: 4b3c71a0f9d9ebc4f9f36dbbff85ea11, type: 2}
+  _itemPrefabData: {fileID: 11400000, guid: 61374cd70b3709d4883caa20062a855a, type: 2}
   _blockTransformerData:
   - {fileID: 11400000, guid: 2aae399e2818c7642a7fb88defd8e208, type: 2}
   - {fileID: 11400000, guid: 3d0992563a1c47045a2776c094c6ef6e, type: 2}

@@ -7,8 +7,8 @@ public class InVisibleObject : MonoBehaviour
     // 블럭, 정적물체, 레일, 동적물체에 다 붙일거야
 
     public bool isEmpty = false;
-
-    private enum EInvisibleType { block, staticObject, rail, dynamicObject, tool };
+    // 
+    private enum EInvisibleType { block, staticObject, rail, dynamicObject, item };
     [SerializeField] private EInvisibleType invisibleType;
 
     private Collider _collider;
@@ -42,7 +42,7 @@ public class InVisibleObject : MonoBehaviour
                 if (!_railController.isInstance)
                     transform.GetChild(0).gameObject.SetActive(true);
                 break;
-            case EInvisibleType.tool:
+            case EInvisibleType.item:
                 transform.GetChild(0).gameObject.SetActive(true);
                 break;
         }
@@ -69,7 +69,7 @@ public class InVisibleObject : MonoBehaviour
                     for (int i = 0; i < transform.childCount; i++)
                         transform.GetChild(i).gameObject.SetActive(false);
                 break;
-            case EInvisibleType.tool:
+            case EInvisibleType.item:
                 transform.GetChild(0).gameObject.SetActive(false);
                 break;
         }

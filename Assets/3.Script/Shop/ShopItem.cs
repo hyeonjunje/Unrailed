@@ -39,7 +39,7 @@ public class ShopItem : MonoBehaviour
         {
             if (train.trainType != itemType) return;
 
-            train.trainUpgradeLevel++;
+            // train.trainUpgradeLevel++;
             train.TrainUpgrade();
             box.enabled = false;
         }
@@ -68,9 +68,9 @@ public class ShopItem : MonoBehaviour
         transform.SetParent(_originParent);
         transform.localPosition = _originPos;
         transform.localRotation = Quaternion.identity;
-
+/*
         // 코일 돌려주자
-        ShopManager.Instance.trainCoin += itemCost;
+        ShopManager.Instance.trainCoin += itemCost;*/
     }
 
     public void SetPosition(Transform parent)
@@ -80,12 +80,14 @@ public class ShopItem : MonoBehaviour
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
 
-        // 코일 돌려주자
-        ShopManager.Instance.trainCoin -= itemCost;
+/*        // 코일 돌려주자
+        ShopManager.Instance.trainCoin -= itemCost;*/
     }
 
     public bool TryBuyItem()
     {
+        Debug.Log("내 코인 :  " + ShopManager.Instance.trainCoin + "  물건의 가격 : " + itemCost); 
+
         return ShopManager.Instance.trainCoin >= itemCost;
     }
 
@@ -106,6 +108,8 @@ public class ShopItem : MonoBehaviour
                     trains.ResetTrain(0);
                 }
             }
+
+            FindObjectOfType<PlayerAnimator>().anim.SetBool("isTwoHandsPickUp", false);
 
             TradeItem(other);
         }

@@ -9,7 +9,6 @@ using UnityEngine.SceneManagement;
 public class PauseUI : MonoBehaviour
 {
     [SerializeField] private GameObject setPauseObj;
-    [SerializeField] private GameObject blurPost;
 
     [Header("UI Zip")]
     [SerializeField] private GameObject audioUI;
@@ -31,7 +30,7 @@ public class PauseUI : MonoBehaviour
     {
         player = FindObjectOfType<PlayerController>();
         setPauseObj.SetActive(false);
-        blurPost.SetActive(false);
+ 
         defaultUI.SetActive(true);
         audioUI.SetActive(false);
 
@@ -70,7 +69,6 @@ public class PauseUI : MonoBehaviour
                 audioUI.SetActive(false);
             }
 
-            blurPost.SetActive(true); //포스트프로세싱 블러
             setPauseObj.SetActive(true); //ui esc 켜기
 
             Time.timeScale = 0;
@@ -114,7 +112,6 @@ public class PauseUI : MonoBehaviour
     }
     public void Continue()
     {
-        blurPost.SetActive(false);
         setPauseObj.SetActive(false);
         Time.timeScale = 1;
     }

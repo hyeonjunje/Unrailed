@@ -40,7 +40,7 @@ public class MapCreator : MonoBehaviour
         InitBlock(mapData);
         await UniTask.Yield();
         SetHeightMap();
-
+        await UniTask.Yield();
 
 
         return _groundList;

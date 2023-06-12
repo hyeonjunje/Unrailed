@@ -59,6 +59,7 @@ public class Station : MonoBehaviour
                 Transform trainTransform = Instantiate(trainPrefab, rail.transform).transform;
                 trainTransform.localPosition = Vector3.left;
                 trainTransform.localRotation = Quaternion.identity;
+                trainTransform.parent = null;
             }
 
             rail.PutRail();
