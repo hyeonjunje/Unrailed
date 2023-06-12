@@ -487,4 +487,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isEmpty: 0
-  invisibleType: 1
+  invisibleType: 4

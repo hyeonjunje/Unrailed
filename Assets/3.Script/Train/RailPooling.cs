@@ -29,6 +29,7 @@ public class RailPooling : MonoBehaviour
         if (MakeRail)
         {
             rails[countPlus].transform.parent = moveVec;
+            rails[countPlus].transform.localRotation = Quaternion.identity;
         }
 
         countPlus++;
