@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 696980883336535414}
   - component: {fileID: 696980883336535413}
   - component: {fileID: 696980883336535412}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 696980883387349283}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: MeshObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 1443672199051369114}
   - component: {fileID: 6075819207968078186}
   - component: {fileID: 4252779012057483040}
-  m_Layer: 15
+  m_Layer: 26
   m_Name: ItemBlackStone06
   m_TagString: Invisible
   m_Icon: {fileID: 0}
@@ -200,7 +200,7 @@ GameObject:
   - component: {fileID: 696980883927229700}
   - component: {fileID: 696980883927229707}
   - component: {fileID: 696980883927229706}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
