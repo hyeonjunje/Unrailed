@@ -22,9 +22,9 @@ public class BTDebugUI : MonoBehaviour
         {
             _helper = FindObjectOfType<Helper>();
             _enemy = FindObjectOfType<EnemyBT>();
-            if(_helper != null)
+            if(_enemy != null)
             {
-                _tree = _helper.GetComponent<BehaviorTree>();
+                _tree = _enemy.GetComponent<BehaviorTree>();
 
             }
         }

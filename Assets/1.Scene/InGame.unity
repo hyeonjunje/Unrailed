@@ -3226,7 +3226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTest: 0
-  isAITest: 0
+  isAITest: 1
   _loadingSceneUI: {fileID: 2059012224}
   backToLobbyUI: {fileID: 1684720359}
   _distanceUI: {fileID: 1014105166}

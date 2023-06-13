@@ -187,7 +187,7 @@ public class EnemyBT : BaseAI
 
          }, () =>
          {
-             return _stack.HandItem.Count ==0 ? BehaviorTree.ENodeStatus.Failed : BehaviorTree.ENodeStatus.InProgress;
+             return _stack.HandItem.Count ==0 ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
          });
 
 
@@ -219,7 +219,7 @@ public class EnemyBT : BaseAI
 
         }, () =>
         {
-            return _stack.HandItem.Count == 0 ? BehaviorTree.ENodeStatus.Failed : BehaviorTree.ENodeStatus.InProgress;
+            return _stack.HandItem.Count == 0 ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
         });
 
 
