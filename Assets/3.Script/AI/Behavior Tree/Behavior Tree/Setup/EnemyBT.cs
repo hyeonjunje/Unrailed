@@ -172,22 +172,33 @@ public class EnemyBT : BaseAI
         Attacked.Add<BTNode_Action>("공격 당함", () =>
          {
              var hp = _localMemory.GetGeneric<int>(BlackBoardKey.HP);
-             if (_stack.HandItem.Count!=0 && hp!=_health.CurrentHp)
+             //손에 뭐가 있는데 맞은 경우
+             if (_stack.HandItem.Count!=0 && hp !=_health.CurrentHp)
              {
                 _currentblock = _stack.BFS(this);
 
                 _animator.SetBool(isMove, true);
                 _animator.SetBool(isRoot, false);
                 _target = null;
-                _localMemory.SetGeneric(BlackBoardKey.HP, _health.CurrentHp);
                 _stack.EnemyPutDown();
                 return BehaviorTree.ENodeStatus.InProgress;
              }
+             //손에 뭐가 없는데 맞은 경우
+             else if (_stack.HandItem.Count == 0 && hp != _health.CurrentHp)
+             {
+                 _animator.SetBool(isMove, true);
+                 _animator.SetBool(isRoot, false);
+                 _target = null;
+                 return BehaviorTree.ENodeStatus.InProgress;
+             }
+
              return BehaviorTree.ENodeStatus.Failed;
 
          }, () =>
          {
-             return _stack.HandItem.Count ==0 ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
+             var hp = _localMemory.GetGeneric<int>(BlackBoardKey.HP);
+             Debug.Log(hp);
+             return _stack.HandItem.Count ==0 ? BehaviorTree.ENodeStatus.Failed : BehaviorTree.ENodeStatus.InProgress;
          });
 
 
@@ -238,7 +249,15 @@ public class EnemyBT : BaseAI
         },
         () =>
         {
-            return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
+            if(_agent.AtDestination)
+            {
+                _localMemory.SetGeneric(BlackBoardKey.HP, _health.CurrentHp);
+                return BehaviorTree.ENodeStatus.Succeeded;
+            }
+            else
+            {
+                return BehaviorTree.ENodeStatus.InProgress;
+            }
         });
 
         var IdleRoot = MainSequence.Add<BTNode_Sequence>("위에거 다 실패 했을 경우");
