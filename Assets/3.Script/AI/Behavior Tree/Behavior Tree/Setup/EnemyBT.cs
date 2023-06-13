@@ -54,11 +54,11 @@ public class EnemyBT : BaseAI
 
         MainSequence.Add<BTNode_Action>("Å¸°Ù Á¤ÇÏ±â", () =>
          {
+            _target = Home.TargettoSteal(_agent);
              return BehaviorTree.ENodeStatus.InProgress;
         }
          , () =>
          {
-            _target = Home.TargettoSteal(_agent);
              return _target == null ? BehaviorTree.ENodeStatus.InProgress : BehaviorTree.ENodeStatus.Succeeded;
 
          });
@@ -72,7 +72,13 @@ public class EnemyBT : BaseAI
         },
             () =>
             {
-                return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
+                if (_target != null)
+                {
+                    return _agent.AtDestination ? BehaviorTree.ENodeStatus.Succeeded : BehaviorTree.ENodeStatus.InProgress;
+
+                }
+                else
+                    return BehaviorTree.ENodeStatus.Failed;
             });
 
         MainSequence.Add<BTNode_Action>("ÈÉÄ¡±â",
@@ -111,7 +117,7 @@ public class EnemyBT : BaseAI
 
              }
              else
-                 return BehaviorTree.ENodeStatus.InProgress;
+                 return BehaviorTree.ENodeStatus.Failed;
          });
 
         MainSequence.Add<BTNode_Action>("½×±â",

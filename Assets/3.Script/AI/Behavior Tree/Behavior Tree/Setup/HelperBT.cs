@@ -735,7 +735,7 @@ public class HelperBT : BaseAI
 
             _item.transform.parent = _stack.BFS(this);
             _item.transform.rotation = Quaternion.identity;
-            _item.transform.localPosition = (Vector3.up * 0.5f) + (Vector3.up * 0.15f);
+            _item.transform.localPosition = (Vector3.up * 0.5f);
             _localMemory.SetGeneric<AI_Item>(BlackBoardKey.Item, null);
             _animator.SetBool(isDig, false);
             _animator.SetBool(isMove, false);

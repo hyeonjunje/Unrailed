@@ -20,6 +20,10 @@ public class MapCreator : MonoBehaviour
     [Header("ETC")]
     [SerializeField] private float _intervalTimeToMoveBlockBundle = 0.1f;  // 블럭 번들들이 떨어지는 시간간격
 
+    [Header("높이")]
+    [SerializeField] private float minHeight;
+    [SerializeField] private float maxHeight;
+
     // 여기서 거리 UI 만들어??
     private List<List<BlockMK2>> _groundList;
 
@@ -32,15 +36,15 @@ public class MapCreator : MonoBehaviour
     public async UniTask<List<List<BlockMK2>>> CreateMapAsync(MapData mapData, Transform parent, bool isInit = false)
     {
         InitMap(mapData, parent);
-
-        if(isInit)
+        await UniTask.WaitForEndOfFrame(this);
+        if (isInit)
             PathFindingField.Instance.InitData(parent);
 
-        await UniTask.Yield();
+        await UniTask.WaitForEndOfFrame(this);
         InitBlock(mapData);
-        await UniTask.Yield();
+        await UniTask.WaitForEndOfFrame(this);
         SetHeightMap();
-        await UniTask.Yield();
+        await UniTask.WaitForEndOfFrame(this);
 
 
         return _groundList;
@@ -114,7 +118,7 @@ public class MapCreator : MonoBehaviour
                 {
                     int height = _groundList[i][j].GetHeight();
                     Transform child = _groundList[i][j].transform.GetChild(0);
-                    child.localScale = Vector3.one + Vector3.up * height * 0.3f;
+                    child.localScale = Vector3.one + Vector3.up * height * Random.Range(minHeight, maxHeight);
                 }
             }
         }

@@ -54,9 +54,8 @@ public class AI_StackableItem : AI_StackItem
         while (handItem.Count != 0)
         {
             detectedItem.Push(handItem.Pop());
-            detectedItem.Peek().PutDownResource(_aiHelper.CurrentBlockTransform, Vector3.up * 0.5f + Vector3.up * stackInterval*handItem.Count);
+            detectedItem.Peek().PutDownResource(_aiHelper.CurrentBlockTransform, Vector3.up * 0.5f + Vector3.up * stackInterval * (detectedItem.Count - 1));
         }
-
 
         return new Pair<Stack<AI_StackItem>, Stack<AI_StackItem>>(handItem, detectedItem);
     }
