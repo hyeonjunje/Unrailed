@@ -2736,7 +2736,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 639408320}
   m_LocalRotation: {x: 0.31135848, y: 0.077490516, z: -0.047119666, w: 0.94595504}
-  m_LocalPosition: {x: -6.5640893, y: 3.3167777, z: -4.6448584}
+  m_LocalPosition: {x: 65.21969, y: 11.282, z: -15.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3228,7 +3228,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTest: 0
-  isAITest: 0
+  isAITest: 1
   _loadingSceneUI: {fileID: 2059012224}
   backToLobbyUI: {fileID: 1684720359}
   _distanceUI: {fileID: 1014105166}

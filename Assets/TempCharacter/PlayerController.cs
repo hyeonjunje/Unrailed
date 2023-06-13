@@ -159,7 +159,6 @@ public class PlayerController : MonoBehaviour
             _handItem = p.first;
             _detectedItem = p.second;
             ItemIOSound(0);
-
             InteractionHighlight();
 
             if (_handItem.Peek().ItemType == EItemType.wood || _handItem.Peek().ItemType == EItemType.steel)
@@ -167,6 +166,7 @@ public class PlayerController : MonoBehaviour
                 WorldResource resource = _handItem.Peek().GetComponent<WorldResource>();
                 if (resource != null)
                     ResourceTracker.Instance.DeRegisterResource(resource);
+                    Destroy(resource);
             }
         }
 

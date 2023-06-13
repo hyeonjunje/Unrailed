@@ -51,10 +51,9 @@ public class EnemyBT : BaseAI
         #region 있는 경우
 
         var MainSequence = HaveTarget.Add<BTNode_Sequence>("있는 경우");
-
-        MainSequence.Add<BTNode_Action>("타겟 정하기", () =>
+            MainSequence.Add<BTNode_Action>("타겟 정하기", () =>
          {
-            _target = Home.TargettoSteal(_agent);
+             _target = Home.TargettoSteal(_agent);
              return BehaviorTree.ENodeStatus.InProgress;
         }
          , () =>
