@@ -12671,7 +12671,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1116280030}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -2.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1045703845}
@@ -12680,7 +12680,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -6.07, y: 0}
   m_SizeDelta: {x: 30, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1116280035
@@ -12696,7 +12696,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followTarget: {fileID: 1311359071295871694}
-  EmotUI: 0
+  offset: {x: 0, y: 0, z: 0}
 --- !u!1 &1132620922
 GameObject:
   m_ObjectHideFlags: 0
@@ -16301,7 +16301,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.8699581, z: 1}
+  m_Size: {x: 0.9, y: 0.6, z: 1}
   m_Center: {x: 0, y: -0.014449099, z: -0.0000000034776044}
 --- !u!23 &1407898985
 MeshRenderer:
@@ -18983,7 +18983,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.8699579, z: 1}
+  m_Size: {x: 0.9, y: 0.6, z: 1}
   m_Center: {x: 0, y: -0.014449099, z: -0.0000000034776044}
 --- !u!23 &1632481978
 MeshRenderer:
@@ -22482,7 +22482,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.8699581, z: 1}
+  m_Size: {x: 0.9, y: 0.6, z: 1}
   m_Center: {x: 0, y: -0.014449099, z: -0.0000000034776044}
 --- !u!23 &1972107494
 MeshRenderer:
@@ -86388,6 +86388,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5482923041946156128, guid: 1834976c1be41e24f89deb44eae8a666, type: 3}
+      propertyPath: EmotUI
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5482923041946156128, guid: 1834976c1be41e24f89deb44eae8a666, type: 3}
       propertyPath: followTarget
       value: 
