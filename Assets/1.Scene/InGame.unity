@@ -7652,26 +7652,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1001835065048350514, guid: 23bb470befc47e2449e94cef11668723, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1001835065048350514, guid: 23bb470befc47e2449e94cef11668723, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1001835065048350514, guid: 23bb470befc47e2449e94cef11668723, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1001835065048350514, guid: 23bb470befc47e2449e94cef11668723, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -3000
-      objectReference: {fileID: 0}
-    - target: {fileID: 3736390654715554259, guid: 23bb470befc47e2449e94cef11668723, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3736390655046718658, guid: 23bb470befc47e2449e94cef11668723, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -7759,14 +7739,6 @@ PrefabInstance:
     - target: {fileID: 3736390655046718663, guid: 23bb470befc47e2449e94cef11668723, type: 3}
       propertyPath: m_Name
       value: Player_UI Order
-      objectReference: {fileID: 0}
-    - target: {fileID: 3736390655046718663, guid: 23bb470befc47e2449e94cef11668723, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5494247263112631938, guid: 23bb470befc47e2449e94cef11668723, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 23bb470befc47e2449e94cef11668723, type: 3}

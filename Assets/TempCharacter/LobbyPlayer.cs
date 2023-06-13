@@ -13,6 +13,7 @@ public class LobbyPlayer : MonoBehaviour
     // 컴포넌트
     private LobbyPlayerInput _playerInput;
     private PlayerStat _playerStat;
+    private Animator _animator;
 
     // 플레이어 수치
     private float _currentSpeed;
@@ -22,6 +23,7 @@ public class LobbyPlayer : MonoBehaviour
     {
         _playerInput = GetComponent<LobbyPlayerInput>();
         _playerStat = GetComponent<PlayerStat>();
+        _animator = GetComponent<Animator>();
         _runParticle.SetActive(false);
 
         _currentSpeed = _playerStat.moveSpeed;
@@ -47,6 +49,8 @@ public class LobbyPlayer : MonoBehaviour
 
         transform.position += _playerInput.Dir * _currentSpeed * Time.deltaTime;
         transform.LookAt(_playerInput.Dir + transform.position);
+
+        _animator.SetBool("isMove", !_playerInput.Dir.Equals(Vector3.zero));
     }
 
     private void DashOff()
