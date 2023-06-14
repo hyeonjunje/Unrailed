@@ -244,7 +244,7 @@ MonoBehaviour:
   banglayer:
     serializedVersion: 2
     m_Bits: 393216
-  radius: 5
+  radius: 3
   ExplosionEffect: {fileID: 1050950319908601510}
   BombEffect: {fileID: 7606537388205188535}
 --- !u!114 &-7889649820041956306

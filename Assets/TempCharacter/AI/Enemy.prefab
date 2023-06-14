@@ -29892,7 +29892,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: 1
-  _animalHp: 8
+  _animalHp: 3
   hitEffects:
   - {fileID: 465066152}
   - {fileID: 704184321}

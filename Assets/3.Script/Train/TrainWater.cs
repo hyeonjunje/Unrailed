@@ -232,7 +232,7 @@ public class TrainWater : TrainMovement
             }
         }
 
-         if (spareOver < fireTime)
+         /*if (spareOver < fireTime)
          {
              for (int i = 0; i < trains.Length; i++)
              {
@@ -242,7 +242,7 @@ public class TrainWater : TrainMovement
                      trains[i].fireEffect.gameObject.SetActive(true);
                  }
              }
-         }
+         }*/
     }
 
 }

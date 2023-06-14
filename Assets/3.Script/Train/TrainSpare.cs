@@ -15,8 +15,8 @@ public class TrainSpare : TrainMovement
         trainIndex = -1;
         GetMesh();
         engine = FindObjectOfType<TrainEngine>();
-        fireEffect = GetComponentInChildren<ParticleSystem>();
-        fireEffect.gameObject.SetActive(false);
+        /*fireEffect = GetComponentInChildren<ParticleSystem>();
+        fireEffect.gameObject.SetActive(false);*/
     }
 
     // Update is called once per frame
